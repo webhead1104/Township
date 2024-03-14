@@ -1,0 +1,7 @@
+# Database credentials
+mysql:
+  host: localhost
+  port: 3306
+  databaseName: township
+  username: root
+  password: password

@@ -1,0 +1,21 @@
+name: Township
+version: '1.0-SNAPSHOT'
+main: me.webhead1104.township.Township
+api-version: '1.20'
+commands:
+  township:
+    description: The main Township command
+permissions:
+  township.*:
+    description: A wildcard permission for Township
+    default: op
+    children:
+      - township.minigame.*
+      - township.minigame.2
+    township.minigame.*:
+      description: A wildcard permission for all minigame permissions
+      default: op
+      children:
+        - township.minigame.level.2
+    township.minigame.level.2:
+      description: level 2
