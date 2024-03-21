@@ -29,7 +29,7 @@
                      plugin.getCommand().mainMenu(event.getPlayer());
                  }
              } catch (SQLException e) {
-                 plugin.newPlayer(event.getPlayer());
+                 plugin.getDatabase().newPlayer(event.getPlayer());
              }
          }
      }

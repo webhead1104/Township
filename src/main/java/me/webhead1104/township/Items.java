@@ -34,7 +34,7 @@
          public MenuItem coinsAndCash = ItemBuilder.of(Material.GOLD_BLOCK).setName(ChatColor.YELLOW + "Coins 0").setLore(ChatColor.GREEN + "Cash 0").buildItem((player, event) -> {});
          public MenuItem profile = ItemBuilder.of(Material.LIGHT_BLUE_CONCRETE).setName("null").buildItem();
          public MenuItem glass = ItemBuilder.of(Material.WHITE_STAINED_GLASS_PANE).setName(" ").buildItem((player, event) -> {});
-         public MenuItem township = ItemBuilder.of(Material.GREEN_CONCRETE).setName(ChatColor.GREEN + "Click to play township!").buildItem((player, event) -> plugin.getCommand().load(player));
+         public MenuItem township = ItemBuilder.of(Material.GREEN_CONCRETE).setName(ChatColor.GREEN + "Click to play township!").buildItem((player, event) -> plugin.getWorldManager().load(player));
          public MenuItem backButton = ItemBuilder.of(Material.BARRIER).setName(ChatColor.RED + "Click to go back!").buildItem((player, event) -> plugin.getWorldManager().getWorld(player,0));
          public MenuItem plantWheat = ItemBuilder.of(Material.WHEAT).setName(ChatColor.GOLD + "Wheat").setLore(List.of("Free","Click to plant wheat!")).buildItem((player, event) -> {player.setItemOnCursor(new ItemStack(Material.WHEAT));});
          public MenuItem plantCorn = ItemBuilder.of(Material.CORNFLOWER).setName(ChatColor.GOLD + "Corn").setLore(List.of("1 coin","Click to plant corn!")).buildItem((player, event) -> {player.setItemOnCursor(new ItemStack(Material.GOLDEN_APPLE));});

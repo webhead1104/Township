@@ -4,8 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import me.webhead1104.township.runables.AnimalsRunable;
-
-import java.sql.ResultSet;
 import java.util.Objects;
 
 public class Animals {

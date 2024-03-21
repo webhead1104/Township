@@ -47,23 +47,6 @@
               getServer().getPluginManager().registerEvents(new InventoryCloseListener(this), this);
           }
 
-          public void newPlayer(Player player) {
-              database.connect();
-              try {
-                  PreparedStatement playerData = database.getConnection().prepareStatement("INSERT INTO TownshipPlayerData (PlayerUUID)VALUE (?);");
-                  playerData.setString(1, player.getUniqueId().toString());
-                  playerData.executeUpdate();
-
-                  PreparedStatement worldData = database.getConnection().prepareStatement("INSERT INTO TownshipWorldData (PlayerUUID)VALUE (?);");
-                  worldData.setString(1, player.getUniqueId().toString());
-                  worldData.executeUpdate();
-
-                  this.getCommand().mainMenu(player);
-              } catch (Exception e) {
-                  this.getLogger().log(Level.SEVERE, e + " ERROR");
-              }
-          }
-
           public Items getItems() {
               return items1;
           }

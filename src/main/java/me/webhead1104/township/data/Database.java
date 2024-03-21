@@ -68,13 +68,13 @@ public class Database {
     public void createTableWorld() {
         try {
             PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS TownshipWorldData(PlayerUUID VARCHAR(255)," +
-                    "plotpage TEXT DEFAULT ('plot1 0 plot2 0 plot3 0 plot4 0 plot5 0 plot6 0 plot7 0 plot8 0 plot9 0 plot10 0 end')," +
-                    "plotslot TEXT DEFAULT ('plot1 0 plot2 0 plot3 0 plot4 0 plot5 0 plot6 0 plot7 0 plot8 0 plot9 0 plot10 0 end')," +
-                    "plottype TEXT DEFAULT ('plot1 0 plot2 0 plot3 0 plot4 0 plot5 0 plot6 0 plot7 0 plot8 0 plot9 0 plot10 0 end')," +
-                    "factorypage TEXT DEFAULT ('feedmill 0 bakery 0 dairy 0 sugar 0 end')," +
-                    "factoryslot TEXT DEFAULT ('feedmill 0 bakery 0 dairy 0 sugar 0 end')," +
-                    "animalspage TEXT DEFAULT ('cowshed 0 chickencoop 0 sheepfarm 0 pigfarm 0 end')," +
-                    "animalsslot TEXT DEFAULT ('cowshed 0 chickencoop 0 sheepfarm 0 pigfarm 0 end')," +
+                    "plotpage TEXT DEFAULT ('plot1 none plot2 none plot3 none plot4 none plot5 none plot6 none plot7 none plot8 none plot9 none plot10 none end')," +
+                    "plotslot TEXT DEFAULT ('plot1 none plot2 none plot3 none plot4 none plot5 none plot6 none plot7 none plot8 none plot9 none plot10 none end')," +
+                    "plottype TEXT DEFAULT ('plot1 none plot2 none plot3 none plot4 none plot5 none plot6 none plot7 none plot8 none plot9 none plot10 none end')," +
+                    "factorypage TEXT DEFAULT ('feedmill none bakery none dairy none sugar none end')," +
+                    "factoryslot TEXT DEFAULT ('feedmill none bakery none dairy none sugar none end')," +
+                    "animalspage TEXT DEFAULT ('cowshed none chickencoop none sheepfarm none pigfarm none end')," +
+                    "animalsslot TEXT DEFAULT ('cowshed none chickencoop none sheepfarm none pigfarm none end')," +
                     "lastpage INT DEFAULT 0," +
                     "PRIMARY KEY(PlayerUUID))");
             statement.executeUpdate();
@@ -170,4 +170,22 @@ public class Database {
             plugin.getLogger().log(Level.SEVERE, "ERROR " + e);
         }
     }
+
+    public void newPlayer(Player player) {
+        plugin.getDatabase().connect();
+        try {
+            PreparedStatement playerData = plugin.getDatabase().getConnection().prepareStatement("INSERT INTO TownshipPlayerData (PlayerUUID)VALUE (?);");
+            playerData.setString(1, player.getUniqueId().toString());
+            playerData.executeUpdate();
+
+            PreparedStatement worldData = plugin.getDatabase().getConnection().prepareStatement("INSERT INTO TownshipWorldData (PlayerUUID)VALUE (?);");
+            worldData.setString(1, player.getUniqueId().toString());
+            worldData.executeUpdate();
+
+            plugin.getCommand().mainMenu(player);
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, e + " ERROR");
+        }
+    }
+
 }

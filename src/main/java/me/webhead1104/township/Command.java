@@ -1,5 +1,6 @@
       package me.webhead1104.township;
 
+      import java.sql.PreparedStatement;
       import java.util.ArrayList;
       import java.util.EnumSet;
       import java.util.List;
@@ -84,19 +85,5 @@
               player.getInventory().clear();
               levelMenu.setItem(34, plugin.getItems().backButton);
               levelMenu.open(player);
-          }
-
-          public void load(Player player) {
-              player.sendMessage("load called");
-              try {
-                  if (plugin.getDatabase().getPlayerData(player,"townName").equals("none")) {
-                      plugin.getWorldManager().townName(player);
-                  } else {
-                      plugin.getWorldManager().getWorld(player, 0);
-                  }
-                  player.sendMessage("load done");
-              } catch (Exception e) {
-                  plugin.getLogger().log(Level.SEVERE,"ERROR  in load!!!!! " +e);
-              }
           }
       }
