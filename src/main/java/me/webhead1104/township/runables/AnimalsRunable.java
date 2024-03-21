@@ -59,7 +59,7 @@ public class AnimalsRunable extends BukkitRunnable {
                     menu.getItem(15).editor().setLore(ChatColor.GOLD + "Click to pickup!").done();
                 }
                 String value = "one " + one + " two " + two + " three " + three + " four " + four + " five " + five + " end";
-                plugin.setPlayerData(player, "cowshedmilk", value);
+                plugin.getDatabase().setPlayerData(player, "cowshedmilk", value);
             }
 
             player.sendMessage("hello you have " + timeLeft + " left");

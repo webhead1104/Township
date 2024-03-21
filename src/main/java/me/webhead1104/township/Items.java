@@ -20,7 +20,7 @@
 
          public MenuItem chicken = ItemBuilder.of(Material.CHICKEN_SPAWN_EGG).setName(ChatColor.RED + "Chicken").setLore(ChatColor.RED + "Really how?!?!?!?!?!?!?!").buildItem((player, event) -> {});
          public MenuItem chickenCoopFeed =  ItemBuilder.of(Material.WHEAT_SEEDS).setName(ChatColor.GOLD + "Chicken Feed").setLore(ChatColor.GOLD + "0").buildItem((player, event) -> {});
-         public MenuItem chickenCoopEgg =ItemBuilder.of(Material.EGG).setName(ChatColor.GOLD + "Egg").setLore(List.of(ChatColor.GOLD + "1",ChatColor.GREEN + "Click to pick up!")).buildItem((player, event) -> {plugin.setPlayerData(player,"eggs", String.valueOf(Integer.parseInt(plugin.getPlayerData(player, "eggs")) + 1));});
+         public MenuItem chickenCoopEgg =ItemBuilder.of(Material.EGG).setName(ChatColor.GOLD + "Egg").setLore(List.of(ChatColor.GOLD + "1",ChatColor.GREEN + "Click to pick up!")).buildItem((player, event) -> {});
 
          public MenuItem sheep = ItemBuilder.of(Material.CHICKEN_SPAWN_EGG).setName(ChatColor.GOLD + "Sheep").setLore(ChatColor.RED + "Really how?!?!?!?!?!?!?!").buildItem((player, event) -> {});
          public MenuItem sheepFarmFeed = ItemBuilder.of(Material.WHEAT_SEEDS).setName(ChatColor.GOLD + "Sheep Feed").setLore(ChatColor.GOLD + "0").buildItem((player, event) -> {});

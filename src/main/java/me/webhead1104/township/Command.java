@@ -4,7 +4,6 @@
       import java.util.EnumSet;
       import java.util.List;
       import java.util.logging.Level;
-
       import me.flame.menus.menu.PaginatedMenu;
       import me.flame.menus.modifiers.Modifier;
       import org.bukkit.ChatColor;
@@ -45,8 +44,13 @@
                           }
                       }
                       case "table" -> {
-                          Player player = (Player) sender;
-                      plugin.getDatabase().resetTable(player);}
+                          plugin.getDatabase().resetTable(sender);
+                      }
+                      case "reload" -> {
+                          plugin.reloadConfig();
+                          plugin.getDatabase().connect();
+                          sender.sendMessage(ChatColor.GREEN + "Plugin reloaded!");
+                      }
                   }
               }
               return true;
@@ -57,7 +61,7 @@
               List<String> returnme = new ArrayList<>();
               if (sender.hasPermission("township.admin")) {
                   if (args.length == 1) {
-                      returnme.addAll(List.of("addplayer", "minigame", "table", "cow", "chicken", "sheep"));
+                      returnme.addAll(List.of("minigame", "table", "cow", "chicken", "sheep","reload"));
                   }
               }
               return returnme;
@@ -71,8 +75,8 @@
 
           public void mainMenu(Player player) {
               player.getInventory().clear();
-              mainMenu.setItem(22, (plugin.getItems()).township);
-              mainMenu.getFiller().fill((plugin.getItems()).glass);
+              mainMenu.setItem(22, plugin.getItems().township);
+              mainMenu.getFiller().fill(plugin.getItems().glass);
               mainMenu.open(player);
           }
 
@@ -83,14 +87,16 @@
           }
 
           public void load(Player player) {
+              player.sendMessage("load called");
               try {
-                  if (plugin.getPlayerData(player, "townName").equals("none")) {
+                  if (plugin.getDatabase().getPlayerData(player,"townName").equals("none")) {
                       plugin.getWorldManager().townName(player);
                   } else {
                       plugin.getWorldManager().getWorld(player, 0);
                   }
+                  player.sendMessage("load done");
               } catch (Exception e) {
-                  plugin.getLogger().log(Level.SEVERE,"ERROR " +e);
+                  plugin.getLogger().log(Level.SEVERE,"ERROR  in load!!!!! " +e);
               }
           }
       }

@@ -23,7 +23,7 @@
 
           public void onEnable() {
               File file = new File("plugins/Township/config.yml");
-              if(!file.exists())
+              if (!file.exists())
                   this.saveResource("config.yml", false);
               minigame1 = new Minigame(this);
               items1 = new Items(this);
@@ -59,63 +59,6 @@
                   worldData.executeUpdate();
 
                   this.getCommand().mainMenu(player);
-              } catch (Exception e) {
-                  this.getLogger().log(Level.SEVERE, e + " ERROR");
-              }
-          }
-
-          public String getWorldData(Player player, String input) {
-              database.connect();
-              String output = null;
-              try {
-                  PreparedStatement preparedStatement = database.getConnection().prepareStatement("SELECT * FROM TownshipWorldData WHERE PlayerUUID = ?;");
-                  preparedStatement.setString(1, player.getUniqueId().toString());
-                  ResultSet res = preparedStatement.executeQuery();
-                  res.next();
-                  output = res.getString(input);
-              } catch (Exception e) {
-                  this.getLogger().log(Level.SEVERE, e + " ERROR");
-              }
-              return output;
-          }
-
-          public String getPlayerData(Player player, String input) {
-              database.connect();
-              String output = null;
-              try {
-                  PreparedStatement preparedStatement = database.getConnection().prepareStatement("SELECT * FROM TownshipPlayerData WHERE PlayerUUID = ?;");
-                  preparedStatement.setString(1, player.getUniqueId().toString());
-                  ResultSet res = preparedStatement.executeQuery();
-                  res.next();
-                  output = res.getString(input);
-              } catch (Exception e) {
-                  this.getLogger().log(Level.SEVERE, e + " ERROR");
-              }
-              return output;
-          }
-
-
-          public void setPlayerData(Player player, String thing, String value) {
-              database.connect();
-              try {
-                  PreparedStatement preparedStatement = database.getConnection().prepareStatement("UPDATE TownshipPlayerData SET ? = ? WHERE PlayerUUID = ?;");
-                  preparedStatement.setString(1, thing);
-                  preparedStatement.setString(2, value);
-                  preparedStatement.setString(3, player.getUniqueId().toString());
-                  preparedStatement.executeUpdate();
-              } catch (Exception e) {
-                  this.getLogger().log(Level.SEVERE, e + " ERROR");
-              }
-          }
-
-          public void setWorldata(Player player, String thing, String value) {
-              database.connect();
-              try {
-                  PreparedStatement preparedStatement = database.getConnection().prepareStatement("UPDATE TownshipWorldData SET ? = ? WHERE PlayerUUID = ?;");
-                  preparedStatement.setString(1, thing);
-                  preparedStatement.setString(2, value);
-                  preparedStatement.setString(3, player.getUniqueId().toString());
-                  preparedStatement.executeUpdate();
               } catch (Exception e) {
                   this.getLogger().log(Level.SEVERE, e + " ERROR");
               }

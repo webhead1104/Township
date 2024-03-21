@@ -4,6 +4,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import me.webhead1104.township.runables.AnimalsRunable;
+
+import java.sql.ResultSet;
 import java.util.Objects;
 
 public class Animals {
@@ -16,8 +18,8 @@ public class Animals {
 
  public void cowshed(InventoryClickEvent event) {
   Player player = (Player) event.getWhoClicked();
-  String input = plugin.getPlayerData(player, "cowshedmilk");
-  int feed = Integer.parseInt(plugin.getPlayerData(player, "cowfeed"));
+  String input = plugin.getDatabase().getPlayerData(player, "cowshedmilk");
+  int feed = Integer.parseInt(plugin.getDatabase().getPlayerData(player, "cowfeed"));
   if (Integer.parseInt(input.substring(input.indexOf("one") + 4, input.indexOf("two") - 1)) == 1) plugin.getCommand().cowshed.setItem(20, plugin.getItems().cowshedMilk.editor().setCustomModelData(1).done());
   if (Integer.parseInt(input.substring(input.indexOf("two") + 4, input.indexOf("three") - 1)) == 1) plugin.getCommand().cowshed.setItem(21, plugin.getItems().cowshedMilk.editor().setCustomModelData(2).done());
   if (Integer.parseInt(input.substring(input.indexOf("three") + 6, input.indexOf("four") - 1)) == 1) plugin.getCommand().cowshed.setItem(22, plugin.getItems().cowshedMilk.editor().setCustomModelData(3).done());
@@ -35,8 +37,8 @@ public class Animals {
 
  public void cowshedFeed(InventoryClickEvent event) {
   Player player = (Player) event.getWhoClicked();
-  String input = plugin.getPlayerData(player, "cowshedfeed");
-  int feed = Integer.parseInt(plugin.getPlayerData(player, "cowfeed"));
+  String input = plugin.getDatabase().getPlayerData(player, "cowshedfeed");
+  int feed = Integer.parseInt(plugin.getDatabase().getPlayerData(player, "cowfeed"));
   int cow1feed = Integer.parseInt(input.substring(input.indexOf("one") + 4, input.indexOf("two") - 1));
   int cow2feed = Integer.parseInt(input.substring(input.indexOf("two") + 4, input.indexOf("three") - 1));
   int cow3feed = Integer.parseInt(input.substring(input.indexOf("three") + 6, input.indexOf("four") - 1));
@@ -68,15 +70,15 @@ public class Animals {
 
 
    String output = "one " + cow1feed + " two " + cow2feed + " three " + cow3feed + " four " + cow4feed + " five " + cow5feed + " end";
-   plugin.setPlayerData(player, "cowfeed", String.valueOf(feed));
-   plugin.setPlayerData(player, "cowshedfeed", output);
+   plugin.getDatabase().setPlayerData(player, "cowfeed", String.valueOf(feed));
+   plugin.database.setPlayerData(player, "cowshedfeed", output);
   }
  }
 
  public void milk(InventoryClickEvent event, Player player) {
-  plugin.setPlayerData(player, "milk", String.valueOf(Integer.parseInt(plugin.getPlayerData(player, "milk")) + 1));
+  plugin.getDatabase().setPlayerData(player, "milk", String.valueOf(Integer.parseInt(plugin.getDatabase().getPlayerData(player, "milk")) + 1));
   plugin.getCommand().cowshed.removePageItem(event.getSlot());
-  String input = plugin.getPlayerData(player, "cowshedmilk");
+  String input = plugin.getDatabase().getPlayerData(player, "cowshedmilk");
   int cow1milk = Integer.parseInt(input.substring(input.indexOf("one") + 4, input.indexOf("two") - 1));
   int cow2milk = Integer.parseInt(input.substring(input.indexOf("two") + 4, input.indexOf("three") - 1));
   int cow3milk = Integer.parseInt(input.substring(input.indexOf("three") + 6, input.indexOf("four") - 1));
@@ -88,7 +90,7 @@ public class Animals {
   if (Objects.requireNonNull(event.getCurrentItem()).getItemMeta().getCustomModelData() == 4) cow4milk = 0;
   if (Objects.requireNonNull(event.getCurrentItem()).getItemMeta().getCustomModelData() == 5) cow5milk = 0;
   String value = "one " + cow1milk + " two " + cow2milk + " three " + cow3milk + " four " + cow4milk + " five " + cow5milk + " end";
-  plugin.setPlayerData(player, "cowshedmilk", value);
+  plugin.getDatabase().setPlayerData(player, "cowshedmilk", value);
   plugin.getCommand().cowshed.getItem(event.getSlot() - 9).editor().setLore(ChatColor.GOLD + "Click the feed to feed me!").done();
  }
 }

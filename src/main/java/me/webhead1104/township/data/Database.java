@@ -1,8 +1,10 @@
 package me.webhead1104.township.data;
 
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 import me.webhead1104.township.Township;
+import org.bukkit.entity.Player;
+
 import java.sql.*;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -99,7 +101,7 @@ public class Database {
         }
     }
 
-    public void resetTable(Player player) {
+    public void resetTable(CommandSender player) {
         try {
             connect();
             createTableWorld();
@@ -110,7 +112,62 @@ public class Database {
             createTablePlayerData();
             player.sendMessage(ChatColor.GREEN + "Database reset complete");
         } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE,"ERROR " +e);
+            plugin.getLogger().log(Level.SEVERE, "ERROR " + e);
+        }
+    }
+
+    public String getWorldData(Player player, String input) {
+        this.connect();
+        String output = null;
+        try {
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement("SELECT * FROM TownshipWorldData WHERE PlayerUUID = ?;");
+            preparedStatement.setString(1, player.getUniqueId().toString());
+            ResultSet res = preparedStatement.executeQuery();
+            res.next();
+            output = res.getString(input);
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "ERROR " + e);
+        }
+        return output;
+    }
+
+    public String getPlayerData(Player player, String input) {
+        this.connect();
+        String output = null;
+        try {
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement("SELECT * FROM TownshipPlayerData WHERE PlayerUUID = ?;");
+            preparedStatement.setString(1, player.getUniqueId().toString());
+            ResultSet res = preparedStatement.executeQuery();
+            res.next();
+            output = res.getString(input);
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "ERROR " + e);
+        }
+        return output;
+    }
+
+
+    public void setPlayerData(Player player, String column, String value) {
+        this.connect();
+        try {
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement("UPDATE TownshipPlayerData SET "+column+" = ? WHERE PlayerUUID = ?;");
+            preparedStatement.setString(1, value);
+            preparedStatement.setString(2, player.getUniqueId().toString());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "ERROR " + e);
+        }
+    }
+
+    public void setWorldata(Player player, String column, String value) {
+        this.connect();
+        try {
+            PreparedStatement preparedStatement = this.getConnection().prepareStatement("UPDATE TownshipWorldData SET "+column+" = ? WHERE PlayerUUID = ?;");
+            preparedStatement.setString(1, value);
+            preparedStatement.setString(2, player.getUniqueId().toString());
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "ERROR " + e);
         }
     }
 }

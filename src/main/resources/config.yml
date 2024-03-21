@@ -5,3 +5,14 @@ mysql:
   databaseName: township
   username: root
   password: password
+
+bannedTownNames:
+  - "lol"
+  - ""
+  - ""
+
+takenTownNames:
+  - "no"
+
+
+

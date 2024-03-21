@@ -55,8 +55,4 @@ tasks {
     reobfJar {
         outputJar.set(layout.buildDirectory.file(providers.gradleProperty("plugin_dir").get() + "/Township-${project.version}.jar"))
     }
-
-    shadowJar {
-        relocate("org.bstats", "dev.foxikle.dependencies.bstats")
-    }
 }
