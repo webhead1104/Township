@@ -21,11 +21,15 @@ public class InventoryClickListener implements Listener {
         ItemStack clickedItem = event.getCurrentItem();
         if (clickedItem != null) {
             if (clickedItem.hasItemMeta()) {
-                if (clickedItem.getItemMeta().getDisplayName().contains(ChatColor.AQUA + "Level ")) {
-                    plugin.getCommand().levelMenu(player);
-                }
-                if (clickedItem.getItemMeta().getDisplayName().contains(ChatColor.AQUA + "Level ")) {
-                }
+                if (clickedItem.getItemMeta().getDisplayName().contains(ChatColor.AQUA + "Level ")) plugin.getLevelMenu().levelMenu(player);
+                //up
+                if (clickedItem.getItemMeta().getDisplayName().contains(ChatColor.DARK_GREEN + "Click to scroll up!")) plugin.getWorldManager().getWorld(player,plugin.getWorldManager().worldMenu.getCurrentPageNumber()+1);
+                //down
+                if (clickedItem.getItemMeta().getDisplayName().contains(ChatColor.DARK_GREEN + "Click to scroll down!")) plugin.getWorldManager().getWorld(player,plugin.getWorldManager().worldMenu.getCurrentPageNumber()-1);
+                //left
+                if (clickedItem.getItemMeta().getDisplayName().contains(ChatColor.DARK_GREEN + "Click to scroll left!")) plugin.getWorldManager().getWorld(player,plugin.getWorldManager().worldMenu.getCurrentPageNumber()+2);
+                //right
+                if (clickedItem.getItemMeta().getDisplayName().contains(ChatColor.DARK_GREEN + "Click to scroll right!")) plugin.getWorldManager().getWorld(player,plugin.getWorldManager().worldMenu.getCurrentPageNumber()-2);
             }
         }
     }

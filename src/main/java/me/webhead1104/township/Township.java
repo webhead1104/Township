@@ -1,77 +1,61 @@
       package me.webhead1104.township;
 
-      import java.io.File;
-      import java.sql.*;
-      import java.util.Objects;
-      import java.util.logging.Level;
+      import me.flame.menus.menu.PaginatedMenu;
+      import me.flame.menus.modifiers.Modifier;
+      import me.webhead1104.township.utils.Items;
+      import org.bukkit.ChatColor;
       import org.bukkit.entity.Player;
       import org.bukkit.plugin.java.JavaPlugin;
       import me.webhead1104.township.data.Database;
       import me.webhead1104.township.listeners.InventoryClickListener;
-      import me.webhead1104.township.listeners.InventoryCloseListener;
       import me.webhead1104.township.listeners.JoinListener;
-      
-      public final class Township extends JavaPlugin {
+      import java.io.File;
+      import java.util.*;
+      import java.util.logging.Level;
 
-          Minigame minigame1;
-          Items items1;
-          Command command1;
-          Animals animals1;
+      public class Township extends JavaPlugin {
+
           Factories factories1;
           WorldManager worldManager1;
-          Database database;
-
+          LevelMenu levelMenu;
+          Animals animals;
+          PaginatedMenu mainMenu;
           public void onEnable() {
+              mainMenu = PaginatedMenu.create(ChatColor.GOLD + "Main Menu", 5, 2, EnumSet.allOf(Modifier.class));
               File file = new File("plugins/Township/config.yml");
               if (!file.exists())
                   this.saveResource("config.yml", false);
-              minigame1 = new Minigame(this);
-              items1 = new Items(this);
-              command1 = new Command(this);
-              animals1 = new Animals(this);
               factories1 = new Factories(this);
               worldManager1 = new WorldManager(this);
-              database = new Database(this);
+              levelMenu = new LevelMenu(this);
+              animals = new Animals(this);
+              new Items(this);
+              new Database(this);
               Objects.requireNonNull(getCommand("township")).setExecutor(new Command(this));
               registerListeners();
-              database.connect();
+              Database.connect();
+              if (Database.isConnected()) Database.create();
+              if (Database.isConnected()) this.getLogger().log(Level.INFO, ChatColor.GREEN + "Database loaded!");
           }
 
           public void onDisable() {
-              database.disconnect();
+              Database.disconnect();
           }
 
           public void registerListeners() {
               getServer().getPluginManager().registerEvents(new JoinListener(this), this);
               getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
-              getServer().getPluginManager().registerEvents(new InventoryCloseListener(this), this);
           }
 
-          public Items getItems() {
-              return items1;
+          public void mainMenu(Player player) {
+              player.getInventory().clear();
+              mainMenu.getFiller().fill(Items.glass);
+              mainMenu.setItem(22, Items.township);
+              mainMenu.open(player);
           }
 
-          public Minigame getMinigame() {
-              return minigame1;
-          }
-
-          public Command getCommand() {
-              return command1;
-          }
-
-          public Animals getAnimals() {
-              return animals1;
-          }
-
-          public Factories getFactories() {
-              return factories1;
-          }
-
-          public WorldManager getWorldManager() {
-              return worldManager1;
-          }
-
-          public Database getDatabase() {
-              return database;
-          }
+          public Animals getAnimals() {return animals;}
+          public Factories getFactories() {return factories1;}
+          public WorldManager getWorldManager() {return worldManager1;}
+          public LevelMenu getLevelMenu() {return levelMenu;}
       }

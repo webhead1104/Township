@@ -9,13 +9,3 @@ permissions:
   township.*:
     description: A wildcard permission for Township
     default: op
-    children:
-      - township.minigame.*
-      - township.minigame.2
-    township.minigame.*:
-      description: A wildcard permission for all minigame permissions
-      default: op
-      children:
-        - township.minigame.level.2
-    township.minigame.level.2:
-      description: level 2

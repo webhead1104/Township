@@ -1,4 +1,5 @@
 # Database credentials
+databaseType: "mysql" # mysql or sqlite
 mysql:
   host: localhost
   port: 3306
@@ -13,6 +14,3 @@ bannedTownNames:
 
 takenTownNames:
   - "no"
-
-
-

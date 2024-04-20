@@ -1,33 +1,31 @@
 plugins {
     `java-library`
     `maven-publish`
-    id("io.papermc.paperweight.userdev") version "1.5.11"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 repositories {
     mavenLocal()
-    maven("https://repo.codemc.io/repository/maven-snapshots/")
+    maven("https://repo.codemc.io/repository/maven-snapshots")
     maven("https://jitpack.io/")
-    maven("https://repo.rapture.pw/repository/maven-releases/")
-    mavenCentral()
+    maven("https://repo.papermc.io/repository/maven-public/")
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
-    api("net.wesjd:anvilgui:1.9.2-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("net.wesjd:anvilgui:1.9.3-SNAPSHOT")
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("com.github.foxikle:woodymenus:main-SNAPSHOT")
 }
 
 group = "me.webhead1104"
-version = "testing"
-description = "Township"
+version = "0.1-testing"
+description = "Township in minecraft"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 tasks {
     assemble {
-        dependsOn(reobfJar)
         dependsOn(shadowJar)
     }
 
@@ -51,8 +49,8 @@ tasks {
             expand(props)
         }
     }
-
-    reobfJar {
-        outputJar.set(layout.buildDirectory.file(providers.gradleProperty("plugin_dir").get() + "/Township-${project.version}.jar"))
+    shadowJar {
+        archiveFileName = "Township-${project.version}.jar"
+        destinationDirectory.set(file(layout.buildDirectory.file(providers.gradleProperty("township_dir").get())))
     }
 }
