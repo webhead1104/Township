@@ -20,7 +20,7 @@ dependencies {
 }
 
 group = "me.webhead1104"
-version = "0.1-testing"
+version = "0.1"
 description = "Township in minecraft"
 java.sourceCompatibility = JavaVersion.VERSION_17
 

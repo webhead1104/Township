@@ -40,18 +40,22 @@ public class Database {
 
     public static void connect() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            if (Objects.equals(plugin.getConfig().getString("databaseType"), "mysql")) {
-                if (!isConnected()) {
-                    connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + databaseName + "?useSSL=false&autoReconnect=true", username, password);
+            if (!isConnected()) {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                String string = "error";
+                if (Objects.equals(plugin.getConfig().getString("databaseType"), "mysql")) {
+                    string = "mysql://" + host + ":" + port + "/" + databaseName + "?useSSL=false&autoReconnect=true,"+ username+","+password;
                     plugin.getLogger().log(Level.INFO, "mysql loaded");
+                } else if (Objects.equals(plugin.getConfig().getString("databaseType"), "sqlite")) {
+                    string = "sqlite:plugins/Township/township.db";
+                    plugin.getLogger().log(Level.INFO, "sqlite loaded");
                 }
-            }else if (Objects.equals(plugin.getConfig().getString("databaseType"), "sqlite")) {
-                String path = "plugins/Township/township.db";
-                connection = DriverManager.getConnection("jdbc:sqlite:"+path);
-                plugin.getLogger().log(Level.INFO, "sqlite loaded");
+                connection = DriverManager.getConnection("jdbc:"+string);
             }
-        } catch (Exception e) {plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));}
+            if (isConnected()) {plugin.getLogger().log(Level.INFO,"enabled");} else plugin.getLogger().log(Level.INFO,"nope");
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "ERROR in connecting " + Arrays.toString(e.getStackTrace()));
+        }
     }
 
     public static void disconnect() {
@@ -306,10 +310,10 @@ public class Database {
     public static void newPlayer(Player player) {
         Database.connect();
         try {
-            PreparedStatement playerData = Database.getConnection().prepareStatement("INSERT INTO TownshipPlayerData (PlayerUUID)VALUE (?);");
+            PreparedStatement playerData = Database.getConnection().prepareStatement("INSERT INTO TownshipPlayerData (PlayerUUID)VALUES (?);");
             playerData.setString(1, player.getUniqueId().toString());
             playerData.executeUpdate();
-            PreparedStatement worldData = Database.getConnection().prepareStatement("INSERT INTO TownshipWorldData (PlayerUUID)VALUE (?);");
+            PreparedStatement worldData = Database.getConnection().prepareStatement("INSERT INTO TownshipWorldData (PlayerUUID)VALUES (?);");
             worldData.setString(1, player.getUniqueId().toString());
             worldData.executeUpdate();
             plugin.mainMenu(player);
