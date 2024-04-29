@@ -1,4 +1,6 @@
 # Database credentials
+databaseType: "mysql" # mysql or sqlite
+sqlitePath: "plugins/Township/township.db"
 mysql:
   host: localhost
   port: 3306
@@ -13,6 +15,3 @@ bannedTownNames:
 
 takenTownNames:
   - "no"
-
-
-

@@ -1,72 +1,101 @@
 package me.webhead1104.township;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import me.flame.menus.items.MenuItem;
+import me.flame.menus.menu.Menu;
 import me.flame.menus.menu.PaginatedMenu;
 import me.flame.menus.modifiers.Modifier;
+import me.webhead1104.township.data.Database;
+import me.webhead1104.township.data.enums.ItemsEnum;
+import me.webhead1104.township.utils.Items;
+import me.webhead1104.township.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.Objects;
+import java.util.logging.Level;
 
 public class Factories {
 
     Township plugin;
-    public Factories(Township plugin) {
-        this.plugin = plugin;
+    public PaginatedMenu feedmill = PaginatedMenu.create(ChatColor.AQUA + "Feed Mill", 5, 1, EnumSet.allOf(Modifier.class));
+    public PaginatedMenu dairy = PaginatedMenu.create(ChatColor.AQUA + "Dairy Factory", 5, 1, EnumSet.allOf(Modifier.class));
+    public PaginatedMenu sugar = PaginatedMenu.create(ChatColor.AQUA + "Sugar Factory", 5, 1, EnumSet.allOf(Modifier.class));
+    public Factories(Township plugin) {this.plugin = plugin;}
+    //"12-14 completed, 27 being worked on,36-44 rec"
+    public void bakery(Player player) {
+        try {
+            Menu menu = Menu.create(ChatColor.BLUE + "Bakery", 5, EnumSet.allOf(Modifier.class));
+            JsonObject bakery = new Gson().fromJson(Database.getPlayerData(player, "factories"), JsonObject.class)
+                    .get("bakery").getAsJsonObject();
+            menu.setItem(39, Items.breadRecipe);
+            menu.setItem(40, Items.cookieRecipe);
+            menu.setItem(41, Items.bagelRecipe);
+            menu.setItem(27, Items.workingOn);
+            if (!bakery.get("working_on").getAsString().equals("none")) {
+                ItemsEnum working_on = Utils.getItem(bakery.get("working_on").getAsString());
+                Objects.requireNonNull(menu.getItem(27)).setItemStack(new ItemStack(working_on.getItemMaterial()));
+                Objects.requireNonNull(menu.getItem(27)).editor().setName(working_on.getItemName())
+                        .setLore(ChatColor.GOLD + "Time: 0").done();
+            }
+            plugin.getLogger().log(Level.INFO,"working_on done id = "+Utils.getItem(bakery.get("working_on").getAsString()).getID());
+            JsonObject completed = bakery.get("completed").getAsJsonObject();
+            menu.setItem(12,Items.completed);
+            if (!completed.get("1").getAsString().equals("none")) {
+                String var = completed.get("1").getAsString();
+                MenuItem menuItem = menu.getItem(12);
+                assert menuItem != null;
+                menuItem.setItemStack(new ItemStack(Utils.getItem(var).getItemMaterial()));
+                menuItem.editor().setName(Utils.getItem(var).getItemName()).done();
+                plugin.getLogger().log(Level.INFO,"1 called id = "+Utils.getItem(var));
+            }
+            plugin.getLogger().log(Level.INFO,"one done id = "+Utils.getItem(completed.get("1").getAsString()).getID());
+            menu.setItem(13,Items.completed);
+            if (!completed.get("2").getAsString().equals("none")) {
+                String var = completed.get("2").getAsString();
+                MenuItem menuItem = menu.getItem(13);
+                assert menuItem != null;
+                menuItem.setItemStack(new ItemStack(Utils.getItem(var).getItemMaterial()));
+                menuItem.editor().setName(Utils.getItem(var).getItemName()).done();
+                plugin.getLogger().log(Level.INFO,"2 called id = "+Utils.getItem(var));
+            }
+            plugin.getLogger().log(Level.INFO,"two done id = "+Utils.getItem(completed.get("2").getAsString()).getID());
+            menu.setItem(14,Items.completed);
+            if (!completed.get("3").getAsString().equals("none")) {
+                String var = completed.get("3").getAsString();
+                MenuItem menuItem = menu.getItem(14);
+                assert menuItem != null;
+                menuItem.setItemStack(new ItemStack(Utils.getItem(var).getItemMaterial()));
+                menuItem.editor().setName(Utils.getItem(var).getItemName()).done();
+                plugin.getLogger().log(Level.INFO,"3 called id = "+Utils.getItem(var));
+            }
+            plugin.getLogger().log(Level.INFO,"3 done id = "+Utils.getItem(completed.get("3").getAsString()).getID());
+            plugin.getLogger().log(Level.INFO,"bakery = "+bakery+" completed = "+completed);
+            menu.setItem(36, Items.backButton);
+            plugin.getLogger().log(Level.INFO, "after back button");
+            menu.open(player);
+            plugin.getLogger().log(Level.INFO, "after open");
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));
+        }
     }
-    public PaginatedMenu feedmill = PaginatedMenu.create(ChatColor.GOLD +"Feed Mill",5,1,EnumSet.allOf(Modifier.class));
-    public PaginatedMenu bakery = PaginatedMenu.create(ChatColor.GOLD +"Bakery",5,1, EnumSet.allOf(Modifier.class));
-    public PaginatedMenu dairyFactory = PaginatedMenu.create(ChatColor.GOLD +"Dairy Factory",5,1, EnumSet.allOf(Modifier.class));
-    public PaginatedMenu sugarFactory = PaginatedMenu.create(ChatColor.GOLD +"Sugar Factory",5,1, EnumSet.allOf(Modifier.class));
 
     public void feedmill(Player player) {
-        feedmill.setItem(11,plugin.getItems().completed);
-        feedmill.setItem(12,plugin.getItems().completed);
-        feedmill.setItem(13,plugin.getItems().completed);
-        feedmill.setItem(14,plugin.getItems().completed);
-        feedmill.setItem(15,plugin.getItems().completed);
-        feedmill.setItem(39,plugin.getItems().cowfeedrecipe);
-        feedmill.setItem(40,plugin.getItems().chickenfeedrecipe);
-        feedmill.setItem(41,plugin.getItems().sheepfeedrecipe);
-        feedmill.setItem(45,plugin.getItems().backButton);
+        feedmill.setItem(36, Items.backButton);
         feedmill.open(player);
     }
 
-    public void bakery(Player player) {
-        bakery.setItem(11,plugin.getItems().completed);
-        bakery.setItem(12,plugin.getItems().completed);
-        bakery.setItem(13,plugin.getItems().completed);
-        bakery.setItem(14,plugin.getItems().completed);
-        bakery.setItem(15,plugin.getItems().completed);
-        bakery.setItem(39,plugin.getItems().breadRecipe);
-        bakery.setItem(40,plugin.getItems().cookieRecipe);
-        bakery.setItem(41,plugin.getItems().bagelRecipe);
-        bakery.setItem(45,plugin.getItems().backButton);
-        bakery.open(player);
+    public void dairy(Player player) {
+        dairy.setItem(36, Items.backButton);
+        dairy.open(player);
     }
 
-    public void dairyFactory(Player player) {
-        dairyFactory.setItem(11,plugin.getItems().completed);
-        dairyFactory.setItem(12,plugin.getItems().completed);
-        dairyFactory.setItem(13,plugin.getItems().completed);
-        dairyFactory.setItem(14,plugin.getItems().completed);
-        dairyFactory.setItem(15,plugin.getItems().completed);
-        dairyFactory.setItem(39,plugin.getItems().creamRecipe);
-        dairyFactory.setItem(40,plugin.getItems().cheeseRecipe);
-        dairyFactory.setItem(41,plugin.getItems().butterRecipe);
-        dairyFactory.setItem(42,plugin.getItems().yogurtRecipe);
-        dairyFactory.setItem(45,plugin.getItems().backButton);
-        dairyFactory.open(player);
-    }
-
-    public void sugarFactory(Player player) {
-        sugarFactory.setItem(11,plugin.getItems().completed);
-        sugarFactory.setItem(12,plugin.getItems().completed);
-        sugarFactory.setItem(13,plugin.getItems().completed);
-        sugarFactory.setItem(14,plugin.getItems().completed);
-        sugarFactory.setItem(15,plugin.getItems().completed);
-        sugarFactory.setItem(39,plugin.getItems().sugarRecipe);
-        sugarFactory.setItem(40,plugin.getItems().syrupRecipe);
-        sugarFactory.setItem(41,plugin.getItems().caramelRecipe);
-        sugarFactory.setItem(45,plugin.getItems().backButton);
-        sugarFactory.open(player);
+    public void sugar(Player player) {
+        sugar.setItem(36, Items.backButton);
+        sugar.open(player);
     }
 }

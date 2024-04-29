@@ -1,96 +1,131 @@
 package me.webhead1104.township;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import me.flame.menus.menu.Menu;
+import me.webhead1104.township.data.Database;
+import me.webhead1104.township.data.enums.AnimalsEnum;
+import me.webhead1104.township.data.enums.ItemsEnum;
+import me.webhead1104.township.utils.Utils;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import me.webhead1104.township.runables.AnimalsRunable;
-
-import java.sql.ResultSet;
-import java.util.Objects;
+import org.bukkit.inventory.ItemStack;
+import java.util.Arrays;
+import java.util.logging.Level;
 
 public class Animals {
- Township plugin;
 
- public Animals(Township plugin) {
-  this.plugin = plugin;
- }
+    Township plugin;
+    public Animals(Township plugin) {
+        this.plugin = plugin;
+    }
 
+    public void cowshed(Player player) {
+        try {
+            AnimalsEnum animal = AnimalsEnum.COWSHED;
+            Menu menu = Menu.create(animal.getAnimalName(),5);
+            JsonObject object = new Gson().fromJson(Database.getPlayerData(player, "animals"), JsonObject.class).get(animal.getID().toLowerCase()).getAsJsonObject();
+            int n = object.size() + 1;
+            int slot = 11;
+            for (int i = 1; i < n; ++i) {
+                JsonObject forJson = object.get(String.valueOf(i)).getAsJsonObject();
+                if (forJson.get("product").getAsBoolean())
+                    menu.setItem(slot + 9, animal.getProduct());
+                menu.setItem(slot, animal.getAnimal());
+                if (forJson.get("feed").getAsBoolean())
+                    menu.setItem(slot, animal.getAnimal().editor().setLore(ChatColor.GOLD + "Time: 0").done());
+                slot++;
+            }
+            menu.setItem(36, animal.getFeed().editor().setLore(ChatColor.GOLD + Database.getItem(player, animal.getFeedType().getID().toLowerCase())).done());
+            menu.open(player);
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));
+        }
+    }
 
- public void cowshed(InventoryClickEvent event) {
-  Player player = (Player) event.getWhoClicked();
-  String input = plugin.getDatabase().getPlayerData(player, "cowshedmilk");
-  int feed = Integer.parseInt(plugin.getDatabase().getPlayerData(player, "cowfeed"));
-  if (Integer.parseInt(input.substring(input.indexOf("one") + 4, input.indexOf("two") - 1)) == 1) plugin.getCommand().cowshed.setItem(20, plugin.getItems().cowshedMilk.editor().setCustomModelData(1).done());
-  if (Integer.parseInt(input.substring(input.indexOf("two") + 4, input.indexOf("three") - 1)) == 1) plugin.getCommand().cowshed.setItem(21, plugin.getItems().cowshedMilk.editor().setCustomModelData(2).done());
-  if (Integer.parseInt(input.substring(input.indexOf("three") + 6, input.indexOf("four") - 1)) == 1) plugin.getCommand().cowshed.setItem(22, plugin.getItems().cowshedMilk.editor().setCustomModelData(3).done());
-  if (Integer.parseInt(input.substring(input.indexOf("four") + 5, input.indexOf("five") - 1)) == 1) plugin.getCommand().cowshed.setItem(23, plugin.getItems().cowshedMilk.editor().setCustomModelData(4).done());
-  if (Integer.parseInt(input.substring(input.indexOf("five") + 5, input.indexOf("end") - 1)) == 1) plugin.getCommand().cowshed.setItem(24, plugin.getItems().cowshedMilk.editor().setCustomModelData(5).done());
-  plugin.getCommand().cowshed.setItem(34, plugin.getItems().backButton);
-  plugin.getCommand().cowshed.setItem(11, plugin.getItems().cow);
-  plugin.getCommand().cowshed.setItem(12, plugin.getItems().cow);
-  plugin.getCommand().cowshed.setItem(13, plugin.getItems().cow);
-  plugin.getCommand().cowshed.setItem(14, plugin.getItems().cow);
-  plugin.getCommand().cowshed.setItem(15, plugin.getItems().cow);
-  plugin.getCommand().cowshed.setItem(36, plugin.getItems().cowshedFeed.editor().setLore(ChatColor.GOLD + "" + feed).done());
-  plugin.getCommand().cowshed.open(player);
- }
+    public void cowshedFeed(Player player) {
+        try {
+            JsonObject object = new Gson().fromJson(Database.getPlayerData(player, "animals"), JsonObject.class).get("cowshed").getAsJsonObject();
+            int var0 = object.size() + 1;
+            for (int i = 1; i < var0; ++i) {
+                int cow_feed = Integer.parseInt(Database.getItem(player, "cow_feed"));
+                if (cow_feed > 0) {
+                    JsonObject obj = object.get(String.valueOf(i)).getAsJsonObject();
+                    if (!obj.get("feed").getAsBoolean()) {
+                        obj.addProperty("feed", true);
+                        Database.setPlayerData(player, "animals", object.toString());
+                        Database.setItem(player, "cow_feed", String.valueOf(cow_feed + 1));
+                    }
+                } else break;
+            }
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));
+        }
+    }
 
- public void cowshedFeed(InventoryClickEvent event) {
-  Player player = (Player) event.getWhoClicked();
-  String input = plugin.getDatabase().getPlayerData(player, "cowshedfeed");
-  int feed = Integer.parseInt(plugin.getDatabase().getPlayerData(player, "cowfeed"));
-  int cow1feed = Integer.parseInt(input.substring(input.indexOf("one") + 4, input.indexOf("two") - 1));
-  int cow2feed = Integer.parseInt(input.substring(input.indexOf("two") + 4, input.indexOf("three") - 1));
-  int cow3feed = Integer.parseInt(input.substring(input.indexOf("three") + 6, input.indexOf("four") - 1));
-  int cow4feed = Integer.parseInt(input.substring(input.indexOf("four") + 5, input.indexOf("five") - 1));
-  int cow5feed = Integer.parseInt(input.substring(input.indexOf("five") + 5, input.indexOf("end") - 1));
-  if (feed >= 1) {
-   if (cow1feed == 0) {
-    cow1feed = 1;
-    feed--;
-    new AnimalsRunable(plugin, 60 * 5, player, "cow 1").runTaskTimer(plugin, 0, 20);
-   } else if (cow2feed == 0) {
-    cow2feed = 1;
-    feed--;
-    new AnimalsRunable(plugin, 60 * 5, player, "cow 2").runTaskTimer(plugin, 0, 20);
-   } else if (cow3feed == 0) {
-    cow3feed = 1;
-    feed--;
-    new AnimalsRunable(plugin, 60 * 5, player, "cow 3").runTaskTimer(plugin, 0, 20);
-   } else if (cow4feed == 0) {
-    cow4feed = 1;
-    feed--;
-    new AnimalsRunable(plugin, 60 * 5, player, "cow 4").runTaskTimer(plugin, 0, 20);
-   } else if (cow5feed == 0) {
-    cow5feed = 1;
-    feed--;
-    new AnimalsRunable(plugin, 60 * 5, player, "cow 5").runTaskTimer(plugin, 0, 20);
-   }
-   plugin.getCommand().cowshed.getItem(36).editor().setLore("" + ChatColor.GOLD + feed).done();
+    public void chickenCoop(Player player) {
+        try {
+            AnimalsEnum animal = AnimalsEnum.CHICKEN_COOP;
+            Menu menu = Menu.create(animal.getAnimalName(),5);
+            JsonObject object = new Gson().fromJson(Database.getPlayerData(player, "animals"), JsonObject.class).get(animal.getID().toLowerCase()).getAsJsonObject();
+            int n = object.size() + 1;
+            int slot = 11;
+            for (int i = 1; i < n; ++i) {
+                JsonObject forJson = object.get(String.valueOf(i)).getAsJsonObject();
+                if (forJson.get("product").getAsBoolean())
+                    menu.setItem(slot + 9, animal.getProduct());
+                menu.setItem(slot, animal.getAnimal());
+                if (forJson.get("feed").getAsBoolean())
+                    menu.setItem(slot, animal.getAnimal().editor().setLore(ChatColor.GOLD + "Time: 0").done());
+                slot++;
+            }
+            menu.setItem(36, animal.getFeed().editor().setLore(ChatColor.GOLD + Database.getItem(player, animal.getFeedType().getID().toLowerCase())).done());
+            menu.open(player);
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));
+        }
+    }
 
+    public void chickenCoopFeed(Player player) {
+        try {
+            JsonObject chickencoop = new Gson().fromJson(Database.getPlayerData(player, "animals"), JsonObject.class)
+                    .get("chicken_coop").getAsJsonObject();
+            plugin.getLogger().log(Level.INFO, "chickencoop = " + chickencoop);
+            int var0 = chickencoop.size() + 1;
+            for (int i = 1; i < var0; ++i) {
+                JsonObject obj = chickencoop.get(String.valueOf(i)).getAsJsonObject();
+                if (!obj.get("feed").getAsBoolean()) {
+                    obj.addProperty("feed", true);
+                    Database.setPlayerData(player, "animals", chickencoop.toString());
+                    int chicken_feed = Integer.parseInt(Database.getItem(player, "chicken_feed"));
+                    Database.setItem(player, "chicken_feed", String.valueOf(chicken_feed + 1));
+                }
+            }
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));
+        }
+    }
 
-   String output = "one " + cow1feed + " two " + cow2feed + " three " + cow3feed + " four " + cow4feed + " five " + cow5feed + " end";
-   plugin.getDatabase().setPlayerData(player, "cowfeed", String.valueOf(feed));
-   plugin.database.setPlayerData(player, "cowshedfeed", output);
-  }
- }
-
- public void milk(InventoryClickEvent event, Player player) {
-  plugin.getDatabase().setPlayerData(player, "milk", String.valueOf(Integer.parseInt(plugin.getDatabase().getPlayerData(player, "milk")) + 1));
-  plugin.getCommand().cowshed.removePageItem(event.getSlot());
-  String input = plugin.getDatabase().getPlayerData(player, "cowshedmilk");
-  int cow1milk = Integer.parseInt(input.substring(input.indexOf("one") + 4, input.indexOf("two") - 1));
-  int cow2milk = Integer.parseInt(input.substring(input.indexOf("two") + 4, input.indexOf("three") - 1));
-  int cow3milk = Integer.parseInt(input.substring(input.indexOf("three") + 6, input.indexOf("four") - 1));
-  int cow4milk = Integer.parseInt(input.substring(input.indexOf("four") + 5, input.indexOf("five") - 1));
-  int cow5milk = Integer.parseInt(input.substring(input.indexOf("five") + 5, input.indexOf("end") - 1));
-  if (Objects.requireNonNull(event.getCurrentItem()).getItemMeta().getCustomModelData() == 1) cow1milk = 0;
-  if (Objects.requireNonNull(event.getCurrentItem()).getItemMeta().getCustomModelData() == 2) cow2milk = 0;
-  if (Objects.requireNonNull(event.getCurrentItem()).getItemMeta().getCustomModelData() == 3) cow3milk = 0;
-  if (Objects.requireNonNull(event.getCurrentItem()).getItemMeta().getCustomModelData() == 4) cow4milk = 0;
-  if (Objects.requireNonNull(event.getCurrentItem()).getItemMeta().getCustomModelData() == 5) cow5milk = 0;
-  String value = "one " + cow1milk + " two " + cow2milk + " three " + cow3milk + " four " + cow4milk + " five " + cow5milk + " end";
-  plugin.getDatabase().setPlayerData(player, "cowshedmilk", value);
-  plugin.getCommand().cowshed.getItem(event.getSlot() - 9).editor().setLore(ChatColor.GOLD + "Click the feed to feed me!").done();
- }
+    public void pickup(Player player, InventoryClickEvent event) {
+        try {
+            ItemStack item = event.getCurrentItem();
+            assert item != null;
+            if (event.getCurrentItem().hasItemMeta()) {
+                ItemsEnum itemsEnum = Utils.getItem(item.getItemMeta().getDisplayName());
+                AnimalsEnum animal = Utils.getAnimal(Utils.switchToID(itemsEnum.getID()));
+                int var2 = event.getSlot() - 10;
+                JsonObject obj = new Gson().fromJson(Database.getPlayerData(player, "animals"), JsonObject.class)
+                        .get(animal.getID().toLowerCase()).getAsJsonObject().get(String.valueOf(var2)).getAsJsonObject();
+                obj.addProperty("product", false);
+                Database.setPlayerData(player,"animals",obj.toString());
+                event.setCurrentItem(new ItemStack(Material.AIR));
+                int var0 = Integer.parseInt(Database.getItem(player, itemsEnum.getID().toLowerCase()));
+                Database.setItem(player, itemsEnum.getID().toLowerCase(), String.valueOf(var0 + 1));
+            }
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));
+        }
+    }
 }
