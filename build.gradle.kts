@@ -51,6 +51,6 @@ tasks {
     }
     shadowJar {
         archiveFileName = "Township-${project.version}.jar"
-        destinationDirectory.set(file(layout.buildDirectory.file(providers.gradleProperty("township_dir").get())))
+        //destinationDirectory.set(file(layout.buildDirectory.file(providers.gradleProperty("township_dir").get())))
     }
 }
