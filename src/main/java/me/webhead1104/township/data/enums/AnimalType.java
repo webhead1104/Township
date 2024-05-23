@@ -1,23 +1,23 @@
 package me.webhead1104.township.data.enums;
 
 import me.flame.menus.items.MenuItem;
-import me.webhead1104.township.utils.Items;
+import me.webhead1104.township.utils.MenuItems;
 import org.bukkit.ChatColor;
 
-public enum AnimalsEnum {
+public enum AnimalType {
 
-    NONE("none", Items.air, Items.air,Items.air,Items.air,ItemsEnum.AIR,"NONE"),
-    COWSHED(ChatColor.GOLD + "Cowshed", Items.cowshedMenuItem,Items.cow,Items.milk,Items.cowshedFeed,ItemsEnum.COW_FEED,"COWSHED"),
-    CHICKEN_COOP(ChatColor.GOLD + "Chicken Coop", Items.chickenMenuItem,Items.chicken,Items.egg,Items.chickencoopFeed,ItemsEnum.CHICKEN_FEED,"CHICKEN_COOP");
+    NONE("none", MenuItems.air, MenuItems.air,MenuItems.air,MenuItems.air, ItemType.AIR,"NONE"),
+    COWSHED(ChatColor.GOLD + "Cowshed", MenuItems.cowshedMenuItem,MenuItems.cow,MenuItems.milk,MenuItems.cowshedFeed,ItemType.COW_FEED,"COWSHED"),
+    CHICKEN_COOP(ChatColor.GOLD + "Chicken Coop", MenuItems.chickenMenuItem,MenuItems.chicken,MenuItems.egg,MenuItems.chickencoopFeed,ItemType.CHICKEN_FEED,"CHICKEN_COOP");
 
     private final String animalName;
     private final MenuItem menuItem;
     private final MenuItem animal;
     private final MenuItem product;
     private final MenuItem feed;
-    private final ItemsEnum feedType;
+    private final ItemType feedType;
     private final String ID;
-    AnimalsEnum(String animalName, MenuItem menuItem, MenuItem animal, MenuItem product, MenuItem feed, ItemsEnum feedType, String ID) {
+    AnimalType(String animalName, MenuItem menuItem, MenuItem animal, MenuItem product, MenuItem feed, ItemType feedType, String ID) {
         this.animalName = animalName;
         this.menuItem = menuItem;
         this.animal = animal;
@@ -32,6 +32,6 @@ public enum AnimalsEnum {
     public MenuItem getAnimal() {return animal;}
     public MenuItem getProduct() {return product;}
     public MenuItem getFeed() {return feed;}
-    public ItemsEnum getFeedType() {return feedType;}
+    public ItemType getFeedType() {return feedType;}
     public String getID() {return ID;}
 }

@@ -6,9 +6,9 @@ import me.flame.menus.items.MenuItem;
 import me.flame.menus.menu.PaginatedMenu;
 import me.flame.menus.modifiers.Modifier;
 import me.webhead1104.township.data.Database;
-import me.webhead1104.township.data.enums.AnimalsEnum;
-import me.webhead1104.township.data.enums.FactoriesEnum;
-import me.webhead1104.township.utils.Items;
+import me.webhead1104.township.data.enums.AnimalType;
+import me.webhead1104.township.data.enums.FactoryType;
+import me.webhead1104.township.utils.MenuItems;
 import me.webhead1104.township.utils.Utils;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.ChatColor;
@@ -18,113 +18,144 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class WorldManager {
+public class WorldManager { 
+    public PaginatedMenu worldMenu = PaginatedMenu.create(STR."\{ChatColor.AQUA}World", 5, 10, EnumSet.allOf(Modifier.class));
 
-    Township plugin;
-    public PaginatedMenu worldMenu = PaginatedMenu.create(ChatColor.AQUA + "World", 5, 10, EnumSet.allOf(Modifier.class));
-
-    public WorldManager(Township plugin) {
-        this.plugin = plugin;
-    }
+    public WorldManager() {}
 
     public void load(Player player) {
         try {
-            if (Database.getPlayerData(player, "townName").equals("none")) {
-                plugin.getWorldManager().townName(player);
-            } else plugin.getWorldManager().getWorld(player, 0);
-        } catch (Exception e) {plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));}
+            if (Database.getData(player.getUniqueId()).get("townName").getAsString().equals("none")) {
+                Township.INSTANCE.getWorldManager().townName(player);
+            } else Township.INSTANCE.getWorldManager().getWorld(player);
+        } catch (Exception e) {Township.INSTANCE.getLogger().log(Level.SEVERE, "ERROR ",e);}
     }
 
     public void townName(Player player) {
         try {
             ItemStack itemStack = new ItemStack(Material.PAPER);
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setDisplayName(ChatColor.GREEN + "Town Name");
-            itemMeta.setLore(List.of(ChatColor.RED + "you cannot change this once you set it!"));
+            itemMeta.setDisplayName(STR."\{ChatColor.GREEN}Town Name");
+            itemMeta.setLore(List.of(STR."\{ChatColor.RED}you cannot change this once you set it!"));
             itemStack.setItemMeta(itemMeta);
             new AnvilGUI.Builder()
-                    .plugin(plugin)
+                    .plugin(Township.INSTANCE)
                     .preventClose()
-                    .title(ChatColor.GOLD + "Set Your Town name!")
+                    .title(STR."\{ChatColor.GOLD}Set Your Town name!")
                     .itemLeft(itemStack)
                     .onClick((slot, stateSnapshot) -> {
                                 if (slot != AnvilGUI.Slot.OUTPUT) return Collections.emptyList();
                                 if (stateSnapshot.getText() != null) {
                                     String value = stateSnapshot.getText();
-                                    if (!value.contains(ChatColor.RED + "That name is taken!") && !value.contains(ChatColor.GREEN + "Town Name")) {
+                                    if (!value.contains(STR."\{ChatColor.RED}That name is taken!") && !value.contains(STR."\{ChatColor.GREEN}Town Name")) {
                                         try {
-                                            List<String> townNames = plugin.getConfig().getStringList("townNames");
-                                            List<String> bannedTownNames = plugin.getConfig().getStringList("bannedTownNames");
+                                            List<String> townNames = Township.INSTANCE.getConfig().getStringList("townNames");
+                                            List<String> bannedTownNames = Township.INSTANCE.getConfig().getStringList("bannedTownNames");
                                             if (!bannedTownNames.contains(value)) {
                                                 if (!townNames.contains(value)) {
                                                     townNames.add(value);
-                                                    plugin.getConfig().set("townNames", townNames);
-                                                    Database.setPlayerData(player, "townName", value);
+                                                    Township.INSTANCE.getConfig().set("townNames", townNames);
+                                                    JsonObject obj = Database.getData(player.getUniqueId());
+                                                    obj.addProperty("townName",value);
+                                                    Database.setData(player.getUniqueId(),obj.toString());
                                                     return Arrays.asList(AnvilGUI.ResponseAction.close(), AnvilGUI.ResponseAction.run(() -> {
                                                         try {
-                                                            getWorld(stateSnapshot.getPlayer(), 0);
+                                                            getWorld(stateSnapshot.getPlayer());
                                                         } catch (Exception e) {
-                                                            plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));
+                                                            Township.INSTANCE.getLogger().log(Level.SEVERE, STR."ERROR \{e} \{Arrays.toString(e.getStackTrace())}");
                                                         }
                                                     }));
                                                 } else
-                                                    return List.of(AnvilGUI.ResponseAction.replaceInputText(ChatColor.RED + "That name is taken!"));
+                                                    return List.of(AnvilGUI.ResponseAction.replaceInputText(STR."\{ChatColor.RED}That name is taken!"));
                                             } else
-                                                return List.of(AnvilGUI.ResponseAction.replaceInputText(ChatColor.RED + "Please try again"));
+                                                return List.of(AnvilGUI.ResponseAction.replaceInputText(STR."\{ChatColor.RED}Please try again"));
                                         } catch (Exception e) {
-                                            plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));
+                                            Township.INSTANCE.getLogger().log(Level.SEVERE, STR."ERROR \{e} \{Arrays.toString(e.getStackTrace())}");
                                         }
                                     }
                                 } else
-                                    return List.of(AnvilGUI.ResponseAction.replaceInputText(ChatColor.RED + "Please try again"));
+                                    return List.of(AnvilGUI.ResponseAction.replaceInputText(STR."\{ChatColor.RED}Please try again"));
                                 return Collections.emptyList();
                             }
                     ).open(player);
-        } catch (Exception e) {plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));}
+        } catch (Exception e) {Township.INSTANCE.getLogger().log(Level.SEVERE, STR."ERROR \{e} \{Arrays.toString(e.getStackTrace())}");}
     }
 
     //world loading
-    public void getWorld(Player player, int page) {
+    public void getWorld(Player player) {
         try {
+            JsonObject obj = Database.getData(player.getUniqueId());
+            int page = obj.get("lastPage").getAsInt();
             worldMenu.getPage(page);
             factories(player, page);
             animals(player, page);
-            int level = Integer.parseInt(Database.getPlayerData(player, "level"));
-            int population = Integer.parseInt(Database.getPlayerData(player, "population"));
-            int coins = Integer.parseInt(Database.getPlayerData(player, "coins"));
-            int cash = Integer.parseInt(Database.getPlayerData(player, "cash"));
-            String townName = Database.getPlayerData(player, "townName");
-            worldMenu.getFiller().fill(Items.grass);
-            player.getInventory().setItem(13, Items.arrowUP.getItemStack());
-            player.getInventory().setItem(21, Items.arrowLEFT.getItemStack());
-            player.getInventory().setItem(23, Items.arrowRIGHT.getItemStack());
-            player.getInventory().setItem(31, Items.arrowDOWN.getItemStack());
-            player.getInventory().setItem(22, Items.profile.editor().setName(ChatColor.GREEN + townName).done().getItemStack());
-            player.getInventory().setItem(9, Items.levelAndPop.editor().setName(ChatColor.AQUA + "Level " + level).setLore(ChatColor.RED + "Population " + population).done().getItemStack());
-            player.getInventory().setItem(17, Items.coinsAndCash.editor().setName(ChatColor.YELLOW + "Coins " + coins).setLore(ChatColor.GREEN + "Cash " + cash).done().getItemStack());
+            int level = obj.get("level").getAsInt();
+            int population = obj.get("population").getAsInt();
+            int coins = obj.get("coins").getAsInt();
+            int cash = obj.get("cash").getAsInt();
+            String townName = obj.get("townName").getAsString();
+            worldMenu.getFiller().fill(MenuItems.grass);
+            player.getInventory().setItem(13, MenuItems.arrowUP.getItemStack());
+            player.getInventory().setItem(21, MenuItems.arrowLEFT.getItemStack());
+            player.getInventory().setItem(23, MenuItems.arrowRIGHT.getItemStack());
+            player.getInventory().setItem(31, MenuItems.arrowDOWN.getItemStack());
+            player.getInventory().setItem(22, MenuItems.profile.editor().setName(ChatColor.GREEN + townName).done().getItemStack());
+            player.getInventory().setItem(9, MenuItems.levelAndPop.editor().setName(STR."\{ChatColor.AQUA}Level \{level}").setLore(STR."\{ChatColor.RED}Population \{population}").done().getItemStack());
+            player.getInventory().setItem(17, MenuItems.coinsAndCash.editor().setName(STR."\{ChatColor.YELLOW}Coins \{coins}").setLore(STR."\{ChatColor.GREEN}Cash \{cash}").done().getItemStack());
             worldMenu.open(player, page);
-        } catch (Exception e) {plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));}
+        } catch (Exception e) {Township.INSTANCE.getLogger().log(Level.SEVERE, STR."ERROR \{e} \{Arrays.toString(e.getStackTrace())}");}
+    }
+
+    public void getWorld(Player player, int page) {
+        try {
+            JsonObject obj = Database.getData(player.getUniqueId());
+            worldMenu.getPage(page);
+            factories(player, page);
+            animals(player, page);
+            int level = obj.get("level").getAsInt();
+            int population = obj.get("population").getAsInt();
+            int coins = obj.get("coins").getAsInt();
+            int cash = obj.get("cash").getAsInt();
+            String townName = obj.get("townName").getAsString();
+            worldMenu.getFiller().fill(MenuItems.grass);
+            player.getInventory().setItem(13, MenuItems.arrowUP.getItemStack());
+            player.getInventory().setItem(21, MenuItems.arrowLEFT.getItemStack());
+            player.getInventory().setItem(23, MenuItems.arrowRIGHT.getItemStack());
+            player.getInventory().setItem(31, MenuItems.arrowDOWN.getItemStack());
+            player.getInventory().setItem(22, MenuItems.profile.editor().setName(ChatColor.GREEN + townName).done().getItemStack());
+            player.getInventory().setItem(9, MenuItems.levelAndPop.editor().setName(STR."\{ChatColor.AQUA}Level \{level}").setLore(STR."\{ChatColor.RED}Population \{population}").done().getItemStack());
+            player.getInventory().setItem(17, MenuItems.coinsAndCash.editor().setName(STR."\{ChatColor.YELLOW}Coins \{coins}").setLore(STR."\{ChatColor.GREEN}Cash \{cash}").done().getItemStack());
+            worldMenu.open(player, page);
+        } catch (Exception e) {Township.INSTANCE.getLogger().log(Level.SEVERE, STR."ERROR \{e} \{Arrays.toString(e.getStackTrace())}");}
     }
 
     public void factories(Player player, int menuPage) {
         try {
             PaginatedMenu menu = worldMenu;
             menu.getPage(menuPage);
-            JsonObject obj = new Gson().fromJson(Database.getWorldData(player, "factories"), JsonObject.class);
+            JsonObject obj = new Gson().fromJson(Database.getData(player.getUniqueId()), JsonObject.class).get("world_data").getAsJsonObject()
+                    .get("factories").getAsJsonObject();
+            Logger logger = Township.INSTANCE.getLogger();
             for (int i = 1; i < obj.size() + 1; ++i) {
-                FactoriesEnum Enum = Utils.switchToFactory(i);
+                FactoryType type = Utils.switchToFactory(i);
+                logger.log(Level.INFO,type.getID());
+                logger.log(Level.INFO, String.valueOf(i));
+                logger.log(Level.INFO,obj.toString());
                 int Slot = 0;
                 int Page = 0;
                 boolean isNone = false;
                 MenuItem menuItem = null;
-                JsonObject object = obj.get(Enum.getID().toLowerCase()).getAsJsonObject();
+                //error
+                JsonObject object = obj.get(type.getID().toLowerCase()).getAsJsonObject();
+
                 String page = object.get("page").getAsString();
                 String slot = object.get("slot").getAsString();
                 if (!slot.equals("none") && !page.equals("none")) {
                     Slot = Integer.parseInt(slot);
                     Page = Integer.parseInt(page);
-                    menuItem = Enum.getMenuItem();
+                    menuItem = type.getMenuItem();
                 } else isNone = true;
                 if (!isNone) {
                     if (Page == menuPage) {
@@ -135,17 +166,17 @@ public class WorldManager {
                     }
                 }
             }
-        } catch (Exception e) {plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));}
+        } catch (Exception e) {Township.INSTANCE.getLogger().log(Level.SEVERE, STR."ERROR \{e} \{Arrays.toString(e.getStackTrace())}");}
     }
 
     public void animals(Player player, int menuPage) {
         try {
             PaginatedMenu menu = worldMenu;
             menu.getPage(menuPage);
-            String string = Database.getWorldData(player, "animals");
-            JsonObject obj = new Gson().fromJson(string, JsonObject.class);
+            JsonObject obj = new Gson().fromJson(Database.getData(player.getUniqueId()), JsonObject.class).get("world_data").getAsJsonObject()
+                    .get("animals").getAsJsonObject();
             for (int i = 1; i < obj.size() + 1; ++i) {
-                AnimalsEnum Enum = Utils.switchToAnimal(i);
+                AnimalType Enum = Utils.switchToAnimal(i);
                 int Slot = 0;
                 int Page = 0;
                 boolean isNone = false;
@@ -166,6 +197,6 @@ public class WorldManager {
                         menu.setItem(Slot + 10, menuItem);
                     }
             }
-        } catch (Exception e) {plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));}
+        } catch (Exception e) {Township.INSTANCE.getLogger().log(Level.SEVERE, STR."ERROR \{e} \{Arrays.toString(e.getStackTrace())}");}
     }
 }

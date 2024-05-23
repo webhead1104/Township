@@ -2,100 +2,105 @@ package me.webhead1104.township;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import me.flame.menus.items.MenuItem;
 import me.flame.menus.menu.Menu;
-import me.flame.menus.menu.PaginatedMenu;
 import me.flame.menus.modifiers.Modifier;
 import me.webhead1104.township.data.Database;
-import me.webhead1104.township.data.enums.ItemsEnum;
-import me.webhead1104.township.utils.Items;
+import me.webhead1104.township.data.enums.FactoryType;
+import me.webhead1104.township.data.enums.ItemType;
+import me.webhead1104.township.utils.MenuItems;
 import me.webhead1104.township.utils.Utils;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
 public class Factories {
 
-    Township plugin;
-    public PaginatedMenu feedmill = PaginatedMenu.create(ChatColor.AQUA + "Feed Mill", 5, 1, EnumSet.allOf(Modifier.class));
-    public PaginatedMenu dairy = PaginatedMenu.create(ChatColor.AQUA + "Dairy Factory", 5, 1, EnumSet.allOf(Modifier.class));
-    public PaginatedMenu sugar = PaginatedMenu.create(ChatColor.AQUA + "Sugar Factory", 5, 1, EnumSet.allOf(Modifier.class));
-    public Factories(Township plugin) {this.plugin = plugin;}
+    public Factories() {}
     //"12-14 completed, 27 being worked on,36-44 rec"
-    public void bakery(Player player) {
+    public static void factory(Player player, FactoryType type) {
         try {
-            Menu menu = Menu.create(ChatColor.BLUE + "Bakery", 5, EnumSet.allOf(Modifier.class));
-            JsonObject bakery = new Gson().fromJson(Database.getPlayerData(player, "factories"), JsonObject.class)
-                    .get("bakery").getAsJsonObject();
-            menu.setItem(39, Items.breadRecipe);
-            menu.setItem(40, Items.cookieRecipe);
-            menu.setItem(41, Items.bagelRecipe);
-            menu.setItem(27, Items.workingOn);
-            if (!bakery.get("working_on").getAsString().equals("none")) {
-                ItemsEnum working_on = Utils.getItem(bakery.get("working_on").getAsString());
-                Objects.requireNonNull(menu.getItem(27)).setItemStack(new ItemStack(working_on.getItemMaterial()));
-                Objects.requireNonNull(menu.getItem(27)).editor().setName(working_on.getItemName())
-                        .setLore(ChatColor.GOLD + "Time: 0").done();
+            Factories factory = new Factories(player.getUniqueId());
+            Menu menu = Menu.create(type.getFactoryName(), 5, EnumSet.allOf(Modifier.class));
+            AtomicInteger var0 = new AtomicInteger(36);
+            type.getRecipes().forEach((n) -> {
+                menu.setItem(var0.get(), n);
+                var0.set(var0.get() + 1);
+            });
+            //todo runnable loading
+            JsonObject json = factory.getObj().get("factories").getAsJsonObject().get(type.getID().toLowerCase()).getAsJsonObject();
+            int var1 = 12;
+            for (int i = 1; i < json.size() + 1; ++i) {
+                String var = json.get("completed").getAsJsonObject().get(String.valueOf(i)).getAsString();
+                if (!var.equals("none")) {
+                    ItemType item = Utils.getItem(var);
+                    menu.setItem(var1, MenuItems.completed);
+                    Objects.requireNonNull(menu.getItem(var1)).setItemStack(new ItemStack(item.getItemMaterial()));
+                    Objects.requireNonNull(menu.getItem(var1)).editor().setName(item.getItemName());
+                } else break;
             }
-            plugin.getLogger().log(Level.INFO,"working_on done id = "+Utils.getItem(bakery.get("working_on").getAsString()).getID());
-            JsonObject completed = bakery.get("completed").getAsJsonObject();
-            menu.setItem(12,Items.completed);
-            if (!completed.get("1").getAsString().equals("none")) {
-                String var = completed.get("1").getAsString();
-                MenuItem menuItem = menu.getItem(12);
-                assert menuItem != null;
-                menuItem.setItemStack(new ItemStack(Utils.getItem(var).getItemMaterial()));
-                menuItem.editor().setName(Utils.getItem(var).getItemName()).done();
-                plugin.getLogger().log(Level.INFO,"1 called id = "+Utils.getItem(var));
-            }
-            plugin.getLogger().log(Level.INFO,"one done id = "+Utils.getItem(completed.get("1").getAsString()).getID());
-            menu.setItem(13,Items.completed);
-            if (!completed.get("2").getAsString().equals("none")) {
-                String var = completed.get("2").getAsString();
-                MenuItem menuItem = menu.getItem(13);
-                assert menuItem != null;
-                menuItem.setItemStack(new ItemStack(Utils.getItem(var).getItemMaterial()));
-                menuItem.editor().setName(Utils.getItem(var).getItemName()).done();
-                plugin.getLogger().log(Level.INFO,"2 called id = "+Utils.getItem(var));
-            }
-            plugin.getLogger().log(Level.INFO,"two done id = "+Utils.getItem(completed.get("2").getAsString()).getID());
-            menu.setItem(14,Items.completed);
-            if (!completed.get("3").getAsString().equals("none")) {
-                String var = completed.get("3").getAsString();
-                MenuItem menuItem = menu.getItem(14);
-                assert menuItem != null;
-                menuItem.setItemStack(new ItemStack(Utils.getItem(var).getItemMaterial()));
-                menuItem.editor().setName(Utils.getItem(var).getItemName()).done();
-                plugin.getLogger().log(Level.INFO,"3 called id = "+Utils.getItem(var));
-            }
-            plugin.getLogger().log(Level.INFO,"3 done id = "+Utils.getItem(completed.get("3").getAsString()).getID());
-            plugin.getLogger().log(Level.INFO,"bakery = "+bakery+" completed = "+completed);
-            menu.setItem(36, Items.backButton);
-            plugin.getLogger().log(Level.INFO, "after back button");
+            menu.setItem(27, MenuItems.workingOn);
+            Objects.requireNonNull(menu.getItem(27)).setItemStack(new ItemStack(Utils.getItem(json.get("working_on").getAsString()).getItemMaterial()));
+            Objects.requireNonNull(menu.getItem(27)).editor().setName(Utils.getItem(json.get("working_on").getAsString()).getItemName());
+            menu.setItem(36, MenuItems.backButton);
             menu.open(player);
-            plugin.getLogger().log(Level.INFO, "after open");
         } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "ERROR " + Arrays.toString(e.getStackTrace()));
+            Township.INSTANCE.getLogger().log(Level.SEVERE, "ERROR " + e + " " + Arrays.toString(e.getStackTrace()));
         }
     }
 
-    public void feedmill(Player player) {
-        feedmill.setItem(36, Items.backButton);
-        feedmill.open(player);
+    private UUID uuid;
+    private JsonObject obj;
+
+    public Factories(UUID uuid) {
+        this.uuid = uuid;
+        obj = new Gson().fromJson(Database.getData(uuid), JsonObject.class);
+    }
+    public JsonObject getObj() {return obj;}
+
+    public Factories getFactories(UUID uuid) {
+        return new Factories(uuid);
     }
 
-    public void dairy(Player player) {
-        dairy.setItem(36, Items.backButton);
-        dairy.open(player);
+    public UUID getUUID() {
+        return uuid;
     }
 
-    public void sugar(Player player) {
-        sugar.setItem(36, Items.backButton);
-        sugar.open(player);
+    public ItemType getProduct(FactoryType type, int slot) {
+        if (slot >= 1 && slot <= 3) {
+            return Utils.getItem(obj.get("factories").getAsJsonObject()
+                    .get(type.getID().toLowerCase()).getAsJsonObject().get(String.valueOf(slot)).getAsString());
+        }else return ItemType.AIR;
+    }
+
+    public ItemType getWaiting(FactoryType type, int slot) {
+        if (slot >= 1 && slot <= 3) {
+            return Utils.getItem(obj.get("factories").getAsJsonObject()
+                    .get(type.getID().toLowerCase()).getAsJsonObject().get(String.valueOf(slot)).getAsString());
+        }else return ItemType.AIR;
+    }
+
+    public ItemType getWorkingOn(FactoryType type) {
+        return Utils.getItem(obj.get("factories").getAsJsonObject().get(type.getID().toLowerCase())
+                .getAsJsonObject().get("working_on").getAsString());
+    }
+
+    public boolean getUnlocked(FactoryType type) {
+        return obj.get("world_data").getAsJsonObject().get("factories")
+                .getAsJsonObject().get(type.getID().toLowerCase()).getAsJsonObject().get("unlocked").getAsBoolean();
+    }
+
+    public int getPage(FactoryType type) {
+        return obj.get("world_data").getAsJsonObject().get("factories")
+                .getAsJsonObject().get(type.getID().toLowerCase()).getAsJsonObject().get("page").getAsInt();
+    }
+
+    public int getSlot(FactoryType type) {
+        return obj.get("world_data").getAsJsonObject().get("factories")
+                .getAsJsonObject().get(type.getID().toLowerCase()).getAsJsonObject().get("slot").getAsInt();
     }
 }

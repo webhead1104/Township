@@ -5,10 +5,10 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
-    maven("https://repo.codemc.io/repository/maven-snapshots")
-    maven("https://jitpack.io/")
+    mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://jitpack.io/")
+    maven("https://repo.codemc.io/repository/maven-snapshots")
 }
 
 dependencies {
@@ -22,7 +22,7 @@ dependencies {
 group = "me.webhead1104"
 version = "0.1"
 description = "Township in minecraft"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 tasks {
     assemble {
@@ -31,7 +31,7 @@ tasks {
 
     compileJava {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
-        options.release.set(17)
+        options.release.set(21)
     }
     javadoc {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
@@ -51,6 +51,6 @@ tasks {
     }
     shadowJar {
         archiveFileName = "Township-${project.version}.jar"
-        //destinationDirectory.set(file(layout.buildDirectory.file(providers.gradleProperty("township_dir").get())))
+        destinationDirectory.set(file(layout.buildDirectory.file(providers.gradleProperty("township_dir").get())))
     }
 }

@@ -3,8 +3,14 @@
      import java.sql.PreparedStatement;
      import java.sql.ResultSet;
      import java.sql.SQLException;
+     import java.util.EnumSet;
      import java.util.Objects;
+     import me.flame.menus.menu.Menu;
+     import me.flame.menus.modifiers.Modifier;
      import me.webhead1104.township.data.Database;
+     import me.webhead1104.township.utils.MenuItems;
+     import me.webhead1104.township.utils.Utils;
+     import org.bukkit.ChatColor;
      import org.bukkit.event.EventHandler;
      import org.bukkit.event.Listener;
      import org.bukkit.event.player.PlayerJoinEvent;
@@ -21,16 +27,13 @@
          public void onJoin(PlayerJoinEvent event) {
              try {
                  event.getPlayer().getInventory().clear();
-                 Database.connect();
-                 PreparedStatement preparedStatement = Database.getConnection().prepareStatement("SELECT * FROM TownshipPlayerData WHERE PlayerUUID = ?");
+                 PreparedStatement preparedStatement = Database.getConnection().prepareStatement("SELECT * FROM Township WHERE PlayerUUID = ?");
                  preparedStatement.setString(1, event.getPlayer().getUniqueId().toString());
                  ResultSet resultSet = preparedStatement.executeQuery();
-                 resultSet.next();
-                 if (Objects.equals(resultSet.getString("PlayerUUID"), event.getPlayer().getUniqueId().toString())) {
-                     plugin.mainMenu(event.getPlayer());
-                 }
-             } catch (SQLException e) {
-                 Database.newPlayer(event.getPlayer());
-             }
+                 if (resultSet.next())
+                     if (Objects.equals(resultSet.getString("PlayerUUID"), event.getPlayer().getUniqueId().toString())) {
+                         // Utils.mainMenu(event.getPlayer());
+                     } else Database.newPlayer(event.getPlayer());
+             } catch (Exception e){}
          }
      }
