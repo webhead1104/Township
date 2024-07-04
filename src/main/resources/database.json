@@ -1,0 +1,168 @@
+{
+  "PlayerUUID": "none",
+  "townName": "none",
+  "page": 0,
+  "level": 0,
+  "population": 0,
+  "coins": 1000,
+  "cash": 0,
+  "items": {
+    "milk": 0,
+    "eggs": 0,
+    "bread": 0,
+    "cookies": 0,
+    "bagel": 0,
+    "cow_feed": 0,
+    "chicken_feed": 0
+  },
+  "animals": {
+    "cowshed": {
+      "1": {
+        "feed": false,
+        "product": false,
+        "runnable_uuid": "none"
+      },
+      "2": {
+        "feed": false,
+        "product": false,
+        "runnable_uuid": "none"
+      },
+      "3": {
+        "feed": false,
+        "product": false,
+        "runnable_uuid": "none"
+      },
+      "4": {
+        "feed": false,
+        "product": false,
+        "runnable_uuid": "none"
+      },
+      "5": {
+        "feed": false,
+        "product": false,
+        "runnable_uuid": "none"
+      }
+    },
+    "chicken_coop": {
+      "1": {
+        "feed": false,
+        "product": false,
+        "runnable_uuid": "none"
+      },
+      "2": {
+        "feed": false,
+        "product": false,
+        "runnable_uuid": "none"
+      },
+      "3": {
+        "feed": false,
+        "product": false,
+        "runnable_uuid": "none"
+      },
+      "4": {
+        "feed": false,
+        "product": false,
+        "runnable_uuid": "none"
+      },
+      "5": {
+        "feed": false,
+        "product": false,
+        "runnable_uuid": "none"
+      }
+    }
+  },
+  "factories": {
+    "bakery": {
+      "completed": {
+        "1": "none",
+        "2": "none",
+        "3": "none"
+      },
+      "working_on": "none",
+      "waiting": {
+        "1": "none",
+        "2": "none",
+        "3": "none"
+      },
+      "runnable_uuid": ""
+    },
+    "feed_mill": {
+      "completed": {
+        "1": "none",
+        "2": "none",
+        "3": "none"
+      },
+      "working_on": "none",
+      "waiting": {
+        "1": "none",
+        "2": "none",
+        "3": "none"
+      },
+      "runnable_uuid": ""
+    },
+    "dairy_factory": {
+      "completed": {
+        "1": "none",
+        "2": "none",
+        "3": "none"
+      },
+      "working_on": "none",
+      "waiting": {
+        "1": "none",
+        "2": "none",
+        "3": "none"
+      },
+      "runnable_uuid": ""
+    },
+    "sugar_factory": {
+      "completed": {
+        "1": "none",
+        "2": "none",
+        "3": "none"
+      },
+      "working_on": "none",
+      "waiting": {
+        "1": "none",
+        "2": "none",
+        "3": "none"
+      },
+      "runnable_uuid": ""
+    }
+  },
+  "world_data": {
+    "factories": {
+      "bakery": {
+        "unlocked": false,
+        "page": "0",
+        "slot": "0"
+      },
+      "feedmill": {
+        "unlocked": false,
+        "page": "0",
+        "slot": "0"
+      },
+      "dairy_factory": {
+        "unlocked": false,
+        "page": "0",
+        "slot": "0"
+      },
+      "sugar_factory": {
+        "unlocked": false,
+        "page": "0",
+        "slot": "0"
+      }
+    },
+    "animals": {
+      "cowshed": {
+        "unlocked": false,
+        "page": "0",
+        "slot": "0"
+      },
+      "chicken_coop": {
+        "unlocked": false,
+        "page": "0",
+        "slot": "0"
+      }
+    }
+  }
+}
