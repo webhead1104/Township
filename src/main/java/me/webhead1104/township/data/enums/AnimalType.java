@@ -1,34 +1,26 @@
 package me.webhead1104.township.data.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.webhead1104.township.utils.MenuItems;
 import net.kyori.adventure.text.Component;
-import net.minestom.server.item.ItemStack;
+import org.bukkit.inventory.ItemStack;
 
-import static net.cytonic.cytosis.utils.MiniMessageTemplate.MM;
+import static me.webhead1104.township.utils.MiniMessageTemplate.MM;
 
 @Getter
+@AllArgsConstructor
 public enum AnimalType {
 
-    NONE(MM."none", MenuItems.air, MenuItems.air, MenuItems.air, MenuItems.air, ItemType.AIR, "NONE"),
-    COWSHED(MM."<gold>Cowshed", MenuItems.cow, MenuItems.cow, MenuItems.milk, MenuItems.cowshedFeed, ItemType.COW_FEED, "COWSHED"),
-    CHICKEN_COOP(MM."<gold>Chicken Coop", MenuItems.chicken, MenuItems.chicken, MenuItems.egg, MenuItems.chickencoopFeed, ItemType.CHICKEN_FEED, "CHICKEN_COOP");
+    COWSHED(MM."<gold>Cowshed", MenuItems.cow, MenuItems.milk, MenuItems.cowFeed, ItemType.COW_FEED, ItemType.MILK, WorldTileType.COWSHED, "cowshed"),
+    CHICKEN_COOP(MM."<gold>Chicken Coop", MenuItems.chicken, MenuItems.egg, MenuItems.chickenFeed, ItemType.CHICKEN_FEED, ItemType.EGG, WorldTileType.CHICKEN_COOP, "chicken_coop");
 
-    private final Component animalName;
-    private final ItemStack menuItem;
-    private final ItemStack animal;
-    private final ItemStack product;
-    private final ItemStack feed;
+    private final Component menuTitle;
+    private final ItemStack animalItemStack;
+    private final ItemStack productItemStack;
+    private final ItemStack feedItemStack;
     private final ItemType feedType;
+    private final ItemType productType;
+    private final WorldTileType tileType;
     private final String ID;
-
-    AnimalType(Component animalName, ItemStack menuItem, ItemStack animal, ItemStack product, ItemStack feed, ItemType feedType, String ID) {
-        this.animalName = animalName;
-        this.menuItem = menuItem;
-        this.animal = animal;
-        this.product = product;
-        this.feed = feed;
-        this.feedType = feedType;
-        this.ID = ID;
-    }
 }

@@ -1,35 +1,39 @@
 package me.webhead1104.township.data.objects;
 
-import com.google.gson.JsonObject;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import me.webhead1104.township.Animals;
-import me.webhead1104.township.Factories;
-import me.webhead1104.township.data.Database;
+import lombok.Setter;
+import me.webhead1104.township.Township;
+
 import java.util.UUID;
 
 @Getter
+@Setter
+@AllArgsConstructor
 public class User {
-    private final JsonObject obj;
-    private final UUID uuid;
-    private final String townName;
-    private final int level;
-    private final int population;
-    private final int coins;
-    private final int cash;
-    private final Items items;
-    private final Animals animals;
-    private final Factories factories;
+    private UUID uuid;
+    private String townName;
+    private int level;
+    private int population;
+    private int coins;
+    private int cash;
+    private int section;
+    private Barn barn;
+    private Animals animals;
+    private Factories factories;
+    private World world;
+    private Trains trains;
 
-    public User(UUID uuid) {
-        this.uuid = uuid;
-        obj = Database.getData(uuid);
-        this.townName = obj.get("townName").getAsString();
-        this.level = obj.get("level").getAsInt();
-        this.population = obj.get("population").getAsInt();
-        this.coins = obj.get("coins").getAsInt();
-        this.cash = obj.get("cash").getAsInt();
-        this.items = Items.getItems(uuid);
-        this.animals = Animals.getAnimals(uuid);
-        this.factories = new Factories().getFactories(uuid);
+    public static User fromJson(String json) {
+        return Township.GSON.fromJson(json, User.class);
+    }
+
+    public String toJson() {
+        return Township.GSON.toJson(this);
+    }
+
+    @Override
+    public String toString() {
+        return toJson();
     }
 }

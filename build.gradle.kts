@@ -1,8 +1,8 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("xyz.jpenilla.run-paper") version "2.3.1"
+    id("io.freefair.lombok") version "8.10.2"
 }
 
 group = "me.webhead1104"
@@ -10,13 +10,22 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven("https://repo.foxikle.dev/cytonic")
+    maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.codemc.io/repository/maven-snapshots/")
+    maven("https://repo.codemc.org/repository/nms/")
 }
 
 dependencies {
-    compileOnly("net.cytonic:Cytosis:1.0-SNAPSHOT")
-    compileOnly("org.projectlombok:lombok:1.18.34") // lombok
-    annotationProcessor("org.projectlombok:lombok:1.18.34") // lombok
+    compileOnly("io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT")
+    compileOnly("org.xerial:sqlite-jdbc:3.47.0.0")
+    compileOnly("com.google.code.gson:gson:2.11.0")
+    compileOnly("org.spigotmc:spigot:1.21.3-R0.1-SNAPSHOT")
+    compileOnly("com.zaxxer:HikariCP:6.0.0")
+    implementation("net.wesjd:anvilgui:1.10.3-SNAPSHOT")
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
 tasks.withType<JavaCompile> {
@@ -24,17 +33,44 @@ tasks.withType<JavaCompile> {
     options.compilerArgs.add("--enable-preview")
 }
 
+tasks.withType<Javadoc> {
+    val javadocOptions = options as CoreJavadocOptions
+
+    javadocOptions.addStringOption("source", "21")
+    javadocOptions.addBooleanOption("-enable-preview", true)
+}
+
 tasks {
     assemble {
-        dependsOn("shadowJar")
+        dependsOn(shadowJar)
     }
-    named<ShadowJar>("shadowJar") {
-        manifest {
-            attributes["Main-Class"] = "me.webhead1104.township.Township"
+
+    compileJava {
+        options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
+        options.release.set(21)
+    }
+    javadoc {
+        options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
+    }
+    processResources {
+        filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
+        val props = mapOf(
+            "version" to project.version,
+            "apiVersion" to "1.21"
+        )
+        inputs.properties(props)
+        filesMatching("plugin.yml") {
+            expand(props)
         }
-        mergeServiceFiles()
-        archiveFileName.set("Township-${project.version}.jar")
-        archiveClassifier.set("")
-        destinationDirectory.set(File(providers.gradleProperty("server_dir").get() + "/plugins"))
+    }
+    shadowJar {
+        archiveFileName = "Township-${project.version}.jar"
+    }
+    runServer {
+        // Configure the Minecraft version for our task.
+        // This is the only required configuration besides applying the plugin.
+        // Your plugin's jar (or shadowJar if present) will be used automatically.
+        minecraftVersion("1.21.3")
+        jvmArguments.add("--enable-preview")
     }
 }
