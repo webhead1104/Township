@@ -1,30 +1,23 @@
 package me.webhead1104.township.data.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import me.webhead1104.township.utils.MenuItems;
 import net.kyori.adventure.text.Component;
-import net.minestom.server.item.ItemStack;
+
 import java.util.List;
-import static net.cytonic.cytosis.utils.MiniMessageTemplate.MM;
+
+import static me.webhead1104.township.utils.MiniMessageTemplate.MM;
 
 @Getter
+@AllArgsConstructor
 public enum FactoryType {
+    BAKERY(MM."<gold>Bakery", "bakery", List.of(RecipeType.BREAD, RecipeType.COOKIE, RecipeType.BAGEL), WorldTileType.BAKERY),
+    FEED_MILL(MM."<gold>Feed Mill", "feed_mill", List.of(RecipeType.COW_FEED, RecipeType.CHICKEN_FEED), WorldTileType.FEED_MILL),
+    DAIRY_FACTORY(MM."<gold>Dairy Factory", "dairy_factory", List.of(RecipeType.CREAM, RecipeType.CHEESE, RecipeType.BUTTER, RecipeType.YOGURT), WorldTileType.DAIRY_FACTORY),
+    SUGAR_FACTORY(MM."<gold>Sugar Factory", "sugar_factory", List.of(RecipeType.SUGAR, RecipeType.SYRUP, RecipeType.CARAMEL), WorldTileType.SUGAR_FACTORY);
 
-    NONE(MM."none", MenuItems.air,"NONE",List.of(MenuItems.air)),
-    BAKERY(MM."<gold>Bakery", MenuItems.bakeryMenuItem,"BAKERY",List.of(MenuItems.breadRecipe,MenuItems.cookieRecipe,MenuItems.bagelRecipe)),
-    FEED_MILL(MM."<gold>Feed Mill",MenuItems.feedmillMenuItem,"FEED_MILL",List.of(MenuItems.cowfeedrecipe,MenuItems.chickenfeedrecipe)),
-    DAIRY_FACTORY(MM."<gold>Dairy Factory",MenuItems.dairyMenuItem,"DAIRY_FACTORY",List.of(MenuItems.creamRecipe,MenuItems.cheeseRecipe,MenuItems.butterRecipe,MenuItems.yogurtRecipe)),
-    SUGAR_FACTORY(MM."<gold>Sugar Factory",MenuItems.sugarMenuItem,"SUGAR_FACTORY",List.of(MenuItems.sugarRecipe,MenuItems.syrupRecipe,MenuItems.caramelRecipe));
-
-    private final Component factoryName;
-    private final ItemStack menuItem;
+    private final Component menuTitle;
     private final String ID;
-    private final List<ItemStack> recipes;
-    FactoryType(Component factoryName, ItemStack menuItem, String ID, List<ItemStack> recipes) {
-        this.factoryName = factoryName;
-        this.menuItem = menuItem;
-        this.ID = ID;
-        this.recipes = recipes;
-    }
-
+    private final List<RecipeType> recipes;
+    private final WorldTileType tileType;
 }

@@ -1,39 +1,37 @@
 package me.webhead1104.township.data.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.cytonic.cytosis.utils.MiniMessageTemplate;
-import net.kyori.adventure.text.Component;
-import net.minestom.server.item.Material;
+import me.webhead1104.township.utils.MenuItems;
+import org.bukkit.inventory.ItemStack;
 
 @Getter
+@AllArgsConstructor
 public enum ItemType {
-    AIR(MiniMessageTemplate.MM."<RED>if you see this what did you do", Material.AIR, "AIR"),
-    WHEAT(MiniMessageTemplate.MM."<gold>Wheat", Material.WHEAT, "WHEAT"),
-    CORN(MiniMessageTemplate.MM."<gold>Corn", Material.PLAYER_HEAD, "CORN"),
-    CARROT(MiniMessageTemplate.MM."<gold>Carrot", Material.CARROT, "CARROT"),
-    SUGARCANE(MiniMessageTemplate.MM."<gold>Sugarcane", Material.SUGAR_CANE, "SUGARCANE"),
-    BREAD(MiniMessageTemplate.MM."<gold>Bread", Material.BREAD, "BREAD"),
-    COOKIE(MiniMessageTemplate.MM."<gold>Cookie", Material.COOKIE, "COOKIE"),
-    BAGEL(MiniMessageTemplate.MM."<gold>Bagel", Material.PLAYER_HEAD, "BAGEL"),
-    COW_FEED(MiniMessageTemplate.MM."<gold>Cow Feed", Material.PLAYER_HEAD, "COW_FEED"),
-    CHICKEN_FEED(MiniMessageTemplate.MM."<gold>Chicken Feed", Material.PLAYER_HEAD, "CHICKEN_FEED"),
-    CREAM(MiniMessageTemplate.MM."<gold>Cream", Material.PLAYER_HEAD, "CREAM"),
-    CHEESE(MiniMessageTemplate.MM."<gold>Cheese", Material.PLAYER_HEAD, "CHEESE"),
-    BUTTER(MiniMessageTemplate.MM."<gold>Butter", Material.PLAYER_HEAD, "BUTTER"),
-    YOGURT(MiniMessageTemplate.MM."<gold>Yogurt", Material.PLAYER_HEAD, "YOGURT"),
-    SUGAR(MiniMessageTemplate.MM."<gold>Sugar", Material.SUGAR, "SUGAR"),
-    SYRUP(MiniMessageTemplate.MM."<gold>Syrup", Material.PLAYER_HEAD, "SYRUP"),
-    CARAMEL(MiniMessageTemplate.MM."<gold>Caramel", Material.PLAYER_HEAD, "CARAMEL"),
-    MILK(MiniMessageTemplate.MM."<gold>Milk", Material.MILK_BUCKET, "MILK"),
-    EGG(MiniMessageTemplate.MM."<gold>Egg", Material.EGG, "EGG");
+    NONE(MenuItems.none, -1, "none"),
+    WHEAT(MenuItems.wheat, 1, "wheat"),
+    CORN(MenuItems.corn, 3, "corn"),
+    CARROT(MenuItems.carrot, 5, "carrot"),
+    SUGARCANE(MenuItems.sugarcane, 7, "sugarcane"),
+    BREAD(MenuItems.bread, 5, "bread"),
+    COOKIE(MenuItems.cookie, 44, "cookie"),
+    BAGEL(MenuItems.bagel, 55, "bagel"),
+    COW_FEED(MenuItems.cowFeed, 1, "cow_feed"),
+    CHICKEN_FEED(MenuItems.chickenFeed, 4, "chicken_feed"),
+    CREAM(MenuItems.cream, 12, "cream"),
+    CHEESE(MenuItems.cheese, 25, "cheese"),
+    BUTTER(MenuItems.butter, 39, "butter"),
+    YOGURT(MenuItems.yogurt, 53, "yogurt"),
+    SUGAR(MenuItems.sugar, 14, "sugar"),
+    SYRUP(MenuItems.syrup, 29, "syrup"),
+    CARAMEL(MenuItems.caramel, 45, "caramel"),
+    MILK(MenuItems.milk, 7, "milk"),
+    EGG(MenuItems.egg, 10, "egg"),
+    PAINT(MenuItems.paint, 100, "paint"),
+    HAMMER(MenuItems.hammer, 100, "hammer"),
+    NAIL(MenuItems.nail, 100, "nail");
 
-    private final Component itemName;
-    private final Material itemMaterial;
+    private final ItemStack itemStack;
+    private final int sellPrice;
     private final String ID;
-
-    ItemType(Component itemName, Material itemMaterial, String ID) {
-        this.itemName = itemName;
-        this.itemMaterial = itemMaterial;
-        this.ID = ID;
-    }
 }

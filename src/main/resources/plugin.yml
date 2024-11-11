@@ -1,0 +1,13 @@
+name: Township
+version: '0.1'
+main: me.webhead1104.township.Township
+api-version: '1.21'
+prefix: Township
+authors: [ Webhead1104 ]
+description: Township in minecraft
+libraries:
+  - com.google.code.gson:gson:2.11.0
+  - org.xerial:sqlite-jdbc:3.47.0.0
+  - com.zaxxer:HikariCP:6.0.0
+commands:
+  township:

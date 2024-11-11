@@ -1,0 +1,9 @@
+# mysql or sqlite
+databaseType: "sqlite"
+# Database credentials
+mysql:
+  host: localhost
+  port: 3306
+  database: township
+  username: root
+  password: password

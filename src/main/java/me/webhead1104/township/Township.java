@@ -1,85 +1,87 @@
 package me.webhead1104.township;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.GsonBuilder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import me.webhead1104.township.commands.TownshipCommand;
-import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.data.Database;
 import me.webhead1104.township.listeners.InventoryClickListener;
 import me.webhead1104.township.listeners.JoinListener;
-import net.cytonic.cytosis.Cytosis;
-import net.cytonic.cytosis.events.EventListener;
-import net.cytonic.cytosis.logging.Logger;
-import net.cytonic.cytosis.plugins.CytosisPlugin;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.event.player.PlayerSpawnEvent;
+import me.webhead1104.township.listeners.LeaveListener;
+import me.webhead1104.township.managers.*;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.slf4j.Logger;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.Objects;
 
-public class Township implements CytosisPlugin {
+@NoArgsConstructor
+public class Township extends JavaPlugin {
 
-    public static Township INSTANCE;
-    public static JsonObject dataTable;
     @Getter
-    private static Factories factories;
+    public static final Gson GSON = new GsonBuilder().serializeNulls().create();
+    public static Logger logger;
+    @Getter
+    private static Database database;
     @Getter
     private static WorldManager worldManager;
     @Getter
-    private static LevelMenu levelMenu;
+    private static ExpansionManager expansionManager;
     @Getter
-    private static Animals animals;
+    private static AnimalsManager animalsManager;
     @Getter
-    private static Map<UUID, User> userMap = new HashMap<>();
+    private static FactoriesManager factoriesManager;
     @Getter
-    private static Map<UUID, Integer> userPageMap = new HashMap<>();
+    private static PlotManager plotManager;
+    @Getter
+    private static InventoryManager inventoryManager;
+    @Getter
+    private static UserManager userManager;
+    @Getter
+    private static BarnManager barnManager;
+    @Getter
+    private static TrainManager trainManager;
 
-
-    public void initialize() {
-        INSTANCE = this;
-        File file = new File("township/config.yml");
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (Exception e) {
-                Logger.error("Error", e);
-            }
-        }
-        factories = new Factories();
-        worldManager = new WorldManager();
-        levelMenu = new LevelMenu();
-        animals = new Animals();
-        try {
-            File file1 = new File("township/database.json");
-            try {
-                file1.createNewFile();
-            } catch (Exception e) {
-                Logger.error("Error", e);
-            }
-            dataTable = new Gson().fromJson(new String(
-                    Files.readAllBytes(Paths.get("township/database.json"))), JsonObject.class);
-            //noinspection ResultOfMethodCallIgnored
-            new File("township/database.json").delete();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Cytosis.getCommandManager().register(new TownshipCommand());
+    @Override
+    public void onEnable() {
+        long start = System.currentTimeMillis();
+        Objects.requireNonNull(getCommand("township")).setExecutor(new TownshipCommand());
         registerListeners();
+        File file = new File(STR."\{getDataFolder().getAbsolutePath()}/config.yml");
+        if (!file.exists()) saveResource("config.yml", false);
+        logger = getSLF4JLogger();
+        database = new Database(this);
+        database.connect();
+        database.createTownshipTable();
+        worldManager = new WorldManager(this);
+        expansionManager = new ExpansionManager();
+        animalsManager = new AnimalsManager();
+        factoriesManager = new FactoriesManager();
+        plotManager = new PlotManager();
+        inventoryManager = new InventoryManager();
+        userManager = new UserManager();
+        barnManager = new BarnManager();
+        barnManager.loadPages();
+        barnManager.loadUpgrades();
+        trainManager = new TrainManager();
+        logger.info(STR."Township initialized in \{System.currentTimeMillis() - start} mills!");
     }
 
-    public void shutdown() {
-        Logger.debug("Township shutting down!");
+    @Override
+    public void onDisable() {
+        logger.info("Township shutting down saving users");
+        userManager.getUsers().forEach((_, user) -> {
+            database.setData(user);
+            logger.info(STR."saved \{user.getUuid()}");
+        });
+        database.disconnect();
+        logger.info("Township has shut down!");
     }
 
     public void registerListeners() {
-        Cytosis.getEventHandler().registerListener(new EventListener<>("township:player-spawn", false, 1,
-                PlayerSpawnEvent.class, (event -> new JoinListener().onJoin(event))));
-        Cytosis.getEventHandler().registerListener(new EventListener<>("township:inventory-preclick", false, 1,
-                InventoryPreClickEvent.class, (event -> new InventoryClickListener().onClick(event))));
+        this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
+        this.getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        this.getServer().getPluginManager().registerEvents(new LeaveListener(), this);
     }
 }
