@@ -19,7 +19,6 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT")
     compileOnly("org.xerial:sqlite-jdbc:3.47.0.0")
     compileOnly("com.google.code.gson:gson:2.11.0")
-    compileOnly("org.spigotmc:spigot:1.21.3-R0.1-SNAPSHOT")
     compileOnly("com.zaxxer:HikariCP:6.0.0")
     implementation("net.wesjd:anvilgui:1.10.3-SNAPSHOT")
 }
