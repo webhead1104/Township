@@ -18,12 +18,8 @@ public class Expansion {
         return Township.GSON.fromJson(json, Expansion.class);
     }
 
-    public String toJson() {
-        return Township.GSON.toJson(this);
-    }
-
     @Override
     public String toString() {
-        return toJson();
+        return Township.GSON.toJson(this);
     }
 }
