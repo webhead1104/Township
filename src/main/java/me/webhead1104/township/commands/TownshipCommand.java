@@ -4,7 +4,6 @@ import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.AnimalType;
 import me.webhead1104.township.data.enums.FactoryType;
-import me.webhead1104.township.data.objects.Trains;
 import me.webhead1104.township.data.objects.User;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -53,13 +52,6 @@ public class TownshipCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
                 case "get_items_back" -> Township.getInventoryManager().returnItemsToPlayer(player);
-                case "test2" ->
-                        Township.getUserManager().getUser(player.getUniqueId()).getTrains().getTrain(1).setInStation(true);
-                case "test3" ->
-                        Township.getUserManager().getUser(player.getUniqueId()).getTrains().getTrain(1).setClaimItems(true);
-                case "test4" -> {
-                    Township.getUserManager().getUser(player.getUniqueId()).getTrains().setTrain(Trains.Train.createTrain(1), 1);
-                }
             }
 
             if (args.length == 2) {
