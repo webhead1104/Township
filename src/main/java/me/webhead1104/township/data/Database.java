@@ -2,7 +2,7 @@ package me.webhead1104.township.data;
 
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.User;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
