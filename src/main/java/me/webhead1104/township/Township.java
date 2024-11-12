@@ -42,6 +42,8 @@ public class Township extends JavaPlugin {
     private static BarnManager barnManager;
     @Getter
     private static TrainManager trainManager;
+    @Getter
+    private static LevelManager levelManager;
 
     @Override
     public void onEnable() {
@@ -65,6 +67,8 @@ public class Township extends JavaPlugin {
         barnManager.loadPages();
         barnManager.loadUpgrades();
         trainManager = new TrainManager();
+        levelManager = new LevelManager();
+        levelManager.loadLevels();
         logger.info(STR."Township initialized in \{System.currentTimeMillis() - start} mills!");
     }
 

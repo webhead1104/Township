@@ -13,7 +13,7 @@ import java.util.UUID;
 public class User {
     private UUID uuid;
     private String townName;
-    private int level;
+    private PlayerLevel level;
     private int population;
     private int coins;
     private int cash;

@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.AnimalType;
 import me.webhead1104.township.data.enums.FactoryType;
+import me.webhead1104.township.data.objects.PlayerLevel;
 import me.webhead1104.township.data.objects.User;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -96,16 +97,16 @@ public class TownshipCommand implements CommandExecutor, TabCompleter {
                         User user = Township.getUserManager().getUser(player.getUniqueId());
                         switch (args[1].toLowerCase()) {
                             case "add" -> {
-                                user.setLevel(user.getLevel() + amount);
+                                user.setLevel(new PlayerLevel(user.getLevel().getLevel() + amount, 0));
                                 sender.sendMessage(MM."added \{amount} level");
                             }
                             case "remove" -> {
-                                user.setLevel(user.getLevel() - amount);
+                                user.setLevel(new PlayerLevel(user.getLevel().getLevel() - amount, 0));
                                 sender.sendMessage(MM."removed \{amount} level");
                             }
                             case "get" -> player.sendMessage(MM."level = \{user.getLevel()}");
                             case "set" -> {
-                                user.setLevel(amount);
+                                user.setLevel(new PlayerLevel(amount, 0));
                                 sender.sendMessage(MM."set level to \{amount}");
                             }
                         }
