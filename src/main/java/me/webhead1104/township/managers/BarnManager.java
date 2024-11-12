@@ -37,12 +37,10 @@ public class BarnManager {
         Barn barn = user.getBarn();
         AtomicInteger i = new AtomicInteger(0);
         for (Map.Entry<Integer, ItemType> entry : barnPageMap.get(page).entrySet()) {
-            if (!(user.getBarn().getItem(entry.getValue()) >= 0)) continue;
+            if (user.getBarn().getItem(entry.getValue()) == 0) continue;
             ItemType type = entry.getValue();
             ItemBuilder builder = new ItemBuilder(type.getItemStack().getType(), STR."\{type.getID()}_barn");
-            String amount = barn.getItem(type) == 0 ? "none" : String.valueOf(barn.getItem(type));
-            String string = Utils.thing2(type.getID());
-            builder.displayName(MM."You have <aqua>\{amount}</aqua> of <yellow>\{string}</yellow>");
+            builder.displayName(MM."You have <aqua>\{barn.getItem(type)}</aqua> of <yellow>\{Utils.thing2(type.getID())}</yellow>");
             builder.lore(List.of());
             builder.setRarity(ItemRarity.COMMON);
             inventory.setItem(i.getAndIncrement(), builder.build());

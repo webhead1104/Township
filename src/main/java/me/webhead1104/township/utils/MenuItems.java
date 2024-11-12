@@ -26,7 +26,6 @@ public class MenuItems {
     public static final ItemStack levelAndPop = new ItemBuilder(Material.BLUE_CONCRETE, MM."<aqua>Level 0", List.of(MM."<red>Population 0"), "level_population").build();
     public static final ItemStack coinsAndCash = new ItemBuilder(Material.GOLD_BLOCK, MM."<yellow>Coins 0", List.of(MM."<green>Cash 0"), "coins_cash").build();
     public static final ItemStack profile = new ItemBuilder(Material.LIGHT_BLUE_CONCRETE, MM."null", "profile").build();
-    public static final ItemStack glass = new ItemBuilder(Material.WHITE_STAINED_GLASS_PANE, MM."", "glass").build();
     public static final ItemStack township = new ItemBuilder(Material.GREEN_CONCRETE, MM."<green>Click to play township!", "township").build();
     public static final ItemStack backButton = new ItemBuilder(Material.BARRIER, MM."<RED>Click to go back!", "back_button").build();
     public static final ItemStack workingOn = new ItemBuilder(Material.COAL_BLOCK, MM."<green>Loading....", "working_on").build();
@@ -45,12 +44,7 @@ public class MenuItems {
     public static final ItemStack bagel = new ItemBuilder(Material.PLAYER_HEAD, MM."<gold>Bagel", "bagel").build();
     public static final ItemStack cream = new ItemBuilder(Material.PLAYER_HEAD, MM."<gold>Cream", "cream").build();
     public static final ItemStack cheese = new ItemBuilder(Material.PLAYER_HEAD, MM."<gold>Cheese", "cheese").build();
-    public static final ItemStack butter = new ItemBuilder(Material.PLAYER_HEAD, MM."<gold>Butter", "butter").build();
-    public static final ItemStack yogurt = new ItemBuilder(Material.PLAYER_HEAD, MM."<gold>Yogurt", "yogurt").build();
     public static final ItemStack sugar = new ItemBuilder(Material.SUGAR, MM."<gold>Sugar", "sugar").build();
-    public static final ItemStack syrup = new ItemBuilder(Material.PLAYER_HEAD, MM."<gold>Syrup", "syrup")
-            .setSkullTextureURL("http://textures.minecraft.net/texture/90800ad4d854c4f5dba77c9a4f2ad6dc7ad1a0d195ac3ce12d00ffdde71d668e").build();
-    public static final ItemStack caramel = new ItemBuilder(Material.PLAYER_HEAD, MM."<gold>Caramel", "caramel").build();
     public static final ItemStack paint = new ItemBuilder(Material.PLAYER_HEAD, MM."<gold>Paint bucket", "paint")
             .setSkullTextureURL("http://textures.minecraft.net/texture/fec5963e1f78f2f05943f4dd32224661374c220ecfde1e54754f5ee1e555dd").build();
     public static final ItemStack hammer = new ItemBuilder(Material.PLAYER_HEAD, MM."<gold>Hammer", "hammer")
@@ -101,11 +95,7 @@ public class MenuItems {
         //dairy
         public static final ItemStack cream = new ItemBuilder(Material.MAGMA_CREAM, MM."<gold>Cream", List.of(MM."<gold>1 milk"), "cream_recipe").build();
         public static final ItemStack cheese = new ItemBuilder(Material.GOLD_NUGGET, MM."<gold>Cheese", List.of(MM."<gold>2 milk"), "cheese_recipe").build();
-        public static final ItemStack butter = new ItemBuilder(Material.GOLD_INGOT, MM."<gold>Butter", List.of(MM."<gold>3 milk"), "butter_recipe").build();
-        public static final ItemStack yogurt = new ItemBuilder(Material.MILK_BUCKET, MM."<gold>Yogurt", List.of(MM."<gold>4 milk"), "yogurt_recipe").build();
         //sugar
         public static final ItemStack sugar = new ItemBuilder(Material.SUGAR, MM."<gold>Sugar", List.of(MM."<gold>1 sugarcane"), "sugar_recipe").build();
-        public static final ItemStack syrup = new ItemBuilder(Material.BROWN_CANDLE, MM."<gold>Syrup", List.of(MM."<gold>2 sugarcane"), "syrup_recipe").build();
-        public static final ItemStack caramel = new ItemBuilder(Material.BROWN_CONCRETE, MM."<gold>Caramel", List.of(MM."<gold>3 sugarcane"), "caramel_recipe").build();
     }
 }

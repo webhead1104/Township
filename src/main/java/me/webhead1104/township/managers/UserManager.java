@@ -47,6 +47,6 @@ public class UserManager {
         World world = World.createWorld();
         Trains trains = Trains.createTrains();
         Township.logger.info(STR."create done in \{System.currentTimeMillis() - start} mills");
-        return new User(uuid, "none", 1, 0, 0, 20, 27, barn, animals, factories, world, trains);
+        return new User(uuid, "none", new PlayerLevel(1, 0), 0, 0, 20, 27, barn, animals, factories, world, trains);
     }
 }

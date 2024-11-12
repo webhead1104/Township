@@ -26,7 +26,7 @@ public class TrainManager {
 
     public void openMenu(Player player) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
-        if (!(user.getLevel() >= 5)) return;
+        if (!(user.getLevel().getLevel() >= 5)) return;
         player.setItemOnCursor(ItemStack.empty());
         player.getInventory().clear();
         Inventory inventory = Bukkit.createInventory(null, 54, MM."Trains");
@@ -97,10 +97,10 @@ public class TrainManager {
                 Component coins = user.getCoins() >= train.getCoinsNeededToUnlock() ?
                         MM."<green>You need \{train.getCoinsNeededToUnlock()} coins to purchase this train! <white>\{user.getCoins()}<aqua>/<green>\{train.getCoinsNeededToUnlock()}" :
                         MM."<red>You need \{train.getCoinsNeededToUnlock()} coins to purchase this train! <white>\{user.getCoins()}<aqua>/<red>\{train.getCoinsNeededToUnlock()}";
-                Component level = user.getLevel() >= train.getLevelNeededToUnlock() ?
+                Component level = user.getLevel().getLevel() >= train.getLevelNeededToUnlock() ?
                         MM."<green>You need to be level \{train.getLevelNeededToUnlock()} to purchase this train! <white>\{user.getLevel()}<aqua>/<green>\{train.getLevelNeededToUnlock()}" :
                         MM."<red>You need to be level \{train.getLevelNeededToUnlock()} to purchase this train! <white>\{user.getLevel()}<aqua>/<red>\{train.getLevelNeededToUnlock()}";
-                if (user.getCoins() >= train.getCoinsNeededToUnlock() && user.getLevel() >= train.getLevelNeededToUnlock()) {
+                if (user.getCoins() >= train.getCoinsNeededToUnlock() && user.getLevel().getLevel() >= train.getLevelNeededToUnlock()) {
                     engine.lore(List.of(MM."<green>You can purchase this!", coins, level));
                 } else engine.lore(List.of(coins, level));
                 engine.material(Material.COARSE_DIRT);
@@ -118,7 +118,7 @@ public class TrainManager {
         Trains trains = user.getTrains();
         int coins = trains.getTrain(train).getCoinsNeededToUnlock();
         int level = trains.getTrain(train).getLevelNeededToUnlock();
-        if (user.getCoins() >= coins && user.getLevel() >= level) {
+        if (user.getCoins() >= coins && user.getLevel().getLevel() >= level) {
             user.setCoins(user.getCoins() - coins);
             trains.getTrain(train).setUnlocked(true);
             openMenu(player);
