@@ -10,6 +10,7 @@ import me.webhead1104.township.utils.MenuItems;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import static me.webhead1104.township.utils.MiniMessageTemplate.MM;
 
@@ -18,9 +19,12 @@ public class AnimalsManager {
 
     public void openAnimalMenu(Player player, AnimalType type) {
         // animals 11-17 feed 36
-        Inventory inventory = Bukkit.createInventory(null, 54, type.getMenuTitle());
+        player.getInventory().clear();
+        player.setItemOnCursor(ItemStack.empty());
         User user = Township.getUserManager().getUser(player.getUniqueId());
+        if (!(user.getLevel().getLevel() >= type.getLevelNeeded())) return;
         Animals animals = user.getAnimals();
+        Inventory inventory = Bukkit.createInventory(null, 54, type.getMenuTitle());
         int slot = 11;
         for (int i = 0; i < 6; ++i) {
             if (animals.getProduct(type, i)) inventory.setItem(slot + 9, type.getProductItemStack());
