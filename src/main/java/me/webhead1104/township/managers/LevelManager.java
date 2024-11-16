@@ -3,19 +3,17 @@ package me.webhead1104.township.managers;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Level;
-import me.webhead1104.township.data.objects.User;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static me.webhead1104.township.utils.MiniMessageTemplate.MM;
-
 @NoArgsConstructor
+@Getter
 public class LevelManager {
 
     private final List<Level> levelList = new ArrayList<>();
@@ -37,28 +35,6 @@ public class LevelManager {
             }
         } catch (Exception e) {
             Township.logger.error("error", e);
-        }
-    }
-
-
-    public void addXp(Player player, int amountOfXp) {
-        User user = Township.getUserManager().getUser(player.getUniqueId());
-        if (canLevelUp(player)) {
-            user.getLevel().setXp(amountOfXp);
-        } else {
-            user.getLevel().setXp(user.getLevel().getXp() + amountOfXp);
-        }
-    }
-
-    public boolean canLevelUp(Player player) {
-        User user = Township.getUserManager().getUser(player.getUniqueId());
-        if (user.getLevel().getXp() >= levelList.get(user.getLevel().getLevel()).getXpNeeded()) {
-            user.getLevel().setLevel(user.getLevel().getLevel() + 1);
-            user.getLevel().setXp(0);
-            player.sendMessage(MM."<green>You have leveled up! You are now level \{user.getLevel().getLevel()}");
-            return true;
-        } else {
-            return false;
         }
     }
 }
