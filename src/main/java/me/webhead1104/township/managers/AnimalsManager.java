@@ -76,6 +76,7 @@ public class AnimalsManager {
         if (animals.getProduct(type, product)) {
             animals.setProduct(type, product, false);
             animals.setFeed(type, product, false);
+            user.getBarn().addAmountToItem(type.getProductType(), 1);
             openAnimalMenu(player, type);
         }
     }
