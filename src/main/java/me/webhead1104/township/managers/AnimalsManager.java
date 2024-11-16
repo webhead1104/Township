@@ -51,10 +51,10 @@ public class AnimalsManager {
                     user.getBarn().removeAmountFromItem(type.getFeedType(), 1);
                     animals.setFeed(type, i, true);
                     animals.setProduct(type, i, true);
-                    openAnimalMenu(player, type);
                 }
             }
         }
+        openAnimalMenu(player, type);
     }
 
     public void pickup(Player player, AnimalType type, int slot) {
