@@ -157,7 +157,9 @@ public class WorldManager {
         player.getInventory().setItem(22, profile.build());
         ItemBuilder levelAndPop = new ItemBuilder(MenuItems.levelAndPop)
                 .displayName(MM."<aqua>Level \{user.getLevel().getLevel()}")
-                .lore(List.of(MM."<red>Population \{user.getPopulation()}"));
+                .lore(List.of(MM."<aqua>Xp \{user.getLevel().getXp()}",
+                        MM."\{user.getLevel().getProgressBar()}",
+                        MM."<red>Population \{user.getPopulation()}"));
         player.getInventory().setItem(9, levelAndPop.build());
         ItemBuilder coinsAndCash = new ItemBuilder(MenuItems.coinsAndCash)
                 .displayName(MM."<yellow>Coins \{user.getCoins()}")
