@@ -73,10 +73,11 @@ public class FactoriesManager {
         player.openInventory(inventory);
     }
 
-    public void complete(Player player, int completedSlot, FactoryType factoryType, ItemType itemType) {
+    public void complete(Player player, int completedSlot, FactoryType factoryType, RecipeType recipeType) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         user.getFactories().setCompleted(factoryType, completedSlot, ItemType.NONE);
-        user.getBarn().addAmountToItem(itemType, 1);
+        user.getBarn().addAmountToItem(recipeType.getItemType(), 1);
+        user.getLevel().addXp(recipeType.getXpGiven());
         openFactoryMenu(player, factoryType);
     }
 

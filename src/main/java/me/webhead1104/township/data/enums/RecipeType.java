@@ -24,7 +24,7 @@ public enum RecipeType {
     private final ItemType itemType;
     private final Map<ItemType, Integer> recipeItems;
     private final int time;
-    private final int xpNeeded;
+    private final int levelNeeded;
     private final int xpGiven;
     private final String id;
 }
