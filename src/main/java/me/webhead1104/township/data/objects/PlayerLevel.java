@@ -1,5 +1,6 @@
 package me.webhead1104.township.data.objects;
 
+import com.google.common.base.Strings;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,14 +22,14 @@ public class PlayerLevel {
 
     public void addXp(int amountOfXp) {
         User user = Township.getUserManager().getUser(uuid);
-        if (canLevelUp(uuid)) {
+        if (canLevelUp()) {
             user.getLevel().setXp(amountOfXp);
         } else {
             user.getLevel().setXp(user.getLevel().getXp() + amountOfXp);
         }
     }
 
-    public boolean canLevelUp(UUID uuid) {
+    public boolean canLevelUp() {
         User user = Township.getUserManager().getUser(uuid);
         if (user.getLevel().getXp() >= Township.getLevelManager().getLevelList().get(user.getLevel().getLevel()).getXpNeeded()) {
             user.getLevel().setLevel(user.getLevel().getLevel() + 1);
@@ -39,5 +40,13 @@ public class PlayerLevel {
         } else {
             return false;
         }
+    }
+
+    public String getProgressBar() {
+        long max = Township.getLevelManager().getLevelList().get(level + 1).getXpNeeded();
+        float percent = (float) xp / max;
+        int progressBars = (int) (16 * percent);
+
+        return Strings.repeat("<aqua>■", progressBars) + Strings.repeat("<gray>■", 16 - progressBars);
     }
 }
