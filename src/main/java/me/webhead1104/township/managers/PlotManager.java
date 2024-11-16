@@ -66,6 +66,7 @@ public class PlotManager {
         ItemBuilder builder = new ItemBuilder(clickedItem);
         Plot plot = Plot.fromJson(builder.pdcGetString(ItemBuilder.plotDataKey));
         user.getBarn().addAmountToItem(plot.getPlotType().getItemType(), 1);
+        user.getLevel().addXp(plot.getPlotType().getXpGiven());
         plot.setPlotType(PlotType.NONE);
         user.getWorld().getSection(plot.getSection()).getSlot(plot.getSlot()).setPlot(plot);
         Township.getWorldManager().openWorldMenu(player);
