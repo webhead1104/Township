@@ -155,11 +155,17 @@ public class WorldManager {
         ItemBuilder profile = new ItemBuilder(MenuItems.profile)
                 .displayName(MM."<green>\{user.getTownName()}");
         player.getInventory().setItem(22, profile.build());
-        ItemBuilder levelAndPop = new ItemBuilder(MenuItems.levelAndPop)
-                .displayName(MM."<aqua>Level \{user.getLevel().getLevel()}")
-                .lore(List.of(MM."<aqua>Xp \{user.getLevel().getXp()}",
-                        MM."\{user.getLevel().getProgressBar()}",
-                        MM."<red>Population \{user.getPopulation()}"));
+        ItemBuilder levelAndPop = new ItemBuilder(MenuItems.levelAndPop);
+        levelAndPop.displayName(MM."<aqua>Level \{user.getLevel().getLevel()}");
+        if (!((user.getLevel().getLevel() + 1) == Township.getLevelManager().getLevelList().size())) {
+            levelAndPop.lore(List.of(MM."<aqua>Xp \{user.getLevel().getXp()}",
+                    MM."\{user.getLevel().getProgressBar()}",
+                    MM."<red>Population \{user.getPopulation()}"));
+        } else {
+            levelAndPop.lore(List.of(
+                    MM."<dark_red>You have reached the max level!",
+                    MM."<red>Population \{user.getPopulation()}"));
+        }
         player.getInventory().setItem(9, levelAndPop.build());
         ItemBuilder coinsAndCash = new ItemBuilder(MenuItems.coinsAndCash)
                 .displayName(MM."<yellow>Coins \{user.getCoins()}")
