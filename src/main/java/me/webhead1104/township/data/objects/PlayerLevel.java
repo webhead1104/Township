@@ -30,23 +30,31 @@ public class PlayerLevel {
     }
 
     public boolean canLevelUp() {
-        User user = Township.getUserManager().getUser(uuid);
-        if (user.getLevel().getXp() >= Township.getLevelManager().getLevelList().get(user.getLevel().getLevel()).getXpNeeded()) {
-            user.getLevel().setLevel(user.getLevel().getLevel() + 1);
-            user.getLevel().setXp(0);
-            Objects.requireNonNull(Bukkit.getPlayer(uuid))
-                    .sendMessage(MM."<green>You have leveled up! You are now level \{user.getLevel().getLevel()}");
-            return true;
+        if (!((level + 1) == Township.getLevelManager().getLevelList().size())) {
+            User user = Township.getUserManager().getUser(uuid);
+            if (user.getLevel().getXp() >= Township.getLevelManager().getLevelList().get(user.getLevel().getLevel() + 1).getXpNeeded()) {
+                user.getLevel().setLevel(user.getLevel().getLevel() + 1);
+                user.getLevel().setXp(0);
+                Objects.requireNonNull(Bukkit.getPlayer(uuid))
+                        .sendMessage(MM."<green>You have leveled up! You are now level \{user.getLevel().getLevel()}");
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
     }
 
     public String getProgressBar() {
-        long max = Township.getLevelManager().getLevelList().get(level + 1).getXpNeeded();
-        float percent = (float) xp / max;
-        int progressBars = (int) (16 * percent);
+        if (!((level + 1) == Township.getLevelManager().getLevelList().size())) {
+            long max = Township.getLevelManager().getLevelList().get(level + 1).getXpNeeded();
+            float percent = (float) xp / max;
+            int progressBars = (int) (16 * percent);
 
-        return Strings.repeat("<aqua>■", progressBars) + Strings.repeat("<gray>■", 16 - progressBars);
+            return Strings.repeat("<aqua>■", progressBars) + Strings.repeat("<gray>■", 16 - progressBars);
+        } else {
+            return "<dark_red>You have reached the max level!";
+        }
     }
 }
