@@ -30,9 +30,6 @@ public class LevelManager {
                 levelList.add(new Level(xp, coins, cash));
             }
             Township.logger.info(STR."Levels loaded in \{System.currentTimeMillis() - start} mills!");
-            for (Level level : levelList) {
-                Township.logger.info(STR."xp = \{level.getXpNeeded()} coins = \{level.getCoinsGiven()} cash = \{level.getCashGiven()}");
-            }
         } catch (Exception e) {
             Township.logger.error("error", e);
         }
