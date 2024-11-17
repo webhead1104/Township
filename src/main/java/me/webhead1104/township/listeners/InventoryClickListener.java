@@ -42,7 +42,7 @@ public class InventoryClickListener implements Listener {
                     case "township", "back_button" -> Township.getWorldManager().openWorldMenu(player);
                     case "completed" -> {
                         FactoryType factoryType = FactoryType.valueOf(builder.pdcGetString(ItemBuilder.factoryTypeKey).toUpperCase());
-                        ItemType recipeType = ItemType.valueOf(builder.pdcGetString(ItemBuilder.itemTypeKey).toUpperCase());
+                        RecipeType recipeType = RecipeType.valueOf(builder.pdcGetString(ItemBuilder.recipeTypeKey).toUpperCase());
                         int slot = builder.pdcGetInt(ItemBuilder.factoryCompletedSlotKey);
                         Township.getFactoriesManager().complete(player, slot, factoryType, recipeType);
                     }

@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -24,7 +25,10 @@ public class FactoriesManager {
 
     //"12-14 completed, 27 being worked on,36-44 recipes"
     public void openFactoryMenu(Player player, FactoryType type) {
+        player.getInventory().clear();
+        player.setItemOnCursor(ItemStack.empty());
         User user = Township.getUserManager().getUser(player.getUniqueId());
+        if (!(user.getLevel().getLevel() >= type.getLevelNeeded())) return;
         Factories factory = user.getFactories();
         Inventory inventory = Bukkit.createInventory(null, 54, type.getMenuTitle());
         //recipes
@@ -69,10 +73,11 @@ public class FactoriesManager {
         player.openInventory(inventory);
     }
 
-    public void complete(Player player, int completedSlot, FactoryType factoryType, ItemType itemType) {
+    public void complete(Player player, int completedSlot, FactoryType factoryType, RecipeType recipeType) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         user.getFactories().setCompleted(factoryType, completedSlot, ItemType.NONE);
-        user.getBarn().addAmountToItem(itemType, 1);
+        user.getBarn().addAmountToItem(recipeType.getItemType(), 1);
+        user.getLevel().addXp(recipeType.getXpGiven());
         openFactoryMenu(player, factoryType);
     }
 

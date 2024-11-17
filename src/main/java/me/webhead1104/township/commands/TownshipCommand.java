@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.AnimalType;
 import me.webhead1104.township.data.enums.FactoryType;
+import me.webhead1104.township.data.objects.PlayerLevel;
 import me.webhead1104.township.data.objects.User;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static me.webhead1104.township.utils.MiniMessageTemplate.MM;
 
@@ -94,19 +96,43 @@ public class TownshipCommand implements CommandExecutor, TabCompleter {
                     try {
                         int amount = Integer.parseInt(args[2]);
                         User user = Township.getUserManager().getUser(player.getUniqueId());
+                        UUID uuid = player.getUniqueId();
                         switch (args[1].toLowerCase()) {
                             case "add" -> {
-                                user.setLevel(user.getLevel() + amount);
+                                user.setLevel(new PlayerLevel(user.getLevel().getLevel() + amount, 0, uuid));
                                 sender.sendMessage(MM."added \{amount} level");
                             }
                             case "remove" -> {
-                                user.setLevel(user.getLevel() - amount);
+                                user.setLevel(new PlayerLevel(user.getLevel().getLevel() - amount, 0, uuid));
                                 sender.sendMessage(MM."removed \{amount} level");
                             }
-                            case "get" -> player.sendMessage(MM."level = \{user.getLevel()}");
+                            case "get" -> player.sendMessage(MM."level = \{user.getLevel().getLevel()}");
                             case "set" -> {
-                                user.setLevel(amount);
+                                user.setLevel(new PlayerLevel(amount, 0, uuid));
                                 sender.sendMessage(MM."set level to \{amount}");
+                            }
+                        }
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage(MM."Invalid amount.");
+                    }
+                }
+                case "xp" -> {
+                    try {
+                        int amount = Integer.parseInt(args[2]);
+                        User user = Township.getUserManager().getUser(player.getUniqueId());
+                        switch (args[1].toLowerCase()) {
+                            case "add" -> {
+                                user.getLevel().addXp(amount);
+                                sender.sendMessage(MM."added \{amount} xp");
+                            }
+                            case "remove" -> {
+                                user.getLevel().setXp(user.getLevel().getXp() - amount);
+                                sender.sendMessage(MM."removed \{amount} xp");
+                            }
+                            case "get" -> player.sendMessage(MM."xp = \{user.getLevel().getXp()}");
+                            case "set" -> {
+                                user.getLevel().setXp(amount);
+                                sender.sendMessage(MM."set xp to \{amount}");
                             }
                         }
                     } catch (NumberFormatException e) {

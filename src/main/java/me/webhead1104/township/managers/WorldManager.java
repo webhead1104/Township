@@ -9,6 +9,7 @@ import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.utils.ItemBuilder;
 import me.webhead1104.township.utils.MenuItems;
+import me.webhead1104.township.utils.Utils;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -93,9 +94,16 @@ public class WorldManager {
                 builder.displayName(MM."Expansion");
                 builder.lore(List.of(MM."<aqua>Click to open the expansion menu!"));
             }
-            if (value.getTileType().equals(WorldTileType.TRAIN) && !(user.getLevel() >= 5)) {
+            if (value.getTileType().equals(WorldTileType.TRAIN) && !(user.getLevel().getLevel() >= 5)) {
                 builder.lore(List.of(MM."<red>You need to be level <aqua>5 <red>to access the trains!",
-                        MM."<red>You are level <aqua>\{user.getLevel()}"));
+                        MM."<red>You are level <aqua>\{user.getLevel().getLevel()}"));
+            }
+            if (value.getTileType().getAnimalType() != null && !(user.getLevel().getLevel() >=
+                    value.getTileType().getAnimalType().getLevelNeeded())) {
+                builder.lore(List.of(
+                        MM."<red>You need to be level <aqua>5 <red>to access the \{
+                                Utils.thing2(value.getTileType().getAnimalType().getID())}!",
+                        MM."<red>You are level <aqua>\{user.getLevel().getLevel()}"));
             }
             inventory.setItem(key, builder.build());
         });
@@ -147,9 +155,17 @@ public class WorldManager {
         ItemBuilder profile = new ItemBuilder(MenuItems.profile)
                 .displayName(MM."<green>\{user.getTownName()}");
         player.getInventory().setItem(22, profile.build());
-        ItemBuilder levelAndPop = new ItemBuilder(MenuItems.levelAndPop)
-                .displayName(MM."<aqua>Level \{user.getLevel()}")
-                .lore(List.of(MM."<red>Population \{user.getPopulation()}"));
+        ItemBuilder levelAndPop = new ItemBuilder(MenuItems.levelAndPop);
+        levelAndPop.displayName(MM."<aqua>Level \{user.getLevel().getLevel()}");
+        if (!((user.getLevel().getLevel() + 1) == Township.getLevelManager().getLevelList().size())) {
+            levelAndPop.lore(List.of(MM."<aqua>Xp \{user.getLevel().getXp()}",
+                    MM."\{user.getLevel().getProgressBar()}",
+                    MM."<red>Population \{user.getPopulation()}"));
+        } else {
+            levelAndPop.lore(List.of(
+                    MM."<dark_red>You have reached the max level!",
+                    MM."<red>Population \{user.getPopulation()}"));
+        }
         player.getInventory().setItem(9, levelAndPop.build());
         ItemBuilder coinsAndCash = new ItemBuilder(MenuItems.coinsAndCash)
                 .displayName(MM."<yellow>Coins \{user.getCoins()}")
