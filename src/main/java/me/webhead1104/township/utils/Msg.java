@@ -13,8 +13,4 @@ public class Msg {
     public static String formatToJson(String miniMessageString) {
         return JSONComponentSerializer.json().serialize(MiniMessage.miniMessage().deserialize(miniMessageString));
     }
-
-    public static String formatToJson(Component miniMessageComponent) {
-        return JSONComponentSerializer.json().serialize(miniMessageComponent);
-    }
 }
