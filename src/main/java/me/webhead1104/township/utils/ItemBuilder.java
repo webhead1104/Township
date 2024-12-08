@@ -35,7 +35,6 @@ public class ItemBuilder {
     public static final NamespacedKey trainKey = new NamespacedKey("township", "train");
     public static final NamespacedKey trainCarKey = new NamespacedKey("township", "train_car");
 
-
     private ItemStack item;
     @Getter
     private ItemMeta meta;
@@ -148,6 +147,10 @@ public class ItemBuilder {
             }
             if (pdcHas(ItemBuilder.townshipIdKey)) this.id = pdcGetString(ItemBuilder.townshipIdKey);
         }
+    }
+
+    public static ItemBuilder loading() {
+        return new ItemBuilder(Material.COAL_BLOCK, Msg.format("<red>Loading..."), "loading");
     }
 
     public ItemBuilder id(String id) {

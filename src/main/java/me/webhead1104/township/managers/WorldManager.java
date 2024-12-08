@@ -144,7 +144,7 @@ public class WorldManager {
                 player.getInventory().setItem(31, MenuItems.arrowDown);
             }
         }
-        ItemBuilder profile = new ItemBuilder(MenuItems.profile).displayName(Msg.format("<green>" + user.getTownName()));
+        ItemBuilder profile = new ItemBuilder(MenuItems.profile).material(Material.LIGHT_BLUE_CONCRETE).displayName(Msg.format("<green>" + user.getTownName()));
         player.getInventory().setItem(22, profile.build());
         ItemBuilder levelAndPop = new ItemBuilder(MenuItems.levelAndPop);
         levelAndPop.displayName(Msg.format("<aqua>Level " + user.getLevel().getLevel()));

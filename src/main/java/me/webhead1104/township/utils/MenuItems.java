@@ -24,14 +24,14 @@ public class MenuItems {
 
     public static final ItemStack levelAndPop = new ItemBuilder(Material.BLUE_CONCRETE, Msg.format("<aqua>Level 0"), List.of(Msg.format("<red>Population 0")), "level_population").build();
     public static final ItemStack coinsAndCash = new ItemBuilder(Material.GOLD_BLOCK, Msg.format("<yellow>Coins 0"), List.of(Msg.format("<green>Cash 0")), "coins_cash").build();
-    public static final ItemStack profile = new ItemBuilder(Material.LIGHT_BLUE_CONCRETE, Msg.format("null"), "profile").build();
+    public static final ItemStack profile = ItemBuilder.loading().id("profile").build();
     public static final ItemStack township = new ItemBuilder(Material.GREEN_CONCRETE, Msg.format("<green>Click to play township!"), "township").build();
     public static final ItemStack backButton = new ItemBuilder(Material.BARRIER, Msg.format("<red>Click to go back!"), "back_button").build();
-    public static final ItemStack workingOn = new ItemBuilder(Material.COAL_BLOCK, Msg.format("<green>Loading...."), "working_on").build();
-    public static final ItemStack completed = new ItemBuilder(Material.COAL_BLOCK, Msg.format("<green>Loading...."), "completed").build();
-    public static final ItemStack expansionPrice = new ItemBuilder(Material.COAL_BLOCK, Msg.format("<green>Loading...."), "expansion_price").build();
-    public static final ItemStack expansionPopulation = new ItemBuilder(Material.COAL_BLOCK, Msg.format("<green>Loading...."), "expansion_population").build();
-    public static final ItemStack expansionBuy = new ItemBuilder(Material.COAL_BLOCK, Msg.format("<green>Loading...."), "expansion_buy").build();
+    public static final ItemStack workingOn = ItemBuilder.loading().id("working_on").build();
+    public static final ItemStack completed = ItemBuilder.loading().id("completed").build();
+    public static final ItemStack expansionPrice = ItemBuilder.loading().id("expansion_price").build();
+    public static final ItemStack expansionPopulation = ItemBuilder.loading().id("expansion_population").build();
+    public static final ItemStack expansionBuy = ItemBuilder.loading().id("expansion_buy").build();
 
     public static final ItemStack none = new ItemBuilder(Material.FARMLAND, Msg.format("none plot"), "none_plot").build();
     public static final ItemStack wheat = new ItemBuilder(Material.WHEAT, Msg.format("<gold>Wheat"), "wheat").build();
@@ -52,14 +52,14 @@ public class MenuItems {
     //barn
     public static final ItemStack barnArrowUp = new ItemBuilder(Material.ARROW, Msg.format("<dark_green>Click to scroll up!"), "barn_arrow_up").build();
     public static final ItemStack barnArrowDown = new ItemBuilder(Material.ARROW, Msg.format("<dark_green>Click to scroll down!"), "barn_arrow_down").build();
-    public static final ItemStack barnSell = new ItemBuilder(Material.COAL_BLOCK, Msg.format("<red>Loading..."), "barn_sell").build();
-    public static final ItemStack barnIncreaseAmount = new ItemBuilder(Material.COAL_BLOCK, Msg.format("<red>Loading..."), "barn_increase").build();
-    public static final ItemStack barnDecreaseAmount = new ItemBuilder(Material.COAL_BLOCK, Msg.format("<red>Loading..."), "barn_decrease").build();
-    public static final ItemStack barnUpgrade = new ItemBuilder(Material.COAL_BLOCK, Msg.format("<red>Loading..."), "barn_upgrade").build();
-    public static final ItemStack barnStorage = new ItemBuilder(Material.COAL_BLOCK, Msg.format("<red>Loading..."), "barn_storage").build();
+    public static final ItemStack barnSell = ItemBuilder.loading().id("barn_sell").build();
+    public static final ItemStack barnIncreaseAmount = ItemBuilder.loading().id("barn_increase").build();
+    public static final ItemStack barnDecreaseAmount = ItemBuilder.loading().id("barn_decrease").build();
+    public static final ItemStack barnUpgrade = ItemBuilder.loading().id("barn_upgrade").build();
+    public static final ItemStack barnStorage = ItemBuilder.loading().id("barn_storage").build();
     //trains
-    public static final ItemStack trainEngine = new ItemBuilder(Material.COAL_BLOCK, Msg.format("<red>Loading..."), "train_engine").build();
-    public static final ItemStack trainCar = new ItemBuilder(Material.COAL_BLOCK, Msg.format("<red>Loading..."), "train_car").build();
+    public static final ItemStack trainEngine = ItemBuilder.loading().id("train_engine").build();
+    public static final ItemStack trainCar = ItemBuilder.loading().id("train_car").build();
 
     public static class World {
         public static final ItemStack grass = new ItemBuilder(Material.GRASS_BLOCK, Msg.format(""), "grass").build();
