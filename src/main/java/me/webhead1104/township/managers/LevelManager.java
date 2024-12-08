@@ -29,7 +29,7 @@ public class LevelManager {
                 long cash = jsonElement.getAsJsonObject().get("cash_given").getAsLong();
                 levelList.add(new Level(xp, coins, cash));
             }
-            Township.logger.info(STR."Levels loaded in \{System.currentTimeMillis() - start} mills!");
+            Township.logger.info("Levels loaded in {} mills!", System.currentTimeMillis() - start);
         } catch (Exception e) {
             Township.logger.error("error", e);
         }

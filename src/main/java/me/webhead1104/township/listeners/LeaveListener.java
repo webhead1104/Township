@@ -17,6 +17,6 @@ public class LeaveListener implements Listener {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         Township.getDatabase().setData(user);
         Township.getUserManager().removeUser(player.getUniqueId());
-        Township.logger.info(STR."player \{player.getName()} has left. data has been saved!");
+        Township.logger.info("player {} has left. data has been saved!", player.getName());
     }
 }

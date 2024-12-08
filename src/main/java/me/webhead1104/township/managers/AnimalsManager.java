@@ -7,12 +7,12 @@ import me.webhead1104.township.data.objects.Animals;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.utils.ItemBuilder;
 import me.webhead1104.township.utils.MenuItems;
+import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import static me.webhead1104.township.utils.MiniMessageTemplate.MM;
 
 @NoArgsConstructor
 public class AnimalsManager {
@@ -30,13 +30,13 @@ public class AnimalsManager {
             if (animals.getProduct(type, i)) inventory.setItem(slot + 9, type.getProductItemStack());
             if (animals.getFeed(type, i)) {
                 ItemBuilder builder = new ItemBuilder(type.getAnimalItemStack());
-                builder.lore(MM."<gold>Time: 0");
+                builder.lore(Msg.format("<gold>Time: 0"));
                 inventory.setItem(slot, builder.build());
             } else inventory.setItem(slot, type.getAnimalItemStack());
             slot++;
         }
         ItemBuilder builder = new ItemBuilder(type.getFeedItemStack());
-        builder.lore(MM."<white>\{user.getBarn().getItem(type.getFeedType())}", 0);
+        builder.lore(Msg.format("<white>" + user.getBarn().getItem(type.getFeedType())), 0);
         inventory.setItem(36, builder.build());
         inventory.setItem(53, MenuItems.backButton);
         player.openInventory(inventory);

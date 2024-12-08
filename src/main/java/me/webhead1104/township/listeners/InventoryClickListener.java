@@ -120,7 +120,7 @@ public class InventoryClickListener implements Listener {
                 //plots
                 for (PlotType plotType : PlotType.values()) {
                     if (plotType.equals(PlotType.NONE)) continue;
-                    if (itemID.equals(STR."\{plotType.getId().toLowerCase()}_type_select")) {
+                    if (itemID.equals(plotType.getId().toLowerCase() + "_type_select")) {
                         Township.getPlotManager().selectCropType(plotType, player);
                     } else if (itemID.equals(plotType.getId().toLowerCase())) {
                         Township.getPlotManager().harvest(player, item);
@@ -128,7 +128,7 @@ public class InventoryClickListener implements Listener {
                 }
                 for (ItemType itemType : ItemType.values()) {
                     if (itemType.equals(ItemType.NONE)) continue;
-                    if (itemID.equals(STR."\{itemType.getID().toLowerCase()}_barn")) {
+                    if (itemID.equals(itemType.getID().toLowerCase() + "_barn")) {
                         Township.getBarnManager().openSellMenu(player, itemType, 1);
                     }
                 }

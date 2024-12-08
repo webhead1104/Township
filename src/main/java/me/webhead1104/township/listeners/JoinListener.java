@@ -27,13 +27,13 @@ public class JoinListener implements Listener {
                         return;
                     }
                     Township.getUserManager().setUser(user.getUuid(), user);
-                    Township.logger.info(STR."player \{event.getPlayer().getName()} has joined. data has been loaded!");
+                    Township.logger.info("player {} has joined. data has been loaded!", player.getName());
                 });
             } else {
-                Township.logger.info(STR."player \{event.getPlayer().getName()} has joined. data not found. creating new player...");
-                Township.getDatabase().newPlayer(event.getPlayer().getUniqueId());
+                Township.logger.info("player {} has joined. data not found. creating new player...", player.getName());
+                Township.getDatabase().newPlayer(player.getUniqueId());
             }
         });
-        Township.logger.info(STR."Join event done in \{System.currentTimeMillis() - start} mills");
+        Township.logger.info("Join event done in {} mills", System.currentTimeMillis() - start);
     }
 }

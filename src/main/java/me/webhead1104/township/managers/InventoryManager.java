@@ -1,6 +1,7 @@
 package me.webhead1104.township.managers;
 
 import lombok.NoArgsConstructor;
+import me.webhead1104.township.utils.Msg;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -8,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-import static me.webhead1104.township.utils.MiniMessageTemplate.MM;
 
 @NoArgsConstructor
 public class InventoryManager {
@@ -27,8 +27,8 @@ public class InventoryManager {
 
     public void returnItemsToPlayer(Player player) {
         if (getPlayerInventory(player.getUniqueId()).isEmpty()) {
-            player.sendMessage(MM."<red>No items found!");
-            throw new NullPointerException(STR."Player \{player.getUniqueId()} does not have a inventory stored!");
+            player.sendMessage(Msg.format("<red>No items found!"));
+            throw new NullPointerException("Player " + player.getUniqueId() + " does not have a inventory stored!");
         } else {
             int i = 0;
             for (ItemStack itemStack : getPlayerInventory(player.getUniqueId()).get().values()) {
@@ -45,7 +45,7 @@ public class InventoryManager {
 
     public void removePlayerInventory(UUID playerUUID) {
         if (getPlayerInventory(playerUUID).isEmpty()) {
-            throw new NullPointerException(STR."Player \{playerUUID} does not have a inventory stored!");
+            throw new NullPointerException("Player " + playerUUID + " does not have a inventory stored!");
         } else playerInventories.remove(playerUUID);
     }
 }

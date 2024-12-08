@@ -50,7 +50,7 @@ public class Township extends JavaPlugin {
         long start = System.currentTimeMillis();
         Objects.requireNonNull(getCommand("township")).setExecutor(new TownshipCommand());
         registerListeners();
-        File file = new File(STR."\{getDataFolder().getAbsolutePath()}/config.yml");
+        File file = new File(getDataFolder().getAbsolutePath() + "/config.yml");
         if (!file.exists()) saveResource("config.yml", false);
         logger = getSLF4JLogger();
         database = new Database(this);
@@ -69,15 +69,15 @@ public class Township extends JavaPlugin {
         trainManager = new TrainManager();
         levelManager = new LevelManager();
         levelManager.loadLevels();
-        logger.info(STR."Township initialized in \{System.currentTimeMillis() - start} mills!");
+        logger.info("Township initialized in {} mills!", System.currentTimeMillis() - start);
     }
 
     @Override
     public void onDisable() {
         logger.info("Township shutting down saving users");
-        userManager.getUsers().forEach((_, user) -> {
+        userManager.getUsers().forEach((key, user) -> {
             database.setData(user);
-            logger.info(STR."saved \{user.getUuid()}");
+            logger.info("saved {}", user.getUuid());
         });
         database.disconnect();
         logger.info("Township has shut down!");

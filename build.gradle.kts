@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.gradleup.shadow") version "9.0.0-beta4"
     id("xyz.jpenilla.run-paper") version "2.3.1"
     id("io.freefair.lombok") version "8.10.2"
 }
@@ -27,16 +27,10 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
-tasks.withType<JavaCompile> {
-    // use String templates
-    options.compilerArgs.add("--enable-preview")
-}
-
 tasks.withType<Javadoc> {
     val javadocOptions = options as CoreJavadocOptions
 
     javadocOptions.addStringOption("source", "21")
-    javadocOptions.addBooleanOption("-enable-preview", true)
 }
 
 tasks {
@@ -70,6 +64,5 @@ tasks {
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
         minecraftVersion("1.21.3")
-        jvmArguments.add("--enable-preview")
     }
 }

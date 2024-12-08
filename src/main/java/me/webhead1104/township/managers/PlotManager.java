@@ -7,12 +7,12 @@ import me.webhead1104.township.data.objects.Plot;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.utils.ItemBuilder;
 import me.webhead1104.township.utils.MenuItems;
+import me.webhead1104.township.utils.Msg;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static me.webhead1104.township.utils.MiniMessageTemplate.MM;
 
 @NoArgsConstructor
 public class PlotManager {
@@ -27,11 +27,11 @@ public class PlotManager {
             if (type.equals(PlotType.NONE)) continue;
             if (!(user.getLevel().getLevel() >= type.getLevelNeeded())) continue;
             ItemBuilder itemBuilder = new ItemBuilder(type.getItemType().getItemStack());
-            itemBuilder.id(STR."\{type.getId().toLowerCase()}_type_select");
+            itemBuilder.id(type.getId().toLowerCase() + "_type_select");
             String price = type.getPrice() == 0 ? "FREE!" : String.valueOf(type.getPrice());
             if (user.getCoins() >= type.getPrice()) {
-                itemBuilder.lore(MM."<blue>Coins needed <green>\{user.getCoins()}/\{price}");
-            } else itemBuilder.lore(MM."<red>Coins needed \{user.getCoins()}/\{price}");
+                itemBuilder.lore(Msg.format("<blue>Coins needed <green>" + user.getCoins() + "/" + price));
+            } else itemBuilder.lore(Msg.format("<red>Coins needed " + user.getCoins() + "/" + price));
             player.getInventory().setItem(i.getAndIncrement(), itemBuilder.build());
         }
         player.getInventory().setItem(0, MenuItems.backButton);
@@ -40,7 +40,7 @@ public class PlotManager {
     public void selectCropType(PlotType plotType, Player player) {
         if (Township.getUserManager().getUser(player.getUniqueId()).getCoins() >= plotType.getPrice()) {
             ItemBuilder builder = new ItemBuilder(plotType.getItemType().getItemStack());
-            builder.id(STR."\{plotType.getId()}_type_selected");
+            builder.id(plotType.getId() + "_type_selected");
             player.setItemOnCursor(builder.build());
         }
     }
@@ -54,8 +54,7 @@ public class PlotManager {
         if (user.getCoins() >= cursorPlotType.getPrice()) {
             user.setCoins(user.getCoins() - cursorPlotType.getPrice());
             plot.setPlotType(cursorPlotType);
-            user.getWorld().getSection(plot.getSection())
-                    .getSlot(plot.getSlot()).setPlot(plot);
+            user.getWorld().getSection(plot.getSection()).getSlot(plot.getSlot()).setPlot(plot);
             openMenu(player);
             player.setItemOnCursor(cursorItem);
         }

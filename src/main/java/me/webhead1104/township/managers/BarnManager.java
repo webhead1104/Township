@@ -8,6 +8,7 @@ import me.webhead1104.township.data.objects.BarnUpgrade;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.utils.ItemBuilder;
 import me.webhead1104.township.utils.MenuItems;
+import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -19,7 +20,6 @@ import org.bukkit.inventory.ItemRarity;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static me.webhead1104.township.utils.MiniMessageTemplate.MM;
 
 @NoArgsConstructor
 public class BarnManager {
@@ -32,15 +32,15 @@ public class BarnManager {
         player.getInventory().clear();
         if (!barnPages.containsKey(player.getUniqueId())) barnPages.put(player.getUniqueId(), 1);
         barnPages.put(player.getUniqueId(), page);
-        Inventory inventory = Bukkit.createInventory(null, 54, STR."Barn page \{barnPages.get(player.getUniqueId())}");
+        Inventory inventory = Bukkit.createInventory(null, 54, Msg.format("The barn"));
         User user = Township.getUserManager().getUser(player.getUniqueId());
         Barn barn = user.getBarn();
         AtomicInteger i = new AtomicInteger(0);
         for (Map.Entry<Integer, ItemType> entry : barnPageMap.get(page).entrySet()) {
             if (user.getBarn().getItem(entry.getValue()) == 0) continue;
             ItemType type = entry.getValue();
-            ItemBuilder builder = new ItemBuilder(type.getItemStack().getType(), STR."\{type.getID()}_barn");
-            builder.displayName(MM."You have <aqua>\{barn.getItem(type)}</aqua> of <yellow>\{Utils.thing2(type.getID())}</yellow>");
+            ItemBuilder builder = new ItemBuilder(type.getItemStack().getType(), type.getID() + "_barn");
+            builder.displayName(Msg.format("You have <aqua>" + barn.getItem(type) + "</aqua> of <yellow>" + Utils.thing2(type.getID()) + "</yellow>"));
             builder.lore(List.of());
             builder.setRarity(ItemRarity.COMMON);
             inventory.setItem(i.getAndIncrement(), builder.build());
@@ -58,36 +58,47 @@ public class BarnManager {
         ItemBuilder storage = new ItemBuilder(MenuItems.barnStorage);
         if (user.getBarn().getBarnUpgrade().getBarnStorage() >= user.getBarn().storage()) {
             storage.material(Material.LIME_CONCRETE);
-            storage.displayName(MM."<green>\{user.getBarn().storage()}/\{user.getBarn().getBarnUpgrade().getBarnStorage()}");
+            storage.displayName(Msg.format("<green>" + user.getBarn().storage() + "/" + user.getBarn().getBarnUpgrade().getBarnStorage()));
         } else {
             storage.material(Material.RED_CONCRETE);
-            storage.displayName(MM."<red>Full! \{user.getBarn().storage()}/\{user.getBarn().getBarnUpgrade().getBarnStorage()}");
+            storage.displayName(Msg.format("<red>Full! " + user.getBarn().storage() + "/" + user.getBarn().getBarnUpgrade().getBarnStorage()));
         }
         List<Component> lore = new ArrayList<>();
         user.getBarn().getItemMap().forEach((key, value) -> {
             if (value != 0) {
-                lore.add(MM."<white>\{Utils.thing2(key.getID())}: \{value}");
+                lore.add(Msg.format("<white>" + Utils.thing2(key.getID()) + ": " + value));
             }
         });
         storage.lore(lore);
         player.getInventory().setItem(0, storage.build());
         ItemBuilder upgrade = new ItemBuilder(MenuItems.barnUpgrade);
-        Component line1 = canUpgrade(player) ? MM."<green>Click to upgrade!" : MM."<red>You need to get more materials to upgrade!";
-        Component hammers = user.getBarn().getItem(ItemType.HAMMER) >= user.getBarn().getBarnUpgrade().getToolsNeeded() ?
-                MM."<dark_green>Hammers: \{user.getBarn().getItem(ItemType.HAMMER)}/\{user.getBarn().getBarnUpgrade().getToolsNeeded()}" :
-                MM."<red>Hammers: \{user.getBarn().getItem(ItemType.HAMMER)}/\{user.getBarn().getBarnUpgrade().getToolsNeeded()}";
-        Component nails = user.getBarn().getItem(ItemType.NAIL) >= user.getBarn().getBarnUpgrade().getToolsNeeded() ?
-                MM."<dark_green>Nails: \{user.getBarn().getItem(ItemType.NAIL)}/\{user.getBarn().getBarnUpgrade().getToolsNeeded()}" :
-                MM."<red>Nails: \{user.getBarn().getItem(ItemType.NAIL)}/\{user.getBarn().getBarnUpgrade().getToolsNeeded()}";
-        Component paint = user.getBarn().getItem(ItemType.PAINT) >= user.getBarn().getBarnUpgrade().getToolsNeeded() ?
-                MM."<dark_green>Paint buckets: \{user.getBarn().getItem(ItemType.PAINT)}/\{user.getBarn().getBarnUpgrade().getToolsNeeded()}" :
-                MM."<red>Paint buckets: \{user.getBarn().getItem(ItemType.PAINT)}/\{user.getBarn().getBarnUpgrade().getToolsNeeded()}";
+        Component line1;
         if (canUpgrade(player)) {
             upgrade.material(Material.LIME_CONCRETE);
+            line1 = Msg.format("<green>Click to upgrade!");
         } else {
             upgrade.material(Material.RED_CONCRETE);
+            line1 = Msg.format("<red>You need to get more materials to upgrade!");
         }
-        upgrade.displayName(MM."<white>Barn level: \{user.getBarn().getBarnUpgrade().getId()}");
+        Component hammers;
+        if (user.getBarn().getItem(ItemType.HAMMER) >= user.getBarn().getBarnUpgrade().getToolsNeeded()) {
+            hammers = Msg.format("<dark_green>Hammers: " + user.getBarn().getItem(ItemType.HAMMER) + "/" + user.getBarn().getBarnUpgrade().getToolsNeeded());
+        } else {
+            hammers = Msg.format("<red>Hammers: " + user.getBarn().getItem(ItemType.HAMMER) + "/" + user.getBarn().getBarnUpgrade().getToolsNeeded());
+        }
+        Component nails;
+        if (user.getBarn().getItem(ItemType.NAIL) >= user.getBarn().getBarnUpgrade().getToolsNeeded()) {
+            nails = Msg.format("<dark_green>Nails: " + user.getBarn().getItem(ItemType.NAIL) + "/" + user.getBarn().getBarnUpgrade().getToolsNeeded());
+        } else {
+            nails = Msg.format("<red>Nails: " + user.getBarn().getItem(ItemType.NAIL) + "/" + user.getBarn().getBarnUpgrade().getToolsNeeded());
+        }
+        Component paint;
+        if (user.getBarn().getItem(ItemType.PAINT) >= user.getBarn().getBarnUpgrade().getToolsNeeded()) {
+            paint = Msg.format("<dark_green>Paint buckets: " + user.getBarn().getItem(ItemType.PAINT) + "/" + user.getBarn().getBarnUpgrade().getToolsNeeded());
+        } else {
+            paint = Msg.format("<red>Paint buckets: " + user.getBarn().getItem(ItemType.PAINT) + "/" + user.getBarn().getBarnUpgrade().getToolsNeeded());
+        }
+        upgrade.displayName(Msg.format("<white>Barn level: " + user.getBarn().getBarnUpgrade().getId()));
         upgrade.lore(List.of(line1, hammers, nails, paint));
         player.getInventory().setItem(8, upgrade.build());
         player.getInventory().setItem(7, MenuItems.backButton);
@@ -102,8 +113,8 @@ public class BarnManager {
         if (amount != 1) {
             ItemBuilder decrease = new ItemBuilder(MenuItems.barnDecreaseAmount);
             decrease.material(Material.RED_CANDLE);
-            decrease.displayName(MM."<red>Click to decrease the amount!");
-            decrease.lore(List.of(MM."<blue>Currently at \{amount}"));
+            decrease.displayName(Msg.format("<red>Click to decrease the amount!"));
+            decrease.lore(List.of(Msg.format("<blue>Currently at " + amount)));
             decrease.pdcSetInt(ItemBuilder.barnSellAmountKey, amount);
             decrease.pdcSetString(ItemBuilder.itemTypeKey, itemType.name());
             player.getInventory().setItem(3, decrease.build());
@@ -112,7 +123,7 @@ public class BarnManager {
         ItemBuilder sell = new ItemBuilder(MenuItems.barnSell);
         sell.material(Material.LIME_CONCRETE);
         String name = Utils.thing2(itemType.getID());
-        sell.displayName(MM."<green>Click to sell <aqua>\{amount} <green>of <yellow>\{name} <green>for <aqua>\{itemType.getSellPrice() * amount} <gold>coins!");
+        sell.displayName(Msg.format("<green>Click to sell <aqua>" + amount + " <green>of <yellow>" + name + " <green>for <aqua>" + (itemType.getSellPrice() * amount) + " <gold>coins!"));
         sell.pdcSetInt(ItemBuilder.barnSellAmountKey, amount);
         sell.pdcSetString(ItemBuilder.itemTypeKey, itemType.name());
         player.getInventory().setItem(4, sell.build());
@@ -120,8 +131,8 @@ public class BarnManager {
         if (user.getBarn().getItem(itemType) > amount) {
             ItemBuilder increase = new ItemBuilder(MenuItems.barnIncreaseAmount);
             increase.material(Material.GREEN_CANDLE);
-            increase.displayName(MM."<green>Click to increase the amount!");
-            increase.lore(List.of(MM."<blue>Currently at \{amount}"));
+            increase.displayName(Msg.format("<green>Click to increase the amount!"));
+            increase.lore(List.of(Msg.format("<blue>Currently at " + amount)));
             increase.pdcSetInt(ItemBuilder.barnSellAmountKey, amount);
             increase.pdcSetString(ItemBuilder.itemTypeKey, itemType.name());
             player.getInventory().setItem(5, increase.build());
@@ -135,7 +146,7 @@ public class BarnManager {
         } else {
             openMenu(player, barnPages.get(player.getUniqueId()));
             ItemBuilder error = new ItemBuilder(Material.BARRIER, "barn_not_enough_items");
-            error.displayName(MM."<red>You don't have enough to sell this amount!");
+            error.displayName(Msg.format("<red>You don't have enough to sell this amount!"));
             player.getInventory().setItem(4, error.build());
         }
     }
@@ -144,7 +155,7 @@ public class BarnManager {
         if (newAmount == 0) {
             openMenu(player, barnPages.get(player.getUniqueId()));
             ItemBuilder error = new ItemBuilder(Material.BARRIER, "barn_not_enough_items");
-            error.displayName(MM."<red>You don't have enough to sell this amount!");
+            error.displayName(Msg.format("<red>You don't have enough to sell this amount!"));
             player.getInventory().setItem(4, error.build());
         } else {
             openSellMenu(player, itemType, newAmount);
@@ -162,9 +173,7 @@ public class BarnManager {
     public boolean canUpgrade(Player player) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         int toolsNeeded = user.getBarn().getBarnUpgrade().getToolsNeeded();
-        return user.getBarn().getItem(ItemType.HAMMER) >= toolsNeeded &&
-                user.getBarn().getItem(ItemType.NAIL) >= toolsNeeded &&
-                user.getBarn().getItem(ItemType.PAINT) >= toolsNeeded;
+        return user.getBarn().getItem(ItemType.HAMMER) >= toolsNeeded && user.getBarn().getItem(ItemType.NAIL) >= toolsNeeded && user.getBarn().getItem(ItemType.PAINT) >= toolsNeeded;
     }
 
     public void upgrade(Player player) {

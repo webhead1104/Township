@@ -6,6 +6,7 @@ import me.webhead1104.township.data.enums.AnimalType;
 import me.webhead1104.township.data.enums.FactoryType;
 import me.webhead1104.township.data.objects.PlayerLevel;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.utils.Msg;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static me.webhead1104.township.utils.MiniMessageTemplate.MM;
 
 @NoArgsConstructor
 public class TownshipCommand implements CommandExecutor, TabCompleter {
@@ -61,9 +61,9 @@ public class TownshipCommand implements CommandExecutor, TabCompleter {
                     try {
                         int section = Integer.parseInt(args[1]);
                         Township.getUserManager().getUser(player.getUniqueId()).setSection(section);
-                        sender.sendMessage(MM."Section set to \{section}");
+                        sender.sendMessage(Msg.format("Section set to " + section));
                     } catch (NumberFormatException e) {
-                        sender.sendMessage(MM."Invalid section number.");
+                        sender.sendMessage(Msg.format("Invalid section number."));
                     }
                     return true;
                 }
@@ -76,20 +76,20 @@ public class TownshipCommand implements CommandExecutor, TabCompleter {
                         switch (args[1].toLowerCase()) {
                             case "add" -> {
                                 user.setPopulation(user.getPopulation() + amount);
-                                sender.sendMessage(MM."added \{amount} population");
+                                sender.sendMessage(Msg.format("added " + amount + " population"));
                             }
                             case "remove" -> {
                                 user.setPopulation(user.getPopulation() - amount);
-                                sender.sendMessage(MM."removed \{amount} population");
+                                sender.sendMessage(Msg.format("removed " + amount + " population"));
                             }
-                            case "get" -> player.sendMessage(MM."population = \{user.getPopulation()}");
+                            case "get" -> player.sendMessage(Msg.format("population = " + user.getPopulation()));
                             case "set" -> {
                                 user.setPopulation(amount);
-                                sender.sendMessage(MM."set population to \{amount}");
+                                sender.sendMessage(Msg.format("set population to " + amount));
                             }
                         }
                     } catch (NumberFormatException e) {
-                        sender.sendMessage(MM."Invalid amount.");
+                        sender.sendMessage(Msg.format("Invalid amount."));
                     }
                 }
                 case "level" -> {
@@ -100,20 +100,20 @@ public class TownshipCommand implements CommandExecutor, TabCompleter {
                         switch (args[1].toLowerCase()) {
                             case "add" -> {
                                 user.setLevel(new PlayerLevel(user.getLevel().getLevel() + amount, 0, uuid));
-                                sender.sendMessage(MM."added \{amount} level");
+                                sender.sendMessage(Msg.format("added " + amount + " level"));
                             }
                             case "remove" -> {
                                 user.setLevel(new PlayerLevel(user.getLevel().getLevel() - amount, 0, uuid));
-                                sender.sendMessage(MM."removed \{amount} level");
+                                sender.sendMessage(Msg.format("removed " + amount + " level"));
                             }
-                            case "get" -> player.sendMessage(MM."level = \{user.getLevel().getLevel()}");
+                            case "get" -> player.sendMessage(Msg.format("level = " + user.getLevel().getLevel()));
                             case "set" -> {
                                 user.setLevel(new PlayerLevel(amount, 0, uuid));
-                                sender.sendMessage(MM."set level to \{amount}");
+                                sender.sendMessage(Msg.format("set level to " + amount));
                             }
                         }
                     } catch (NumberFormatException e) {
-                        sender.sendMessage(MM."Invalid amount.");
+                        sender.sendMessage(Msg.format("Invalid amount."));
                     }
                 }
                 case "xp" -> {
@@ -123,20 +123,20 @@ public class TownshipCommand implements CommandExecutor, TabCompleter {
                         switch (args[1].toLowerCase()) {
                             case "add" -> {
                                 user.getLevel().addXp(amount);
-                                sender.sendMessage(MM."added \{amount} xp");
+                                sender.sendMessage(Msg.format("added " + amount + " xp"));
                             }
                             case "remove" -> {
                                 user.getLevel().setXp(user.getLevel().getXp() - amount);
-                                sender.sendMessage(MM."removed \{amount} xp");
+                                sender.sendMessage(Msg.format("removed " + amount + " xp"));
                             }
-                            case "get" -> player.sendMessage(MM."xp = \{user.getLevel().getXp()}");
+                            case "get" -> player.sendMessage(Msg.format("xp = " + user.getLevel().getXp()));
                             case "set" -> {
                                 user.getLevel().setXp(amount);
-                                sender.sendMessage(MM."set xp to \{amount}");
+                                sender.sendMessage(Msg.format("set xp to " + amount));
                             }
                         }
                     } catch (NumberFormatException e) {
-                        sender.sendMessage(MM."Invalid amount.");
+                        sender.sendMessage(Msg.format("Invalid amount."));
                     }
                 }
                 case "coins" -> {
@@ -146,20 +146,20 @@ public class TownshipCommand implements CommandExecutor, TabCompleter {
                         switch (args[1].toLowerCase()) {
                             case "add" -> {
                                 user.setCoins(user.getCoins() + amount);
-                                sender.sendMessage(MM."added \{amount} coins");
+                                sender.sendMessage(Msg.format("added " + amount + " coins"));
                             }
                             case "remove" -> {
                                 user.setCoins(user.getCoins() - amount);
-                                sender.sendMessage(MM."removed \{amount} coins");
+                                sender.sendMessage(Msg.format("removed " + amount + " coins"));
                             }
-                            case "get" -> player.sendMessage(MM."coins = \{user.getCoins()}");
+                            case "get" -> player.sendMessage(Msg.format("coins = " + user.getCoins()));
                             case "set" -> {
                                 user.setCoins(amount);
-                                sender.sendMessage(MM."set coins to \{amount}");
+                                sender.sendMessage(Msg.format("set coins to " + amount));
                             }
                         }
                     } catch (NumberFormatException e) {
-                        sender.sendMessage(MM."Invalid amount.");
+                        sender.sendMessage(Msg.format("Invalid amount."));
                     }
                 }
                 case "cash" -> {
@@ -169,20 +169,20 @@ public class TownshipCommand implements CommandExecutor, TabCompleter {
                         switch (args[1].toLowerCase()) {
                             case "add" -> {
                                 user.setCash(user.getCash() + amount);
-                                sender.sendMessage(MM."added \{amount} cash");
+                                sender.sendMessage(Msg.format("added " + amount + " cash"));
                             }
                             case "remove" -> {
                                 user.setCash(user.getCash() - amount);
-                                sender.sendMessage(MM."removed \{amount} cash");
+                                sender.sendMessage(Msg.format("removed " + amount + " cash"));
                             }
-                            case "get" -> player.sendMessage(MM."cash = \{user.getCash()}");
+                            case "get" -> player.sendMessage(Msg.format("cash = " + user.getCash()));
                             case "set" -> {
                                 user.setCash(amount);
-                                sender.sendMessage(MM."set cash to \{amount}");
+                                sender.sendMessage(Msg.format("set cash to " + amount));
                             }
                         }
                     } catch (NumberFormatException e) {
-                        sender.sendMessage(MM."Invalid amount.");
+                        sender.sendMessage(Msg.format("Invalid amount."));
                     }
                 }
             }

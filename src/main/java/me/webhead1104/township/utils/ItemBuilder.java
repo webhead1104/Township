@@ -1,28 +1,25 @@
 package me.webhead1104.township.utils;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import lombok.Getter;
-import me.webhead1104.township.Township;
 import net.kyori.adventure.text.Component;
 import org.apache.commons.lang3.Validate;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.profile.PlayerTextures;
 import org.jetbrains.annotations.NotNull;
 
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.util.*;
 
-@SuppressWarnings({"unused", "UnusedReturnValue"})
+@SuppressWarnings({"rawtypes", "unchecked", "unused"})
 public class ItemBuilder {
 
     public static final NamespacedKey townshipIdKey = new NamespacedKey("township", "township_id");
@@ -47,7 +44,7 @@ public class ItemBuilder {
     @Getter
     private int amount = 1;
     @Getter
-    private short durability = 0;
+    private int durability = 0;
     @Getter
     private Map<Enchantment, Integer> enchantments = new HashMap<>();
     @Getter
@@ -133,10 +130,10 @@ public class ItemBuilder {
         this.item = item;
         this.material = item.getType();
         this.amount = item.getAmount();
-        this.durability = item.getDurability();
         this.enchantments = item.getEnchantments();
         if (item.hasItemMeta()) {
             this.meta = item.getItemMeta();
+            this.durability = ((Damageable) item.getItemMeta()).getDamage();
             if (item.getItemMeta().hasDisplayName()) this.displayName = item.getItemMeta().displayName();
             if (item.getItemMeta().hasLore()) this.lore = item.getItemMeta().lore();
             flags.addAll(item.getItemMeta().getItemFlags());
@@ -175,6 +172,7 @@ public class ItemBuilder {
         return this;
     }
 
+    @CanIgnoreReturnValue
     public ItemBuilder enchant(Enchantment enchant, int level) {
         Validate.notNull(enchant, "The Enchantment is null.");
         enchantments.put(enchant, level);
@@ -213,12 +211,14 @@ public class ItemBuilder {
         return this;
     }
 
+    @CanIgnoreReturnValue
     public ItemBuilder lore(Component line, int index) {
         Validate.notNull(line, "The Line is null.");
         lore.set(index, line);
         return this;
     }
 
+    @CanIgnoreReturnValue
     public ItemBuilder flag(ItemFlag flag) {
         Validate.notNull(flag, "The Flag is null.");
         flags.add(flag);
@@ -242,6 +242,7 @@ public class ItemBuilder {
         return this;
     }
 
+    @CanIgnoreReturnValue
     public ItemBuilder setRarity(ItemRarity rarity) {
         meta.setRarity(rarity);
         return this;
@@ -258,7 +259,9 @@ public class ItemBuilder {
     public ItemStack build() {
         item = item.withType(material);
         item.setAmount(amount);
-        item.setDurability(durability);
+        if (meta instanceof Damageable damageable) {
+            damageable.setDamage(durability);
+        }
         if (enchantments != null && !enchantments.isEmpty()) {
             item.addUnsafeEnchantments(enchantments);
         }
@@ -275,18 +278,6 @@ public class ItemBuilder {
         }
         if (meta != null) {
             pdcSet(ItemBuilder.townshipIdKey, PersistentDataType.STRING, this.id);
-            if (!skullTextureURL.isEmpty()) {
-                SkullMeta skullMeta = (SkullMeta) meta;
-                PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID());
-                PlayerTextures textures = profile.getTextures();
-                try {
-                    textures.setSkin(URI.create(skullTextureURL).toURL());
-                } catch (MalformedURLException e) {
-                    Township.logger.error("error", e);
-                }
-                profile.setTextures(textures);
-                skullMeta.setPlayerProfile(profile);
-            }
         }
         item.setItemMeta(meta);
         return item;
@@ -294,7 +285,7 @@ public class ItemBuilder {
 
 
     @NotNull
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @CanIgnoreReturnValue
     public ItemBuilder pdcSet(NamespacedKey key, PersistentDataType type, Object value) {
         this.meta.getPersistentDataContainer().set(key, type, value);
         return this;
@@ -311,6 +302,7 @@ public class ItemBuilder {
     }
 
     @NotNull
+    @CanIgnoreReturnValue
     public ItemBuilder pdcSetInt(NamespacedKey key, int value) {
         this.pdcSet(key, PersistentDataType.INTEGER, value);
         return this;

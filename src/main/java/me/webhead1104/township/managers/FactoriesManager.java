@@ -9,6 +9,7 @@ import me.webhead1104.township.data.objects.Factories;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.utils.ItemBuilder;
 import me.webhead1104.township.utils.MenuItems;
+import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,7 +19,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static me.webhead1104.township.utils.MiniMessageTemplate.MM;
 
 @NoArgsConstructor
 public class FactoriesManager {
@@ -49,7 +49,7 @@ public class FactoriesManager {
                 ItemBuilder builder = new ItemBuilder(MenuItems.completed);
                 builder.material(item.getItemStack().getType());
                 builder.displayName(item.getItemStack().getItemMeta().displayName());
-                builder.lore(MM."<green>Click to claim!");
+                builder.lore(Msg.format("<green>Click to claim!"));
                 builder.pdcSetString(ItemBuilder.itemTypeKey, item.toString());
                 builder.pdcSetString(ItemBuilder.factoryTypeKey, type.getID());
                 builder.pdcSetInt(ItemBuilder.factoryCompletedSlotKey, i);
@@ -61,7 +61,7 @@ public class FactoriesManager {
         RecipeType workingOn = factory.getWorkingOn(type);
         ItemBuilder builder = new ItemBuilder(MenuItems.workingOn);
         if (workingOn.equals(RecipeType.NONE)) {
-            builder.displayName(MM."<red>Nothing is being made right now, <aqua>Maybe you should made something!");
+            builder.displayName(Msg.format("<red>Nothing is being made right now, <aqua>Maybe you should made something!"));
             builder.material(Material.RED_CANDLE);
         } else {
             builder.displayName(workingOn.getItemType().getItemStack().displayName());

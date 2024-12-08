@@ -9,10 +9,10 @@ import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.utils.ItemBuilder;
 import me.webhead1104.township.utils.MenuItems;
+import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -21,9 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import static me.webhead1104.township.utils.MiniMessageTemplate.MM;
-import static me.webhead1104.township.utils.MiniMessageTemplate.MM_TO_JSON;
 
 @AllArgsConstructor
 public class WorldManager {
@@ -39,36 +36,34 @@ public class WorldManager {
 
     public void townName(Player player) {
         ItemBuilder builder = new ItemBuilder(Material.PAPER, "town_name_paper")
-                .displayName(MM."<green>Town Name")
-                .lore(MM."<red>you cannot change this once you set it!");
+                .displayName(Msg.format("<green>Town Name"))
+                .lore(Msg.format("<red>you cannot change this once you set it!"));
         new AnvilGUI.Builder()
                 .preventClose()
                 .plugin(plugin)
-                .jsonTitle(MM_TO_JSON."<gold>Set Your Town name!")
-                .itemLeft(builder.build())
-                .onClick((slot, stateSnapshot) -> {
-                            Player p = stateSnapshot.getPlayer();
-                            if (slot != AnvilGUI.Slot.OUTPUT) return Collections.emptyList();
-                            if (!stateSnapshot.getText().isEmpty()) {
-                                String value = stateSnapshot.getText();
-                                if (!value.contains("That name is taken!") && !value.contains("Town Name")) {
-                                    List<String> townNames;
-                                    try {
-                                        townNames = Township.getDatabase().getTakenTownNames().get();
-                                    } catch (InterruptedException | ExecutionException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                    if (!townNames.contains(value)) {
-                                        Township.getUserManager().getUser(p.getUniqueId()).setTownName(value);
-                                        return List.of(AnvilGUI.ResponseAction.close(), AnvilGUI.ResponseAction.run(() -> openWorldMenu(stateSnapshot.getPlayer())));
-                                    } else {
-                                        return List.of(AnvilGUI.ResponseAction.replaceInputText(STR."\{ChatColor.RED}That name is taken!"));
-                                    }
-                                }
+                .jsonTitle(Msg.formatToJson("<gold>Set Your Town name!"))
+                .itemLeft(builder.build()).onClick((slot, stateSnapshot) -> {
+                    Player p = stateSnapshot.getPlayer();
+                    if (slot != AnvilGUI.Slot.OUTPUT) return Collections.emptyList();
+                    if (!stateSnapshot.getText().isEmpty()) {
+                        String value = stateSnapshot.getText();
+                        if (!value.contains("That name is taken!") && !value.contains("Town Name")) {
+                            List<String> townNames;
+                            try {
+                                townNames = Township.getDatabase().getTakenTownNames().get();
+                            } catch (InterruptedException | ExecutionException e) {
+                                throw new RuntimeException(e);
                             }
-                            return Collections.emptyList();
+                            if (!townNames.contains(value)) {
+                                Township.getUserManager().getUser(p.getUniqueId()).setTownName(value);
+                                return List.of(AnvilGUI.ResponseAction.close(), AnvilGUI.ResponseAction.run(() -> openWorldMenu(stateSnapshot.getPlayer())));
+                            } else {
+                                return List.of(AnvilGUI.ResponseAction.replaceInputText(Msg.formatToJson("<red>That name is taken!")));
+                            }
                         }
-                ).open(player);
+                    }
+                    return Collections.emptyList();
+                }).open(player);
     }
 
     public Inventory getWorld(Player player, int section) {
@@ -76,7 +71,7 @@ public class WorldManager {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         user.setSection(section);
         World world = user.getWorld();
-        Inventory inventory = Bukkit.createInventory(null, 54, MM."<rainbow>World Menu");
+        Inventory inventory = Bukkit.createInventory(null, 54, Msg.format("World Menu"));
         world.getSection(section).getSlotMap().forEach((key, value) -> {
             ItemBuilder builder = new ItemBuilder(value.getTileType().getItem());
             if (value.getPlot() != null) {
@@ -91,19 +86,16 @@ public class WorldManager {
                 builder.pdcSetString(ItemBuilder.expansionDataKey, expansion.toString());
                 builder.id("expansion");
                 builder.material(Material.PODZOL);
-                builder.displayName(MM."Expansion");
-                builder.lore(List.of(MM."<aqua>Click to open the expansion menu!"));
+                builder.displayName(Msg.format("Expansion"));
+                builder.lore(List.of(Msg.format("<aqua>Click to open the expansion menu!")));
             }
             if (value.getTileType().equals(WorldTileType.TRAIN) && !(user.getLevel().getLevel() >= 5)) {
-                builder.lore(List.of(MM."<red>You need to be level <aqua>5 <red>to access the trains!",
-                        MM."<red>You are level <aqua>\{user.getLevel().getLevel()}"));
+                builder.lore(List.of(Msg.format("<red>You need to be level <aqua>5 <red>to access the trains!"),
+                        Msg.format("<red>You are level <aqua>" + user.getLevel().getLevel())));
             }
-            if (value.getTileType().getAnimalType() != null && !(user.getLevel().getLevel() >=
-                    value.getTileType().getAnimalType().getLevelNeeded())) {
-                builder.lore(List.of(
-                        MM."<red>You need to be level <aqua>5 <red>to access the \{
-                                Utils.thing2(value.getTileType().getAnimalType().getID())}!",
-                        MM."<red>You are level <aqua>\{user.getLevel().getLevel()}"));
+            if (value.getTileType().getAnimalType() != null && !(user.getLevel().getLevel() >= value.getTileType().getAnimalType().getLevelNeeded())) {
+                builder.lore(List.of(Msg.format("<red>You need to be level <aqua>5 <red>to access the " + Utils.thing2(value.getTileType().getAnimalType().getID()) + "!"),
+                        Msg.format("<red>You are level <aqua>" + user.getLevel().getLevel())));
             }
             inventory.setItem(key, builder.build());
         });
@@ -152,24 +144,21 @@ public class WorldManager {
                 player.getInventory().setItem(31, MenuItems.arrowDown);
             }
         }
-        ItemBuilder profile = new ItemBuilder(MenuItems.profile)
-                .displayName(MM."<green>\{user.getTownName()}");
+        ItemBuilder profile = new ItemBuilder(MenuItems.profile).displayName(Msg.format("<green>" + user.getTownName()));
         player.getInventory().setItem(22, profile.build());
         ItemBuilder levelAndPop = new ItemBuilder(MenuItems.levelAndPop);
-        levelAndPop.displayName(MM."<aqua>Level \{user.getLevel().getLevel()}");
+        levelAndPop.displayName(Msg.format("<aqua>Level " + user.getLevel().getLevel()));
         if (!((user.getLevel().getLevel() + 1) == Township.getLevelManager().getLevelList().size())) {
-            levelAndPop.lore(List.of(MM."<aqua>Xp \{user.getLevel().getXp()}",
-                    MM."\{user.getLevel().getProgressBar()}",
-                    MM."<red>Population \{user.getPopulation()}"));
+            levelAndPop.lore(List.of(Msg.format("<aqua>Xp " + user.getLevel().getXp()),
+                    Msg.format(user.getLevel().getProgressBar()), Msg.format("<red>Population " + user.getPopulation())));
         } else {
-            levelAndPop.lore(List.of(
-                    MM."<dark_red>You have reached the max level!",
-                    MM."<red>Population \{user.getPopulation()}"));
+            levelAndPop.lore(List.of(Msg.format("<dark_red>You have reached the max level!"),
+                    Msg.format("<red>Population " + user.getPopulation())));
         }
         player.getInventory().setItem(9, levelAndPop.build());
         ItemBuilder coinsAndCash = new ItemBuilder(MenuItems.coinsAndCash)
-                .displayName(MM."<yellow>Coins \{user.getCoins()}")
-                .lore(List.of(MM."<green>Cash \{user.getCash()}"));
+                .displayName(Msg.format("<yellow>Coins " + user.getCoins()))
+                .lore(List.of(Msg.format("<green>Cash " + user.getCash())));
         player.getInventory().setItem(17, coinsAndCash.build());
         return inventory;
     }
