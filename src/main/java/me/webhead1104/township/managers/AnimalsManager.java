@@ -77,7 +77,7 @@ public class AnimalsManager {
             animals.setProduct(type, product, false);
             animals.setFeed(type, product, false);
             user.getBarn().addAmountToItem(type.getProductType(), 1);
-            user.getLevel().addXp(type.getXpGiven());
+            user.getLevel().addXp(type.getXpGivenOnClaim());
             openAnimalMenu(player, type);
         }
     }
