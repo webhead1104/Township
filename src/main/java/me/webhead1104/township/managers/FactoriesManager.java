@@ -53,7 +53,7 @@ public class FactoriesManager {
                 builder.lore(Msg.format("<green>Click to claim!"));
                 builder.pdcSetString(Keys.recipeTypeKey, item.name());
                 builder.pdcSetString(Keys.factoryTypeKey, type.getID());
-                builder.pdcSetInt(Keys.factoryCompletedSlotKey, i);
+                builder.pdcSetInt(Keys.slot, i);
                 inventory.setItem(num2.get(), builder.build());
                 num2.getAndIncrement();
             }

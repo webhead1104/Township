@@ -13,7 +13,7 @@ public class Keys {
     public static final NamespacedKey plotDataKey = new NamespacedKey("township", "plot_data");
     public static final NamespacedKey barnArrowCurrentKey = new NamespacedKey("township", "current_barn_arrow");
     public static final NamespacedKey barnSellAmountKey = new NamespacedKey("township", "barn_sell_amount");
-    public static final NamespacedKey factoryCompletedSlotKey = new NamespacedKey("township", "factory_completed_slot");
+    public static final NamespacedKey slot = new NamespacedKey("township", "slot");
     public static final NamespacedKey trainKey = new NamespacedKey("township", "train");
     public static final NamespacedKey trainCarKey = new NamespacedKey("township", "train_car");
 }
