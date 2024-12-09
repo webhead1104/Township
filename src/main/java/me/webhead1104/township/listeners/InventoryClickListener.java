@@ -28,14 +28,6 @@ public class InventoryClickListener implements Listener {
                 String itemID = builder.pdcGetString(Keys.townshipIdKey);
                 Player player = (Player) event.getWhoClicked();
                 switch (itemID.toLowerCase()) {
-                    case "cow_feed", "chicken_feed" -> {
-                        AnimalType animalType = AnimalType.valueOf(builder.pdcGetString(Keys.animalTypeKey).toUpperCase());
-                        Township.getAnimalsManager().feed(player, animalType);
-                    }
-                    case "milk", "egg" -> {
-                        AnimalType animalType = AnimalType.valueOf(builder.pdcGetString(Keys.animalTypeKey).toUpperCase());
-                        Township.getAnimalsManager().pickup(player, animalType, event.getSlot());
-                    }
                     case "arrow_up" ->
                             Township.getWorldManager().openWorldMenu(player, Township.getUserManager().getUser(player.getUniqueId()).getSection() - 8);
                     case "arrow_left" ->
@@ -48,7 +40,7 @@ public class InventoryClickListener implements Listener {
                     case "completed" -> {
                         FactoryType factoryType = FactoryType.valueOf(builder.pdcGetString(Keys.factoryTypeKey).toUpperCase());
                         RecipeType recipeType = RecipeType.valueOf(builder.pdcGetString(Keys.recipeTypeKey).toUpperCase());
-                        int slot = builder.pdcGetInt(Keys.factoryCompletedSlotKey);
+                        int slot = builder.pdcGetInt(Keys.slot);
                         Township.getFactoriesManager().complete(player, slot, factoryType, recipeType);
                     }
                     //todo fix this mess
@@ -148,6 +140,14 @@ public class InventoryClickListener implements Listener {
                     if (itemID.equals(recipeType.getId())) {
                         FactoryType factoryType = FactoryType.valueOf(builder.pdcGetString(Keys.factoryTypeKey).toUpperCase());
                         Township.getFactoriesManager().recipe(player, recipeType, factoryType);
+                    }
+                }
+                for (AnimalType animalType : AnimalType.values()) {
+                    if (itemID.equals(animalType.getProductType().getID())) {
+                        int slot = builder.pdcGetInt(Keys.slot);
+                        Township.getAnimalsManager().pickup(player, animalType, slot);
+                    } else if (itemID.equals(animalType.getFeedType().getID())) {
+                        Township.getAnimalsManager().feed(player, animalType);
                     }
                 }
             }

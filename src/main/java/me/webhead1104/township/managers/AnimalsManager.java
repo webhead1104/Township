@@ -6,6 +6,7 @@ import me.webhead1104.township.data.enums.AnimalType;
 import me.webhead1104.township.data.objects.Animals;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.utils.ItemBuilder;
+import me.webhead1104.township.utils.Keys;
 import me.webhead1104.township.utils.MenuItems;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
@@ -27,7 +28,12 @@ public class AnimalsManager {
         Inventory inventory = Bukkit.createInventory(null, 54, type.getMenuTitle());
         int slot = 11;
         for (int i = 0; i < 6; ++i) {
-            if (animals.getProduct(type, i)) inventory.setItem(slot + 9, type.getProductItemStack());
+            if (animals.getProduct(type, i)) {
+                ItemBuilder builder = new ItemBuilder(type.getProductType().getItemStack());
+                builder.pdcSetString(Keys.animalTypeKey, type.name());
+                builder.pdcSetInt(Keys.slot, i);
+                inventory.setItem(slot + 9, builder.build());
+            }
             if (animals.getFeed(type, i)) {
                 ItemBuilder builder = new ItemBuilder(type.getAnimalItemStack());
                 builder.lore(Msg.format("<gold>Time: 0"));
@@ -35,8 +41,9 @@ public class AnimalsManager {
             } else inventory.setItem(slot, type.getAnimalItemStack());
             slot++;
         }
-        ItemBuilder builder = new ItemBuilder(type.getFeedItemStack());
+        ItemBuilder builder = new ItemBuilder(type.getFeedType().getItemStack());
         builder.lore(Msg.format("<white>" + user.getBarn().getItem(type.getFeedType())), 0);
+        builder.pdcSetString(Keys.animalTypeKey, type.name());
         inventory.setItem(36, builder.build());
         inventory.setItem(53, MenuItems.backButton);
         player.openInventory(inventory);
@@ -64,18 +71,9 @@ public class AnimalsManager {
     public void pickup(Player player, AnimalType type, int slot) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         Animals animals = user.getAnimals();
-        int product = switch (slot) {
-            case 21 -> 1;
-            case 22 -> 2;
-            case 23 -> 3;
-            case 24 -> 4;
-            case 25 -> 5;
-            case 26 -> 6;
-            default -> 0;
-        };
-        if (animals.getProduct(type, product)) {
-            animals.setProduct(type, product, false);
-            animals.setFeed(type, product, false);
+        if (animals.getProduct(type, slot)) {
+            animals.setProduct(type, slot, false);
+            animals.setFeed(type, slot, false);
             user.getBarn().addAmountToItem(type.getProductType(), 1);
             user.getLevel().addXp(type.getXpGivenOnClaim());
             openAnimalMenu(player, type);
