@@ -51,13 +51,6 @@ public class InventoryClickListener implements Listener {
                         int slot = builder.pdcGetInt(Keys.factoryCompletedSlotKey);
                         Township.getFactoriesManager().complete(player, slot, factoryType, recipeType);
                     }
-                    case "bread_recipe", "cookie_recipe", "bagel_recipe", "cow_feed_recipe", "chicken_feed_recipe",
-                         "cream_recipe", "cheese_recipe", "butter_recipe", "yogurt_recipe", "sugar_recipe",
-                         "syrup_recipe", "caramel_recipe" -> {
-                        FactoryType type = FactoryType.valueOf(builder.pdcGetString(Keys.factoryTypeKey).toUpperCase());
-                        RecipeType recipeType = RecipeType.valueOf(builder.pdcGetString(Keys.recipeTypeKey).toUpperCase());
-                        Township.getFactoriesManager().recipe(player, recipeType, type);
-                    }
                     //todo fix this mess
                     case "cowshed_1" -> Township.getAnimalsManager().openAnimalMenu(player, AnimalType.COWSHED_1);
                     case "cowshed_2" -> Township.getAnimalsManager().openAnimalMenu(player, AnimalType.COWSHED_2);
@@ -148,6 +141,13 @@ public class InventoryClickListener implements Listener {
                     if (itemType.equals(ItemType.NONE)) continue;
                     if (itemID.equals(itemType.getID().toLowerCase() + "_barn")) {
                         Township.getBarnManager().openSellMenu(player, itemType, 1);
+                    }
+                }
+                for (RecipeType recipeType : RecipeType.values()) {
+                    if (recipeType.equals(RecipeType.NONE)) continue;
+                    if (itemID.equals(recipeType.getId())) {
+                        FactoryType factoryType = FactoryType.valueOf(builder.pdcGetString(Keys.factoryTypeKey).toUpperCase());
+                        Township.getFactoriesManager().recipe(player, recipeType, factoryType);
                     }
                 }
             }

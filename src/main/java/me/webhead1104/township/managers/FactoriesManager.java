@@ -51,7 +51,7 @@ public class FactoriesManager {
                 builder.material(item.getItemStack().getType());
                 builder.displayName(item.getItemStack().getItemMeta().displayName());
                 builder.lore(Msg.format("<green>Click to claim!"));
-                builder.pdcSetString(Keys.itemTypeKey, item.toString());
+                builder.pdcSetString(Keys.recipeTypeKey, item.name());
                 builder.pdcSetString(Keys.factoryTypeKey, type.getID());
                 builder.pdcSetInt(Keys.factoryCompletedSlotKey, i);
                 inventory.setItem(num2.get(), builder.build());
