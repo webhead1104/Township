@@ -6,10 +6,7 @@ import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.data.objects.Barn;
 import me.webhead1104.township.data.objects.BarnUpgrade;
 import me.webhead1104.township.data.objects.User;
-import me.webhead1104.township.utils.ItemBuilder;
-import me.webhead1104.township.utils.MenuItems;
-import me.webhead1104.township.utils.Msg;
-import me.webhead1104.township.utils.Utils;
+import me.webhead1104.township.utils.*;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -47,12 +44,12 @@ public class BarnManager {
         }
         if (barnPageMap.containsKey(page + 1)) {
             ItemBuilder up = new ItemBuilder(MenuItems.barnArrowUp);
-            up.pdcSetInt(ItemBuilder.barnArrowCurrentKey, page);
+            up.pdcSetInt(Keys.barnArrowCurrentKey, page);
             player.getInventory().setItem(11, up.build());
         }
         if (page > 1) {
             ItemBuilder down = new ItemBuilder(MenuItems.barnArrowDown);
-            down.pdcSetInt(ItemBuilder.barnArrowCurrentKey, page);
+            down.pdcSetInt(Keys.barnArrowCurrentKey, page);
             player.getInventory().setItem(33, down.build());
         }
         ItemBuilder storage = new ItemBuilder(MenuItems.barnStorage);
@@ -115,8 +112,8 @@ public class BarnManager {
             decrease.material(Material.RED_CANDLE);
             decrease.displayName(Msg.format("<red>Click to decrease the amount!"));
             decrease.lore(List.of(Msg.format("<blue>Currently at " + amount)));
-            decrease.pdcSetInt(ItemBuilder.barnSellAmountKey, amount);
-            decrease.pdcSetString(ItemBuilder.itemTypeKey, itemType.name());
+            decrease.pdcSetInt(Keys.barnSellAmountKey, amount);
+            decrease.pdcSetString(Keys.itemTypeKey, itemType.name());
             player.getInventory().setItem(3, decrease.build());
         }
 
@@ -124,8 +121,8 @@ public class BarnManager {
         sell.material(Material.LIME_CONCRETE);
         String name = Utils.thing2(itemType.getID());
         sell.displayName(Msg.format("<green>Click to sell <aqua>" + amount + " <green>of <yellow>" + name + " <green>for <aqua>" + (itemType.getSellPrice() * amount) + " <gold>coins!"));
-        sell.pdcSetInt(ItemBuilder.barnSellAmountKey, amount);
-        sell.pdcSetString(ItemBuilder.itemTypeKey, itemType.name());
+        sell.pdcSetInt(Keys.barnSellAmountKey, amount);
+        sell.pdcSetString(Keys.itemTypeKey, itemType.name());
         player.getInventory().setItem(4, sell.build());
 
         if (user.getBarn().getItem(itemType) > amount) {
@@ -133,8 +130,8 @@ public class BarnManager {
             increase.material(Material.GREEN_CANDLE);
             increase.displayName(Msg.format("<green>Click to increase the amount!"));
             increase.lore(List.of(Msg.format("<blue>Currently at " + amount)));
-            increase.pdcSetInt(ItemBuilder.barnSellAmountKey, amount);
-            increase.pdcSetString(ItemBuilder.itemTypeKey, itemType.name());
+            increase.pdcSetInt(Keys.barnSellAmountKey, amount);
+            increase.pdcSetString(Keys.itemTypeKey, itemType.name());
             player.getInventory().setItem(5, increase.build());
         }
     }

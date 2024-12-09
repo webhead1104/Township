@@ -7,10 +7,7 @@ import me.webhead1104.township.data.objects.Expansion;
 import me.webhead1104.township.data.objects.Plot;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
-import me.webhead1104.township.utils.ItemBuilder;
-import me.webhead1104.township.utils.MenuItems;
-import me.webhead1104.township.utils.Msg;
-import me.webhead1104.township.utils.Utils;
+import me.webhead1104.township.utils.*;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -76,14 +73,14 @@ public class WorldManager {
             ItemBuilder builder = new ItemBuilder(value.getTileType().getItem());
             if (value.getPlot() != null) {
                 Plot plot = value.getPlot();
-                builder.pdcSetString(ItemBuilder.plotDataKey, plot.toString());
+                builder.pdcSetString(Keys.plotDataKey, plot.toString());
                 builder.id(plot.getPlotType().getId());
                 builder.material(plot.getPlotType().getItemType().getItemStack().getType());
                 builder.displayName(new ItemBuilder(plot.getPlotType().getItemType().getItemStack()).getDisplayName());
             }
             if (value.getExpansion() != null) {
                 Expansion expansion = value.getExpansion();
-                builder.pdcSetString(ItemBuilder.expansionDataKey, expansion.toString());
+                builder.pdcSetString(Keys.expansionDataKey, expansion.toString());
                 builder.id("expansion");
                 builder.material(Material.PODZOL);
                 builder.displayName(Msg.format("Expansion"));

@@ -8,6 +8,7 @@ import me.webhead1104.township.data.enums.RecipeType;
 import me.webhead1104.township.data.objects.Factories;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.utils.ItemBuilder;
+import me.webhead1104.township.utils.Keys;
 import me.webhead1104.township.utils.MenuItems;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
@@ -35,8 +36,8 @@ public class FactoriesManager {
         AtomicInteger recipes = new AtomicInteger(45);
         for (RecipeType recipe : type.getRecipes()) {
             ItemBuilder builder = new ItemBuilder(recipe.getMenuItem());
-            builder.pdcSetString(ItemBuilder.recipeTypeKey, recipe.name());
-            builder.pdcSetString(ItemBuilder.factoryTypeKey, type.name());
+            builder.pdcSetString(Keys.recipeTypeKey, recipe.name());
+            builder.pdcSetString(Keys.factoryTypeKey, type.name());
             inventory.setItem(recipes.get(), builder.build());
             recipes.getAndIncrement();
         }
@@ -50,9 +51,9 @@ public class FactoriesManager {
                 builder.material(item.getItemStack().getType());
                 builder.displayName(item.getItemStack().getItemMeta().displayName());
                 builder.lore(Msg.format("<green>Click to claim!"));
-                builder.pdcSetString(ItemBuilder.itemTypeKey, item.toString());
-                builder.pdcSetString(ItemBuilder.factoryTypeKey, type.getID());
-                builder.pdcSetInt(ItemBuilder.factoryCompletedSlotKey, i);
+                builder.pdcSetString(Keys.itemTypeKey, item.toString());
+                builder.pdcSetString(Keys.factoryTypeKey, type.getID());
+                builder.pdcSetInt(Keys.factoryCompletedSlotKey, i);
                 inventory.setItem(num2.get(), builder.build());
                 num2.getAndIncrement();
             }
@@ -67,7 +68,7 @@ public class FactoriesManager {
             builder.displayName(workingOn.getItemType().getItemStack().displayName());
             workingOn.getItemType().getItemStack().getType();
         }
-        builder.pdcSetString(ItemBuilder.factoryTypeKey, type.getID());
+        builder.pdcSetString(Keys.factoryTypeKey, type.getID());
         inventory.setItem(36, builder.build());
         inventory.setItem(53, MenuItems.backButton);
         player.openInventory(inventory);

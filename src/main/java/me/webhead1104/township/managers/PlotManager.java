@@ -6,6 +6,7 @@ import me.webhead1104.township.data.enums.PlotType;
 import me.webhead1104.township.data.objects.Plot;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.utils.ItemBuilder;
+import me.webhead1104.township.utils.Keys;
 import me.webhead1104.township.utils.MenuItems;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.entity.Player;
@@ -28,10 +29,10 @@ public class PlotManager {
             if (!(user.getLevel().getLevel() >= type.getLevelNeeded())) continue;
             ItemBuilder itemBuilder = new ItemBuilder(type.getItemType().getItemStack());
             itemBuilder.id(type.getId().toLowerCase() + "_type_select");
-            String price = type.getPrice() == 0 ? "FREE!" : String.valueOf(type.getPrice());
+            String price = type.getPrice() == 0 ? "FREE!" : user.getCoins() + "/" + type.getPrice();
             if (user.getCoins() >= type.getPrice()) {
-                itemBuilder.lore(Msg.format("<blue>Coins needed <green>" + user.getCoins() + "/" + price));
-            } else itemBuilder.lore(Msg.format("<red>Coins needed " + user.getCoins() + "/" + price));
+                itemBuilder.lore(Msg.format("<blue>Coins needed <green>" + price));
+            } else itemBuilder.lore(Msg.format("<red>Coins needed " + price));
             player.getInventory().setItem(i.getAndIncrement(), itemBuilder.build());
         }
         player.getInventory().setItem(0, MenuItems.backButton);
@@ -49,7 +50,7 @@ public class PlotManager {
         player.setItemOnCursor(ItemStack.empty());
         User user = Township.getUserManager().getUser(player.getUniqueId());
         ItemBuilder builder = new ItemBuilder(clickedItem);
-        Plot plot = Plot.fromJson(builder.pdcGetString(ItemBuilder.plotDataKey));
+        Plot plot = Plot.fromJson(builder.pdcGetString(Keys.plotDataKey));
         PlotType cursorPlotType = PlotType.valueOf(new ItemBuilder(cursorItem).getId().split("_")[0].toUpperCase());
         if (user.getCoins() >= cursorPlotType.getPrice()) {
             user.setCoins(user.getCoins() - cursorPlotType.getPrice());
@@ -63,7 +64,7 @@ public class PlotManager {
     public void harvest(Player player, ItemStack clickedItem) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         ItemBuilder builder = new ItemBuilder(clickedItem);
-        Plot plot = Plot.fromJson(builder.pdcGetString(ItemBuilder.plotDataKey));
+        Plot plot = Plot.fromJson(builder.pdcGetString(Keys.plotDataKey));
         user.getBarn().addAmountToItem(plot.getPlotType().getItemType(), 1);
         user.getLevel().addXp(plot.getPlotType().getXpGiven());
         plot.setPlotType(PlotType.NONE);

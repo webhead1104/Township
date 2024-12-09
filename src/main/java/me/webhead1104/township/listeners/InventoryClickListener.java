@@ -5,6 +5,7 @@ import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.*;
 import me.webhead1104.township.data.objects.Expansion;
 import me.webhead1104.township.utils.ItemBuilder;
+import me.webhead1104.township.utils.Keys;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,15 +23,19 @@ public class InventoryClickListener implements Listener {
         ItemStack item = event.getCurrentItem();
         if (item != null) {
             ItemBuilder builder = new ItemBuilder(item);
-            if (builder.getMeta() != null && builder.pdcHas(ItemBuilder.townshipIdKey)) {
+            if (builder.getMeta() != null && builder.pdcHas(Keys.townshipIdKey)) {
                 event.setCancelled(true);
-                String itemID = builder.pdcGetString(ItemBuilder.townshipIdKey);
+                String itemID = builder.pdcGetString(Keys.townshipIdKey);
                 Player player = (Player) event.getWhoClicked();
                 switch (itemID.toLowerCase()) {
-                    case "cow_feed" -> Township.getAnimalsManager().feed(player, AnimalType.COWSHED);
-                    case "milk" -> Township.getAnimalsManager().pickup(player, AnimalType.COWSHED, event.getSlot());
-                    case "chicken_feed" -> Township.getAnimalsManager().feed(player, AnimalType.CHICKEN_COOP);
-                    case "egg" -> Township.getAnimalsManager().pickup(player, AnimalType.CHICKEN_COOP, event.getSlot());
+                    case "cow_feed", "chicken_feed" -> {
+                        AnimalType animalType = AnimalType.valueOf(builder.pdcGetString(Keys.animalTypeKey).toUpperCase());
+                        Township.getAnimalsManager().feed(player, animalType);
+                    }
+                    case "milk", "egg" -> {
+                        AnimalType animalType = AnimalType.valueOf(builder.pdcGetString(Keys.animalTypeKey).toUpperCase());
+                        Township.getAnimalsManager().pickup(player, animalType, event.getSlot());
+                    }
                     case "arrow_up" ->
                             Township.getWorldManager().openWorldMenu(player, Township.getUserManager().getUser(player.getUniqueId()).getSection() - 8);
                     case "arrow_left" ->
@@ -41,32 +46,45 @@ public class InventoryClickListener implements Listener {
                             Township.getWorldManager().openWorldMenu(player, Township.getUserManager().getUser(player.getUniqueId()).getSection() + 8);
                     case "township", "back_button" -> Township.getWorldManager().openWorldMenu(player);
                     case "completed" -> {
-                        FactoryType factoryType = FactoryType.valueOf(builder.pdcGetString(ItemBuilder.factoryTypeKey).toUpperCase());
-                        RecipeType recipeType = RecipeType.valueOf(builder.pdcGetString(ItemBuilder.recipeTypeKey).toUpperCase());
-                        int slot = builder.pdcGetInt(ItemBuilder.factoryCompletedSlotKey);
+                        FactoryType factoryType = FactoryType.valueOf(builder.pdcGetString(Keys.factoryTypeKey).toUpperCase());
+                        RecipeType recipeType = RecipeType.valueOf(builder.pdcGetString(Keys.recipeTypeKey).toUpperCase());
+                        int slot = builder.pdcGetInt(Keys.factoryCompletedSlotKey);
                         Township.getFactoriesManager().complete(player, slot, factoryType, recipeType);
                     }
                     case "bread_recipe", "cookie_recipe", "bagel_recipe", "cow_feed_recipe", "chicken_feed_recipe",
                          "cream_recipe", "cheese_recipe", "butter_recipe", "yogurt_recipe", "sugar_recipe",
                          "syrup_recipe", "caramel_recipe" -> {
-                        FactoryType type = FactoryType.valueOf(builder.pdcGetString(ItemBuilder.factoryTypeKey).toUpperCase());
-                        RecipeType recipeType = RecipeType.valueOf(builder.pdcGetString(ItemBuilder.recipeTypeKey).toUpperCase());
+                        FactoryType type = FactoryType.valueOf(builder.pdcGetString(Keys.factoryTypeKey).toUpperCase());
+                        RecipeType recipeType = RecipeType.valueOf(builder.pdcGetString(Keys.recipeTypeKey).toUpperCase());
                         Township.getFactoriesManager().recipe(player, recipeType, type);
                     }
-                    case "cowshed" -> Township.getAnimalsManager().openAnimalMenu(player, AnimalType.COWSHED);
-                    case "chicken_coop" -> Township.getAnimalsManager().openAnimalMenu(player, AnimalType.CHICKEN_COOP);
+                    //todo fix this mess
+                    case "cowshed_1" -> Township.getAnimalsManager().openAnimalMenu(player, AnimalType.COWSHED_1);
+                    case "cowshed_2" -> Township.getAnimalsManager().openAnimalMenu(player, AnimalType.COWSHED_2);
+                    case "cowshed_3" -> Township.getAnimalsManager().openAnimalMenu(player, AnimalType.COWSHED_3);
+                    case "chicken_coop_1" ->
+                            Township.getAnimalsManager().openAnimalMenu(player, AnimalType.CHICKEN_COOP_1);
+                    case "chicken_coop_2" ->
+                            Township.getAnimalsManager().openAnimalMenu(player, AnimalType.CHICKEN_COOP_2);
+                    case "chicken_coop_3" ->
+                            Township.getAnimalsManager().openAnimalMenu(player, AnimalType.CHICKEN_COOP_3);
                     case "bakery" -> Township.getFactoriesManager().openFactoryMenu(player, FactoryType.BAKERY);
-                    case "feed_mill" -> Township.getFactoriesManager().openFactoryMenu(player, FactoryType.FEED_MILL);
+                    case "feed_mill_1" ->
+                            Township.getFactoriesManager().openFactoryMenu(player, FactoryType.FEED_MILL_1);
+                    case "feed_mill_2" ->
+                            Township.getFactoriesManager().openFactoryMenu(player, FactoryType.FEED_MILL_2);
+                    case "feed_mill_3" ->
+                            Township.getFactoriesManager().openFactoryMenu(player, FactoryType.FEED_MILL_3);
                     case "dairy_factory" ->
                             Township.getFactoriesManager().openFactoryMenu(player, FactoryType.DAIRY_FACTORY);
                     case "sugar_factory" ->
                             Township.getFactoriesManager().openFactoryMenu(player, FactoryType.SUGAR_FACTORY);
                     case "expansion" -> {
-                        Expansion expansion = Expansion.fromJson(builder.pdcGetString(ItemBuilder.expansionDataKey));
+                        Expansion expansion = Expansion.fromJson(builder.pdcGetString(Keys.expansionDataKey));
                         Township.getExpansionManager().openExpansionMenu(player, expansion);
                     }
                     case "expansion_buy" -> {
-                        Expansion expansion = Expansion.fromJson(builder.pdcGetString(ItemBuilder.expansionDataKey));
+                        Expansion expansion = Expansion.fromJson(builder.pdcGetString(Keys.expansionDataKey));
                         Township.getExpansionManager().buyExpansion(player, expansion);
                     }
                     case "none_plot" -> {
@@ -75,45 +93,45 @@ public class InventoryClickListener implements Listener {
                         } else Township.getPlotManager().plant(player, item, event.getCursor());
                     }
                     case "barn_arrow_up" -> {
-                        int page = builder.pdcGetInt(ItemBuilder.barnArrowCurrentKey);
+                        int page = builder.pdcGetInt(Keys.barnArrowCurrentKey);
                         Township.getBarnManager().openMenu(player, page + 1);
                     }
                     case "barn_arrow_down" -> {
-                        int page = builder.pdcGetInt(ItemBuilder.barnArrowCurrentKey);
+                        int page = builder.pdcGetInt(Keys.barnArrowCurrentKey);
                         Township.getBarnManager().openMenu(player, page - 1);
                     }
                     case "barn" -> Township.getBarnManager().openMenu(player, 1);
                     case "barn_sell" -> {
-                        ItemType itemType = ItemType.valueOf(builder.pdcGetString(ItemBuilder.itemTypeKey).toUpperCase());
-                        int amount = builder.pdcGetInt(ItemBuilder.barnSellAmountKey);
+                        ItemType itemType = ItemType.valueOf(builder.pdcGetString(Keys.itemTypeKey).toUpperCase());
+                        int amount = builder.pdcGetInt(Keys.barnSellAmountKey);
                         Township.getBarnManager().sellItem(player, itemType, amount);
                     }
                     case "barn_increase" -> {
-                        ItemType itemType = ItemType.valueOf(builder.pdcGetString(ItemBuilder.itemTypeKey).toUpperCase());
-                        int newAmount = builder.pdcGetInt(ItemBuilder.barnSellAmountKey) + 1;
+                        ItemType itemType = ItemType.valueOf(builder.pdcGetString(Keys.itemTypeKey).toUpperCase());
+                        int newAmount = builder.pdcGetInt(Keys.barnSellAmountKey) + 1;
                         Township.getBarnManager().increaseAmount(player, itemType, newAmount);
                     }
                     case "barn_decrease" -> {
-                        ItemType itemType = ItemType.valueOf(builder.pdcGetString(ItemBuilder.itemTypeKey).toUpperCase());
-                        int newAmount = builder.pdcGetInt(ItemBuilder.barnSellAmountKey) - 1;
+                        ItemType itemType = ItemType.valueOf(builder.pdcGetString(Keys.itemTypeKey).toUpperCase());
+                        int newAmount = builder.pdcGetInt(Keys.barnSellAmountKey) - 1;
                         Township.getBarnManager().decreaseAmount(player, itemType, newAmount);
                     }
                     case "barn_upgrade" -> Township.getBarnManager().upgrade(player);
                     case "train" -> Township.getTrainManager().openMenu(player);
                     case "train_buy" ->
-                            Township.getTrainManager().purchaseTrain(player, builder.pdcGetInt(ItemBuilder.trainKey));
+                            Township.getTrainManager().purchaseTrain(player, builder.pdcGetInt(Keys.trainKey));
                     case "train_collect" -> {
-                        ItemType itemType = ItemType.valueOf(builder.pdcGetString(ItemBuilder.itemTypeKey).toUpperCase());
-                        int amount = builder.pdcGetInt(ItemBuilder.itemAmountKey);
-                        int train = builder.pdcGetInt(ItemBuilder.trainKey);
-                        int car = builder.pdcGetInt(ItemBuilder.trainCarKey);
+                        ItemType itemType = ItemType.valueOf(builder.pdcGetString(Keys.itemTypeKey).toUpperCase());
+                        int amount = builder.pdcGetInt(Keys.itemAmountKey);
+                        int train = builder.pdcGetInt(Keys.trainKey);
+                        int car = builder.pdcGetInt(Keys.trainCarKey);
                         Township.getTrainManager().collectItem(player, itemType, amount, train, car);
                     }
                     case "train_give" -> {
-                        ItemType itemType = ItemType.valueOf(builder.pdcGetString(ItemBuilder.itemTypeKey).toUpperCase());
-                        int amount = builder.pdcGetInt(ItemBuilder.itemAmountKey);
-                        int train = builder.pdcGetInt(ItemBuilder.trainKey);
-                        int car = builder.pdcGetInt(ItemBuilder.trainCarKey);
+                        ItemType itemType = ItemType.valueOf(builder.pdcGetString(Keys.itemTypeKey).toUpperCase());
+                        int amount = builder.pdcGetInt(Keys.itemAmountKey);
+                        int train = builder.pdcGetInt(Keys.trainKey);
+                        int car = builder.pdcGetInt(Keys.trainCarKey);
                         Township.getTrainManager().giveItem(player, itemType, amount, train, car);
                     }
                 }
@@ -138,7 +156,7 @@ public class InventoryClickListener implements Listener {
                 event.setCancelled(true);
             } else {
                 ItemBuilder builder = new ItemBuilder(Objects.requireNonNull(event.getInventory()).getItem(event.getSlot()));
-                if (builder.getMeta() != null && builder.pdcHas(ItemBuilder.townshipIdKey)) {
+                if (builder.getMeta() != null && builder.pdcHas(Keys.townshipIdKey)) {
                     event.setCancelled(true);
                 }
             }

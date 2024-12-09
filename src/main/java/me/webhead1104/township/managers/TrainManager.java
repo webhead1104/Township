@@ -7,6 +7,7 @@ import me.webhead1104.township.data.objects.Trains;
 import me.webhead1104.township.data.objects.Tuple;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.utils.ItemBuilder;
+import me.webhead1104.township.utils.Keys;
 import me.webhead1104.township.utils.MenuItems;
 import me.webhead1104.township.utils.Msg;
 import net.kyori.adventure.text.Component;
@@ -48,10 +49,10 @@ public class TrainManager {
                                 carItem.displayName(Msg.format("<green>Item claimed!"));
                             } else {
                                 carItem.material(Material.CHEST);
-                                carItem.pdcSetInt(ItemBuilder.trainKey, i);
-                                carItem.pdcSetInt(ItemBuilder.itemAmountKey, car.getClaimItems().getB());
-                                carItem.pdcSetString(ItemBuilder.itemTypeKey, car.getClaimItems().getA().name());
-                                carItem.pdcSetInt(ItemBuilder.trainCarKey, j);
+                                carItem.pdcSetInt(Keys.trainKey, i);
+                                carItem.pdcSetInt(Keys.itemAmountKey, car.getClaimItems().getB());
+                                carItem.pdcSetString(Keys.itemTypeKey, car.getClaimItems().getA().name());
+                                carItem.pdcSetInt(Keys.trainCarKey, j);
                                 carItem.id("train_collect");
                                 carItem.displayName(car.getClaimItems().getA().getItemStack().getItemMeta().displayName());
                                 carItem.lore(Msg.format("<white>" + car.getClaimItems().getB()));
@@ -76,10 +77,10 @@ public class TrainManager {
                                     carItem.lore(List.of(Msg.format("<red>You need " + car.getGiveItems().getB()), Msg.format("<red>You have " + (user.getBarn().getItem(car.getGiveItems().getA()) == 0 ? "none" : user.getBarn().getItem(car.getGiveItems().getA())))));
                                 }
                                 carItem.id("train_give");
-                                carItem.pdcSetInt(ItemBuilder.trainKey, i);
-                                carItem.pdcSetInt(ItemBuilder.itemAmountKey, car.getGiveItems().getB());
-                                carItem.pdcSetString(ItemBuilder.itemTypeKey, car.getGiveItems().getA().name());
-                                carItem.pdcSetInt(ItemBuilder.trainCarKey, j);
+                                carItem.pdcSetInt(Keys.trainKey, i);
+                                carItem.pdcSetInt(Keys.itemAmountKey, car.getGiveItems().getB());
+                                carItem.pdcSetString(Keys.itemTypeKey, car.getGiveItems().getA().name());
+                                carItem.pdcSetInt(Keys.trainCarKey, j);
                             }
                             inventory.setItem(carSlot.getAndAdd(1), carItem.build());
                         }
@@ -110,7 +111,7 @@ public class TrainManager {
                 engine.material(Material.COARSE_DIRT);
                 engine.id("train_buy");
             }
-            engine.pdcSetInt(ItemBuilder.trainKey, i);
+            engine.pdcSetInt(Keys.trainKey, i);
             inventory.setItem(trainSlot.getAndAdd(18), engine.build());
         }
         inventory.setItem(53, MenuItems.backButton);

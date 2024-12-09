@@ -5,10 +5,7 @@ import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.WorldTileType;
 import me.webhead1104.township.data.objects.Expansion;
 import me.webhead1104.township.data.objects.User;
-import me.webhead1104.township.utils.ItemBuilder;
-import me.webhead1104.township.utils.MenuItems;
-import me.webhead1104.township.utils.Msg;
-import me.webhead1104.township.utils.Utils;
+import me.webhead1104.township.utils.*;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -24,7 +21,7 @@ public class ExpansionManager {
         Inventory inventory = Township.getWorldManager().getWorld(player);
         player.getInventory().clear();
         User user = Township.getUserManager().getUser(player.getUniqueId());
-        ItemStack itemStack = new ItemBuilder(Material.LIME_CONCRETE, "expansion").pdcSetString(ItemBuilder.expansionDataKey, expansion.toString()).material(Material.LIME_CONCRETE).displayName(Msg.format("Expansion")).build();
+        ItemStack itemStack = new ItemBuilder(Material.LIME_CONCRETE, "expansion").pdcSetString(Keys.expansionDataKey, expansion.toString()).material(Material.LIME_CONCRETE).displayName(Msg.format("Expansion")).build();
         int expansionSlot = expansion.getSlot();
         inventory.setItem(expansionSlot, itemStack);
         inventory.setItem(expansionSlot + 1, itemStack);
@@ -54,7 +51,7 @@ public class ExpansionManager {
             expansionBuy.lore(List.of(Msg.format("<gold>Coins needed: <red>" + user.getCoins() + "/" + expansion.getPrice()), Msg.format("<red>Population needed: <red>" + user.getPopulation() + "/" + expansion.getPopulationNeeded())));
             expansionBuy.material(Material.RED_CONCRETE);
         }
-        expansionBuy.pdcSetString(ItemBuilder.expansionDataKey, expansion.toString());
+        expansionBuy.pdcSetString(Keys.expansionDataKey, expansion.toString());
         player.getInventory().setItem(4, expansionBuy.build());
         ItemBuilder expansionPopulation = new ItemBuilder(MenuItems.expansionPopulation);
         if (user.getPopulation() >= expansion.getPopulationNeeded()) {
