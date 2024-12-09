@@ -101,9 +101,9 @@ public class TrainManager {
                 }
                 Component level;
                 if (user.getLevel().getLevel() >= train.getLevelNeededToUnlock()) {
-                    level = Msg.format("<green>You need to be level " + train.getLevelNeededToUnlock() + " to purchase this train! <white>" + user.getLevel() + "<aqua>/<green>" + train.getLevelNeededToUnlock());
+                    level = Msg.format("<green>You need to be level " + train.getLevelNeededToUnlock() + " to purchase this train! <white>" + user.getLevel().getLevel() + "<aqua>/<green>" + train.getLevelNeededToUnlock());
                 } else {
-                    level = Msg.format("<red>You need to be level " + train.getLevelNeededToUnlock() + " to purchase this train! <white>You are level " + user.getLevel());
+                    level = Msg.format("<red>You need to be level " + train.getLevelNeededToUnlock() + " to purchase this train! <white>You are level " + user.getLevel().getLevel());
                 }
                 if (user.getCoins() >= train.getCoinsNeededToUnlock() && user.getLevel().getLevel() >= train.getLevelNeededToUnlock()) {
                     engine.lore(List.of(Msg.format("<green>You can purchase this!"), coins, level));
