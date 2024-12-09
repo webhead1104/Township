@@ -29,9 +29,9 @@ public class PlayerLevel {
     }
 
     public boolean canLevelUp() {
-        if (!((level + 1) == Township.getLevelManager().getLevelList().size())) {
+        if (Township.getLevelManager().getLevelMap().containsKey(level + 1)) {
             User user = Township.getUserManager().getUser(uuid);
-            if (user.getLevel().getXp() >= Township.getLevelManager().getLevelList().get(user.getLevel().getLevel() + 1).getXpNeeded()) {
+            if (user.getLevel().getXp() >= Township.getLevelManager().getLevelMap().get(user.getLevel().getLevel() + 1).getXpNeeded()) {
                 user.getLevel().setLevel(user.getLevel().getLevel() + 1);
                 user.getLevel().setXp(0);
                 Objects.requireNonNull(Bukkit.getPlayer(uuid))
@@ -46,8 +46,8 @@ public class PlayerLevel {
     }
 
     public String getProgressBar() {
-        if (!((level + 1) == Township.getLevelManager().getLevelList().size())) {
-            long max = Township.getLevelManager().getLevelList().get(level + 1).getXpNeeded();
+        if (Township.getLevelManager().getLevelMap().containsKey(level + 1)) {
+            long max = Township.getLevelManager().getLevelMap().get(level + 1).getXpNeeded();
             float percent = (float) xp / max;
             int progressBars = (int) (16 * percent);
 

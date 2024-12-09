@@ -145,7 +145,7 @@ public class WorldManager {
         player.getInventory().setItem(22, profile.build());
         ItemBuilder levelAndPop = new ItemBuilder(MenuItems.levelAndPop);
         levelAndPop.displayName(Msg.format("<aqua>Level " + user.getLevel().getLevel()));
-        if (!((user.getLevel().getLevel() + 1) == Township.getLevelManager().getLevelList().size())) {
+        if (Township.getLevelManager().getLevelMap().containsKey(user.getLevel().getLevel() + 1)) {
             levelAndPop.lore(List.of(Msg.format("<aqua>Xp " + user.getLevel().getXp()),
                     Msg.format(user.getLevel().getProgressBar()), Msg.format("<red>Population " + user.getPopulation())));
         } else {
