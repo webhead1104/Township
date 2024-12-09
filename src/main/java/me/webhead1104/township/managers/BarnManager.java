@@ -43,13 +43,19 @@ public class BarnManager {
             inventory.setItem(i.getAndIncrement(), builder.build());
         }
         if (barnPageMap.containsKey(page + 1)) {
-            ItemBuilder up = new ItemBuilder(MenuItems.barnArrowUp);
-            up.pdcSetInt(Keys.barnArrowCurrentKey, page);
+            ItemBuilder up = new ItemBuilder(MenuItems.arrow)
+                    .id("barn_arrow")
+                    .displayName(Msg.format("<dark_green>Click to scroll up!"))
+                    .material(Material.ARROW)
+                    .pdcSetInt(Keys.newPageKey, page + 1);
             player.getInventory().setItem(11, up.build());
         }
         if (page > 1) {
-            ItemBuilder down = new ItemBuilder(MenuItems.barnArrowDown);
-            down.pdcSetInt(Keys.barnArrowCurrentKey, page);
+            ItemBuilder down = new ItemBuilder(MenuItems.arrow)
+                    .id("barn_arrow")
+                    .material(Material.ARROW)
+                    .displayName(Msg.format("<dark_green>Click to scroll down!"))
+                    .pdcSetInt(Keys.newPageKey, page - 1);
             player.getInventory().setItem(33, down.build());
         }
         ItemBuilder storage = new ItemBuilder(MenuItems.barnStorage);

@@ -97,48 +97,72 @@ public class WorldManager {
             inventory.setItem(key, builder.build());
         });
         player.getInventory().clear();
+        ItemStack arrowUp = new ItemBuilder(MenuItems.arrow)
+                .material(Material.ARROW)
+                .id("world_arrow")
+                .displayName(Msg.format("<dark_green>Click to scroll up!"))
+                .pdcSetInt(Keys.newPageKey, section - 8)
+                .build();
+        ItemStack arrowRight = new ItemBuilder(MenuItems.arrow)
+                .material(Material.ARROW)
+                .id("world_arrow")
+                .displayName(Msg.format("<dark_green>Click to scroll right!"))
+                .pdcSetInt(Keys.newPageKey, section + 1)
+                .build();
+        ItemStack arrowDown = new ItemBuilder(MenuItems.arrow)
+                .material(Material.ARROW)
+                .id("world_arrow")
+                .displayName(Msg.format("<dark_green>Click to scroll up!"))
+                .pdcSetInt(Keys.newPageKey, section + 8)
+                .build();
+        ItemStack arrowLeft = new ItemBuilder(MenuItems.arrow)
+                .material(Material.ARROW)
+                .id("world_arrow")
+                .displayName(Msg.format("<dark_green>Click to scroll left!"))
+                .pdcSetInt(Keys.newPageKey, section - 1)
+                .build();
         switch (section) {
             case 0 -> {
-                player.getInventory().setItem(23, MenuItems.arrowRight);
-                player.getInventory().setItem(31, MenuItems.arrowDown);
+                player.getInventory().setItem(23, arrowRight);
+                player.getInventory().setItem(31, arrowDown);
             }
             case 1, 2, 3, 4, 5, 6 -> {
-                player.getInventory().setItem(21, MenuItems.arrowLeft);
-                player.getInventory().setItem(23, MenuItems.arrowRight);
-                player.getInventory().setItem(31, MenuItems.arrowDown);
+                player.getInventory().setItem(21, arrowLeft);
+                player.getInventory().setItem(23, arrowRight);
+                player.getInventory().setItem(31, arrowDown);
             }
             case 7 -> {
-                player.getInventory().setItem(21, MenuItems.arrowLeft);
-                player.getInventory().setItem(31, MenuItems.arrowDown);
+                player.getInventory().setItem(21, arrowLeft);
+                player.getInventory().setItem(31, arrowDown);
             }
             case 15, 23, 31, 39, 47, 55 -> {
-                player.getInventory().setItem(21, MenuItems.arrowLeft);
-                player.getInventory().setItem(31, MenuItems.arrowDown);
-                player.getInventory().setItem(13, MenuItems.arrowUp);
+                player.getInventory().setItem(21, arrowLeft);
+                player.getInventory().setItem(31, arrowDown);
+                player.getInventory().setItem(13, arrowUp);
             }
             case 63 -> {
-                player.getInventory().setItem(13, MenuItems.arrowUp);
-                player.getInventory().setItem(21, MenuItems.arrowLeft);
+                player.getInventory().setItem(13, arrowUp);
+                player.getInventory().setItem(21, arrowLeft);
             }
             case 62, 61, 60, 59, 58, 57 -> {
-                player.getInventory().setItem(21, MenuItems.arrowLeft);
-                player.getInventory().setItem(23, MenuItems.arrowRight);
-                player.getInventory().setItem(13, MenuItems.arrowUp);
+                player.getInventory().setItem(21, arrowLeft);
+                player.getInventory().setItem(23, arrowRight);
+                player.getInventory().setItem(13, arrowUp);
             }
             case 8, 16, 24, 32, 40, 48 -> {
-                player.getInventory().setItem(23, MenuItems.arrowRight);
-                player.getInventory().setItem(13, MenuItems.arrowUp);
-                player.getInventory().setItem(31, MenuItems.arrowDown);
+                player.getInventory().setItem(23, arrowRight);
+                player.getInventory().setItem(13, arrowUp);
+                player.getInventory().setItem(31, arrowDown);
             }
             case 56 -> {
-                player.getInventory().setItem(13, MenuItems.arrowUp);
-                player.getInventory().setItem(23, MenuItems.arrowRight);
+                player.getInventory().setItem(13, arrowUp);
+                player.getInventory().setItem(23, arrowRight);
             }
             default -> {
-                player.getInventory().setItem(21, MenuItems.arrowLeft);
-                player.getInventory().setItem(23, MenuItems.arrowRight);
-                player.getInventory().setItem(13, MenuItems.arrowUp);
-                player.getInventory().setItem(31, MenuItems.arrowDown);
+                player.getInventory().setItem(21, arrowLeft);
+                player.getInventory().setItem(23, arrowRight);
+                player.getInventory().setItem(13, arrowUp);
+                player.getInventory().setItem(31, arrowDown);
             }
         }
         ItemBuilder profile = new ItemBuilder(MenuItems.profile).material(Material.LIGHT_BLUE_CONCRETE).displayName(Msg.format("<green>" + user.getTownName()));

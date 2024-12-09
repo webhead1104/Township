@@ -28,14 +28,8 @@ public class InventoryClickListener implements Listener {
                 String itemID = builder.pdcGetString(Keys.townshipIdKey);
                 Player player = (Player) event.getWhoClicked();
                 switch (itemID.toLowerCase()) {
-                    case "arrow_up" ->
-                            Township.getWorldManager().openWorldMenu(player, Township.getUserManager().getUser(player.getUniqueId()).getSection() - 8);
-                    case "arrow_left" ->
-                            Township.getWorldManager().openWorldMenu(player, Township.getUserManager().getUser(player.getUniqueId()).getSection() - 1);
-                    case "arrow_right" ->
-                            Township.getWorldManager().openWorldMenu(player, Township.getUserManager().getUser(player.getUniqueId()).getSection() + 1);
-                    case "arrow_down" ->
-                            Township.getWorldManager().openWorldMenu(player, Township.getUserManager().getUser(player.getUniqueId()).getSection() + 8);
+                    case "world_arrow" ->
+                            Township.getWorldManager().openWorldMenu(player, builder.pdcGetInt(Keys.newPageKey));
                     case "township", "back_button" -> Township.getWorldManager().openWorldMenu(player);
                     case "completed" -> {
                         FactoryType factoryType = FactoryType.valueOf(builder.pdcGetString(Keys.factoryTypeKey).toUpperCase());
@@ -77,14 +71,7 @@ public class InventoryClickListener implements Listener {
                             Township.getPlotManager().openMenu(player);
                         } else Township.getPlotManager().plant(player, item, event.getCursor());
                     }
-                    case "barn_arrow_up" -> {
-                        int page = builder.pdcGetInt(Keys.barnArrowCurrentKey);
-                        Township.getBarnManager().openMenu(player, page + 1);
-                    }
-                    case "barn_arrow_down" -> {
-                        int page = builder.pdcGetInt(Keys.barnArrowCurrentKey);
-                        Township.getBarnManager().openMenu(player, page - 1);
-                    }
+                    case "barn_arrow" -> Township.getBarnManager().openMenu(player, builder.pdcGetInt(Keys.newPageKey));
                     case "barn" -> Township.getBarnManager().openMenu(player, 1);
                     case "barn_sell" -> {
                         ItemType itemType = ItemType.valueOf(builder.pdcGetString(Keys.itemTypeKey).toUpperCase());

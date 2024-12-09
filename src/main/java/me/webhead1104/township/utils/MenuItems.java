@@ -17,10 +17,7 @@ public class MenuItems {
     public static final ItemStack chickenFeed = new ItemBuilder(Material.PLAYER_HEAD, Msg.format("<gold>Chicken Feed"), List.of(Msg.format("<gold>0")), "chicken_feed").build();
     public static final ItemStack egg = new ItemBuilder(Material.EGG, Msg.format("<gold>Egg"), List.of(Msg.format("<gold>1"), Msg.format("<green>Click to pick up!")), "egg").build();
 
-    public static final ItemStack arrowUp = new ItemBuilder(Material.ARROW, Msg.format("<dark_green>Click to scroll up!"), "arrow_up").build();
-    public static final ItemStack arrowDown = new ItemBuilder(Material.ARROW, Msg.format("<dark_green>Click to scroll down!"), "arrow_down").build();
-    public static final ItemStack arrowLeft = new ItemBuilder(Material.ARROW, Msg.format("<dark_green>Click to scroll left!"), "arrow_left").build();
-    public static final ItemStack arrowRight = new ItemBuilder(Material.ARROW, Msg.format("<dark_green>Click to scroll right!"), "arrow_right").build();
+    public static final ItemStack arrow = ItemBuilder.loading().id("arrow").build();
 
     public static final ItemStack levelAndPop = new ItemBuilder(Material.BLUE_CONCRETE, Msg.format("<aqua>Level 0"), List.of(Msg.format("<red>Population 0")), "level_population").build();
     public static final ItemStack coinsAndCash = new ItemBuilder(Material.GOLD_BLOCK, Msg.format("<yellow>Coins 0"), List.of(Msg.format("<green>Cash 0")), "coins_cash").build();
@@ -50,8 +47,6 @@ public class MenuItems {
             .setSkullTextureURL("http://textures.minecraft.net/texture/efdc6d3bad396e7abc57ef56e84e016d016b862747b9f59b055ac20e4e3a0930").build();
     public static final ItemStack nail = new ItemBuilder(Material.IRON_BARS, Msg.format("<gold>Nail"), "nail").build();
     //barn
-    public static final ItemStack barnArrowUp = new ItemBuilder(Material.ARROW, Msg.format("<dark_green>Click to scroll up!"), "barn_arrow_up").build();
-    public static final ItemStack barnArrowDown = new ItemBuilder(Material.ARROW, Msg.format("<dark_green>Click to scroll down!"), "barn_arrow_down").build();
     public static final ItemStack barnSell = ItemBuilder.loading().id("barn_sell").build();
     public static final ItemStack barnIncreaseAmount = ItemBuilder.loading().id("barn_increase").build();
     public static final ItemStack barnDecreaseAmount = ItemBuilder.loading().id("barn_decrease").build();
