@@ -192,6 +192,8 @@ public class BarnManager {
     }
 
     public void loadPages() {
+        Township.logger.info("Loading barn");
+        long start = System.currentTimeMillis();
         int page = 1;
         int slot = 0;
         int i = 0;
@@ -209,7 +211,7 @@ public class BarnManager {
             barnPageMap.get(page).put(slot, type);
             slot++;
         }
-        Township.logger.info("Done");
+        Township.logger.info("Barn loaded in {} ms!", System.currentTimeMillis() - start);
     }
 
     public void loadUpgrades() {

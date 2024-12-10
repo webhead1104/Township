@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Level;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -32,8 +33,8 @@ public class LevelManager {
                 i++;
             }
             Township.logger.info("Levels loaded in {} mills!", System.currentTimeMillis() - start);
-        } catch (Exception e) {
-            Township.logger.error("error", e);
+        } catch (IOException e) {
+            Township.logger.error("An error occurred whilst loading the levels! Please report the following stacktrace to Webhead1104:", e);
         }
     }
 }
