@@ -21,6 +21,8 @@ dependencies {
     compileOnly("com.google.code.gson:gson:2.11.0")
     compileOnly("com.zaxxer:HikariCP:6.0.0")
     implementation("net.wesjd:anvilgui:1.10.3-SNAPSHOT")
+    implementation("dev.velix:imperat-core:1.3.2")
+    implementation("dev.velix:imperat-bukkit:1.3.2")
 }
 
 java {

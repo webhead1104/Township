@@ -2,9 +2,15 @@ package me.webhead1104.township;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dev.velix.imperat.BukkitImperat;
+import dev.velix.imperat.BukkitSource;
+import dev.velix.imperat.Imperat;
+import dev.velix.imperat.type.ParameterPlayer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.commands.TownshipCommand;
+import me.webhead1104.township.commands.suggestions.AnimalTypeSuggestionResolver;
+import me.webhead1104.township.commands.suggestions.FactoryTypeSuggestionResolver;
 import me.webhead1104.township.data.Database;
 import me.webhead1104.township.listeners.InventoryClickListener;
 import me.webhead1104.township.listeners.JoinListener;
@@ -14,7 +20,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 
 import java.io.File;
-import java.util.Objects;
 
 @NoArgsConstructor
 public class Township extends JavaPlugin {
@@ -44,11 +49,18 @@ public class Township extends JavaPlugin {
     private static TrainManager trainManager;
     @Getter
     private static LevelManager levelManager;
+    @Getter
+    private Imperat<BukkitSource> imperat;
 
     @Override
     public void onEnable() {
         long start = System.currentTimeMillis();
-        Objects.requireNonNull(getCommand("township")).setExecutor(new TownshipCommand());
+        imperat = BukkitImperat.builder(this).applyBrigadier(true)
+                .namedSuggestionResolver("player", new ParameterPlayer().getSuggestionResolver())
+                .namedSuggestionResolver("factoryType", new FactoryTypeSuggestionResolver())
+                .namedSuggestionResolver("animalType", new AnimalTypeSuggestionResolver())
+                .build();
+        imperat.registerCommand(new TownshipCommand());
         registerListeners();
         File file = new File(getDataFolder().getAbsolutePath() + "/config.yml");
         if (!file.exists()) saveResource("config.yml", false);

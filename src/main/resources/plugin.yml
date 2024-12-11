@@ -9,5 +9,38 @@ libraries:
   - com.google.code.gson:gson:2.11.0
   - org.xerial:sqlite-jdbc:3.47.0.0
   - com.zaxxer:HikariCP:6.0.0
-commands:
-  township:
+permissions:
+  township.*:
+    description: A wildcard permission for Township
+    default: op
+    children:
+      - township.commands.*
+      - township.commands.cash
+      - township.commands.coins
+      - township.commands.level
+      - township.commands.population
+      - township.commands.xp
+  township.commands.*:
+    description: A wildcard permission for Township commands
+    default: op
+    children:
+      - township.commands.cash
+      - township.commands.coins
+      - township.commands.level
+      - township.commands.population
+      - township.commands.xp
+  township.commands.cash:
+    description: Be able to edit your cash
+    default: op
+  township.commands.coins:
+    description: Be able to edit your coins
+    default: op
+  township.commands.level:
+    description: Be able to edit your level
+    default: op
+  township.commands.population:
+    description: Be able to edit your population
+    default: op
+  township.commands.xp:
+    description: Be able to edit your xp
+    default: op
