@@ -14,9 +14,9 @@ public class User {
     private UUID uuid;
     private String townName;
     private PlayerLevel level;
-    private int population;
-    private int coins;
-    private int cash;
+    private long population;
+    private long coins;
+    private long cash;
     private int section;
     private Barn barn;
     private Animals animals;

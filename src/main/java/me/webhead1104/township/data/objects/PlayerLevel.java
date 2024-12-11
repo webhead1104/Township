@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PlayerLevel {
     private int level;
-    private int xp;
+    private long xp;
     private UUID uuid;
 
     public void addXp(int amountOfXp) {
