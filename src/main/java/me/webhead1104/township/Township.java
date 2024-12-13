@@ -12,6 +12,7 @@ import me.webhead1104.township.commands.TownshipCommand;
 import me.webhead1104.township.commands.suggestions.AnimalTypeSuggestionResolver;
 import me.webhead1104.township.commands.suggestions.FactoryTypeSuggestionResolver;
 import me.webhead1104.township.data.Database;
+import me.webhead1104.township.data.adapters.InstantAdapter;
 import me.webhead1104.township.listeners.InventoryClickListener;
 import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
@@ -20,12 +21,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 
 import java.io.File;
+import java.time.Instant;
 
 @NoArgsConstructor
 public class Township extends JavaPlugin {
 
     @Getter
-    public static final Gson GSON = new GsonBuilder().serializeNulls().create();
+    public static final Gson GSON = new GsonBuilder()
+            .serializeNulls()
+            .registerTypeAdapter(Instant.class, new InstantAdapter())
+            .create();
     public static Logger logger;
     @Getter
     private static Database database;
