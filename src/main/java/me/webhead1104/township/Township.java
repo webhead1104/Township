@@ -5,12 +5,9 @@ import com.google.gson.GsonBuilder;
 import dev.velix.imperat.BukkitImperat;
 import dev.velix.imperat.BukkitSource;
 import dev.velix.imperat.Imperat;
-import dev.velix.imperat.type.ParameterPlayer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.commands.TownshipCommand;
-import me.webhead1104.township.commands.suggestions.AnimalTypeSuggestionResolver;
-import me.webhead1104.township.commands.suggestions.FactoryTypeSuggestionResolver;
 import me.webhead1104.township.data.Database;
 import me.webhead1104.township.data.adapters.InstantAdapter;
 import me.webhead1104.township.listeners.InventoryClickListener;
@@ -60,11 +57,7 @@ public class Township extends JavaPlugin {
     @Override
     public void onEnable() {
         long start = System.currentTimeMillis();
-        imperat = BukkitImperat.builder(this).applyBrigadier(true)
-                .namedSuggestionResolver("player", new ParameterPlayer().getSuggestionResolver())
-                .namedSuggestionResolver("factoryType", new FactoryTypeSuggestionResolver())
-                .namedSuggestionResolver("animalType", new AnimalTypeSuggestionResolver())
-                .build();
+        imperat = BukkitImperat.builder(this).applyBrigadier(true).build();
         imperat.registerCommand(new TownshipCommand());
         registerListeners();
         File file = new File(getDataFolder().getAbsolutePath() + "/config.yml");

@@ -24,18 +24,17 @@ public final class TownshipCommand {
     }
 
     @SubCommand(value = "help")
-    @Description(value = "Displays the help message")
     public void test(BukkitSource source, CommandHelp commandHelp) {
         source.asPlayer().sendMessage("Hello World This is the help message!");
     }
 
     @SubCommand(value = "animals")
-    public void animals(BukkitSource source, @Named("The animal type that you want to open a menu for") @SuggestionProvider("animalType") AnimalType animalType) {
+    public void animals(BukkitSource source, AnimalType animalType) {
         Township.getAnimalsManager().openAnimalMenu(source.asPlayer(), animalType);
     }
 
     @SubCommand(value = "factories")
-    public void factories(BukkitSource source, @Named("The factory type that you want to open a menu for") @SuggestionProvider("factoryType") FactoryType factoryType) {
+    public void factories(BukkitSource source, FactoryType factoryType) {
         Township.getFactoriesManager().openFactoryMenu(source.asPlayer(), factoryType);
     }
 
