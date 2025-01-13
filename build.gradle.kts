@@ -16,13 +16,13 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT")
-    compileOnly("org.xerial:sqlite-jdbc:3.47.0.0")
+    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
+    compileOnly("org.xerial:sqlite-jdbc:3.47.2.0")
     compileOnly("com.google.code.gson:gson:2.11.0")
-    compileOnly("com.zaxxer:HikariCP:6.0.0")
-    implementation("net.wesjd:anvilgui:1.10.3-SNAPSHOT")
-    implementation("dev.velix:imperat-core:1.3.2")
-    implementation("dev.velix:imperat-bukkit:1.3.2")
+    compileOnly("com.zaxxer:HikariCP:6.2.1")
+    implementation("net.wesjd:anvilgui:1.10.4-SNAPSHOT")
+    implementation("dev.velix:imperat-core:1.5.1")
+    implementation("dev.velix:imperat-bukkit:1.5.1")
 }
 
 java {
@@ -67,6 +67,6 @@ tasks {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.21.3")
+        minecraftVersion("1.21.4")
     }
 }
