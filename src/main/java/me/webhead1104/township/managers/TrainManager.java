@@ -6,10 +6,7 @@ import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.data.objects.Trains;
 import me.webhead1104.township.data.objects.Tuple;
 import me.webhead1104.township.data.objects.User;
-import me.webhead1104.township.utils.ItemBuilder;
-import me.webhead1104.township.utils.Keys;
-import me.webhead1104.township.utils.MenuItems;
-import me.webhead1104.township.utils.Msg;
+import me.webhead1104.township.utils.*;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -27,7 +24,7 @@ public class TrainManager {
 
     public void openMenu(Player player) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
-        if (!(user.getLevel().getLevel() >= 5)) return;
+        if (!user.getTrains().isUnlocked()) return;
         player.setItemOnCursor(ItemStack.empty());
         player.getInventory().clear();
         Inventory inventory = Bukkit.createInventory(null, 54, Msg.format("The Trains"));
@@ -115,7 +112,7 @@ public class TrainManager {
             inventory.setItem(trainSlot.getAndAdd(18), engine.build());
         }
         inventory.setItem(53, MenuItems.backButton);
-        player.openInventory(inventory);
+        Utils.openInventory(player, inventory, uuid -> Township.getWorldManager().openWorldMenu(player), null);
     }
 
     public void purchaseTrain(Player player, int train) {
@@ -142,7 +139,7 @@ public class TrainManager {
         });
         if (good.get()) {
             trains.setClaimItems(false);
-            Trains.Train newTrain = Trains.Train.createTrain(train);
+            Trains.Train newTrain = new Trains.Train(train);
             newTrain.setUnlocked(true);
             user.getTrains().setTrain(newTrain, train);
         }
@@ -162,7 +159,7 @@ public class TrainManager {
                     good.set(false);
             });
             if (good.get()) {
-                user.getTrains().setTrain(Trains.Train.createTrain(train), train);
+                user.getTrains().setTrain(new Trains.Train(train), train);
                 user.getTrains().getTrain(train).setUnlocked(true);
                 user.getTrains().getTrain(train).setClaimItems(true);
             }

@@ -6,13 +6,19 @@ import dev.velix.imperat.help.CommandHelp;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.AnimalType;
 import me.webhead1104.township.data.enums.FactoryType;
-import me.webhead1104.township.utils.Msg;
 import org.bukkit.entity.Player;
 
 @Command("township")
 @Description("The main command for Township")
 @SuppressWarnings("unused")
-@Inherit({PopulationCommand.class, LevelCommand.class, XpCommand.class, CoinsCommand.class, CashCommand.class})
+@Inherit({
+        PopulationCommand.class,
+        LevelCommand.class,
+        XpCommand.class,
+        CoinsCommand.class,
+        CashCommand.class,
+        UnlockCommand.class,
+        LockCommand.class})
 public final class TownshipCommand {
 
     @Usage
@@ -36,17 +42,5 @@ public final class TownshipCommand {
     @SubCommand(value = "factories")
     public void factories(BukkitSource source, FactoryType factoryType) {
         Township.getFactoriesManager().openFactoryMenu(source.asPlayer(), factoryType);
-    }
-
-    @SubCommand(value = "getItemsBack")
-    public void getItemsBack(BukkitSource source) {
-        Player player = source.asPlayer();
-        player.sendMessage(Msg.format("<dark_red>Since I don't have time to add the item return system this will have to do."));
-        if (Township.getInventoryManager().getPlayerInventory(player.getUniqueId()).isEmpty()) {
-            player.sendMessage(Msg.format("<red>Your saved inventory is empty!"));
-            return;
-        }
-        Township.getInventoryManager().returnItemsToPlayer(player);
-        player.sendMessage(Msg.format("<green>Your items have been returned!"));
     }
 }
