@@ -59,12 +59,13 @@ public class BarnManager {
             player.getInventory().setItem(33, down.build());
         }
         ItemBuilder storage = new ItemBuilder(MenuItems.barnStorage);
-        if (user.getBarn().getBarnUpgrade().getBarnStorage() >= user.getBarn().storage()) {
+        //todo fix this
+        if (user.getBarn().getBarnUpgrade().getBarnStorage() < user.getBarn().getStorage() || user.getBarn().getBarnUpgrade().getBarnStorage() == user.getBarn().getStorage()) {
             storage.material(Material.LIME_CONCRETE);
-            storage.displayName(Msg.format("<green>" + user.getBarn().storage() + "/" + user.getBarn().getBarnUpgrade().getBarnStorage()));
+            storage.displayName(Msg.format("<green>" + user.getBarn().getStorage() + "/" + user.getBarn().getBarnUpgrade().getBarnStorage()));
         } else {
             storage.material(Material.RED_CONCRETE);
-            storage.displayName(Msg.format("<red>Full! " + user.getBarn().storage() + "/" + user.getBarn().getBarnUpgrade().getBarnStorage()));
+            storage.displayName(Msg.format("<red>Full! " + user.getBarn().getStorage() + "/" + user.getBarn().getBarnUpgrade().getBarnStorage()));
         }
         List<Component> lore = new ArrayList<>();
         user.getBarn().getItemMap().forEach((key, value) -> {
@@ -105,7 +106,7 @@ public class BarnManager {
         upgrade.lore(List.of(line1, hammers, nails, paint));
         player.getInventory().setItem(8, upgrade.build());
         player.getInventory().setItem(7, MenuItems.backButton);
-        player.openInventory(inventory);
+        Utils.openInventory(player, inventory, uuid -> Township.getWorldManager().openWorldMenu(player), null);
     }
 
     public void openSellMenu(Player player, ItemType itemType, int amount) {
@@ -155,7 +156,7 @@ public class BarnManager {
     }
 
     public void decreaseAmount(Player player, ItemType itemType, int newAmount) {
-        if (newAmount == 0) {
+        if (newAmount == 0) {//todo add full for when at max storage
             openMenu(player, barnPages.get(player.getUniqueId()));
             ItemBuilder error = new ItemBuilder(Material.BARRIER, "barn_not_enough_items");
             error.displayName(Msg.format("<red>You don't have enough to sell this amount!"));
@@ -169,7 +170,7 @@ public class BarnManager {
         if (amount == 0) return;
         User user = Township.getUserManager().getUser(player.getUniqueId());
         user.getBarn().removeAmountFromItem(itemType, amount);
-        user.setCoins(user.getCoins() + itemType.getSellPrice() * amount);
+        user.setCoins(user.getCoins() + (long) itemType.getSellPrice() * amount);
         openMenu(player, barnPages.get(player.getUniqueId()));
     }
 
