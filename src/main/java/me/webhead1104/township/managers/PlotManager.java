@@ -38,7 +38,7 @@ public class PlotManager {
 
     public void selectCropType(PlotType plotType, Player player) {
         if (Township.getUserManager().getUser(player.getUniqueId()).getCoins() >= plotType.getPrice()) {
-            ItemBuilder builder = new ItemBuilder(plotType.getItemType().getItemStack());
+            ItemBuilder builder = new ItemBuilder(plotType.getMenuItem());
             builder.id(plotType.getId() + "_type_selected");
             player.setItemOnCursor(builder.build());
         }
