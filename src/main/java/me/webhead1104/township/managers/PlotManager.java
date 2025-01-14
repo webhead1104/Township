@@ -24,7 +24,7 @@ public class PlotManager {
         for (PlotType type : PlotType.values()) {
             if (type.equals(PlotType.NONE)) continue;
             if (!(user.getLevel().getLevel() >= type.getLevelNeeded())) continue;
-            ItemBuilder itemBuilder = new ItemBuilder(type.getItemType().getItemStack());
+            ItemBuilder itemBuilder = new ItemBuilder(type.getMenuItem());
             itemBuilder.id(type.getId().toLowerCase() + "_type_select");
             String price = type.getPrice() == 0 ? "FREE!" : user.getCoins() + "/" + type.getPrice();
             if (user.getCoins() >= type.getPrice()) {

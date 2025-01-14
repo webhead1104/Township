@@ -77,7 +77,7 @@ public class WorldManager {
                 builder.pdcSetString(Keys.plotDataKey, plot.toString());
                 builder.id(plot.getPlotType().getId());
                 builder.material(plot.getPlotType().getMenuItem().getType());
-                builder.displayName(new ItemBuilder(plot.getPlotType().getItemType().getItemStack()).getDisplayName());
+                builder.displayName(new ItemBuilder(plot.getPlotType().getMenuItem()).getDisplayName());
             }
             if (value.getExpansion() != null) {
                 Expansion expansion = value.getExpansion();

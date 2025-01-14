@@ -63,7 +63,7 @@ public class MenuItems {
         public static final ItemStack road = new ItemBuilder(Material.BLACK_CONCRETE, Msg.format(""), "road").build();
         public static final ItemStack wood_plank = new ItemBuilder(Material.OAK_PLANKS, Msg.format(""), "wood_plank").build();
         public static final ItemStack expansion = new ItemBuilder(Material.PODZOL, Msg.format("Expansion"), "expansion").build();
-        public static final ItemStack plot = new ItemBuilder(Material.FARMLAND, Msg.format("plot"), "plot_none").build();
+        public static final ItemStack plot = new ItemBuilder(Material.FARMLAND, Msg.format("Empty Plot"), List.of(Msg.format("<green>You should plant something!")), "plot_none").build();
         public static final ItemStack barn = new ItemBuilder(Material.PLAYER_HEAD, Msg.format("<blue>Barn"), "barn")
                 .setSkullTextureURL("https://textures.minecraft.net/texture/4a9953ce945da6e2fb80030e754fa8e092c4e9ecd0548f938c3497a808e41a48").build();
         public static final ItemStack train = new ItemBuilder(Material.PLAYER_HEAD, Msg.format("Trains"), "train").build();
