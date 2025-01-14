@@ -69,16 +69,20 @@ public class FactoriesManager {
             //completed
             for (int i = 0; i < 3; ++i) {
                 ItemType item = factories.getCompleted(type, i);
-                if (!item.equals(ItemType.NONE)) {
-                    ItemBuilder builder = new ItemBuilder(MenuItems.completed);
+                ItemBuilder builder;
+                if (item.equals(ItemType.NONE)) {
+                    builder = new ItemBuilder(Material.CHEST, "completed_no_claim");
+                    builder.displayName(Msg.format("<red>Nothing is being made right now, <aqua>Maybe you should make something!"));
+                } else {
+                    builder = new ItemBuilder(MenuItems.completed);
                     builder.material(item.getItemStack().getType());
                     builder.displayName(item.getItemStack().getItemMeta().displayName());
                     builder.lore(Msg.format("<green>Click to claim!"));
                     builder.pdcSetString(Keys.recipeTypeKey, item.name());
                     builder.pdcSetString(Keys.factoryTypeKey, type.getID());
                     builder.pdcSetInt(Keys.slot, i);
-                    inventory.setItem(completedSlot.getAndIncrement(), builder.build());
                 }
+                inventory.setItem(completedSlot.getAndIncrement(), builder.build());
             }
             //working on
             RecipeType workingOn = factories.getWorkingOn(type);
@@ -120,7 +124,9 @@ public class FactoriesManager {
                             workingOnBuilder.displayName(workingOn.getMenuItem().getItemMeta().displayName());
                             workingOnBuilder.lore(List.of(Msg.format("<gold>Time: " + Utils.format(Instant.now(), factories.getInstant(type)))));
                             inventory.setItem(27, workingOnBuilder.build());
-                            inventory.clear(getWaitingSlotFromFactorySlot(waitingFactorySlot));
+                            ItemBuilder waitingBuilder = new ItemBuilder(Material.HOPPER, "waiting");
+                            waitingBuilder.displayName(Msg.format("<red>Nothing is being made right now, <aqua>Maybe you should make something!"));
+                            inventory.setItem(getWaitingSlotFromFactorySlot(waitingFactorySlot), waitingBuilder.build());
                         } else {
                             Township.logger.info("not Working on next item");
                             factories.setWorkingOn(type, RecipeType.NONE);
@@ -151,7 +157,9 @@ public class FactoriesManager {
         user.getFactories().setCompleted(factoryType, completedSlot, ItemType.NONE);
         user.getBarn().addAmountToItem(recipeType.getItemType(), 1);
         user.getLevel().addXp(recipeType.getXpGiven());
-        inventory.clear(clickedSlot);
+        ItemBuilder builder = new ItemBuilder(Material.CHEST, "completed_no_claim");
+        builder.displayName(Msg.format("<red>Nothing is being made right now, <aqua>Maybe you should make something!"));
+        inventory.setItem(clickedSlot, builder.build());
     }
 
     public void recipe(Player player, RecipeType recipeType, FactoryType factoryType, Inventory inventory, int clickedSlot) {
@@ -172,7 +180,8 @@ public class FactoriesManager {
                     ItemBuilder workingOn = new ItemBuilder(MenuItems.workingOn);
                     workingOn.displayName(Msg.format("<white>" + Utils.thing2(recipeType.name().toLowerCase())));
                     workingOn.material(recipeType.getMenuItem().getType());
-                    workingOn.lore(List.of(Msg.format("<gold>Time: " + Utils.format(Instant.now(), factories.getInstant(factoryType)))));
+                    String string = "<gold>Time: " + Utils.format(Instant.now(), factories.getInstant(factoryType));
+                    workingOn.lore(List.of(Msg.format(string)));
                     inventory.setItem(27, workingOn.build());
                 } else {
                     if (factories.canAddWaiting(factoryType)) {
