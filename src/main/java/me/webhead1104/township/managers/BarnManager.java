@@ -59,8 +59,7 @@ public class BarnManager {
             player.getInventory().setItem(33, down.build());
         }
         ItemBuilder storage = new ItemBuilder(MenuItems.barnStorage);
-        //todo fix this
-        if (user.getBarn().getBarnUpgrade().getBarnStorage() < user.getBarn().getStorage() || user.getBarn().getBarnUpgrade().getBarnStorage() == user.getBarn().getStorage()) {
+        if (user.getBarn().getBarnUpgrade().getBarnStorage() > user.getBarn().getStorage()) {
             storage.material(Material.LIME_CONCRETE);
             storage.displayName(Msg.format("<green>" + user.getBarn().getStorage() + "/" + user.getBarn().getBarnUpgrade().getBarnStorage()));
         } else {
