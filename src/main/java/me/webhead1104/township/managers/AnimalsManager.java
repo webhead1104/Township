@@ -82,10 +82,7 @@ public class AnimalsManager {
                     }
                 }
             }.runTaskTimer(Township.getInstance(), 0, 20);
-            Utils.openInventory(player, inventory, (uuid -> {
-                task.cancel();
-                Township.getWorldManager().openWorldMenu(Objects.requireNonNull(Bukkit.getPlayer(uuid)));
-            }), task);
+            Utils.openInventory(player, inventory, uuid -> Township.getWorldManager().openWorldMenu(player), task);
         }
     }
 
