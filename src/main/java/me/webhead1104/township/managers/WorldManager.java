@@ -95,6 +95,16 @@ public class WorldManager {
             }
             inventory.setItem(key, builder.build());
         });
+        return inventory;
+    }
+
+    public Inventory getWorld(Player player) {
+        return getWorld(player, Township.getUserManager().getUser(player.getUniqueId()).getSection());
+    }
+
+    public void openWorldMenu(Player player, int section) {
+        Utils.openInventory(player, getWorld(player, section), uuid -> openConfirmCloseMenu(player), null);
+        User user = Township.getUserManager().getUser(player.getUniqueId());
         player.getInventory().clear();
         ItemStack arrowUp = new ItemBuilder(MenuItems.arrow)
                 .material(Material.ARROW)
@@ -180,20 +190,10 @@ public class WorldManager {
                 .displayName(Msg.format("<yellow>Coins " + user.getCoins()))
                 .lore(List.of(Msg.format("<green>Cash " + user.getCash())));
         player.getInventory().setItem(17, coinsAndCash.build());
-        return inventory;
-    }
-
-    public Inventory getWorld(Player player) {
-        return getWorld(player, Township.getUserManager().getUser(player.getUniqueId()).getSection());
-    }
-
-    public void openWorldMenu(Player player, int section) {
-        Utils.openInventory(player, getWorld(player, section), uuid -> openConfirmCloseMenu(Objects.requireNonNull(Bukkit.getPlayer(uuid))), null);
     }
 
     public void openWorldMenu(Player player) {
-        Utils.openInventory(player, getWorld(player, Township.getUserManager().getUser(player.getUniqueId()).getSection()), uuid ->
-                openConfirmCloseMenu(Objects.requireNonNull(Bukkit.getPlayer(uuid))), null);
+        openWorldMenu(player, Township.getUserManager().getUser(player.getUniqueId()).getSection());
     }
 
     public void openConfirmCloseMenu(Player player) {
