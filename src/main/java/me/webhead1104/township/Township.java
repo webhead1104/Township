@@ -60,6 +60,7 @@ public class Township extends JavaPlugin {
     @Override
     public void onEnable() {
         long start = System.currentTimeMillis();
+        instance = this;
         imperat = BukkitImperat.builder(this).applyBrigadier(true).build();
         imperat.registerCommand(new TownshipCommand());
         registerListeners();
@@ -82,7 +83,6 @@ public class Township extends JavaPlugin {
         trainManager = new TrainManager();
         levelManager = new LevelManager();
         levelManager.loadLevels();
-        instance = this;
         logger.info("Township initialized in {} mills!", System.currentTimeMillis() - start);
     }
 
