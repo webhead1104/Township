@@ -1,6 +1,5 @@
 package me.webhead1104.township.managers;
 
-import lombok.AllArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.WorldTileType;
 import me.webhead1104.township.data.objects.Expansion;
@@ -20,9 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-@AllArgsConstructor
 public class WorldManager {
-    private final Township plugin;
 
     public void load(Player player) {
         if (Township.getUserManager().getUser(player.getUniqueId()).getTownName().equals("none")) {
@@ -38,7 +35,7 @@ public class WorldManager {
                 .lore(Msg.format("<red>you cannot change this once you set it!"));
         new AnvilGUI.Builder()
                 .preventClose()
-                .plugin(plugin)
+                .plugin(Township.getInstance())
                 .jsonTitle(Msg.formatToJson("<gold>Set Your Town name!"))
                 .itemLeft(builder.build()).onClick((slot, stateSnapshot) -> {
                     Player p = stateSnapshot.getPlayer();

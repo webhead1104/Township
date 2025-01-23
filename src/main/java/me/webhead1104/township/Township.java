@@ -70,7 +70,7 @@ public class Township extends JavaPlugin {
         database = new Database(this);
         database.connect();
         database.createTownshipTable();
-        worldManager = new WorldManager(this);
+        worldManager = new WorldManager();
         expansionManager = new ExpansionManager();
         animalsManager = new AnimalsManager();
         factoriesManager = new FactoriesManager();
