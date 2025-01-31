@@ -5,14 +5,13 @@ import com.google.gson.GsonBuilder;
 import dev.velix.imperat.BukkitImperat;
 import dev.velix.imperat.BukkitSource;
 import dev.velix.imperat.Imperat;
-import dev.velix.imperat.type.ParameterPlayer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.commands.TownshipCommand;
-import me.webhead1104.township.commands.suggestions.AnimalTypeSuggestionResolver;
-import me.webhead1104.township.commands.suggestions.FactoryTypeSuggestionResolver;
 import me.webhead1104.township.data.Database;
+import me.webhead1104.township.data.adapters.InstantAdapter;
 import me.webhead1104.township.listeners.InventoryClickListener;
+import me.webhead1104.township.listeners.InventoryCloseListener;
 import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.*;
@@ -20,12 +19,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 
 import java.io.File;
+import java.time.Instant;
 
 @NoArgsConstructor
 public class Township extends JavaPlugin {
 
     @Getter
-    public static final Gson GSON = new GsonBuilder().serializeNulls().create();
+    public static final Gson GSON = new GsonBuilder()
+            .serializeNulls()
+            .registerTypeAdapter(Instant.class, new InstantAdapter())
+            .create();
     public static Logger logger;
     @Getter
     private static Database database;
@@ -50,16 +53,15 @@ public class Township extends JavaPlugin {
     @Getter
     private static LevelManager levelManager;
     @Getter
-    private Imperat<BukkitSource> imperat;
+    private static Township instance;
+    @Getter
+    private static Imperat<BukkitSource> imperat;
 
     @Override
     public void onEnable() {
         long start = System.currentTimeMillis();
-        imperat = BukkitImperat.builder(this).applyBrigadier(true)
-                .namedSuggestionResolver("player", new ParameterPlayer().getSuggestionResolver())
-                .namedSuggestionResolver("factoryType", new FactoryTypeSuggestionResolver())
-                .namedSuggestionResolver("animalType", new AnimalTypeSuggestionResolver())
-                .build();
+        instance = this;
+        imperat = BukkitImperat.builder(this).applyBrigadier(true).build();
         imperat.registerCommand(new TownshipCommand());
         registerListeners();
         File file = new File(getDataFolder().getAbsolutePath() + "/config.yml");
@@ -68,7 +70,7 @@ public class Township extends JavaPlugin {
         database = new Database(this);
         database.connect();
         database.createTownshipTable();
-        worldManager = new WorldManager(this);
+        worldManager = new WorldManager();
         expansionManager = new ExpansionManager();
         animalsManager = new AnimalsManager();
         factoriesManager = new FactoriesManager();
@@ -99,5 +101,6 @@ public class Township extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new JoinListener(), this);
         this.getServer().getPluginManager().registerEvents(new LeaveListener(), this);
+        this.getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
     }
 }

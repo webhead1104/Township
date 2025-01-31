@@ -1,6 +1,5 @@
 package me.webhead1104.township.managers;
 
-import lombok.AllArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.WorldTileType;
 import me.webhead1104.township.data.objects.Expansion;
@@ -17,11 +16,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-@AllArgsConstructor
 public class WorldManager {
-    private final Township plugin;
 
     public void load(Player player) {
         if (Township.getUserManager().getUser(player.getUniqueId()).getTownName().equals("none")) {
@@ -37,7 +35,7 @@ public class WorldManager {
                 .lore(Msg.format("<red>you cannot change this once you set it!"));
         new AnvilGUI.Builder()
                 .preventClose()
-                .plugin(plugin)
+                .plugin(Township.getInstance())
                 .jsonTitle(Msg.formatToJson("<gold>Set Your Town name!"))
                 .itemLeft(builder.build()).onClick((slot, stateSnapshot) -> {
                     Player p = stateSnapshot.getPlayer();
@@ -75,8 +73,8 @@ public class WorldManager {
                 Plot plot = value.getPlot();
                 builder.pdcSetString(Keys.plotDataKey, plot.toString());
                 builder.id(plot.getPlotType().getId());
-                builder.material(plot.getPlotType().getItemType().getItemStack().getType());
-                builder.displayName(new ItemBuilder(plot.getPlotType().getItemType().getItemStack()).getDisplayName());
+                builder.material(plot.getPlotType().getMenuItem().getType());
+                builder.displayName(new ItemBuilder(plot.getPlotType().getMenuItem()).getDisplayName());
             }
             if (value.getExpansion() != null) {
                 Expansion expansion = value.getExpansion();
@@ -86,16 +84,24 @@ public class WorldManager {
                 builder.displayName(Msg.format("Expansion"));
                 builder.lore(List.of(Msg.format("<aqua>Click to open the expansion menu!")));
             }
-            if (value.getTileType().equals(WorldTileType.TRAIN) && !(user.getLevel().getLevel() >= 5)) {
-                builder.lore(List.of(Msg.format("<red>You need to be level <aqua>5 <red>to access the trains!"),
-                        Msg.format("<red>You are level <aqua>" + user.getLevel().getLevel())));
+            if (value.getTileType().equals(WorldTileType.TRAIN) && !user.getTrains().isUnlocked()) {
+                builder.lore(List.of(Msg.format("<red>You need to purchase the trains!")));
             }
-            if (value.getTileType().getAnimalType() != null && !(user.getLevel().getLevel() >= value.getTileType().getAnimalType().getLevelNeeded())) {
-                builder.lore(List.of(Msg.format("<red>You need to be level <aqua>5 <red>to access the " + Utils.thing2(value.getTileType().getAnimalType().getID()) + "!"),
-                        Msg.format("<red>You are level <aqua>" + user.getLevel().getLevel())));
+            if (value.getTileType().getAnimalType() != null && !user.getAnimals().isUnlocked(value.getTileType().getAnimalType())) {
+                builder.lore(List.of(Msg.format("<red>You need to purchase the " + Utils.thing2(value.getTileType().getId()) + "!")));
             }
             inventory.setItem(key, builder.build());
         });
+        return inventory;
+    }
+
+    public Inventory getWorld(Player player) {
+        return getWorld(player, Township.getUserManager().getUser(player.getUniqueId()).getSection());
+    }
+
+    public void openWorldMenu(Player player, int section) {
+        Utils.openInventory(player, getWorld(player, section), uuid -> openConfirmCloseMenu(player), null);
+        User user = Township.getUserManager().getUser(player.getUniqueId());
         player.getInventory().clear();
         ItemStack arrowUp = new ItemBuilder(MenuItems.arrow)
                 .material(Material.ARROW)
@@ -181,18 +187,20 @@ public class WorldManager {
                 .displayName(Msg.format("<yellow>Coins " + user.getCoins()))
                 .lore(List.of(Msg.format("<green>Cash " + user.getCash())));
         player.getInventory().setItem(17, coinsAndCash.build());
-        return inventory;
-    }
-
-    public Inventory getWorld(Player player) {
-        return getWorld(player, Township.getUserManager().getUser(player.getUniqueId()).getSection());
-    }
-
-    public void openWorldMenu(Player player, int section) {
-        player.openInventory(getWorld(player, section));
     }
 
     public void openWorldMenu(Player player) {
-        player.openInventory(getWorld(player, Township.getUserManager().getUser(player.getUniqueId()).getSection()));
+        openWorldMenu(player, Township.getUserManager().getUser(player.getUniqueId()).getSection());
+    }
+
+    public void openConfirmCloseMenu(Player player) {
+        player.getInventory().clear();
+        Inventory inventory = Bukkit.createInventory(null, 9, Msg.format("<red>Are you sure?"));
+        ItemBuilder confirm = new ItemBuilder(Material.RED_CONCRETE, Msg.format("<red>Are you sure you want to close township?"), "confirm_close");
+        confirm.lore(List.of(Msg.format("<red>If so click this item!"),
+                Msg.format("<green>Or if don't want to close township hit the Esc key or click the back button!")));
+        inventory.setItem(4, confirm.build());
+        inventory.setItem(8, MenuItems.backButton);
+        Utils.openInventory(player, inventory, uuid -> openWorldMenu(Objects.requireNonNull(Bukkit.getPlayer(uuid))), null);
     }
 }

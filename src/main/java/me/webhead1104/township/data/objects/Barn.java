@@ -68,9 +68,9 @@ public class Barn {
         itemMap.put(type, getItem(type) - amount);
     }
 
-    public int storage() {
-        int atomicInteger = 0;
-        for (int value : itemMap.values()) atomicInteger += value;
-        return atomicInteger;
+    public int getStorage() {
+        int storage = 0;
+        for (int value : itemMap.values()) storage += value;
+        return storage;
     }
 }

@@ -11,7 +11,7 @@ import java.util.Map;
 @AllArgsConstructor
 public enum RecipeType {
     NONE(MenuItems.none, ItemType.NONE, Map.of(), -1, -1, -1, "none_recipe"),
-    BREAD(MenuItems.Recipes.bread, ItemType.BREAD, Map.of(ItemType.WHEAT, 2), 138, 2, 2, "bread_recipe"),
+    BREAD(MenuItems.Recipes.bread, ItemType.BREAD, Map.of(ItemType.WHEAT, 2), 300, 2, 2, "bread_recipe"),
     COOKIE(MenuItems.Recipes.cookie, ItemType.COOKIE, Map.of(ItemType.WHEAT, 2, ItemType.EGG, 2), 438, 5, 19, "cookie_recipe"),
     BAGEL(MenuItems.Recipes.bagel, ItemType.BAGEL, Map.of(ItemType.WHEAT, 2, ItemType.EGG, 3, ItemType.SUGAR, 1), 900, 8, 24, "bagel_recipe"),
     COW_FEED(MenuItems.Recipes.cowFeed, ItemType.COW_FEED, Map.of(ItemType.WHEAT, 2, ItemType.CORN, 1), 138, 1, 1, "cow_feed_recipe"),
@@ -23,6 +23,7 @@ public enum RecipeType {
     private final ItemStack menuItem;
     private final ItemType itemType;
     private final Map<ItemType, Integer> recipeItems;
+    //in seconds
     private final int time;
     private final int levelNeeded;
     private final int xpGiven;

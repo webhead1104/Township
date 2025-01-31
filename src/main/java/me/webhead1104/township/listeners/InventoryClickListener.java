@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
@@ -30,12 +31,13 @@ public class InventoryClickListener implements Listener {
                 switch (itemID.toLowerCase()) {
                     case "world_arrow" ->
                             Township.getWorldManager().openWorldMenu(player, builder.pdcGetInt(Keys.newPageKey));
-                    case "township", "back_button" -> Township.getWorldManager().openWorldMenu(player);
+                    case "township", "back_button" ->
+                            Township.getUserManager().getPlayerCloseHandler(player.getUniqueId()).accept(player.getUniqueId());
                     case "completed" -> {
                         FactoryType factoryType = FactoryType.valueOf(builder.pdcGetString(Keys.factoryTypeKey).toUpperCase());
                         RecipeType recipeType = RecipeType.valueOf(builder.pdcGetString(Keys.recipeTypeKey).toUpperCase());
                         int slot = builder.pdcGetInt(Keys.slot);
-                        Township.getFactoriesManager().complete(player, slot, factoryType, recipeType);
+                        Township.getFactoriesManager().collectItem(player, slot, factoryType, recipeType, event.getInventory(), event.getSlot());
                     }
                     //todo fix this mess
                     case "cowshed_1" -> Township.getAnimalsManager().openAnimalMenu(player, AnimalType.COWSHED_1);
@@ -106,6 +108,14 @@ public class InventoryClickListener implements Listener {
                         int car = builder.pdcGetInt(Keys.trainCarKey);
                         Township.getTrainManager().giveItem(player, itemType, amount, train, car);
                     }
+                    case "confirm_close" -> {
+                        Township.getDatabase().setData(Township.getUserManager().getUser(player.getUniqueId()));
+                        Township.getUserManager().removePlayerCloseHandler(player.getUniqueId());
+                        player.closeInventory(InventoryCloseEvent.Reason.PLUGIN);
+                        if (Township.getInventoryManager().getPlayerInventory(player.getUniqueId()).isPresent()) {
+                            Township.getInventoryManager().returnItemsToPlayer(player);
+                        }
+                    }
                 }
                 //plots
                 for (PlotType plotType : PlotType.values()) {
@@ -126,20 +136,22 @@ public class InventoryClickListener implements Listener {
                     if (recipeType.equals(RecipeType.NONE)) continue;
                     if (itemID.equals(recipeType.getId())) {
                         FactoryType factoryType = FactoryType.valueOf(builder.pdcGetString(Keys.factoryTypeKey).toUpperCase());
-                        Township.getFactoriesManager().recipe(player, recipeType, factoryType);
+                        Township.getFactoriesManager().recipe(player, recipeType, factoryType, event.getInventory(), event.getSlot());
                     }
                 }
                 for (AnimalType animalType : AnimalType.values()) {
                     if (itemID.equals(animalType.getProductType().getID())) {
                         int slot = builder.pdcGetInt(Keys.slot);
-                        Township.getAnimalsManager().pickup(player, animalType, slot);
-                    } else if (itemID.equals(animalType.getFeedType().getID())) {
-                        Township.getAnimalsManager().feed(player, animalType);
+                        Township.getAnimalsManager().pickup(player, animalType, slot, event.getInventory(), event.getSlot());
+                    } else if (builder.pdcHas(Keys.animalTypeKey) && builder.pdcGetString(Keys.animalTypeKey).equalsIgnoreCase(animalType.name())) {
+                        Township.getAnimalsManager().feed(player, animalType, event.getInventory());
                     }
                 }
             }
         } else {
-            if (event.getAction().equals(InventoryAction.DROP_ALL_CURSOR) || event.getAction().equals(InventoryAction.DROP_ONE_CURSOR) || event.getAction().equals(InventoryAction.NOTHING)) {
+            if (event.getAction().equals(InventoryAction.DROP_ALL_CURSOR) ||
+                    event.getAction().equals(InventoryAction.DROP_ONE_CURSOR) ||
+                    event.getAction().equals(InventoryAction.NOTHING)) {
                 event.setCancelled(true);
             } else {
                 ItemBuilder builder = new ItemBuilder(Objects.requireNonNull(event.getInventory()).getItem(event.getSlot()));

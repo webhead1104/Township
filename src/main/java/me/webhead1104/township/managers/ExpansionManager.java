@@ -32,7 +32,7 @@ public class ExpansionManager {
         inventory.setItem(expansionSlot + 18, itemStack);
         inventory.setItem(expansionSlot + 19, itemStack);
         inventory.setItem(expansionSlot + 20, itemStack);
-        player.openInventory(inventory);
+        Utils.openInventory(player, inventory, uuid -> Township.getWorldManager().openWorldMenu(player), null);
         ItemBuilder expansionPrice = new ItemBuilder(MenuItems.expansionPrice);
         if (user.getCoins() >= expansion.getPrice()) {
             expansionPrice.displayName(Msg.format("<gold>Coins needed: <white>" + user.getCoins() + "/" + expansion.getPrice()));
