@@ -7,59 +7,16 @@ import me.webhead1104.township.data.objects.Plot;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.utils.*;
-import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 public class WorldManager {
-
-    public void load(Player player) {
-        if (Township.getUserManager().getUser(player.getUniqueId()).getTownName().equals("none")) {
-            townName(player);
-            return;
-        }
-        openWorldMenu(player);
-    }
-
-    public void townName(Player player) {
-        ItemBuilder builder = new ItemBuilder(Material.PAPER, "town_name_paper")
-                .displayName(Msg.format("<green>Town Name"))
-                .lore(Msg.format("<red>you cannot change this once you set it!"));
-        new AnvilGUI.Builder()
-                .preventClose()
-                .plugin(Township.getInstance())
-                .jsonTitle(Msg.formatToJson("<gold>Set Your Town name!"))
-                .itemLeft(builder.build()).onClick((slot, stateSnapshot) -> {
-                    Player p = stateSnapshot.getPlayer();
-                    if (slot != AnvilGUI.Slot.OUTPUT) return Collections.emptyList();
-                    if (!stateSnapshot.getText().isEmpty()) {
-                        String value = stateSnapshot.getText();
-                        if (!value.contains("That name is taken!") && !value.contains("Town Name")) {
-                            List<String> townNames;
-                            try {
-                                townNames = Township.getDatabase().getTakenTownNames().get();
-                            } catch (InterruptedException | ExecutionException e) {
-                                throw new RuntimeException(e);
-                            }
-                            if (!townNames.contains(value)) {
-                                Township.getUserManager().getUser(p.getUniqueId()).setTownName(value);
-                                return List.of(AnvilGUI.ResponseAction.close(), AnvilGUI.ResponseAction.run(() -> openWorldMenu(stateSnapshot.getPlayer())));
-                            } else {
-                                return List.of(AnvilGUI.ResponseAction.replaceInputText(Msg.formatToJson("<red>That name is taken!")));
-                            }
-                        }
-                    }
-                    return Collections.emptyList();
-                }).open(player);
-    }
 
     public Inventory getWorld(Player player, int section) {
         player.setItemOnCursor(ItemStack.empty());

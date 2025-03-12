@@ -26,7 +26,7 @@ public final class TownshipCommand {
         Player player = source.asPlayer();
         if (!player.getInventory().isEmpty()) Township.getInventoryManager().addPlayerInventory(player);
         player.getInventory().clear();
-        Township.getWorldManager().load(player);
+        Township.getWorldManager().openWorldMenu(player);
     }
 
     @SubCommand(value = "help")
