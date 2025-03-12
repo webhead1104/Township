@@ -8,8 +8,6 @@ import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -127,28 +125,6 @@ public class Database {
                 future.complete(null);
             } catch (SQLException e) {
                 Township.logger.error("An error occurred whilst setting a player's data! Please report the following stacktrace to Webhead1104:", e);
-                future.completeExceptionally(e);
-            }
-        });
-        return future;
-    }
-
-    @NotNull
-    public CompletableFuture<List<String>> getTakenTownNames() {
-        CompletableFuture<List<String>> future = new CompletableFuture<>();
-        worker.submit(() -> {
-            if (!isConnected())
-                throw new IllegalStateException("The database must be connected to get a list of taken town names!");
-            try {
-                PreparedStatement ps = sqlConnection.prepareStatement("SELECT data FROM Township;");
-                ResultSet rs = ps.executeQuery();
-                List<String> takenNames = new ArrayList<>();
-                while (rs.next()) {
-                    takenNames.add(User.fromJson(rs.getString("data")).getTownName());
-                }
-                future.complete(takenNames);
-            } catch (SQLException e) {
-                Township.logger.error("An error occurred whilst getting a list of taken town names! Please report the following stacktrace to Webhead1104:", e);
                 future.completeExceptionally(e);
             }
         });
