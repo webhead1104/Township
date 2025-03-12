@@ -20,7 +20,6 @@ dependencies {
     compileOnly("org.xerial:sqlite-jdbc:3.47.2.0")
     compileOnly("com.google.code.gson:gson:2.11.0")
     compileOnly("com.zaxxer:HikariCP:6.2.1")
-    implementation("net.wesjd:anvilgui:1.10.4-SNAPSHOT")
     implementation("dev.velix:imperat-core:1.5.1")
     implementation("dev.velix:imperat-bukkit:1.5.1")
 }
