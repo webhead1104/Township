@@ -14,7 +14,6 @@ repositories {
     maven("https://repo.codemc.io/repository/maven-snapshots/")
     maven("https://repo.codemc.org/repository/nms/")
     maven("https://libraries.minecraft.net")
-    maven("https://maven.lukebemish.dev/releases/")
 }
 
 dependencies {
@@ -69,13 +68,5 @@ tasks {
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
         minecraftVersion("1.21.4")
-    }
-}
-
-configurations.configureEach {
-    resolutionStrategy.eachDependency {
-        if (requested.group == "com.mojang" && requested.name == "datafixerupper") {
-            useTarget("dev.lukebemish:documenteddfu:6.0.12-2024.01.31-20.49.34")
-        }
     }
 }
