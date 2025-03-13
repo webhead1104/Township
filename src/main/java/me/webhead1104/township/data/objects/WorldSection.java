@@ -31,7 +31,6 @@ public class WorldSection {
 
     public WorldSection(int section) {
         AtomicInteger slot = new AtomicInteger(0);
-        AtomicInteger times = new AtomicInteger(0);
         for (int i = 0; i < 54; i++) {
             slotMap.put(i, new Tile(WorldTileType.GRASS, null, null));
             if (section != 27 && section != 28 && section != 35 && section != 36) {
