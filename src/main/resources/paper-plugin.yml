@@ -6,7 +6,6 @@ prefix: Township
 authors: [ Webhead1104 ]
 description: Township in minecraft
 libraries:
-  - com.google.code.gson:gson:2.11.0
   - org.xerial:sqlite-jdbc:3.47.0.0
   - com.zaxxer:HikariCP:6.0.0
 permissions:
