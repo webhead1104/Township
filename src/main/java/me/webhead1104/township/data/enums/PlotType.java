@@ -1,5 +1,6 @@
 package me.webhead1104.township.data.enums;
 
+import com.mojang.serialization.Codec;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.webhead1104.township.utils.MenuItems;
@@ -13,6 +14,7 @@ public enum PlotType {
     CORN(ItemType.CORN, MenuItems.corn, 1, 3, 1, "corn_plot"),
     CARROT(ItemType.CARROT, MenuItems.carrot, 2, 4, 2, "carrot_plot"),
     SUGARCANE(ItemType.SUGARCANE, MenuItems.sugarcane, 3, 7, 3, "sugarcane_plot");
+    public static final Codec<PlotType> CODEC = Codec.STRING.xmap(PlotType::valueOf, PlotType::toString);
     private final ItemType itemType;
     private final ItemStack menuItem;
     private final int price;

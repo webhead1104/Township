@@ -28,17 +28,17 @@ public class AnimalsManager {
         player.setItemOnCursor(ItemStack.empty());
         User user = Township.getUserManager().getUser(player.getUniqueId());
         Animals animals = user.getAnimals();
-        if (animals.isUnlocked(type)) {
+        if (animals.getAnimalBuilding(type).isUnlocked()) {
             Inventory inventory = Bukkit.createInventory(null, 54, type.getMenuTitle());
             int slot = 11;
             for (int i = 0; i < 6; ++i) {
-                if (animals.getProduct(type, i)) {
+                if (animals.getAnimalBuilding(type).getAnimal(i).isProduct()) {
                     ItemBuilder builder = new ItemBuilder(type.getProductType().getItemStack());
                     builder.pdcSetString(Keys.animalTypeKey, type.name());
                     builder.pdcSetInt(Keys.slot, i);
                     inventory.setItem(slot + 9, builder.build());
                 }
-                if (animals.getFeed(type, i)) {
+                if (animals.getAnimalBuilding(type).getAnimal(i).isFeed()) {
                     ItemBuilder builder = new ItemBuilder(type.getAnimalItemStack());
                     builder.lore(Msg.format("<gold>Time: 0"));
                     inventory.setItem(slot, builder.build());
@@ -56,14 +56,14 @@ public class AnimalsManager {
                     int slot = 11;
                     Animals animals = Township.getUserManager().getUser(player.getUniqueId()).getAnimals();
                     for (int i = 0; i < 6; ++i) {
-                        if (animals.getInstant(type, i).equals(Instant.EPOCH)) {
+                        if (animals.getAnimalBuilding(type).getAnimal(i).getInstant().equals(Instant.EPOCH)) {
                             slot++;
                             continue;
                         }
-                        if (Instant.now().isAfter(animals.getInstant(type, i).minusSeconds(1))) {
-                            animals.setFeed(type, i, false);
-                            animals.setProduct(type, i, true);
-                            animals.setInstant(type, i, Instant.EPOCH);
+                        if (Instant.now().isAfter(animals.getAnimalBuilding(type).getAnimal(i).getInstant().minusSeconds(1))) {
+                            animals.getAnimalBuilding(type).getAnimal(i).setFeed(false);
+                            animals.getAnimalBuilding(type).getAnimal(i).setProduct(true);
+                            animals.getAnimalBuilding(type).getAnimal(i).setInstant(Instant.EPOCH);
                             ItemBuilder builder = new ItemBuilder(type.getProductType().getItemStack());
                             builder.pdcSetString(Keys.animalTypeKey, type.name());
                             builder.pdcSetInt(Keys.slot, i);
@@ -72,7 +72,7 @@ public class AnimalsManager {
                             slot++;
                             continue;
                         }
-                        String string = Utils.format(Instant.now(), animals.getInstant(type, i));
+                        String string = Utils.format(Instant.now(), animals.getAnimalBuilding(type).getAnimal(i).getInstant());
                         Objects.requireNonNull(inventory.getItem(slot)).editMeta(ItemMeta.class, meta -> meta.lore(List.of(Msg.format("<gold>Time: " + string))));
                         ItemBuilder builder = new ItemBuilder(type.getFeedType().getItemStack());
                         builder.lore(Msg.format("<white>" + user.getBarn().getItem(type.getFeedType())), 0);
@@ -93,14 +93,14 @@ public class AnimalsManager {
         if (feed >= 1) {
             for (int i = 0; i < 6; ++i) {
                 if (!(user.getBarn().getItem(type.getFeedType()) >= 1)) return;
-                if (animals.getFeed(type, i)) {
+                if (animals.getAnimalBuilding(type).getAnimal(i).isFeed()) {
                     continue;
                 }
                 String string = Utils.format(Instant.now(), Instant.now().plusSeconds(type.getTimeTakesToFeed()));
                 Objects.requireNonNull(inventory.getItem(11 + i)).editMeta(ItemMeta.class, meta -> meta.lore(List.of(Msg.format("<gold>Time: " + string))));
                 user.getBarn().removeAmountFromItem(type.getFeedType(), 1);
-                animals.setFeed(type, i, true);
-                animals.setInstant(type, i, Instant.now().plusSeconds(type.getTimeTakesToFeed()));
+                animals.getAnimalBuilding(type).getAnimal(i).setFeed(true);
+                animals.getAnimalBuilding(type).getAnimal(i).setInstant(Instant.now().plusSeconds(type.getTimeTakesToFeed()));
                 ItemBuilder builder = new ItemBuilder(type.getFeedType().getItemStack());
                 builder.lore(Msg.format("<white>" + user.getBarn().getItem(type.getFeedType())), 0);
                 builder.pdcSetString(Keys.animalTypeKey, type.name());
@@ -112,9 +112,9 @@ public class AnimalsManager {
     public void pickup(Player player, AnimalType type, int slot, Inventory inventory, int actualSlot) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         Animals animals = user.getAnimals();
-        if (animals.getProduct(type, slot)) {
-            animals.setProduct(type, slot, false);
-            animals.setFeed(type, slot, false);
+        if (animals.getAnimalBuilding(type).getAnimal(slot).isProduct()) {
+            animals.getAnimalBuilding(type).getAnimal(slot).setProduct(false);
+            animals.getAnimalBuilding(type).getAnimal(slot).setFeed(false);
             user.getBarn().addAmountToItem(type.getProductType(), 1);
             user.getLevel().addXp(type.getXpGivenOnClaim());
             inventory.clear(actualSlot);

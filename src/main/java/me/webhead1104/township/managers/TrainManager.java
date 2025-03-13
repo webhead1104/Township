@@ -4,7 +4,6 @@ import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.data.objects.Trains;
-import me.webhead1104.township.data.objects.Tuple;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.utils.*;
 import net.kyori.adventure.text.Component;
@@ -40,19 +39,19 @@ public class TrainManager {
                         AtomicInteger carSlot = new AtomicInteger(trainSlot.get() + 1);
                         for (int j = 1; j < 6; j++) {
                             ItemBuilder carItem = new ItemBuilder(MenuItems.trainCar);
-                            Trains.TrainCar car = train.getTrainCar(j);
-                            if (car.getClaimItems().getA().equals(ItemType.NONE)) {
+                            Trains.Train.TrainCar car = train.getTrainCar(j);
+                            if (car.getClaimItem().getItemType().equals(ItemType.NONE)) {
                                 carItem.material(Material.IRON_INGOT);
                                 carItem.displayName(Msg.format("<green>Item claimed!"));
                             } else {
                                 carItem.material(Material.CHEST);
                                 carItem.pdcSetInt(Keys.trainKey, i);
-                                carItem.pdcSetInt(Keys.itemAmountKey, car.getClaimItems().getB());
-                                carItem.pdcSetString(Keys.itemTypeKey, car.getClaimItems().getA().name());
+                                carItem.pdcSetInt(Keys.itemAmountKey, car.getClaimItem().getAmount());
+                                carItem.pdcSetString(Keys.itemTypeKey, car.getClaimItem().getItemType().name());
                                 carItem.pdcSetInt(Keys.trainCarKey, j);
                                 carItem.id("train_collect");
-                                carItem.displayName(car.getClaimItems().getA().getItemStack().getItemMeta().displayName());
-                                carItem.lore(Msg.format("<white>" + car.getClaimItems().getB()));
+                                carItem.displayName(car.getClaimItem().getItemType().getItemStack().getItemMeta().displayName());
+                                carItem.lore(Msg.format("<white>" + car.getClaimItem().getAmount()));
                             }
                             inventory.setItem(carSlot.getAndAdd(1), carItem.build());
                         }
@@ -61,22 +60,24 @@ public class TrainManager {
                         AtomicInteger carSlot = new AtomicInteger(trainSlot.get() + 1);
                         for (int j = 1; j < 6; j++) {
                             ItemBuilder carItem = new ItemBuilder(MenuItems.trainCar);
-                            Trains.TrainCar car = train.getTrainCar(j);
-                            if (car.getGiveItems().getA().equals(ItemType.NONE)) {
+                            Trains.Train.TrainCar car = train.getTrainCar(j);
+                            if (car.getGiveItem().getItemType().equals(ItemType.NONE)) {
                                 carItem.material(Material.IRON_INGOT);
                                 carItem.displayName(Msg.format("<green>Items gave!"));
                             } else {
                                 carItem.material(Material.HOPPER);
-                                carItem.displayName(car.getGiveItems().getA().getItemStack().getItemMeta().displayName());
-                                if (user.getBarn().getItem(car.getGiveItems().getA()) >= car.getGiveItems().getB()) {
-                                    carItem.lore(List.of(Msg.format("<green>You need " + car.getGiveItems().getB()), Msg.format("<green>You have " + (user.getBarn().getItem(car.getGiveItems().getA()) == 0 ? "none" : user.getBarn().getItem(car.getGiveItems().getA())))));
+                                carItem.displayName(car.getGiveItem().getItemType().getItemStack().getItemMeta().displayName());
+                                if (user.getBarn().getItem(car.getGiveItem().getItemType()) >= car.getGiveItem().getAmount()) {
+                                    carItem.lore(List.of(Msg.format("<green>You need " + car.getGiveItem().getAmount()),
+                                            Msg.format("<green>You have " + (user.getBarn().getItem(car.getGiveItem().getItemType()) == 0 ? "none" : user.getBarn().getItem(car.getClaimItem().getItemType())))));
                                 } else {
-                                    carItem.lore(List.of(Msg.format("<red>You need " + car.getGiveItems().getB()), Msg.format("<red>You have " + (user.getBarn().getItem(car.getGiveItems().getA()) == 0 ? "none" : user.getBarn().getItem(car.getGiveItems().getA())))));
+                                    carItem.lore(List.of(Msg.format("<red>You need " + car.getGiveItem().getItemType()),
+                                            Msg.format("<red>You have " + (user.getBarn().getItem(car.getGiveItem().getItemType()) == 0 ? "none" : user.getBarn().getItem(car.getClaimItem().getItemType())))));
                                 }
                                 carItem.id("train_give");
                                 carItem.pdcSetInt(Keys.trainKey, i);
-                                carItem.pdcSetInt(Keys.itemAmountKey, car.getGiveItems().getB());
-                                carItem.pdcSetString(Keys.itemTypeKey, car.getGiveItems().getA().name());
+                                carItem.pdcSetInt(Keys.itemAmountKey, car.getGiveItem().getAmount());
+                                carItem.pdcSetString(Keys.itemTypeKey, car.getGiveItem().getItemType().name());
                                 carItem.pdcSetInt(Keys.trainCarKey, j);
                             }
                             inventory.setItem(carSlot.getAndAdd(1), carItem.build());
@@ -130,11 +131,11 @@ public class TrainManager {
     public void collectItem(Player player, ItemType itemType, int amount, int train, int car) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         user.getBarn().addAmountToItem(itemType, amount);
-        user.getTrains().getTrain(train).getTrainCar(car).setClaimItems(new Tuple<>(ItemType.NONE, 0));
+        user.getTrains().getTrain(train).getTrainCar(car).setClaimItem(new Trains.Train.TrainCar.TrainCarItem(ItemType.NONE, 0));
         Trains.Train trains = user.getTrains().getTrain(train);
         AtomicBoolean good = new AtomicBoolean(true);
         trains.getTrainCars().forEach((key, value) -> {
-            if (!value.getClaimItems().getA().equals(ItemType.NONE) && value.getGiveItems().getB() != 0)
+            if (!value.getClaimItem().getItemType().equals(ItemType.NONE) && value.getGiveItem().getAmount() != 0)
                 good.set(false);
         });
         if (good.get()) {
@@ -150,12 +151,12 @@ public class TrainManager {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         if (user.getBarn().getItem(itemType) >= amount) {
             user.getBarn().removeAmountFromItem(itemType, amount);
-            Tuple<ItemType, Integer> tuple = new Tuple<>(ItemType.NONE, 0);
-            user.getTrains().getTrain(train).getTrainCar(car).setGiveItems(tuple);
+            Trains.Train.TrainCar.TrainCarItem item = new Trains.Train.TrainCar.TrainCarItem(ItemType.NONE, 0);
+            user.getTrains().getTrain(train).getTrainCar(car).setGiveItem(item);
             Trains.Train trains = user.getTrains().getTrain(train);
             AtomicBoolean good = new AtomicBoolean(true);
             trains.getTrainCars().forEach((key, value) -> {
-                if (!value.getGiveItems().getA().equals(ItemType.NONE) && value.getGiveItems().getB() != 0)
+                if (!value.getGiveItem().getItemType().equals(ItemType.NONE) && value.getGiveItem().getAmount() != 0)
                     good.set(false);
             });
             if (good.get()) {

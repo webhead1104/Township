@@ -44,7 +44,7 @@ public class WorldManager {
             if (value.getTileType().equals(WorldTileType.TRAIN) && !user.getTrains().isUnlocked()) {
                 builder.lore(List.of(Msg.format("<red>You need to purchase the trains!")));
             }
-            if (value.getTileType().getAnimalType() != null && !user.getAnimals().isUnlocked(value.getTileType().getAnimalType())) {
+            if (value.getTileType().getAnimalType() != null && !user.getAnimals().getAnimalBuilding(value.getTileType().getAnimalType()).isUnlocked()) {
                 builder.lore(List.of(Msg.format("<red>You need to purchase the " + Utils.thing2(value.getTileType().getId()) + "!")));
             }
             inventory.setItem(key, builder.build());

@@ -70,10 +70,10 @@ public class UserManager {
 
     public @NotNull User createUser(UUID uuid) {
         long start = System.currentTimeMillis();
-        Barn barn = Barn.createItems();
-        Animals animals = Animals.createAnimals();
-        Factories factories = Factories.createFactories();
-        World world = World.createWorld();
+        Barn barn = new Barn();
+        Animals animals = new Animals();
+        Factories factories = new Factories();
+        World world = new World();
         Trains trains = new Trains();
         Township.logger.info("create done in {} mills", System.currentTimeMillis() - start);
         String name = Bukkit.getPlayer(uuid) == null ? "none" : Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName() + "'s Town";

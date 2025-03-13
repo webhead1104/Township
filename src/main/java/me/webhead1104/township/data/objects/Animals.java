@@ -1,82 +1,93 @@
 package me.webhead1104.township.data.objects;
 
-import lombok.AllArgsConstructor;
+import com.google.common.base.Preconditions;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import lombok.Getter;
+import lombok.Setter;
+import me.webhead1104.township.data.datafixer.TownshipCodecs;
 import me.webhead1104.township.data.enums.AnimalType;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("unused")
-@AllArgsConstructor
+@Getter
 public class Animals {
-    private final Map<AnimalType, Map<Integer, Boolean>> feed;
-    private final Map<AnimalType, Map<Integer, Boolean>> product;
-    private final Map<AnimalType, Map<Integer, Boolean>> animalUnlocked;
-    private final Map<AnimalType, Boolean> unlocked;
-    private final Map<AnimalType, Map<Integer, Instant>> instant;
+    public static final @NotNull Codec<Animals> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.unboundedMap(AnimalType.CODEC, AnimalBuilding.CODEC).fieldOf("animals").forGetter(Animals::getAnimals)
+    ).apply(instance, Animals::new));
+    private final Map<AnimalType, AnimalBuilding> animals = new HashMap<>();
 
-    public static Animals createAnimals() {
-        Map<AnimalType, Map<Integer, Boolean>> feed = new HashMap<>();
-        Map<AnimalType, Map<Integer, Boolean>> product = new HashMap<>();
-        Map<AnimalType, Map<Integer, Boolean>> animalUnlocked = new HashMap<>();
-        Map<AnimalType, Boolean> unlocked = new HashMap<>();
-        Map<AnimalType, Map<Integer, Instant>> instant = new HashMap<>();
-        for (AnimalType value : AnimalType.values()) {
+    public Animals() {
+        for (AnimalType animalType : AnimalType.values()) {
+            Map<Integer, AnimalBuilding.Animal> animals = new HashMap<>();
             for (int i = 0; i < 6; i++) {
-                if (i == 0) {
-                    feed.put(value, new HashMap<>());
-                    product.put(value, new HashMap<>());
-                    animalUnlocked.put(value, new HashMap<>());
-                    instant.put(value, new HashMap<>());
-                }
-                feed.get(value).put(i, false);
-                product.get(value).put(i, false);
-                animalUnlocked.get(value).put(i, false);
-                instant.get(value).put(i, Instant.EPOCH);
+                animals.put(i, new AnimalBuilding.Animal(false, false, i < 3, Instant.EPOCH));
             }
-            unlocked.put(value, false);
+            this.animals.put(animalType, new AnimalBuilding(animals, false));
         }
-        return new Animals(feed, product, animalUnlocked, unlocked, instant);
     }
 
-    public void setFeed(AnimalType type, int animal, boolean value) {
-        feed.get(type).put(animal, value);
+    public Animals(Map<AnimalType, AnimalBuilding> animals) {
+        this.animals.putAll(animals);
     }
 
-    public boolean getFeed(AnimalType type, int animal) {
-        return feed.get(type).get(animal);
+    public void setAnimalBuilding(@NotNull AnimalType animalType, @NotNull AnimalBuilding animal) {
+        Preconditions.checkNotNull(animalType);
+        Preconditions.checkNotNull(animal);
+        animals.replace(animalType, animal);
     }
 
-    public void setProduct(AnimalType type, int animal, boolean value) {
-        product.get(type).put(animal, value);
+    public AnimalBuilding getAnimalBuilding(@NotNull AnimalType animalType) {
+        Preconditions.checkNotNull(animalType);
+        return animals.get(animalType);
     }
 
-    public boolean getProduct(AnimalType type, int animal) {
-        return product.get(type).get(animal);
-    }
+    @Getter
+    @Setter
+    public static class AnimalBuilding {
+        public static final @NotNull Codec<AnimalBuilding> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                Codec.unboundedMap(TownshipCodecs.INT, Animal.CODEC).fieldOf("animals").forGetter(AnimalBuilding::getAnimals),
+                Codec.BOOL.fieldOf("unlocked").forGetter(AnimalBuilding::isUnlocked)
+        ).apply(instance, AnimalBuilding::new));
+        private final Map<Integer, Animal> animals;
+        private boolean unlocked;
 
-    public void setAnimalUnlocked(AnimalType type, int animal, boolean value) {
-        animalUnlocked.get(type).put(animal, value);
-    }
+        public AnimalBuilding(Map<Integer, Animal> animals, boolean unlocked) {
+            this.animals = animals;
+            this.unlocked = unlocked;
+        }
 
-    public boolean isAnimalUnlocked(AnimalType type, int animal) {
-        return animalUnlocked.get(type).get(animal);
-    }
+        public void setAnimal(int slot, @NotNull Animal animal) {
+            animals.put(slot, Preconditions.checkNotNull(animal));
+        }
 
-    public void setUnlocked(AnimalType type, boolean isUnlocked) {
-        unlocked.put(type, isUnlocked);
-    }
+        public Animal getAnimal(int slot) {
+            return animals.get(slot);
+        }
 
-    public boolean isUnlocked(AnimalType type) {
-        return unlocked.get(type);
-    }
+        @Getter
+        @Setter
+        public static class Animal {
+            public static final @NotNull Codec<Animal> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                    Codec.BOOL.fieldOf("feed").forGetter(Animal::isFeed),
+                    Codec.BOOL.fieldOf("product").forGetter(Animal::isProduct),
+                    Codec.BOOL.fieldOf("unlocked").forGetter(Animal::isUnlocked),
+                    TownshipCodecs.INSTANT.fieldOf("instant").forGetter(Animal::getInstant)
+            ).apply(instance, Animal::new));
+            private boolean feed;
+            private boolean product;
+            private boolean unlocked;
+            private Instant instant;
 
-    public void setInstant(AnimalType type, int animal, Instant value) {
-        instant.get(type).put(animal, value);
-    }
-
-    public Instant getInstant(AnimalType type, int animal) {
-        return instant.get(type).get(animal);
+            public Animal(boolean feed, boolean product, boolean unlocked, Instant instant) {
+                this.feed = feed;
+                this.product = product;
+                this.unlocked = unlocked;
+                this.instant = instant;
+            }
+        }
     }
 }

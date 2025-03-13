@@ -17,14 +17,14 @@ public class UnlockCommand {
     @SubCommand(value = "animal")
     public void unlockAnimal(BukkitSource source, AnimalType type) {
         Player player = source.asPlayer();
-        Township.getUserManager().getUser(player.getUniqueId()).getAnimals().setUnlocked(type, true);
+        Township.getUserManager().getUser(player.getUniqueId()).getAnimals().getAnimalBuilding(type).setUnlocked(true);
         player.sendMessage(Msg.format("<green>Unlocked " + type.name() + "!"));
     }
 
     @SubCommand(value = "factory")
     public void unlockFactory(BukkitSource source, FactoryType type) {
         Player player = source.asPlayer();
-        Township.getUserManager().getUser(player.getUniqueId()).getFactories().setUnlocked(type, true);
+        Township.getUserManager().getUser(player.getUniqueId()).getFactories().getFactory(type).setUnlocked(true);
         player.sendMessage(Msg.format("<green>Unlocked " + type.name() + "!"));
     }
 

@@ -1,5 +1,6 @@
 package me.webhead1104.township.data.enums;
 
+import com.mojang.serialization.Codec;
 import lombok.Getter;
 import me.webhead1104.township.utils.MenuItems;
 import org.bukkit.inventory.ItemStack;
@@ -28,8 +29,7 @@ public enum WorldTileType {
     PLOT(MenuItems.World.plot, "plot"),
     BARN(MenuItems.World.barn, "barn"),
     TRAIN(MenuItems.World.train, "train");
-
-
+    public static final Codec<WorldTileType> CODEC = Codec.STRING.xmap(WorldTileType::valueOf, WorldTileType::name);
     private final ItemStack item;
     private final String id;
     private final AnimalType animalType;
