@@ -22,7 +22,7 @@ public class WorldSection {
             Codec.INT.fieldOf("section").forGetter(WorldSection::getSection)
     ).apply(instance, WorldSection::new));
     private final Map<Integer, Tile> slotMap = new HashMap<>();
-    private int section = 1;
+    private int section;
 
     public WorldSection(Map<Integer, Tile> slotMap, int section) {
         this.slotMap.putAll(slotMap);
