@@ -18,7 +18,6 @@ import me.webhead1104.township.managers.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 
-import java.io.File;
 import java.time.Instant;
 
 @NoArgsConstructor
@@ -64,8 +63,7 @@ public class Township extends JavaPlugin {
         imperat = BukkitImperat.builder(this).applyBrigadier(true).build();
         imperat.registerCommand(new TownshipCommand());
         registerListeners();
-        File file = new File(getDataFolder().getAbsolutePath() + "/config.yml");
-        if (!file.exists()) saveResource("config.yml", false);
+        saveDefaultConfig();
         logger = getSLF4JLogger();
         database = new Database(this);
         database.connect();
