@@ -2,6 +2,7 @@ package me.webhead1104.township.managers;
 
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.data.enums.TileSize;
 import me.webhead1104.township.data.enums.WorldTileType;
 import me.webhead1104.township.data.objects.Expansion;
 import me.webhead1104.township.data.objects.User;
@@ -75,7 +76,7 @@ public class ExpansionManager {
 
     public void removeExpansion(Player player, Expansion expansion) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
-        for (Integer i : Utils.thing("3x3", expansion.getSlot())) {
+        for (Integer i : TileSize.SIZE_3X3.toList(expansion.getSlot())) {
             user.getWorld().getSection(expansion.getSection()).setSlot(i, WorldTileType.GRASS);
         }
     }
