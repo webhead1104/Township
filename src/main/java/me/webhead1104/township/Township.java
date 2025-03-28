@@ -83,7 +83,7 @@ public class Township extends JavaPlugin {
         trainManager = new TrainManager();
         levelManager = new LevelManager();
         levelManager.loadLevels();
-        logger.info("Township initialized in {} mills!", System.currentTimeMillis() - start);
+        logger.info("Township test 2 initialized in {} mills!", System.currentTimeMillis() - start);
     }
 
     @Override
