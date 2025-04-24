@@ -41,7 +41,7 @@ public class XpCommand {
         player.sendMessage(Msg.format("<green>Set xp to " + xp + " xp!"));
     }
 
-    @SubCommand(value = "get", attachDirectly = true)
+    @SubCommand(value = "get")
     public void getXp(BukkitSource source) {
         Player player = source.asPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());

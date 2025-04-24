@@ -20,8 +20,8 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly("org.xerial:sqlite-jdbc:3.47.2.0")
     compileOnly("com.zaxxer:HikariCP:6.2.1")
-    implementation("dev.velix:imperat-core:1.5.1")
-    implementation("dev.velix:imperat-bukkit:1.5.1")
+    implementation("dev.velix:imperat-core:1.9.0")
+    implementation("dev.velix:imperat-bukkit:1.9.0")
 }
 
 java {

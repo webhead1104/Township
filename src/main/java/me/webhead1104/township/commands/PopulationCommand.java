@@ -40,7 +40,7 @@ public class PopulationCommand {
         player.sendMessage(Msg.format("<green>Set your population to " + population + "!"));
     }
 
-    @SubCommand(value = "get", attachDirectly = true)
+    @SubCommand(value = "get")
     public void getPopulation(BukkitSource source) {
         Player player = source.asPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());
