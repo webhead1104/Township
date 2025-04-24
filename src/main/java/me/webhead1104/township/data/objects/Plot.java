@@ -2,6 +2,7 @@ package me.webhead1104.township.data.objects;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.PlotType;
 
 @Setter
@@ -18,11 +19,11 @@ public class Plot {
     }
 
     public static Plot fromJson(String json) {
-        return null;
+        return Township.GSON.fromJson(json, Plot.class);
     }
 
     @Override
     public String toString() {
-        return null;
+        return Township.GSON.toJson(this);
     }
 }
