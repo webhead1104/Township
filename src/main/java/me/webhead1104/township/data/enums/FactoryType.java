@@ -7,7 +7,6 @@ import net.kyori.adventure.text.Component;
 
 import java.util.List;
 
-
 @Getter
 @AllArgsConstructor
 public enum FactoryType {

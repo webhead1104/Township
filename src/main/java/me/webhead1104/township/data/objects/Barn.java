@@ -40,11 +40,6 @@ public class Barn {
         }
     }
 
-    public Barn(Map<ItemType, Integer> itemMap, BarnUpgrade barnUpgrade) {
-        this.itemMap.putAll(itemMap);
-        this.barnUpgrade = barnUpgrade;
-    }
-
     public int getItem(ItemType type) {
         return itemMap.get(type);
     }

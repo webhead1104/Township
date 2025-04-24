@@ -21,14 +21,12 @@ public enum TileSize {
     public List<Integer> toList(int startAt) {
         List<Integer> area = new ArrayList<>();
         int currentValue = startAt;
-
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 area.add(currentValue++);
             }
             currentValue += 9 - width;
         }
-
         return area;
     }
 }

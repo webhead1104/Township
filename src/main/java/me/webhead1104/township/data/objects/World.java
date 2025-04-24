@@ -9,10 +9,6 @@ import java.util.Map;
 public class World {
     private final Map<Integer, WorldSection> worldMap = new HashMap<>();
 
-    public World(Map<Integer, WorldSection> worldMap) {
-        this.worldMap.putAll(worldMap);
-    }
-
     public World() {
         //8x8
         for (int i = 0; i < 64; i++) {

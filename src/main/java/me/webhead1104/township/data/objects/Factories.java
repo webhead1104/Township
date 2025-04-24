@@ -21,10 +21,6 @@ public class Factories {
         }
     }
 
-    public Factories(Map<FactoryType, Factory> factories) {
-        this.factories.putAll(factories);
-    }
-
     public Factory getFactory(FactoryType factoryType) {
         return factories.get(factoryType);
     }
@@ -50,14 +46,6 @@ public class Factories {
             this.workingOn = RecipeType.NONE;
             this.unlocked = false;
             this.instant = Instant.EPOCH;
-        }
-
-        public Factory(Map<Integer, RecipeType> waiting, Map<Integer, ItemType> completed, RecipeType workingOn, boolean unlocked, Instant instant) {
-            this.waiting.putAll(waiting);
-            this.completed.putAll(completed);
-            this.workingOn = workingOn;
-            this.unlocked = unlocked;
-            this.instant = instant;
         }
 
         public RecipeType getWaiting(int slot) {

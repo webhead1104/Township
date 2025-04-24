@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 @Getter
 @AllArgsConstructor
 public enum AnimalType {
-
     COWSHED_1(Msg.format("<gold>Cowshed"), MenuItems.cow, ItemType.COW_FEED, ItemType.MILK, WorldTileType.COWSHED_1, 3, 0, 1, 0, 1200, "cowshed_1"),
     COWSHED_2(Msg.format("<gold>Cowshed"), MenuItems.cow, ItemType.COW_FEED, ItemType.MILK, WorldTileType.COWSHED_2, 3, 1000, 15, 46, 1200, "cowshed_2"),
     COWSHED_3(Msg.format("<gold>Cowshed"), MenuItems.cow, ItemType.COW_FEED, ItemType.MILK, WorldTileType.COWSHED_3, 3, 5000, 22, 211, 1200, "cowshed_3"),

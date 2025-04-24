@@ -15,11 +15,6 @@ public class WorldSection {
     private final Map<Integer, Tile> slotMap = new HashMap<>();
     private int section;
 
-    public WorldSection(Map<Integer, Tile> slotMap, int section) {
-        this.slotMap.putAll(slotMap);
-        this.section = section;
-    }
-
     public WorldSection(int section) {
         for (int i = 0; i < 54; i++) {
             if (slotMap.containsKey(i)) continue;

@@ -13,11 +13,6 @@ public class Trains {
     private final Map<Integer, Train> trains = new HashMap<>();
     private boolean unlocked = false;
 
-    public Trains(Map<Integer, Train> trains, boolean unlocked) {
-        this.trains.putAll(trains);
-        this.unlocked = unlocked;
-    }
-
     public Trains() {
         for (int i = 1; i < 4; i++) {
             this.trains.put(i, new Train(i));
@@ -41,15 +36,6 @@ public class Trains {
         private boolean claimItems = false;
         private int coinsNeededToUnlock = 0;
         private int levelNeededToUnlock = 0;
-
-        public Train(Map<Integer, TrainCar> trainCars, boolean unlocked, boolean inStation, boolean claimItems, int coinsNeededToUnlock, int levelNeededToUnlock) {
-            this.trainCars.putAll(trainCars);
-            this.unlocked = unlocked;
-            this.inStation = inStation;
-            this.claimItems = claimItems;
-            this.coinsNeededToUnlock = coinsNeededToUnlock;
-            this.levelNeededToUnlock = levelNeededToUnlock;
-        }
 
         public Train(int train) {
             for (int i = 1; i < 6; i++) {
@@ -81,11 +67,6 @@ public class Trains {
         public static class TrainCar {
             private TrainCarItem claimItem;
             private TrainCarItem giveItem;
-
-            public TrainCar(TrainCarItem claimItem, TrainCarItem giveItem) {
-                this.claimItem = claimItem;
-                this.giveItem = giveItem;
-            }
 
             public TrainCar() {
                 Random random = new Random();

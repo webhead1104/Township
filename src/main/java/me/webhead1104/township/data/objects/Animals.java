@@ -24,10 +24,6 @@ public class Animals {
         }
     }
 
-    public Animals(Map<AnimalType, AnimalBuilding> animals) {
-        this.animals.putAll(animals);
-    }
-
     public void setAnimalBuilding(@NotNull AnimalType animalType, @NotNull AnimalBuilding animal) {
         Preconditions.checkNotNull(animalType);
         Preconditions.checkNotNull(animal);
