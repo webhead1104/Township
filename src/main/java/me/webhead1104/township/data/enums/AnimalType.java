@@ -1,13 +1,11 @@
 package me.webhead1104.township.data.enums;
 
-import com.mojang.serialization.Codec;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.webhead1104.township.utils.MenuItems;
 import me.webhead1104.township.utils.Msg;
 import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 @Getter
 @AllArgsConstructor
@@ -19,7 +17,6 @@ public enum AnimalType {
     CHICKEN_COOP_1(Msg.format("<gold>Chicken Coop"), MenuItems.chicken, ItemType.CHICKEN_FEED, ItemType.EGG, WorldTileType.CHICKEN_COOP_1, 4, 200, 5, 13, 3600, "chicken_coop_1"),
     CHICKEN_COOP_2(Msg.format("<gold>Chicken Coop"), MenuItems.chicken, ItemType.CHICKEN_FEED, ItemType.EGG, WorldTileType.CHICKEN_COOP_2, 4, 3000, 24, 128, 3600, "chicken_coop_2"),
     CHICKEN_COOP_3(Msg.format("<gold>Chicken Coop"), MenuItems.chicken, ItemType.CHICKEN_FEED, ItemType.EGG, WorldTileType.CHICKEN_COOP_3, 4, 15000, 39, 623, 3600, "chicken_coop_3");
-    public static final @NotNull Codec<AnimalType> CODEC = Codec.STRING.xmap(AnimalType::valueOf, AnimalType::toString);
     private final Component menuTitle;
     private final ItemStack animalItemStack;
     private final ItemType feedType;

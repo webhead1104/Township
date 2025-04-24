@@ -1,14 +1,10 @@
 package me.webhead1104.township.data.objects;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import lombok.Getter;
 import lombok.Setter;
-import me.webhead1104.township.data.datafixer.TownshipCodecs;
 import me.webhead1104.township.data.enums.PlotType;
 import me.webhead1104.township.data.enums.TileSize;
 import me.webhead1104.township.data.enums.WorldTileType;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,10 +12,6 @@ import java.util.Map;
 @Setter
 @Getter
 public class WorldSection {
-    public static final @NotNull Codec<WorldSection> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.unboundedMap(TownshipCodecs.INT, Tile.CODEC).fieldOf("slotMap").forGetter(WorldSection::getSlotMap),
-            Codec.INT.fieldOf("section").forGetter(WorldSection::getSection)
-    ).apply(instance, WorldSection::new));
     private final Map<Integer, Tile> slotMap = new HashMap<>();
     private int section;
 

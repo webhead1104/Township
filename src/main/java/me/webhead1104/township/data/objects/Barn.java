@@ -1,11 +1,8 @@
 package me.webhead1104.township.data.objects;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import me.webhead1104.township.data.enums.ItemType;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,10 +10,6 @@ import java.util.Map;
 @Getter
 @Setter
 public class Barn {
-    public static final @NotNull Codec<Barn> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.unboundedMap(ItemType.CODEC, Codec.INT).fieldOf("itemMap").forGetter(Barn::getItemMap),
-            BarnUpgrade.CODEC.fieldOf("barnUpgrade").forGetter(Barn::getBarnUpgrade)
-    ).apply(instance, Barn::new));
     private final Map<ItemType, Integer> itemMap = new HashMap<>();
     private BarnUpgrade barnUpgrade = new BarnUpgrade(1, 2, 70);
 

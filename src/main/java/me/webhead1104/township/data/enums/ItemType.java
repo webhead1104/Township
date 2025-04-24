@@ -1,6 +1,5 @@
 package me.webhead1104.township.data.enums;
 
-import com.mojang.serialization.Codec;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.webhead1104.township.utils.MenuItems;
@@ -27,7 +26,6 @@ public enum ItemType {
     PAINT(MenuItems.paint, 100, "paint"),
     HAMMER(MenuItems.hammer, 100, "hammer"),
     NAIL(MenuItems.nail, 100, "nail");
-    public static final Codec<ItemType> CODEC = Codec.STRING.xmap(ItemType::valueOf, ItemType::toString);
     private final ItemStack itemStack;
     private final int sellPrice;
     private final String ID;

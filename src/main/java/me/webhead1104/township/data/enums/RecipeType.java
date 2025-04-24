@@ -1,6 +1,5 @@
 package me.webhead1104.township.data.enums;
 
-import com.mojang.serialization.Codec;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.webhead1104.township.utils.MenuItems;
@@ -20,7 +19,6 @@ public enum RecipeType {
     CREAM(MenuItems.Recipes.cream, ItemType.CREAM, Map.of(ItemType.MILK, 1), 438, 4, 5, "cream_recipe"),
     CHEESE(MenuItems.Recipes.cheese, ItemType.CHEESE, Map.of(ItemType.MILK, 2), 900, 6, 11, "cheese_recipe"),
     SUGAR(MenuItems.Recipes.sugar, ItemType.SUGAR, Map.of(ItemType.SUGARCANE, 1), 600, 7, 6, "sugar_recipe");
-    public static final Codec<RecipeType> CODEC = Codec.STRING.xmap(RecipeType::valueOf, RecipeType::name);
     private final ItemStack menuItem;
     private final ItemType itemType;
     private final Map<ItemType, Integer> recipeItems;

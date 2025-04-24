@@ -22,7 +22,6 @@ dependencies {
     compileOnly("com.zaxxer:HikariCP:6.2.1")
     implementation("dev.velix:imperat-core:1.5.1")
     implementation("dev.velix:imperat-bukkit:1.5.1")
-    implementation("com.mojang:datafixerupper:8.0.16")
 }
 
 java {

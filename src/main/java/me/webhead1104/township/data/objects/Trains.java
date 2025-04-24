@@ -1,23 +1,15 @@
 package me.webhead1104.township.data.objects;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import lombok.Getter;
 import lombok.Setter;
-import me.webhead1104.township.data.datafixer.TownshipCodecs;
 import me.webhead1104.township.data.enums.ItemType;
 import org.apache.commons.lang3.Validate;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 @Getter
 @Setter
 public class Trains {
-    public static final @NotNull Codec<Trains> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.unboundedMap(TownshipCodecs.INT, Train.CODEC).fieldOf("trains").forGetter(Trains::getTrains),
-            Codec.BOOL.fieldOf("unlocked").forGetter(Trains::isUnlocked)
-    ).apply(instance, Trains::new));
     private final Map<Integer, Train> trains = new HashMap<>();
     private boolean unlocked = false;
 
@@ -43,14 +35,6 @@ public class Trains {
     @Getter
     @Setter
     public static class Train {
-        public static final @NotNull Codec<Train> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codec.unboundedMap(TownshipCodecs.INT, TrainCar.CODEC).fieldOf("trainCars").forGetter(Train::getTrainCars),
-                Codec.BOOL.fieldOf("unlocked").forGetter(Train::isUnlocked),
-                Codec.BOOL.fieldOf("inStation").forGetter(Train::isInStation),
-                Codec.BOOL.fieldOf("claimItems").forGetter(Train::isClaimItems),
-                Codec.INT.fieldOf("coinsNeededToUnlock").forGetter(Train::getCoinsNeededToUnlock),
-                Codec.INT.fieldOf("levelNeededToUnlock").forGetter(Train::getLevelNeededToUnlock)
-        ).apply(instance, Train::new));
         private final Map<Integer, TrainCar> trainCars = new HashMap<>();
         private boolean unlocked = false;
         private boolean inStation = true;
@@ -95,10 +79,6 @@ public class Trains {
         @Getter
         @Setter
         public static class TrainCar {
-            public static final @NotNull Codec<TrainCar> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                    TrainCarItem.CODEC.fieldOf("claimItem").forGetter(TrainCar::getClaimItem),
-                    TrainCarItem.CODEC.fieldOf("giveItem").forGetter(TrainCar::getGiveItem)
-            ).apply(instance, TrainCar::new));
             private TrainCarItem claimItem;
             private TrainCarItem giveItem;
 
@@ -120,10 +100,6 @@ public class Trains {
             @Getter
             @Setter
             public static class TrainCarItem {
-                public static final @NotNull Codec<TrainCarItem> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                        ItemType.CODEC.fieldOf("itemType").forGetter(TrainCarItem::getItemType),
-                        Codec.INT.fieldOf("amount").forGetter(TrainCarItem::getAmount)
-                ).apply(instance, TrainCarItem::new));
                 private ItemType itemType;
                 private int amount;
 

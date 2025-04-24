@@ -1,14 +1,10 @@
 package me.webhead1104.township.data.objects;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import lombok.Getter;
 import lombok.Setter;
-import me.webhead1104.township.data.datafixer.TownshipCodecs;
 import me.webhead1104.township.data.enums.FactoryType;
 import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.data.enums.RecipeType;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -17,9 +13,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Getter
 public class Factories {
-    public static final @NotNull Codec<Factories> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.unboundedMap(FactoryType.CODEC, Factory.CODEC).fieldOf("factories").forGetter(Factories::getFactories)
-    ).apply(instance, Factories::new));
     private final Map<FactoryType, Factory> factories = new HashMap<>();
 
     public Factories() {
@@ -43,13 +36,6 @@ public class Factories {
     @Getter
     @Setter
     public static class Factory {
-        public static final @NotNull Codec<Factory> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codec.unboundedMap(TownshipCodecs.INT, RecipeType.CODEC).fieldOf("waiting").forGetter(Factory::getWaiting),
-                Codec.unboundedMap(TownshipCodecs.INT, ItemType.CODEC).fieldOf("completed").forGetter(Factory::getCompleted),
-                RecipeType.CODEC.fieldOf("workingOn").forGetter(Factory::getWorkingOn),
-                Codec.BOOL.fieldOf("unlocked").forGetter(Factory::isUnlocked),
-                TownshipCodecs.INSTANT.fieldOf("instant").forGetter(Factory::getInstant)
-        ).apply(instance, Factory::new));
         private final Map<Integer, RecipeType> waiting = new HashMap<>();
         private final Map<Integer, ItemType> completed = new HashMap<>();
         private RecipeType workingOn;
