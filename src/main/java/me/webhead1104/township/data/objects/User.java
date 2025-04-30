@@ -12,7 +12,8 @@ public class User {
     private UUID uuid;
     private String townName;
     private PlayerLevel level;
-    private long population;
+    private int population;
+    private int maxPopulation;
     private long coins;
     private long cash;
     private int section;
@@ -22,12 +23,13 @@ public class User {
     private World world;
     private Trains trains;
 
-    public User(UUID uuid, String townName, PlayerLevel level, long population, long coins, long cash, int section,
+    public User(UUID uuid, String townName, PlayerLevel level, int population, int maxPopulation, long coins, long cash, int section,
                 Barn barn, Animals animals, Factories factories, World world, Trains trains) {
         this.uuid = uuid;
         this.townName = townName;
         this.level = level;
         this.population = population;
+        this.maxPopulation = maxPopulation;
         this.coins = coins;
         this.cash = cash;
         this.section = section;
