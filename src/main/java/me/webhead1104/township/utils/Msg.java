@@ -7,8 +7,8 @@ import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 
 public class Msg {
 
-    public static Component format(String miniMessageString) {
-        return MiniMessage.miniMessage().deserialize(miniMessageString).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+    public static Component format(String miniMessageString, Object... args) {
+        return MiniMessage.miniMessage().deserialize(String.format(miniMessageString, args)).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
     }
 
     public static String formatToJson(String miniMessageString) {
