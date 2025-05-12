@@ -58,7 +58,6 @@ tasks {
     }
     shadowJar {
         archiveFileName = "Township-${project.version}.jar"
-        relocate("net.wesjd.anvilgui", "me.webhead1104.township.libs.anvilgui")
         relocate("dev.velix:imperat", "me.webhead1104.township.libs.imperat")
     }
     runServer {
