@@ -21,9 +21,10 @@ public class User {
     private Factories factories;
     private World world;
     private Trains trains;
+    private PurchasedBuildings purchasedBuildings;
 
     public User(UUID uuid, String townName, PlayerLevel level, long population, long coins, long cash, int section,
-                Barn barn, Animals animals, Factories factories, World world, Trains trains) {
+                Barn barn, Animals animals, Factories factories, World world, Trains trains, PurchasedBuildings purchasedBuildings) {
         this.uuid = uuid;
         this.townName = townName;
         this.level = level;
@@ -36,6 +37,7 @@ public class User {
         this.factories = factories;
         this.world = world;
         this.trains = trains;
+        this.purchasedBuildings = purchasedBuildings;
     }
 
     public static User fromJson(String json) {

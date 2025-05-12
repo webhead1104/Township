@@ -47,7 +47,7 @@ public class TrainManager {
                                 carItem.material(Material.CHEST);
                                 carItem.pdcSetInt(Keys.trainKey, i);
                                 carItem.pdcSetInt(Keys.itemAmountKey, car.getClaimItem().getAmount());
-                                carItem.pdcSetString(Keys.itemTypeKey, car.getClaimItem().getItemType().name());
+                                carItem.pdcSetString(Keys.typeKey, car.getClaimItem().getItemType().name());
                                 carItem.pdcSetInt(Keys.trainCarKey, j);
                                 carItem.id("train_collect");
                                 carItem.displayName(car.getClaimItem().getItemType().getItemStack().getItemMeta().displayName());
@@ -77,7 +77,7 @@ public class TrainManager {
                                 carItem.id("train_give");
                                 carItem.pdcSetInt(Keys.trainKey, i);
                                 carItem.pdcSetInt(Keys.itemAmountKey, car.getGiveItem().getAmount());
-                                carItem.pdcSetString(Keys.itemTypeKey, car.getGiveItem().getItemType().name());
+                                carItem.pdcSetString(Keys.typeKey, car.getGiveItem().getItemType().name());
                                 carItem.pdcSetInt(Keys.trainCarKey, j);
                             }
                             inventory.setItem(carSlot.getAndAdd(1), carItem.build());

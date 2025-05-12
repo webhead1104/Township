@@ -1,10 +1,7 @@
 package me.webhead1104.township.commands;
 
 import dev.velix.imperat.BukkitSource;
-import dev.velix.imperat.annotations.Description;
-import dev.velix.imperat.annotations.Named;
-import dev.velix.imperat.annotations.Permission;
-import dev.velix.imperat.annotations.SubCommand;
+import dev.velix.imperat.annotations.*;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.PlayerLevel;
 import me.webhead1104.township.data.objects.User;

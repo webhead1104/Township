@@ -1,30 +1,27 @@
 package me.webhead1104.township.utils;
 
-import com.destroystokyo.paper.profile.PlayerProfile;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemEnchantments;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.datacomponent.item.Unbreakable;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-@SuppressWarnings({"rawtypes", "unchecked", "unused"})
+@SuppressWarnings({"rawtypes", "unused", "unchecked"})
 public class ItemBuilder {
 
     private ItemStack item;
-    @Getter
-    private ItemMeta meta;
     @Getter
     private Material material;
     @Getter
@@ -38,18 +35,17 @@ public class ItemBuilder {
     @Getter
     private List<Component> lore = new ArrayList<>();
     @Getter
-    private List<ItemFlag> flags = new ArrayList<>();
-    @Getter
     private String id;
     @Getter
     private ItemRarity itemRarity;
     @Getter
     private String skullTextureURL = "";
+    @Getter
+    private boolean glow = false;
 
     public ItemBuilder(Material material, String id) {
         if (material == null) material = Material.AIR;
         this.item = ItemStack.of(material);
-        this.meta = item.getItemMeta();
         this.material = material;
         this.id = id;
     }
@@ -60,7 +56,6 @@ public class ItemBuilder {
         if (((amount > material.getMaxStackSize()) || (amount <= 0))) amount = 1;
         this.amount = amount;
         this.item = ItemStack.of(material, amount);
-        this.meta = item.getItemMeta();
         this.material = material;
         this.id = id;
     }
@@ -69,7 +64,6 @@ public class ItemBuilder {
         if (material == null) material = Material.AIR;
         Validate.notNull(displayName, "The Display name is null.");
         this.item = ItemStack.of(material, amount);
-        this.meta = item.getItemMeta();
         this.material = material;
         if (((amount > material.getMaxStackSize()) || (amount <= 0))) amount = 1;
         this.amount = amount;
@@ -81,7 +75,6 @@ public class ItemBuilder {
         if (material == null) material = Material.AIR;
         Validate.notNull(displayName, "The Display name is null.");
         this.item = ItemStack.of(material, amount);
-        this.meta = item.getItemMeta();
         this.material = material;
         if (((amount > material.getMaxStackSize()) || (amount <= 0))) amount = 1;
         this.amount = amount;
@@ -94,7 +87,6 @@ public class ItemBuilder {
         if (material == null) material = Material.AIR;
         Validate.notNull(displayName, "The Display name is null.");
         this.item = ItemStack.of(material);
-        this.meta = item.getItemMeta();
         this.material = material;
         this.displayName = displayName;
         this.id = id;
@@ -104,7 +96,6 @@ public class ItemBuilder {
         if (material == null) material = Material.AIR;
         Validate.notNull(displayName, "The Display name is null.");
         this.item = ItemStack.of(material);
-        this.meta = item.getItemMeta();
         this.material = material;
         this.displayName = displayName;
         this.lore = lore;
@@ -117,22 +108,28 @@ public class ItemBuilder {
         this.material = item.getType();
         this.amount = item.getAmount();
         this.enchantments = item.getEnchantments();
-        if (item.hasItemMeta()) {
-            this.meta = item.getItemMeta();
-            this.durability = ((Damageable) item.getItemMeta()).getDamage();
-            if (item.getItemMeta().hasDisplayName()) this.displayName = item.getItemMeta().displayName();
-            if (item.getItemMeta().hasLore()) this.lore = item.getItemMeta().lore();
-            flags.addAll(item.getItemMeta().getItemFlags());
-            if (material.equals(Material.PLAYER_HEAD)) {
-                SkullMeta skullMeta = (SkullMeta) meta;
-                if (skullMeta.getPlayerProfile() != null) {
-                    PlayerProfile profile = skullMeta.getPlayerProfile();
-                    if (profile.hasTextures() && profile.getTextures().getSkin() != null) {
-                        this.skullTextureURL = profile.getTextures().getSkin().toString();
-                    }
+        if (item.hasData(DataComponentTypes.DAMAGE)) {
+            this.durability = Objects.requireNonNull(item.getData(DataComponentTypes.DAMAGE));
+        }
+        if (item.hasData(DataComponentTypes.ITEM_NAME)) {
+            this.displayName = Objects.requireNonNull(item.getData(DataComponentTypes.ITEM_NAME));
+        }
+        if (item.hasData(DataComponentTypes.LORE)) {
+            this.lore = new ArrayList<>(Objects.requireNonNull(item.getData(DataComponentTypes.LORE)).lines());
+        }
+        if (material.equals(Material.PLAYER_HEAD) && item.hasData(DataComponentTypes.PROFILE)) {
+            Objects.requireNonNull(item.getData(DataComponentTypes.PROFILE)).resolve().whenComplete((profile, throwable) -> {
+                if (throwable != null) {
+                    throw new RuntimeException(throwable);
                 }
-            }
-            if (pdcHas(Keys.townshipIdKey)) this.id = pdcGetString(Keys.townshipIdKey);
+                if (profile.hasTextures() && profile.getTextures().getSkin() != null) {
+                    this.skullTextureURL = profile.getTextures().getSkin().toString();
+                }
+            });
+        }
+        if (pdcHas(Keys.townshipIdKey)) this.id = pdcGetString(Keys.townshipIdKey);
+        if (item.hasData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE)) {
+            glow = Boolean.TRUE.equals(item.getData(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE));
         }
     }
 
@@ -208,33 +205,41 @@ public class ItemBuilder {
         return this;
     }
 
-    @CanIgnoreReturnValue
-    public ItemBuilder flag(ItemFlag flag) {
-        Validate.notNull(flag, "The Flag is null.");
-        flags.add(flag);
-        return this;
-    }
-
-    public ItemBuilder flag(List<ItemFlag> flags) {
-        Validate.notNull(flags, "The Flags are null.");
-        this.flags = flags;
-        return this;
-    }
-
     public ItemBuilder unbreakable(boolean unbreakable) {
-        meta.setUnbreakable(unbreakable);
+        if (unbreakable) {
+            item.setData(DataComponentTypes.UNBREAKABLE, Unbreakable.unbreakable());
+            return this;
+        } else {
+            item.unsetData(DataComponentTypes.UNBREAKABLE);
+        }
+        return this;
+    }
+
+    public ItemBuilder hideTooltip(boolean hide) {
+        if (hide) {
+            item.setData(DataComponentTypes.HIDE_TOOLTIP);
+        } else {
+            item.unsetData(DataComponentTypes.HIDE_TOOLTIP);
+        }
+        return this;
+    }
+
+    public ItemBuilder hideAdditionalTooltip(boolean hide) {
+        if (hide) {
+            item.setData(DataComponentTypes.HIDE_ADDITIONAL_TOOLTIP);
+        } else {
+            item.unsetData(DataComponentTypes.HIDE_ADDITIONAL_TOOLTIP);
+        }
         return this;
     }
 
     public ItemBuilder glow() {
-        enchant(material != Material.BOW ? Enchantment.INFINITY : Enchantment.LUCK_OF_THE_SEA, 10);
-        flag(ItemFlag.HIDE_ENCHANTS);
         return this;
     }
 
     @CanIgnoreReturnValue
     public ItemBuilder setRarity(ItemRarity rarity) {
-        meta.setRarity(rarity);
+        item.setData(DataComponentTypes.RARITY, rarity);
         return this;
     }
 
@@ -249,50 +254,38 @@ public class ItemBuilder {
     public ItemStack build() {
         item = item.withType(material);
         item.setAmount(amount);
-        if (meta instanceof Damageable damageable) {
-            damageable.setDamage(durability);
-        }
+        item.setData(DataComponentTypes.DAMAGE, durability);
         if (enchantments != null && !enchantments.isEmpty()) {
+            item.setData(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments(enchantments, true));
             item.addUnsafeEnchantments(enchantments);
         }
-        if (displayName != null && meta != null) {
-            meta.displayName(displayName);
+        if (displayName != null) {
+            item.setData(DataComponentTypes.ITEM_NAME, displayName);
         }
-        if (lore != null && !lore.isEmpty() && meta != null) {
-            meta.lore(lore);
+        if (lore != null && !lore.isEmpty()) {
+            item.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
         }
-        if (flags != null && !flags.isEmpty() && meta != null) {
-            for (ItemFlag f : flags) {
-                meta.addItemFlags(f);
-            }
-        }
-        if (meta != null) {
-            pdcSet(Keys.townshipIdKey, PersistentDataType.STRING, this.id);
-        }
-        item.setItemMeta(meta);
+        pdcSetString(Keys.townshipIdKey, id);
         return item;
     }
-
 
     @NotNull
     @CanIgnoreReturnValue
     public ItemBuilder pdcSet(NamespacedKey key, PersistentDataType type, Object value) {
-        this.meta.getPersistentDataContainer().set(key, type, value);
+        item.editPersistentDataContainer(pdc -> pdc.set(key, type, value));
         return this;
     }
 
     @NotNull
-    @SuppressWarnings({"rawtypes", "unchecked"})
     public Object pdcGet(NamespacedKey key, PersistentDataType type) {
-        return Objects.requireNonNull(this.meta.getPersistentDataContainer().get(key, type));
+        return Objects.requireNonNull(item.getPersistentDataContainer().get(key, type));
     }
 
     public boolean pdcHas(NamespacedKey key) {
-        return this.meta.getPersistentDataContainer().has(key);
+        return item.getPersistentDataContainer().has(key);
     }
 
     @NotNull
-    @CanIgnoreReturnValue
     public ItemBuilder pdcSetInt(NamespacedKey key, int value) {
         this.pdcSet(key, PersistentDataType.INTEGER, value);
         return this;
@@ -388,7 +381,7 @@ public class ItemBuilder {
     }
 
     public int[] pdcGetIntArray(NamespacedKey key) {
-        return Objects.requireNonNull(this.meta.getPersistentDataContainer().get(key, PersistentDataType.INTEGER_ARRAY));
+        return Objects.requireNonNull(item.getPersistentDataContainer().get(key, PersistentDataType.INTEGER_ARRAY));
     }
 
     public long pdcGetLong(NamespacedKey key) {

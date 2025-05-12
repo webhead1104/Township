@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 @SuppressWarnings("unused")
 @Inherit({
         PopulationCommand.class,
+        MaxPopulationCommand.class,
         LevelCommand.class,
         XpCommand.class,
         CoinsCommand.class,

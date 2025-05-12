@@ -14,6 +14,7 @@ repositories {
     maven("https://repo.codemc.io/repository/maven-snapshots/")
     maven("https://repo.codemc.org/repository/nms/")
     maven("https://libraries.minecraft.net")
+    maven("https://repo.xenondevs.xyz/releases")
 }
 
 dependencies {
@@ -22,6 +23,7 @@ dependencies {
     compileOnly("com.zaxxer:HikariCP:6.2.1")
     implementation("dev.velix:imperat-core:1.9.0")
     implementation("dev.velix:imperat-bukkit:1.9.0")
+    implementation("xyz.xenondevs.invui:invui:1.45")
 }
 
 java {

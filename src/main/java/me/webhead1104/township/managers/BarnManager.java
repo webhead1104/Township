@@ -119,7 +119,7 @@ public class BarnManager {
             decrease.displayName(Msg.format("<red>Click to decrease the amount!"));
             decrease.lore(List.of(Msg.format("<blue>Currently at " + amount)));
             decrease.pdcSetInt(Keys.barnSellAmountKey, amount);
-            decrease.pdcSetString(Keys.itemTypeKey, itemType.name());
+            decrease.pdcSetString(Keys.typeKey, itemType.name());
             player.getInventory().setItem(3, decrease.build());
         }
 
@@ -128,7 +128,7 @@ public class BarnManager {
         String name = Utils.thing2(itemType.getID());
         sell.displayName(Msg.format("<green>Click to sell <aqua>" + amount + " <green>of <yellow>" + name + " <green>for <aqua>" + (itemType.getSellPrice() * amount) + " <gold>coins!"));
         sell.pdcSetInt(Keys.barnSellAmountKey, amount);
-        sell.pdcSetString(Keys.itemTypeKey, itemType.name());
+        sell.pdcSetString(Keys.typeKey, itemType.name());
         player.getInventory().setItem(4, sell.build());
 
         if (user.getBarn().getItem(itemType) > amount) {
@@ -137,7 +137,7 @@ public class BarnManager {
             increase.displayName(Msg.format("<green>Click to increase the amount!"));
             increase.lore(List.of(Msg.format("<blue>Currently at " + amount)));
             increase.pdcSetInt(Keys.barnSellAmountKey, amount);
-            increase.pdcSetString(Keys.itemTypeKey, itemType.name());
+            increase.pdcSetString(Keys.typeKey, itemType.name());
             player.getInventory().setItem(5, increase.build());
         }
     }

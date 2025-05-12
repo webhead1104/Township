@@ -2,6 +2,7 @@ package me.webhead1104.township.utils;
 
 import lombok.NoArgsConstructor;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -9,7 +10,6 @@ import java.util.List;
 
 @NoArgsConstructor
 public class MenuItems {
-
     public static final ItemStack cow = new ItemBuilder(Material.COW_SPAWN_EGG, Msg.format("<white>Cow"), "cow").build();
     public static final ItemStack cowFeed = new ItemBuilder(Material.PLAYER_HEAD, Msg.format("<white>Cow Feed"), "cow_feed").build();
     public static final ItemStack milk = new ItemBuilder(Material.MILK_BUCKET, Msg.format("<white>Milk"), List.of(Msg.format("<green>Click to pick up!")), "milk").build();
@@ -21,9 +21,11 @@ public class MenuItems {
 
     public static final ItemStack levelAndPop = new ItemBuilder(Material.BLUE_CONCRETE, Msg.format("<aqua>Level 0"), List.of(Msg.format("<red>Population 0")), "level_population").build();
     public static final ItemStack coinsAndCash = new ItemBuilder(Material.GOLD_BLOCK, Msg.format("<yellow>Coins 0"), List.of(Msg.format("<green>Cash 0")), "coins_cash").build();
+    public static final ItemStack buildMenu = new ItemBuilder(Material.YELLOW_CONCRETE, Msg.format("<white>Build Menu"), "build_menu").build();
     public static final ItemStack profile = ItemBuilder.loading().id("profile").build();
     public static final ItemStack township = new ItemBuilder(Material.GREEN_CONCRETE, Msg.format("<green>Click to play township!"), "township").build();
     public static final ItemStack backButton = new ItemBuilder(Material.BARRIER, Msg.format("<red>Click to go back!"), "back_button").build();
+    public static final ItemStack homeButton = new ItemBuilder(Material.BLUE_CONCRETE, Msg.format("<red>Click to go to the world!"), "home_button").build();
     public static final ItemStack workingOn = ItemBuilder.loading().id("working_on").build();
     public static final ItemStack waiting = ItemBuilder.loading().id("waiting").build();
     public static final ItemStack completed = ItemBuilder.loading().id("completed").build();
@@ -54,7 +56,14 @@ public class MenuItems {
     //trains
     public static final ItemStack trainEngine = ItemBuilder.loading().id("train_engine").build();
     public static final ItemStack trainCar = ItemBuilder.loading().id("train_car").build();
-
+    //build menu
+    public static final ItemStack buildMenuHousing = new ItemBuilder(Material.PLAYER_HEAD, Msg.format("<aqua>Houses"), "build_menu_housing").build();
+    public static final ItemStack buildMenuCommunity = new ItemBuilder(Material.PLAYER_HEAD, Msg.format("<aqua>Community Buildings"), "build_menu_community").build();
+    public static final ItemStack buildMenuFactories = new ItemBuilder(Material.PLAYER_HEAD, Msg.format("<aqua>Factories"), "build_menu_factories").build();
+    public static final ItemStack buildMenuFarming = new ItemBuilder(Material.PLAYER_HEAD, Msg.format("<aqua>Farming"), "build_menu_farming").build();
+    public static final ItemStack buildMenuSpecial = new ItemBuilder(Material.PLAYER_HEAD, Msg.format("<aqua>Special"), "build_menu_special").build();
+    public static final ItemStack buildMenuCoins = ItemBuilder.loading().id("build_menu_coins").build();
+    public static final ItemStack buildMenuCash = ItemBuilder.loading().id("build_menu_cash").build();
     public static class World {
         public static final ItemStack grass = new ItemBuilder(Material.GRASS_BLOCK, Msg.format(""), "grass").build();
         public static final ItemStack stone = new ItemBuilder(Material.STONE, Msg.format(""), "stone").build();

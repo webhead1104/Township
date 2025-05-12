@@ -55,6 +55,8 @@ public class Township extends JavaPlugin {
     private static Township instance;
     @Getter
     private static Imperat<BukkitSource> imperat;
+    @Getter
+    private static BuildManager buildManager;
 
     @Override
     public void onEnable() {
@@ -81,6 +83,7 @@ public class Township extends JavaPlugin {
         trainManager = new TrainManager();
         levelManager = new LevelManager();
         levelManager.loadLevels();
+        buildManager = new BuildManager();
         logger.info("Township initialized in {} mills!", System.currentTimeMillis() - start);
     }
 

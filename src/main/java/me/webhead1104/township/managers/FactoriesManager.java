@@ -44,8 +44,8 @@ public class FactoriesManager {
             for (RecipeType recipe : type.getRecipes()) {
                 ItemBuilder builder = new ItemBuilder(recipe.getMenuItem());
                 builder.lore(calculateLore(recipe, user.getBarn()));
-                builder.pdcSetString(Keys.recipeTypeKey, recipe.name());
-                builder.pdcSetString(Keys.factoryTypeKey, type.name());
+                builder.pdcSetString(Keys.typeKey, recipe.name());
+                builder.pdcSetString(Keys.typeKey, type.name());
                 inventory.setItem(recipeSlot.getAndIncrement(), builder.build());
             }
             //waiting
@@ -60,8 +60,8 @@ public class FactoriesManager {
                     builder = new ItemBuilder(MenuItems.waiting);
                     builder.displayName(new ItemBuilder(waiting.getMenuItem()).getDisplayName());
                     builder.material(waiting.getMenuItem().getType());
-                    builder.pdcSetString(Keys.recipeTypeKey, waiting.name());
-                    builder.pdcSetString(Keys.factoryTypeKey, type.name());
+                    builder.pdcSetString(Keys.typeKey, waiting.name());
+                    builder.pdcSetString(Keys.typeKey, type.name());
                 }
                 inventory.setItem(waitingSlot.getAndIncrement(), builder.build());
             }
@@ -78,8 +78,8 @@ public class FactoriesManager {
                     builder.material(item.getItemStack().getType());
                     builder.displayName(item.getItemStack().getItemMeta().displayName());
                     builder.lore(Msg.format("<green>Click to claim!"));
-                    builder.pdcSetString(Keys.recipeTypeKey, item.name());
-                    builder.pdcSetString(Keys.factoryTypeKey, type.getID());
+                    builder.pdcSetString(Keys.typeKey, item.name());
+                    builder.pdcSetString(Keys.typeKey, type.getID());
                     builder.pdcSetInt(Keys.slot, i);
                 }
                 inventory.setItem(completedSlot.getAndIncrement(), builder.build());
@@ -94,7 +94,7 @@ public class FactoriesManager {
                 builder.displayName(workingOn.getItemType().getItemStack().getItemMeta().displayName());
                 builder.material(workingOn.getItemType().getItemStack().getType());
             }
-            builder.pdcSetString(Keys.factoryTypeKey, type.getID());
+            builder.pdcSetString(Keys.typeKey, type.getID());
             inventory.setItem(27, builder.build());
             BukkitTask task = new BukkitRunnable() {
                 public void run() {
@@ -106,8 +106,8 @@ public class FactoriesManager {
                         int completedSlot = 12 + completed;
                         ItemBuilder builder = new ItemBuilder(workingOn.getMenuItem());
                         builder.lore(List.of(Msg.format("<green>Click to claim!")));
-                        builder.pdcSetString(Keys.recipeTypeKey, workingOn.name());
-                        builder.pdcSetString(Keys.factoryTypeKey, type.getID());
+                        builder.pdcSetString(Keys.typeKey, workingOn.name());
+                        builder.pdcSetString(Keys.typeKey, type.getID());
                         builder.pdcSetInt(Keys.slot, completed);
                         builder.id("completed");
                         inventory.setItem(completedSlot, builder.build());

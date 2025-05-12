@@ -34,7 +34,7 @@ public class AnimalsManager {
             for (int i = 0; i < 6; ++i) {
                 if (animals.getAnimalBuilding(type).getAnimal(i).isProduct()) {
                     ItemBuilder builder = new ItemBuilder(type.getProductType().getItemStack());
-                    builder.pdcSetString(Keys.animalTypeKey, type.name());
+                    builder.pdcSetString(Keys.typeKey, type.name());
                     builder.pdcSetInt(Keys.slot, i);
                     inventory.setItem(slot + 9, builder.build());
                 }
@@ -47,7 +47,7 @@ public class AnimalsManager {
             }
             ItemBuilder builder = new ItemBuilder(type.getFeedType().getItemStack());
             builder.lore(Msg.format("<white>" + user.getBarn().getItem(type.getFeedType())));
-            builder.pdcSetString(Keys.animalTypeKey, type.name());
+            builder.pdcSetString(Keys.typeKey, type.name());
             inventory.setItem(36, builder.build());
             inventory.setItem(53, MenuItems.backButton);
             BukkitTask task = new BukkitRunnable() {
@@ -65,7 +65,7 @@ public class AnimalsManager {
                             animals.getAnimalBuilding(type).getAnimal(i).setProduct(true);
                             animals.getAnimalBuilding(type).getAnimal(i).setInstant(Instant.EPOCH);
                             ItemBuilder builder = new ItemBuilder(type.getProductType().getItemStack());
-                            builder.pdcSetString(Keys.animalTypeKey, type.name());
+                            builder.pdcSetString(Keys.typeKey, type.name());
                             builder.pdcSetInt(Keys.slot, i);
                             inventory.setItem(slot + 9, builder.build());
                             Objects.requireNonNull(inventory.getItem(slot)).editMeta(ItemMeta.class, meta -> meta.lore(List.of()));
@@ -76,7 +76,7 @@ public class AnimalsManager {
                         Objects.requireNonNull(inventory.getItem(slot)).editMeta(ItemMeta.class, meta -> meta.lore(List.of(Msg.format("<gold>Time: " + string))));
                         ItemBuilder builder = new ItemBuilder(type.getFeedType().getItemStack());
                         builder.lore(Msg.format("<white>" + user.getBarn().getItem(type.getFeedType())), 0);
-                        builder.pdcSetString(Keys.animalTypeKey, type.name());
+                        builder.pdcSetString(Keys.typeKey, type.name());
                         inventory.setItem(36, builder.build());
                         slot++;
                     }
@@ -103,7 +103,7 @@ public class AnimalsManager {
                 animals.getAnimalBuilding(type).getAnimal(i).setInstant(Instant.now().plusSeconds(type.getTimeTakesToFeed()));
                 ItemBuilder builder = new ItemBuilder(type.getFeedType().getItemStack());
                 builder.lore(Msg.format("<white>" + user.getBarn().getItem(type.getFeedType())), 0);
-                builder.pdcSetString(Keys.animalTypeKey, type.name());
+                builder.pdcSetString(Keys.typeKey, type.name());
                 inventory.setItem(36, builder.build());
             }
         }

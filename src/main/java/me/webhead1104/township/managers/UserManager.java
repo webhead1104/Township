@@ -75,8 +75,9 @@ public class UserManager {
         Factories factories = new Factories();
         World world = new World();
         Trains trains = new Trains();
+        PurchasedBuildings purchasedBuildings = new PurchasedBuildings();
         Township.logger.info("create done in {} mills", System.currentTimeMillis() - start);
         String name = Bukkit.getPlayer(uuid) == null ? "none" : Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName() + "'s Town";
-        return new User(uuid, name, new PlayerLevel(1, 0, uuid), 0, 0, 20, 27, barn, animals, factories, world, trains);
+        return new User(uuid, name, new PlayerLevel(1, 0, uuid), 60, 60, 0, 20, 27, barn, animals, factories, world, trains, purchasedBuildings);
     }
 }

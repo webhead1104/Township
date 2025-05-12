@@ -44,9 +44,6 @@ public class WorldManager {
             if (value.getTileType().equals(WorldTileType.TRAIN) && !user.getTrains().isUnlocked()) {
                 builder.lore(List.of(Msg.format("<red>You need to purchase the trains!")));
             }
-            if (value.getTileType().getAnimalType() != null && !user.getAnimals().getAnimalBuilding(value.getTileType().getAnimalType()).isUnlocked()) {
-                builder.lore(List.of(Msg.format("<red>You need to purchase the " + Utils.thing2(value.getTileType().getId()) + "!")));
-            }
             inventory.setItem(key, builder.build());
         });
         return inventory;
@@ -84,57 +81,26 @@ public class WorldManager {
                 .displayName(Msg.format("<dark_green>Click to scroll left!"))
                 .pdcSetInt(Keys.newPageKey, section - 1)
                 .build();
-        switch (section) {
-            case 0 -> {
-                player.getInventory().setItem(23, arrowRight);
-                player.getInventory().setItem(31, arrowDown);
-            }
-            case 1, 2, 3, 4, 5, 6 -> {
-                player.getInventory().setItem(21, arrowLeft);
-                player.getInventory().setItem(23, arrowRight);
-                player.getInventory().setItem(31, arrowDown);
-            }
-            case 7 -> {
-                player.getInventory().setItem(21, arrowLeft);
-                player.getInventory().setItem(31, arrowDown);
-            }
-            case 15, 23, 31, 39, 47, 55 -> {
-                player.getInventory().setItem(21, arrowLeft);
-                player.getInventory().setItem(31, arrowDown);
-                player.getInventory().setItem(13, arrowUp);
-            }
-            case 63 -> {
-                player.getInventory().setItem(13, arrowUp);
-                player.getInventory().setItem(21, arrowLeft);
-            }
-            case 62, 61, 60, 59, 58, 57 -> {
-                player.getInventory().setItem(21, arrowLeft);
-                player.getInventory().setItem(23, arrowRight);
-                player.getInventory().setItem(13, arrowUp);
-            }
-            case 8, 16, 24, 32, 40, 48 -> {
-                player.getInventory().setItem(23, arrowRight);
-                player.getInventory().setItem(13, arrowUp);
-                player.getInventory().setItem(31, arrowDown);
-            }
-            case 56 -> {
-                player.getInventory().setItem(13, arrowUp);
-                player.getInventory().setItem(23, arrowRight);
-            }
-            default -> {
-                player.getInventory().setItem(21, arrowLeft);
-                player.getInventory().setItem(23, arrowRight);
-                player.getInventory().setItem(13, arrowUp);
-                player.getInventory().setItem(31, arrowDown);
-            }
+        if (canShowArrowUp(section)) {
+            player.getInventory().setItem(13, arrowUp);
         }
+        if (canShowArrowLeft(section)) {
+            player.getInventory().setItem(21, arrowLeft);
+        }
+        if (canShowArrowRight(section)) {
+            player.getInventory().setItem(23, arrowRight);
+        }
+        if (canShowArrowDown(section)) {
+            player.getInventory().setItem(31, arrowDown);
+        }
+
         ItemBuilder profile = new ItemBuilder(MenuItems.profile).material(Material.LIGHT_BLUE_CONCRETE).displayName(Msg.format("<green>" + user.getTownName()));
         player.getInventory().setItem(22, profile.build());
         ItemBuilder levelAndPop = new ItemBuilder(MenuItems.levelAndPop);
         levelAndPop.displayName(Msg.format("<aqua>Level " + user.getLevel().getLevel()));
         if (Township.getLevelManager().getLevelMap().containsKey(user.getLevel().getLevel() + 1)) {
             levelAndPop.lore(List.of(Msg.format("<aqua>Xp " + user.getLevel().getXp()),
-                    Msg.format(user.getLevel().getProgressBar()), Msg.format("<red>Population " + user.getPopulation())));
+                    Msg.format(user.getLevel().getProgressBar()), Msg.format("<red>Population<white>: %s/%s", user.getPopulation(), user.getMaxPopulation())));
         } else {
             levelAndPop.lore(List.of(Msg.format("<dark_red>You have reached the max level!"),
                     Msg.format("<red>Population " + user.getPopulation())));
@@ -144,6 +110,7 @@ public class WorldManager {
                 .displayName(Msg.format("<yellow>Coins " + user.getCoins()))
                 .lore(List.of(Msg.format("<green>Cash " + user.getCash())));
         player.getInventory().setItem(17, coinsAndCash.build());
+        player.getInventory().setItem(8, MenuItems.buildMenu);
     }
 
     public void openWorldMenu(Player player) {
@@ -159,5 +126,33 @@ public class WorldManager {
         inventory.setItem(4, confirm.build());
         inventory.setItem(8, MenuItems.backButton);
         Utils.openInventory(player, inventory, uuid -> openWorldMenu(Objects.requireNonNull(Bukkit.getPlayer(uuid))), null);
+    }
+
+    public boolean canShowArrowUp(int section) {
+        return switch (section) {
+            case 0, 1, 2, 3, 4, 5, 6, 7 -> false;
+            default -> true;
+        };
+    }
+
+    public boolean canShowArrowRight(int section) {
+        return switch (section) {
+            case 7, 15, 23, 31, 39, 47, 55, 63 -> false;
+            default -> true;
+        };
+    }
+
+    public boolean canShowArrowDown(int section) {
+        return switch (section) {
+            case 56, 57, 58, 59, 60, 61, 62, 63 -> false;
+            default -> true;
+        };
+    }
+
+    public boolean canShowArrowLeft(int section) {
+        return switch (section) {
+            case 0, 8, 16, 24, 32, 40, 48, 56 -> false;
+            default -> true;
+        };
     }
 }
