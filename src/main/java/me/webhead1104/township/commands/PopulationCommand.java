@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 public class PopulationCommand {
 
     @SubCommand(value = "add")
-    public void addPopulation(BukkitSource source, @Named(value = "The amount of population to add") long population) {
+    public void addPopulation(BukkitSource source, @Named(value = "The amount of population to add") int population) {
         Player player = source.asPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());
         user.setPopulation(user.getPopulation() + population);
@@ -25,7 +25,7 @@ public class PopulationCommand {
     }
 
     @SubCommand(value = "remove")
-    public void removePopulation(BukkitSource source, @Named(value = "The amount of population to remove") long population) {
+    public void removePopulation(BukkitSource source, @Named(value = "The amount of population to remove") int population) {
         Player player = source.asPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());
         user.setPopulation(user.getPopulation() - population);
@@ -33,7 +33,7 @@ public class PopulationCommand {
     }
 
     @SubCommand(value = "set")
-    public void setPopulation(BukkitSource source, long population) {
+    public void setPopulation(BukkitSource source, int population) {
         Player player = source.asPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());
         user.setPopulation(population);
@@ -44,7 +44,7 @@ public class PopulationCommand {
     public void getPopulation(BukkitSource source) {
         Player player = source.asPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());
-        long population = user.getPopulation();
+        int population = user.getPopulation();
         player.sendMessage(Msg.format("<green>You have " + population + " population!"));
     }
 }
