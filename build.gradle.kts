@@ -57,8 +57,9 @@ tasks {
         }
     }
     shadowJar {
-        archiveFileName = "Township-${project.version}.jar"
-        relocate("dev.velix:imperat", "me.webhead1104.township.libs.imperat")
+        archiveFileName.set("Township-${project.version}.jar")
+        archiveClassifier.set("")
+        mergeServiceFiles()
     }
     runServer {
         // Configure the Minecraft version for our task.
