@@ -8,6 +8,7 @@ import org.eclipse.aether.graph.Dependency;
 import org.eclipse.aether.repository.RemoteRepository;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public class TownshipLoader implements PluginLoader {
 
     @Override
