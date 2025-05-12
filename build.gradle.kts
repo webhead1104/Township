@@ -13,7 +13,6 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://repo.codemc.io/repository/maven-snapshots/")
     maven("https://repo.codemc.org/repository/nms/")
-    maven("https://libraries.minecraft.net")
 }
 
 dependencies {
