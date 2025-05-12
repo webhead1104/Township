@@ -5,6 +5,7 @@ api-version: '1.21'
 prefix: Township
 authors: [ Webhead1104 ]
 description: Township in minecraft
+loader: me.webhead1104.township.TownshipLoader
 permissions:
   township.*:
     description: A wildcard permission for Township

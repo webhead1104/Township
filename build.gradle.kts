@@ -15,8 +15,8 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
-    implementation("dev.velix:imperat-core:1.9.0")
-    implementation("dev.velix:imperat-bukkit:1.9.0")
+    compileOnly("dev.velix:imperat-core:1.9.0")
+    compileOnly("dev.velix:imperat-bukkit:1.9.0")
 }
 
 java {
