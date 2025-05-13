@@ -19,6 +19,7 @@ import me.webhead1104.township.managers.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
+import xyz.xenondevs.invui.InvUI;
 
 import java.time.Instant;
 
@@ -66,6 +67,7 @@ public class Township extends JavaPlugin {
         instance = this;
         imperat = BukkitImperat.builder(this).applyBrigadier(true).build();
         imperat.registerCommand(new TownshipCommand());
+        InvUI.getInstance().setPlugin(this);
         registerListeners();
         saveDefaultConfig();
         logger = getSLF4JLogger();

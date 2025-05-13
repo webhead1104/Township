@@ -11,6 +11,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.xenondevs.xyz/releases")
 }
 
 dependencies {
@@ -18,6 +19,8 @@ dependencies {
     compileOnly("dev.velix:imperat-core:1.9.0")
     compileOnly("dev.velix:imperat-bukkit:1.9.0")
     compileOnly("org.spongepowered:configurate-gson:4.2.0")
+    compileOnly("xyz.xenondevs.invui:invui-core:1.45")
+    compileOnly("xyz.xenondevs.invui:inventory-access-r22:1.45")
 }
 
 java {
