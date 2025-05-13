@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import me.webhead1104.township.commands.TownshipCommand;
 import me.webhead1104.township.data.Database;
 import me.webhead1104.township.data.adapters.InstantAdapter;
+import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.listeners.InventoryClickListener;
 import me.webhead1104.township.listeners.InventoryCloseListener;
 import me.webhead1104.township.listeners.JoinListener;
@@ -81,6 +82,9 @@ public class Township extends JavaPlugin {
         trainManager = new TrainManager();
         levelManager = new LevelManager();
         levelManager.loadLevels();
+        User.fromJson("""
+                {"hello":1}
+                """);
         logger.info("Township initialized in {} mills!", System.currentTimeMillis() - start);
     }
 

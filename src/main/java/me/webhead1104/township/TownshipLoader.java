@@ -20,6 +20,7 @@ public class TownshipLoader implements PluginLoader {
 
         resolver.addDependency(new Dependency(new DefaultArtifact("dev.velix:imperat-core:1.9.0"), null));
         resolver.addDependency(new Dependency(new DefaultArtifact("dev.velix:imperat-bukkit:1.9.0"), null));
+        resolver.addDependency(new Dependency(new DefaultArtifact("org.spongepowered:configurate-gson:4.2.0"), null));
 
         classpathBuilder.addLibrary(resolver);
     }

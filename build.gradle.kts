@@ -17,6 +17,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     compileOnly("dev.velix:imperat-core:1.9.0")
     compileOnly("dev.velix:imperat-bukkit:1.9.0")
+    compileOnly("org.spongepowered:configurate-gson:4.2.0")
 }
 
 java {

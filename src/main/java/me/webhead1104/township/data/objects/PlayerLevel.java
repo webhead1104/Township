@@ -1,27 +1,27 @@
 package me.webhead1104.township.data.objects;
 
 import com.google.common.base.Strings;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ConfigSerializable
 public class PlayerLevel {
     private int level;
     private long xp;
     private UUID uuid;
-
-    public PlayerLevel(int level, long xp, UUID uuid) {
-        this.level = level;
-        this.xp = xp;
-        this.uuid = uuid;
-    }
 
     public void addXp(int amountOfXp) {
         User user = Township.getUserManager().getUser(uuid);

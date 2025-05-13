@@ -5,6 +5,7 @@ import lombok.Setter;
 import me.webhead1104.township.data.enums.FactoryType;
 import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.data.enums.RecipeType;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -12,25 +13,27 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Getter
+@ConfigSerializable
 public class Factories {
-    private final Map<FactoryType, Factory> factories = new HashMap<>();
+    private final Map<FactoryType, Factory> factoryBuildings = new HashMap<>();
 
     public Factories() {
         for (FactoryType value : FactoryType.values()) {
-            factories.put(value, new Factory());
+            factoryBuildings.put(value, new Factory());
         }
     }
 
     public Factory getFactory(FactoryType factoryType) {
-        return factories.get(factoryType);
+        return factoryBuildings.get(factoryType);
     }
 
     public void setFactory(FactoryType factoryType, Factory factory) {
-        factories.put(factoryType, factory);
+        factoryBuildings.put(factoryType, factory);
     }
 
     @Getter
     @Setter
+    @ConfigSerializable
     public static class Factory {
         private final Map<Integer, RecipeType> waiting = new HashMap<>();
         private final Map<Integer, ItemType> completed = new HashMap<>();

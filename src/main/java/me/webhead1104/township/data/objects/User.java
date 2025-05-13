@@ -1,15 +1,27 @@
 package me.webhead1104.township.data.objects;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.data.serializers.InstantSerializer;
+import me.webhead1104.township.managers.UserManager;
 import org.bukkit.Bukkit;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.gson.GsonConfigurationLoader;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
 @Getter
 @Setter
+@ConfigSerializable
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     private UUID uuid;
     private String townName;
@@ -24,23 +36,6 @@ public class User {
     private Factories factories;
     private World world;
     private Trains trains;
-
-    public User(UUID uuid, String townName, PlayerLevel level, int population, int maxPopulation, long coins, long cash, int section,
-                Barn barn, Animals animals, Factories factories, World world, Trains trains) {
-        this.uuid = uuid;
-        this.townName = townName;
-        this.level = level;
-        this.population = population;
-        this.maxPopulation = maxPopulation;
-        this.coins = coins;
-        this.cash = cash;
-        this.section = section;
-        this.barn = barn;
-        this.animals = animals;
-        this.factories = factories;
-        this.world = world;
-        this.trains = trains;
-    }
 
     public User(UUID uuid) {
         long start = System.currentTimeMillis();
@@ -61,7 +56,20 @@ public class User {
     }
 
     public static User fromJson(String json) {
-        return Township.GSON.fromJson(json, User.class);
+        try {
+            ConfigurationNode node = GsonConfigurationLoader.builder()
+                    .defaultOptions(opts ->
+                            opts.shouldCopyDefaults(true).serializers(builder -> builder.register(t -> t == Instant.class, new InstantSerializer())))
+                    .buildAndLoadString(json);
+            ConfigurationTransformation configurationTransformation = ConfigurationTransformation.versionedBuilder()
+                    .addVersion(UserManager.LATEST_VERSION, ConfigurationTransformation.builder().build())
+                    .build();
+            configurationTransformation.apply(node);
+            return node.get(User.class);
+        } catch (Exception e) {
+            Township.logger.error("An error occurred whilst updating a user! Please report the following stacktrace to Webhead1104:", e);
+        }
+        throw new IllegalStateException("An error occurred whilst deserializing a user! Please report this to Webhead1104!");
     }
 
     @Override
