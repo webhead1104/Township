@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import me.webhead1104.township.commands.TownshipCommand;
 import me.webhead1104.township.data.Database;
 import me.webhead1104.township.data.adapters.InstantAdapter;
-import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.serializers.InstantSerializer;
 import me.webhead1104.township.listeners.InventoryClickListener;
 import me.webhead1104.township.listeners.InventoryCloseListener;
