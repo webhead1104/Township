@@ -11,6 +11,7 @@ import me.webhead1104.township.commands.TownshipCommand;
 import me.webhead1104.township.data.Database;
 import me.webhead1104.township.data.adapters.InstantAdapter;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.data.serializers.InstantSerializer;
 import me.webhead1104.township.listeners.InventoryClickListener;
 import me.webhead1104.township.listeners.InventoryCloseListener;
 import me.webhead1104.township.listeners.JoinListener;
@@ -18,17 +19,20 @@ import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
+import org.spongepowered.configurate.gson.GsonConfigurationLoader;
 
 import java.time.Instant;
 
 @NoArgsConstructor
 public class Township extends JavaPlugin {
 
-    @Getter
     public static final Gson GSON = new GsonBuilder()
             .serializeNulls()
             .registerTypeAdapter(Instant.class, new InstantAdapter())
             .create();
+    public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder()
+            .defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> builder.register(t -> t == Instant.class, new InstantSerializer())));
+
     public static Logger logger;
     @Getter
     private static Database database;

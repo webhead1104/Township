@@ -23,7 +23,7 @@ public class LevelManager {
         try {
             long start = System.currentTimeMillis();
             String levels = new String(Objects.requireNonNull(this.getClass().getResourceAsStream("/levels.json")).readAllBytes());
-            JsonArray array = Township.getGSON().fromJson(levels, JsonObject.class).get("levels").getAsJsonArray();
+            JsonArray array = Township.GSON.fromJson(levels, JsonObject.class).get("levels").getAsJsonArray();
             int i = 1;
             for (JsonElement jsonElement : array) {
                 long xp = jsonElement.getAsJsonObject().get("xp_needed").getAsLong();

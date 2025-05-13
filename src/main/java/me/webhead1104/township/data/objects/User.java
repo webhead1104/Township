@@ -5,14 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.serializers.InstantSerializer;
 import org.bukkit.Bukkit;
 import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.gson.GsonConfigurationLoader;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
-import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -57,12 +54,10 @@ public class User {
 
     public static User fromJson(String json) {
         try {
-            ConfigurationNode node = GsonConfigurationLoader.builder()
-                    .defaultOptions(opts ->
-                            opts.shouldCopyDefaults(true).serializers(builder -> builder.register(t -> t == Instant.class, new InstantSerializer())))
+            ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER
                     .buildAndLoadString(json);
             ConfigurationTransformation configurationTransformation = ConfigurationTransformation.versionedBuilder()
-                    .addVersion(User.LATEST_VERSION, ConfigurationTransformation.builder().build())
+                    .addVersion(LATEST_VERSION, ConfigurationTransformation.builder().build())
                     .build();
             configurationTransformation.apply(node);
             return node.get(User.class);
