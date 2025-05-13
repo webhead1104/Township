@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.serializers.InstantSerializer;
-import me.webhead1104.township.managers.UserManager;
 import org.bukkit.Bukkit;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
@@ -23,6 +22,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
+    public static final int LATEST_VERSION = 1;
     private UUID uuid;
     private String townName;
     private PlayerLevel level;
@@ -62,7 +62,7 @@ public class User {
                             opts.shouldCopyDefaults(true).serializers(builder -> builder.register(t -> t == Instant.class, new InstantSerializer())))
                     .buildAndLoadString(json);
             ConfigurationTransformation configurationTransformation = ConfigurationTransformation.versionedBuilder()
-                    .addVersion(UserManager.LATEST_VERSION, ConfigurationTransformation.builder().build())
+                    .addVersion(User.LATEST_VERSION, ConfigurationTransformation.builder().build())
                     .build();
             configurationTransformation.apply(node);
             return node.get(User.class);

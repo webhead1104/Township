@@ -13,7 +13,6 @@ import java.util.function.Consumer;
 
 @NoArgsConstructor
 public class UserManager {
-    public static final int LATEST_VERSION = 1;
     public final Map<UUID, User> users = new HashMap<>();
     public final Map<UUID, Consumer<UUID>> playerCloseHandlers = new HashMap<>();
     public final Map<UUID, BukkitTask> menuTasks = new HashMap<>();
