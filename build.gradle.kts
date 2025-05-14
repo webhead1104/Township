@@ -3,6 +3,7 @@ plugins {
     id("com.gradleup.shadow") version "9.0.0-beta4"
     id("xyz.jpenilla.run-paper") version "2.3.1"
     id("io.freefair.lombok") version "8.10.2"
+    id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.0"
 }
 
 group = "me.webhead1104"
@@ -11,19 +12,16 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
-    maven("https://repo.codemc.io/repository/maven-snapshots/")
-    maven("https://repo.codemc.org/repository/nms/")
-    maven("https://libraries.minecraft.net")
     maven("https://repo.xenondevs.xyz/releases")
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
-    compileOnly("org.xerial:sqlite-jdbc:3.47.2.0")
-    compileOnly("com.zaxxer:HikariCP:6.2.1")
-    implementation("dev.velix:imperat-core:1.9.0")
-    implementation("dev.velix:imperat-bukkit:1.9.0")
-    implementation("xyz.xenondevs.invui:invui:1.45")
+    compileOnly("dev.velix:imperat-core:1.9.0")
+    compileOnly("dev.velix:imperat-bukkit:1.9.0")
+    compileOnly("org.spongepowered:configurate-gson:4.2.0")
+    compileOnly("xyz.xenondevs.invui:invui-core:1.45")
+    compileOnly("xyz.xenondevs.invui:inventory-access-r22:1.45")
 }
 
 java {
@@ -60,14 +58,23 @@ tasks {
         }
     }
     shadowJar {
-        archiveFileName = "Township-${project.version}.jar"
-        relocate("net.wesjd.anvilgui", "me.webhead1104.township.libs.anvilgui")
-        relocate("dev.velix:imperat", "me.webhead1104.township.libs.imperat")
+        archiveFileName.set("Township-${project.version}.jar")
+        archiveClassifier.set("")
+        mergeServiceFiles()
     }
     runServer {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
         minecraftVersion("1.21.4")
+    }
+    paperPluginYaml {
+        // Defaults for name, version, and description are inherited from the Gradle project
+        main.set("me.webhead1104.township.Township")
+        apiVersion.set("1.21")
+        author.set("Webhead1104")
+        description.set("A remake of the game Township by Playrix in Minecraft")
+        loader.set("me.webhead1104.township.TownshipLoader")
+        website.set("https://github.com/Webhead1104/Township")
     }
 }
