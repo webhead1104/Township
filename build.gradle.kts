@@ -3,6 +3,7 @@ plugins {
     id("com.gradleup.shadow") version "9.0.0-beta4"
     id("xyz.jpenilla.run-paper") version "2.3.1"
     id("io.freefair.lombok") version "8.10.2"
+    id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.0"
 }
 
 group = "me.webhead1104"
@@ -66,5 +67,14 @@ tasks {
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
         minecraftVersion("1.21.4")
+    }
+    paperPluginYaml {
+        // Defaults for name, version, and description are inherited from the Gradle project
+        main.set("me.webhead1104.township.Township")
+        apiVersion.set("1.21")
+        author.set("Webhead1104")
+        description.set("A remake of the game Township by Playrix in Minecraft")
+        loader.set("me.webhead1104.township.TownshipLoader")
+        website.set("https://github.com/Webhead1104/Township")
     }
 }
