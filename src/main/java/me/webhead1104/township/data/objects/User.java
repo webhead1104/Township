@@ -1,18 +1,30 @@
 package me.webhead1104.township.data.objects;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
+import org.bukkit.Bukkit;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
 @Setter
+@ConfigSerializable
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
+    public static final int LATEST_VERSION = 1;
     private UUID uuid;
     private String townName;
     private PlayerLevel level;
-    private long population;
+    private int population;
+    private int maxPopulation;
     private long coins;
     private long cash;
     private int section;
@@ -23,25 +35,38 @@ public class User {
     private Trains trains;
     private PurchasedBuildings purchasedBuildings;
 
-    public User(UUID uuid, String townName, PlayerLevel level, long population, long coins, long cash, int section,
-                Barn barn, Animals animals, Factories factories, World world, Trains trains, PurchasedBuildings purchasedBuildings) {
+    public User(UUID uuid) {
+        long start = System.currentTimeMillis();
         this.uuid = uuid;
-        this.townName = townName;
-        this.level = level;
-        this.population = population;
-        this.coins = coins;
-        this.cash = cash;
-        this.section = section;
-        this.barn = barn;
-        this.animals = animals;
-        this.factories = factories;
-        this.world = world;
-        this.trains = trains;
-        this.purchasedBuildings = purchasedBuildings;
+        this.townName = Bukkit.getPlayer(uuid) == null ? "none" : String.format("%s's Town", Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName());
+        this.level = new PlayerLevel(1, 0, uuid);
+        this.population = 60;
+        this.maxPopulation = 60;
+        this.coins = 0;
+        this.cash = 20;
+        this.section = 27;
+        this.barn = new Barn();
+        this.animals = new Animals();
+        this.factories = new Factories();
+        this.world = new World();
+        this.trains = new Trains();
+        this.purchasedBuildings = new PurchasedBuildings();
+        Township.logger.info("Finished creating a user in {} mills!", System.currentTimeMillis() - start);
     }
 
     public static User fromJson(String json) {
-        return Township.GSON.fromJson(json, User.class);
+        try {
+            ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER
+                    .buildAndLoadString(json);
+            ConfigurationTransformation configurationTransformation = ConfigurationTransformation.versionedBuilder()
+                    .addVersion(LATEST_VERSION, ConfigurationTransformation.builder().build())
+                    .build();
+            configurationTransformation.apply(node);
+            return node.get(User.class);
+        } catch (Exception e) {
+            Township.logger.error("An error occurred whilst updating a user! Please report the following stacktrace to Webhead1104:", e);
+        }
+        throw new IllegalStateException("An error occurred whilst deserializing a user! Please report this to Webhead1104!");
     }
 
     @Override
