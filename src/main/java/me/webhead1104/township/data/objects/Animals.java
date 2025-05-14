@@ -5,38 +5,41 @@ import lombok.Getter;
 import lombok.Setter;
 import me.webhead1104.township.data.enums.AnimalType;
 import org.jetbrains.annotations.NotNull;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
 @Getter
+@ConfigSerializable
 public class Animals {
-    private final Map<AnimalType, AnimalBuilding> animals = new HashMap<>();
+    private final Map<AnimalType, AnimalBuilding> animalBuildings = new HashMap<>();
 
     public Animals() {
         for (AnimalType animalType : AnimalType.values()) {
-            Map<Integer, AnimalBuilding.Animal> animals = new HashMap<>();
+            Map<Integer, AnimalBuilding.Animal> animalBuildings = new HashMap<>();
             for (int i = 0; i < 6; i++) {
-                animals.put(i, new AnimalBuilding.Animal(false, false, i < 3, Instant.EPOCH));
+                animalBuildings.put(i, new AnimalBuilding.Animal(false, false, i < 3, Instant.EPOCH));
             }
-            this.animals.put(animalType, new AnimalBuilding(animals, false));
+            this.animalBuildings.put(animalType, new AnimalBuilding(animalBuildings, false));
         }
     }
 
     public void setAnimalBuilding(@NotNull AnimalType animalType, @NotNull AnimalBuilding animal) {
         Preconditions.checkNotNull(animalType);
         Preconditions.checkNotNull(animal);
-        animals.replace(animalType, animal);
+        animalBuildings.replace(animalType, animal);
     }
 
     public AnimalBuilding getAnimalBuilding(@NotNull AnimalType animalType) {
         Preconditions.checkNotNull(animalType);
-        return animals.get(animalType);
+        return animalBuildings.get(animalType);
     }
 
     @Getter
     @Setter
+    @ConfigSerializable
     public static class AnimalBuilding {
         private final Map<Integer, Animal> animals;
         private boolean unlocked;
@@ -56,6 +59,7 @@ public class Animals {
 
         @Getter
         @Setter
+        @ConfigSerializable
         public static class Animal {
             private boolean feed;
             private boolean product;

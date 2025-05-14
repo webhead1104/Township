@@ -1,11 +1,13 @@
 package me.webhead1104.township.data.objects;
 
 import lombok.Getter;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Getter
+@ConfigSerializable
 public class World {
     private final Map<Integer, WorldSection> worldMap = new HashMap<>();
 

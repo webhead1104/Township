@@ -181,7 +181,7 @@ public class Database {
             if (!isConnected())
                 throw new IllegalStateException("The database must be connected to add a player!");
             try {
-                User user = Township.getUserManager().createUser(uuid);
+                User user = new User(uuid);
                 PreparedStatement ps = sqlConnection.prepareStatement("INSERT INTO Township (PlayerUUID, data) VALUES (?, ?);");
                 ps.setString(1, user.getUuid().toString());
                 ps.setString(2, user.toString());

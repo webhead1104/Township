@@ -1,14 +1,19 @@
 package me.webhead1104.township.data.objects;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.data.enums.ItemType;
 import org.apache.commons.lang3.Validate;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.util.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@ConfigSerializable
 public class Trains {
     private final Map<Integer, Train> trains = new HashMap<>();
     private boolean unlocked = false;
@@ -29,6 +34,9 @@ public class Trains {
 
     @Getter
     @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @ConfigSerializable
     public static class Train {
         private final Map<Integer, TrainCar> trainCars = new HashMap<>();
         private boolean unlocked = false;
@@ -64,6 +72,8 @@ public class Trains {
 
         @Getter
         @Setter
+        @AllArgsConstructor
+        @ConfigSerializable
         public static class TrainCar {
             private TrainCarItem claimItem;
             private TrainCarItem giveItem;
@@ -80,14 +90,12 @@ public class Trains {
 
             @Getter
             @Setter
+            @AllArgsConstructor
+            @NoArgsConstructor
+            @ConfigSerializable
             public static class TrainCarItem {
                 private ItemType itemType;
                 private int amount;
-
-                public TrainCarItem(ItemType itemType, int amount) {
-                    this.itemType = itemType;
-                    this.amount = amount;
-                }
             }
         }
     }

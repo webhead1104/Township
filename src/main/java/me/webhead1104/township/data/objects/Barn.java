@@ -3,12 +3,14 @@ package me.webhead1104.township.data.objects;
 import lombok.Getter;
 import lombok.Setter;
 import me.webhead1104.township.data.enums.ItemType;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Getter
 @Setter
+@ConfigSerializable
 public class Barn {
     private final Map<ItemType, Integer> itemMap = new HashMap<>();
     private BarnUpgrade barnUpgrade = new BarnUpgrade(1, 2, 70);

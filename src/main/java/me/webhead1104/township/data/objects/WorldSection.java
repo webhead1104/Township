@@ -5,12 +5,14 @@ import lombok.Setter;
 import me.webhead1104.township.data.enums.PlotType;
 import me.webhead1104.township.data.enums.TileSize;
 import me.webhead1104.township.data.enums.WorldTileType;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Setter
 @Getter
+@ConfigSerializable
 public class WorldSection {
     private final Map<Integer, Tile> slotMap = new HashMap<>();
     private int section;

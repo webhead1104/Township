@@ -23,7 +23,7 @@ public class Utils {
     }
 
     public static String thing2(String string) {
-        return StringUtils.capitalize(string.replaceAll("_", " "));
+        return StringUtils.capitalize(string.replaceAll("_", " ").toLowerCase());
     }
 
     public static String format(Instant instant1, Instant instant2) {
