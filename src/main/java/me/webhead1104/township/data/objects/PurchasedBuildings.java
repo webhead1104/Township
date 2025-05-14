@@ -4,12 +4,14 @@ import lombok.Getter;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.BuildingType;
 import org.bukkit.entity.Player;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
+@ConfigSerializable
 public class PurchasedBuildings {
     private final Map<BuildingType, Map<Integer, Boolean>> purchasedBuildings = new HashMap<>();
 
