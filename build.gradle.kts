@@ -12,16 +12,15 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
-    maven("https://repo.xenondevs.xyz/releases")
+    maven("https://eldonexus.de/repository/maven-public/")
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
-    compileOnly("dev.velix:imperat-core:1.9.0")
-    compileOnly("dev.velix:imperat-bukkit:1.9.0")
+    compileOnly("io.papermc.paper:paper-api:1.21.7-R0.1-SNAPSHOT")
     compileOnly("org.spongepowered:configurate-gson:4.2.0")
-    compileOnly("xyz.xenondevs.invui:invui-core:1.45")
-    compileOnly("xyz.xenondevs.invui:inventory-access-r22:1.45")
+
+    compileOnly("net.strokkur:strokk-commands-annotations:1.2.4-SNAPSHOT")
+    annotationProcessor("net.strokkur:strokk-commands-processor:1.2.4-SNAPSHOT")
 }
 
 java {
@@ -66,7 +65,7 @@ tasks {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.21.4")
+        minecraftVersion("1.21.7")
     }
     paperPluginYaml {
         // Defaults for name, version, and description are inherited from the Gradle project

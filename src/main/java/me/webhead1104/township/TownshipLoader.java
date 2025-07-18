@@ -16,15 +16,8 @@ public class TownshipLoader implements PluginLoader {
         System.setProperty("bstats.relocatecheck", "false");
         MavenLibraryResolver resolver = new MavenLibraryResolver();
 
-        resolver.addRepository(new RemoteRepository.Builder("central", "default", "https://repo1.maven.org/maven2/").build());
-        resolver.addRepository(new RemoteRepository.Builder("xenondevs", "default", "https://repo.xenondevs.xyz/releases/").build());
-
-        resolver.addDependency(new Dependency(new DefaultArtifact("dev.velix:imperat-core:1.9.0"), null));
-        resolver.addDependency(new Dependency(new DefaultArtifact("dev.velix:imperat-bukkit:1.9.0"), null));
+        resolver.addRepository(new RemoteRepository.Builder("maven mirror", "default", MavenLibraryResolver.MAVEN_CENTRAL_DEFAULT_MIRROR).build());
         resolver.addDependency(new Dependency(new DefaultArtifact("org.spongepowered:configurate-gson:4.2.0"), null));
-        resolver.addDependency(new Dependency(new DefaultArtifact("xyz.xenondevs.invui:invui-core:1.45"), null));
-        resolver.addDependency(new Dependency(new DefaultArtifact("xyz.xenondevs.invui:invui-core:1.45"), null));
-        resolver.addDependency(new Dependency(new DefaultArtifact("xyz.xenondevs.invui:inventory-access-r22:1.45"), null));
 
         classpathBuilder.addLibrary(resolver);
     }
