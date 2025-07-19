@@ -2,7 +2,6 @@ package me.webhead1104.township.data.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -12,7 +11,6 @@ import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @ConfigSerializable
 public class Expansion {
     public static final int LATEST_VERSION = 1;

@@ -2,7 +2,6 @@ package me.webhead1104.township.data.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.data.enums.ItemType;
 import org.apache.commons.lang3.Validate;
@@ -35,7 +34,6 @@ public class Trains {
     @Getter
     @Setter
     @AllArgsConstructor
-    @NoArgsConstructor
     @ConfigSerializable
     public static class Train {
         private final Map<Integer, TrainCar> trainCars = new HashMap<>();
@@ -91,7 +89,6 @@ public class Trains {
             @Getter
             @Setter
             @AllArgsConstructor
-            @NoArgsConstructor
             @ConfigSerializable
             public static class TrainCarItem {
                 private ItemType itemType;
