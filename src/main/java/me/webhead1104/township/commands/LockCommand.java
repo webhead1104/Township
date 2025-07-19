@@ -1,44 +1,29 @@
 package me.webhead1104.township.commands;
 
-import dev.velix.imperat.BukkitSource;
-import dev.velix.imperat.annotations.Description;
-import dev.velix.imperat.annotations.SubCommand;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.AnimalType;
 import me.webhead1104.township.data.enums.FactoryType;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.entity.Player;
 
-@SubCommand(value = "lock")
-@Description(value = "Locks the factory type or animal type")
-@SuppressWarnings("unused")
-public class LockCommand {
+public final class LockCommand {
 
-    @SubCommand(value = "animal")
-    public void lock(BukkitSource source, AnimalType type) {
-        Player player = source.asPlayer();
-        Township.getUserManager().getUser(player.getUniqueId()).getAnimals().getAnimalBuilding(type).setUnlocked(false);
-        player.sendMessage(Msg.format("<green>Locked" + type.name()));
+    public static void lock(Player player, AnimalType type, boolean locked) {
+        Township.getUserManager().getUser(player.getUniqueId()).getAnimals().getAnimalBuilding(type).setUnlocked(locked);
+        player.sendMessage(Msg.format("<green>Set %s to %b", type.name(), locked));
     }
 
-    @SubCommand(value = "factory")
-    public void lock(BukkitSource source, FactoryType type) {
-        Player player = source.asPlayer();
-        Township.getUserManager().getUser(player.getUniqueId()).getFactories().getFactory(type).setUnlocked(false);
-        player.sendMessage(Msg.format("<green>Locked " + type.name()));
+    public static void lock(Player player, FactoryType type, boolean locked) {
+        player.sendMessage(Msg.format("<green>Set %s to %b", type.name(), locked));
     }
 
-    @SubCommand(value = "trains")
-    public void lockTrains(BukkitSource source) {
-        Player player = source.asPlayer();
-        Township.getUserManager().getUser(player.getUniqueId()).getTrains().setUnlocked(false);
-        player.sendMessage(Msg.format("<green>Locked the trains!"));
+    public static void lockTrains(Player player, boolean locked) {
+        Township.getUserManager().getUser(player.getUniqueId()).getTrains().setUnlocked(locked);
+        player.sendMessage(Msg.format("<green>Set the trains to %b", locked));
     }
 
-    @SubCommand(value = "train")
-    public void lockTrain(BukkitSource source, int train) {
-        Player player = source.asPlayer();
-        Township.getUserManager().getUser(player.getUniqueId()).getTrains().getTrain(train).setUnlocked(false);
-        player.sendMessage(Msg.format("<green>Locked train " + train));
+    public static void lockTrain(Player player, int train, boolean locked) {
+        Township.getUserManager().getUser(player.getUniqueId()).getTrains().getTrain(train).setUnlocked(locked);
+        player.sendMessage(Msg.format("<green>Set train %d to %b", train, locked));
     }
 }

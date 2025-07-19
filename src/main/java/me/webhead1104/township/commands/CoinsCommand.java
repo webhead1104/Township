@@ -1,55 +1,38 @@
 package me.webhead1104.township.commands;
 
-import dev.velix.imperat.BukkitSource;
-import dev.velix.imperat.annotations.Description;
-import dev.velix.imperat.annotations.Named;
-import dev.velix.imperat.annotations.Permission;
-import dev.velix.imperat.annotations.SubCommand;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.entity.Player;
 
-@SubCommand(value = "coins")
-@Description(value = "The coins command")
-@Permission(value = "township.commands.coins")
-@SuppressWarnings("unused")
-public class CoinsCommand {
+public final class CoinsCommand {
 
-    @SubCommand(value = "add")
-    public void addCoins(BukkitSource source, @Named(value = "The amount of coins to add") long coins) {
-        Player player = source.asPlayer();
+    public static void addCoins(Player player, long coins) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         user.setCoins(user.getCoins() + coins);
-        player.sendMessage(Msg.format("<green>Added " + coins + " coins!"));
+        player.sendMessage(Msg.format("<green>Added %d coins!", coins));
     }
 
-    @SubCommand(value = "remove")
-    public void removeCoins(BukkitSource source, @Named(value = "The amount of coins to remove") long coins) {
-        Player player = source.asPlayer();
+    public static void removeCoins(Player player, long coins) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         if (user.getCoins() - coins < 0) {
-            player.sendMessage(Msg.format("<red>Unable to remove " + coins + " coins!"));
+            player.sendMessage(Msg.format("<red>Unable to remove %d coins!", coins));
             return;
         }
         user.setCoins(user.getCoins() - coins);
-        player.sendMessage(Msg.format("<green>Removed " + coins + " coins!"));
+        player.sendMessage(Msg.format("<green>Removed %d coins!", coins));
     }
 
-    @SubCommand(value = "set")
-    public void setCoins(BukkitSource source, long coins) {
-        Player player = source.asPlayer();
+    public static void setCoins(Player player, long coins) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         user.setCoins(coins);
-        player.sendMessage(Msg.format("<green>Set coins to " + coins + "!"));
+        player.sendMessage(Msg.format("<green>Set coins to %d!", coins));
     }
 
-    @SubCommand(value = "get")
-    public void getCoins(BukkitSource source) {
-        Player player = source.asPlayer();
+    public static void getCoins(Player player) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         long coins = user.getCoins();
-        player.sendMessage(Msg.format("<green>You have " + coins + " coins!"));
+        player.sendMessage(Msg.format("<green>You have %d coins!", coins));
     }
 }
 

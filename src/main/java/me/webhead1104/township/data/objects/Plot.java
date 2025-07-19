@@ -2,7 +2,6 @@ package me.webhead1104.township.data.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.PlotType;
@@ -13,7 +12,6 @@ import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 @Setter
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @ConfigSerializable
 public class Plot {
     public static final int LATEST_VERSION = 1;

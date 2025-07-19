@@ -2,13 +2,14 @@ package me.webhead1104.township.data.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
 import org.bukkit.Bukkit;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.NodePath;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
+import org.spongepowered.configurate.transformation.TransformAction;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -17,9 +18,8 @@ import java.util.UUID;
 @Setter
 @ConfigSerializable
 @AllArgsConstructor
-@NoArgsConstructor
 public class User {
-    public static final int LATEST_VERSION = 1;
+    public static final int LATEST_VERSION = 2;
     private UUID uuid;
     private String townName;
     private PlayerLevel level;
@@ -56,10 +56,10 @@ public class User {
 
     public static User fromJson(String json) {
         try {
-            ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER
-                    .buildAndLoadString(json);
+            ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.buildAndLoadString(json);
             ConfigurationTransformation configurationTransformation = ConfigurationTransformation.versionedBuilder()
-                    .addVersion(LATEST_VERSION, ConfigurationTransformation.builder().build())
+                    .addVersion(2, ConfigurationTransformation.builder().build())
+                    .addVersion(1, ConfigurationTransformation.builder().addAction(NodePath.path("uuid"), TransformAction.rename("test")).build())
                     .build();
             configurationTransformation.apply(node);
             return node.get(User.class);

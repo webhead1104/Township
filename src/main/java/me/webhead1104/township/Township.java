@@ -2,12 +2,10 @@ package me.webhead1104.township;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dev.velix.imperat.BukkitImperat;
-import dev.velix.imperat.BukkitSource;
-import dev.velix.imperat.Imperat;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.webhead1104.township.commands.TownshipCommand;
+import me.webhead1104.township.commands.TownshipCommandBrigadier;
 import me.webhead1104.township.data.Database;
 import me.webhead1104.township.data.adapters.InstantAdapter;
 import me.webhead1104.township.data.serializers.InstantSerializer;
@@ -19,7 +17,6 @@ import me.webhead1104.township.managers.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
-import xyz.xenondevs.invui.InvUI;
 
 import java.time.Instant;
 
@@ -57,19 +54,20 @@ public class Township extends JavaPlugin {
     @Getter
     private static LevelManager levelManager;
     @Getter
-    private static Township instance;
-    @Getter
-    private static Imperat<BukkitSource> imperat;
-    @Getter
     private static BuildManager buildManager;
+    @Getter
+    private static Township instance;
+
+    @Override
+    public void onLoad() {
+        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS.newHandler(event -> TownshipCommandBrigadier.register(event.registrar())));
+    }
+
 
     @Override
     public void onEnable() {
         long start = System.currentTimeMillis();
         instance = this;
-        imperat = BukkitImperat.builder(this).applyBrigadier(true).build();
-        imperat.registerCommand(new TownshipCommand());
-        InvUI.getInstance().setPlugin(this);
         registerListeners();
         saveDefaultConfig();
         logger = getSLF4JLogger();
