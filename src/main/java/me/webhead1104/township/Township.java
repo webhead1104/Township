@@ -14,6 +14,7 @@ import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.*;
 import me.webhead1104.township.menus.AnimalMenu;
+import me.webhead1104.township.menus.WorldMenu;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
@@ -74,7 +75,7 @@ public class Township extends JavaPlugin {
         database.connect();
         database.createTownshipTable();
         viewFrame = ViewFrame.create(this);
-        viewFrame.with(new AnimalMenu());
+        viewFrame.with(new AnimalMenu(), new WorldMenu());
         viewFrame.register();
         worldManager = new WorldManager();
         expansionManager = new ExpansionManager();

@@ -5,6 +5,7 @@ import me.webhead1104.township.commands.arguments.AnimalTypeArgument;
 import me.webhead1104.township.commands.arguments.FactoryTypeArgument;
 import me.webhead1104.township.data.enums.AnimalType;
 import me.webhead1104.township.data.enums.FactoryType;
+import me.webhead1104.township.menus.WorldMenu;
 import net.strokkur.commands.annotations.Command;
 import net.strokkur.commands.annotations.Description;
 import net.strokkur.commands.annotations.Executes;
@@ -22,6 +23,11 @@ public final class TownshipCommand {
         if (!player.getInventory().isEmpty()) Township.getInventoryManager().addPlayerInventory(player);
         player.getInventory().clear();
         Township.getWorldManager().openWorldMenu(player);
+    }
+
+    @Executes("test")
+    void test(CommandSender ignored, @Executor Player player) {
+        Township.getViewFrame().open(WorldMenu.class, player, Township.getUserManager().getUser(player.getUniqueId()).getSection());
     }
 
     @Executes("animal")
