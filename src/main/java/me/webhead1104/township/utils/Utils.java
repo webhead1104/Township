@@ -1,10 +1,13 @@
 package me.webhead1104.township.utils;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.time.Duration;
@@ -55,5 +58,12 @@ public class Utils {
         }
 
         return formatted.toString().trim(); // Remove trailing space
+    }
+
+
+    public static ItemStack getItemStackItem(String name, Material material) {
+        ItemStack itemStack = ItemStack.of(material);
+        itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>%s", name));
+        return itemStack;
     }
 }

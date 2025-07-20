@@ -2,7 +2,10 @@ package me.webhead1104.township.listeners;
 
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.*;
+import me.webhead1104.township.data.enums.FactoryType;
+import me.webhead1104.township.data.enums.ItemType;
+import me.webhead1104.township.data.enums.PlotType;
+import me.webhead1104.township.data.enums.RecipeType;
 import me.webhead1104.township.data.objects.Expansion;
 import me.webhead1104.township.utils.ItemBuilder;
 import me.webhead1104.township.utils.Keys;
@@ -40,15 +43,6 @@ public class InventoryClickListener implements Listener {
                         Township.getFactoriesManager().collectItem(player, slot, factoryType, recipeType, event.getInventory(), event.getSlot());
                     }
                     //todo fix this mess
-                    case "cowshed_1" -> Township.getAnimalsManager().openAnimalMenu(player, AnimalType.COWSHED_1);
-                    case "cowshed_2" -> Township.getAnimalsManager().openAnimalMenu(player, AnimalType.COWSHED_2);
-                    case "cowshed_3" -> Township.getAnimalsManager().openAnimalMenu(player, AnimalType.COWSHED_3);
-                    case "chicken_coop_1" ->
-                            Township.getAnimalsManager().openAnimalMenu(player, AnimalType.CHICKEN_COOP_1);
-                    case "chicken_coop_2" ->
-                            Township.getAnimalsManager().openAnimalMenu(player, AnimalType.CHICKEN_COOP_2);
-                    case "chicken_coop_3" ->
-                            Township.getAnimalsManager().openAnimalMenu(player, AnimalType.CHICKEN_COOP_3);
                     case "bakery" -> Township.getFactoriesManager().openFactoryMenu(player, FactoryType.BAKERY);
                     case "feed_mill_1" ->
                             Township.getFactoriesManager().openFactoryMenu(player, FactoryType.FEED_MILL_1);
@@ -137,14 +131,6 @@ public class InventoryClickListener implements Listener {
                     if (itemID.equals(recipeType.getId())) {
                         FactoryType factoryType = FactoryType.valueOf(builder.pdcGetString(Keys.factoryTypeKey).toUpperCase());
                         Township.getFactoriesManager().recipe(player, recipeType, factoryType, event.getInventory(), event.getSlot());
-                    }
-                }
-                for (AnimalType animalType : AnimalType.values()) {
-                    if (itemID.equals(animalType.getProductType().getID())) {
-                        int slot = builder.pdcGetInt(Keys.slot);
-                        Township.getAnimalsManager().pickup(player, animalType, slot, event.getInventory(), event.getSlot());
-                    } else if (builder.pdcHas(Keys.animalTypeKey) && builder.pdcGetString(Keys.animalTypeKey).equalsIgnoreCase(animalType.name())) {
-                        Township.getAnimalsManager().feed(player, animalType, event.getInventory());
                     }
                 }
             }

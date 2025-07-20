@@ -9,14 +9,6 @@ import java.util.List;
 
 @NoArgsConstructor
 public class MenuItems {
-
-    public static final ItemStack cow = new ItemBuilder(Material.COW_SPAWN_EGG, Msg.format("<white>Cow"), "cow").build();
-    public static final ItemStack cowFeed = new ItemBuilder(Material.PLAYER_HEAD, Msg.format("<white>Cow Feed"), "cow_feed").build();
-    public static final ItemStack milk = new ItemBuilder(Material.MILK_BUCKET, Msg.format("<white>Milk"), List.of(Msg.format("<green>Click to pick up!")), "milk").build();
-    public static final ItemStack chicken = new ItemBuilder(Material.CHICKEN_SPAWN_EGG, Msg.format("<white>Chicken"), "chicken").build();
-    public static final ItemStack chickenFeed = new ItemBuilder(Material.PLAYER_HEAD, Msg.format("<white>Chicken Feed"), "chicken_feed").build();
-    public static final ItemStack egg = new ItemBuilder(Material.EGG, Msg.format("<white>Egg"), List.of(Msg.format("<green>Click to pick up!")), "egg").build();
-
     public static final ItemStack arrow = ItemBuilder.loading().id("arrow").build();
 
     public static final ItemStack levelAndPop = new ItemBuilder(Material.BLUE_CONCRETE, Msg.format("<aqua>Level 0"), List.of(Msg.format("<red>Population 0")), "level_population").build();

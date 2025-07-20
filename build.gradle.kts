@@ -13,11 +13,14 @@ repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://eldonexus.de/repository/maven-public/")
+    maven("https://repo.tcoded.com/releases")
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.7-R0.1-SNAPSHOT")
     compileOnly("org.spongepowered:configurate-gson:4.2.0")
+    implementation("me.devnatan:inventory-framework-platform-paper:3.5.0")
+    implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.0")
 
     compileOnly("net.strokkur:strokk-commands-annotations:1.2.4-SNAPSHOT")
     annotationProcessor("net.strokkur:strokk-commands-processor:1.2.4-SNAPSHOT")
@@ -115,6 +118,8 @@ tasks {
         archiveFileName.set("Township-${project.version}.jar")
         archiveClassifier.set("")
         mergeServiceFiles()
+        relocate("me.devnatan.inventoryframework", "me.webhead1104.township.libs.inventoryframework")
+        relocate("com.tcoded.folialib", "me.webhead1104.township.libs.folialib")
     }
     runServer {
         // Configure the Minecraft version for our task.

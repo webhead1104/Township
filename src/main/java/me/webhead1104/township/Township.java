@@ -5,15 +5,15 @@ import com.google.gson.GsonBuilder;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.devnatan.inventoryframework.ViewFrame;
 import me.webhead1104.township.commands.TownshipCommandBrigadier;
 import me.webhead1104.township.data.Database;
 import me.webhead1104.township.data.adapters.InstantAdapter;
 import me.webhead1104.township.data.serializers.InstantSerializer;
-import me.webhead1104.township.listeners.InventoryClickListener;
-import me.webhead1104.township.listeners.InventoryCloseListener;
 import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.*;
+import me.webhead1104.township.menus.AnimalMenu;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
@@ -54,13 +54,14 @@ public class Township extends JavaPlugin {
     @Getter
     private static LevelManager levelManager;
     @Getter
+    private static ViewFrame viewFrame;
+    @Getter
     private static Township instance;
 
     @Override
     public void onLoad() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS.newHandler(event -> TownshipCommandBrigadier.register(event.registrar())));
     }
-
 
     @Override
     public void onEnable() {
@@ -72,6 +73,9 @@ public class Township extends JavaPlugin {
         database = new Database(this);
         database.connect();
         database.createTownshipTable();
+        viewFrame = ViewFrame.create(this);
+        viewFrame.with(new AnimalMenu());
+        viewFrame.register();
         worldManager = new WorldManager();
         expansionManager = new ExpansionManager();
         animalsManager = new AnimalsManager();
@@ -100,9 +104,9 @@ public class Township extends JavaPlugin {
     }
 
     public void registerListeners() {
-        this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
+//        this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new JoinListener(), this);
         this.getServer().getPluginManager().registerEvents(new LeaveListener(), this);
-        this.getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
+//        this.getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
     }
 }
