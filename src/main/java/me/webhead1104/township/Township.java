@@ -1,20 +1,20 @@
 package me.webhead1104.township;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.devnatan.inventoryframework.ViewFrame;
 import me.webhead1104.township.commands.TownshipCommandBrigadier;
 import me.webhead1104.township.data.Database;
-import me.webhead1104.township.data.adapters.InstantAdapter;
-import me.webhead1104.township.data.serializers.InstantSerializer;
 import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.*;
 import me.webhead1104.township.menus.AnimalMenu;
+import me.webhead1104.township.menus.ConfirmCloseMenu;
 import me.webhead1104.township.menus.WorldMenu;
+import me.webhead1104.township.serializers.InstantSerializer;
+import me.webhead1104.township.tiles.Tile;
+import me.webhead1104.township.tiles.TileSerializer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
@@ -24,12 +24,16 @@ import java.time.Instant;
 @NoArgsConstructor
 public class Township extends JavaPlugin {
 
-    public static final Gson GSON = new GsonBuilder()
-            .serializeNulls()
-            .registerTypeAdapter(Instant.class, new InstantAdapter())
-            .create();
     public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder()
-            .defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> builder.register(t -> t == Instant.class, new InstantSerializer())));
+            .defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
+                builder.register(t -> t == Instant.class, new InstantSerializer());
+                builder.register(t -> {
+                    if (t instanceof Class<?> clazz) {
+                        return clazz == Tile.class || Tile.class.isAssignableFrom(clazz);
+                    }
+                    return false;
+                }, new TileSerializer());
+            }));
 
     public static Logger logger;
     @Getter
@@ -75,7 +79,7 @@ public class Township extends JavaPlugin {
         database.connect();
         database.createTownshipTable();
         viewFrame = ViewFrame.create(this);
-        viewFrame.with(new AnimalMenu(), new WorldMenu());
+        viewFrame.with(new AnimalMenu(), new WorldMenu(), new ConfirmCloseMenu());
         viewFrame.register();
         worldManager = new WorldManager();
         expansionManager = new ExpansionManager();
