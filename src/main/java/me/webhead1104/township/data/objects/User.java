@@ -71,6 +71,16 @@ public class User {
 
     @Override
     public String toString() {
-        return Township.GSON.toJson(this);
+        try {
+            StringWriter stringWriter = new StringWriter();
+            ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.build().createNode();
+            node.set(this);
+            Township.GSON_CONFIGURATION_LOADER
+                    .sink(() -> new BufferedWriter(stringWriter))
+                    .build().save(node);
+            return stringWriter.toString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
