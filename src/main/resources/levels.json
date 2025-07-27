@@ -1,54 +1,52 @@
-{
-  "levels": [
-    {
-      "xp_needed": 9,
-      "coins_given": 500,
-      "cash_given": 30
-    },
-    {
-      "xp_needed": 17,
-      "coins_given": 100,
-      "cash_given": 1
-    },
-    {
-      "xp_needed": 44,
-      "coins_given": 150,
-      "cash_given": 1
-    },
-    {
-      "xp_needed": 130,
-      "coins_given": 200,
-      "cash_given": 1
-    },
-    {
-      "xp_needed": 284,
-      "coins_given": 250,
-      "cash_given": 1
-    },
-    {
-      "xp_needed": 292,
-      "coins_given": 300,
-      "cash_given": 1
-    },
-    {
-      "xp_needed": 408,
-      "coins_given": 300,
-      "cash_given": 1
-    },
-    {
-      "xp_needed": 556,
-      "coins_given": 300,
-      "cash_given": 0
-    },
-    {
-      "xp_needed": 779,
-      "coins_given": 300,
-      "cash_given": 0
-    },
-    {
-      "xp_needed": 963,
-      "coins_given": 300,
-      "cash_given": 0
-    }
-  ]
-}
+[
+  {
+    "xp_needed": 9,
+    "coins_given": 500,
+    "cash_given": 30
+  },
+  {
+    "xp_needed": 17,
+    "coins_given": 100,
+    "cash_given": 1
+  },
+  {
+    "xp_needed": 44,
+    "coins_given": 150,
+    "cash_given": 1
+  },
+  {
+    "xp_needed": 130,
+    "coins_given": 200,
+    "cash_given": 1
+  },
+  {
+    "xp_needed": 284,
+    "coins_given": 250,
+    "cash_given": 1
+  },
+  {
+    "xp_needed": 292,
+    "coins_given": 300,
+    "cash_given": 1
+  },
+  {
+    "xp_needed": 408,
+    "coins_given": 300,
+    "cash_given": 1
+  },
+  {
+    "xp_needed": 556,
+    "coins_given": 300,
+    "cash_given": 0
+  },
+  {
+    "xp_needed": 779,
+    "coins_given": 300,
+    "cash_given": 0
+  },
+  {
+    "xp_needed": 963,
+    "coins_given": 300,
+    "cash_given": 0
+  }
+]
