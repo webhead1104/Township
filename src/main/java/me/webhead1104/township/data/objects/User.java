@@ -58,8 +58,6 @@ public class User {
         try {
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.buildAndLoadString(json);
             ConfigurationTransformation configurationTransformation = ConfigurationTransformation.versionedBuilder()
-                    .addVersion(2, ConfigurationTransformation.builder().build())
-                    .addVersion(1, ConfigurationTransformation.builder().addAction(NodePath.path("uuid"), TransformAction.rename("test")).build())
                     .build();
             configurationTransformation.apply(node);
             return node.get(User.class);
