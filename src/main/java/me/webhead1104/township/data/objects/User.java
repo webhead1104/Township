@@ -7,11 +7,11 @@ import lombok.Setter;
 import me.webhead1104.township.Township;
 import org.bukkit.Bukkit;
 import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.NodePath;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
-import org.spongepowered.configurate.transformation.TransformAction;
 
+import java.io.BufferedWriter;
+import java.io.StringWriter;
 import java.util.Objects;
 import java.util.UUID;
 
