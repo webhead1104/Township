@@ -1,7 +1,6 @@
 package me.webhead1104.township.data.enums;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.webhead1104.township.utils.Msg;
 import net.kyori.adventure.text.Component;
@@ -9,14 +8,15 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @Getter
-@AllArgsConstructor
 public enum AnimalType {
-    COWSHED_1(Msg.format("<gold>Cowshed"), cowItemStack(), ItemType.COW_FEED, ItemType.MILK, 3, 0, 1, 0, 10, "cowshed_1"),
-    COWSHED_2(Msg.format("<gold>Cowshed"), cowItemStack(), ItemType.COW_FEED, ItemType.MILK, 3, 1000, 15, 46, 10, "cowshed_2"),
-    COWSHED_3(Msg.format("<gold>Cowshed"), cowItemStack(), ItemType.COW_FEED, ItemType.MILK, 3, 5000, 22, 211, 10, "cowshed_3"),
-    CHICKEN_COOP_1(Msg.format("<gold>Chicken Coop"), chickenItemStack(), ItemType.CHICKEN_FEED, ItemType.EGG, 4, 200, 5, 13, 3600, "chicken_coop_1"),
-    CHICKEN_COOP_2(Msg.format("<gold>Chicken Coop"), chickenItemStack(), ItemType.CHICKEN_FEED, ItemType.EGG, 4, 3000, 24, 128, 3600, "chicken_coop_2"),
-    CHICKEN_COOP_3(Msg.format("<gold>Chicken Coop"), chickenItemStack(), ItemType.CHICKEN_FEED, ItemType.EGG, 4, 15000, 39, 623, 3600, "chicken_coop_3");
+    //todo add custom tile in world menu
+    COWSHED_1("Cowshed", cowItemStack(), ItemType.COW_FEED, ItemType.MILK, 3, 0, 1, 0, 10),
+    COWSHED_2("Cowshed", cowItemStack(), ItemType.COW_FEED, ItemType.MILK, 3, 1000, 15, 46, 10),
+    COWSHED_3("Cowshed", cowItemStack(), ItemType.COW_FEED, ItemType.MILK, 3, 5000, 22, 211, 10),
+    CHICKEN_COOP_1("Chicken Coop", chickenItemStack(), ItemType.CHICKEN_FEED, ItemType.EGG, 4, 200, 5, 13, 3600),
+    CHICKEN_COOP_2("Chicken Coop", chickenItemStack(), ItemType.CHICKEN_FEED, ItemType.EGG, 4, 3000, 24, 128, 3600),
+    CHICKEN_COOP_3("Chicken Coop", chickenItemStack(), ItemType.CHICKEN_FEED, ItemType.EGG, 4, 15000, 39, 623, 3600);
+    private final String name;
     private final Component menuTitle;
     private final ItemStack animalItemStack;
     private final ItemType feedType;
@@ -27,7 +27,19 @@ public enum AnimalType {
     private final int xpGivenOnBuild;
     //in seconds
     private final long timeTakesToFeed;
-    private final String ID;
+
+    AnimalType(String name, ItemStack animalItemStack, ItemType feedType, ItemType productType, int xpGivenOnClaim, int coinsNeeded, int levelNeeded, int xpGivenOnBuild, long timeTakesToFeed) {
+        this.name = name;
+        this.menuTitle = Msg.format("<gold>%s", name);
+        this.animalItemStack = animalItemStack;
+        this.feedType = feedType;
+        this.productType = productType;
+        this.xpGivenOnClaim = xpGivenOnClaim;
+        this.coinsNeeded = coinsNeeded;
+        this.levelNeeded = levelNeeded;
+        this.xpGivenOnBuild = xpGivenOnBuild;
+        this.timeTakesToFeed = timeTakesToFeed;
+    }
 
     private static ItemStack cowItemStack() {
         ItemStack itemStack = ItemStack.of(Material.COW_SPAWN_EGG);
