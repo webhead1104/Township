@@ -14,6 +14,7 @@ public final class LockCommand {
     }
 
     public static void lock(Player player, FactoryType type, boolean locked) {
+        Township.getUserManager().getUser(player.getUniqueId()).getFactories().getFactory(type).setUnlocked(locked);
         player.sendMessage(Msg.format("<green>Set %s to %b", type.name(), locked));
     }
 
