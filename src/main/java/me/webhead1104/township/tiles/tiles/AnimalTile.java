@@ -23,7 +23,11 @@ public class AnimalTile extends Tile {
     }
 
     @Override
-    public void onClick(SlotClickContext context) {
-        Township.getAnimalsManager().openAnimalMenu(context.getPlayer(), animalType);
+    public boolean onClick(SlotClickContext context) {
+        if (Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getAnimals().getAnimalBuilding(animalType).isUnlocked()) {
+            Township.getAnimalsManager().openAnimalMenu(context.getPlayer(), animalType);
+            return true;
+        }
+        return false;
     }
 }

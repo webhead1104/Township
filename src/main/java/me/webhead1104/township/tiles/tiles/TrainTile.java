@@ -25,7 +25,11 @@ public class TrainTile extends Tile {
     }
 
     @Override
-    public void onClick(SlotClickContext context) {
-        Township.getTrainManager().openMenu(context.getPlayer());
+    public boolean onClick(SlotClickContext context) {
+        if (Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getTrains().isUnlocked()) {
+            Township.getTrainManager().openMenu(context.getPlayer());
+            return true;
+        }
+        return false;
     }
 }

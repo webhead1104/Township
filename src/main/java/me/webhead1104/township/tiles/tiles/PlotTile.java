@@ -29,12 +29,13 @@ public class PlotTile extends Tile {
     }
 
     @Override
-    public void onClick(SlotClickContext context) {
+    public boolean onClick(SlotClickContext context) {
         ItemStack cursor = context.getPlayer().getItemOnCursor();
         if (cursor.isEmpty()) {
             Township.getPlotManager().openMenu(context.getPlayer());
         } else {
             Township.getPlotManager().plant(context.getPlayer(), context.getItem(), cursor);
         }
+        return true;
     }
 }

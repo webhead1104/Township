@@ -25,7 +25,8 @@ public class StaticWorldTile extends Tile {
     }
 
     @Override
-    public void onClick(SlotClickContext context) {
+    public boolean onClick(SlotClickContext context) {
+        return false;
     }
 
     @Getter
