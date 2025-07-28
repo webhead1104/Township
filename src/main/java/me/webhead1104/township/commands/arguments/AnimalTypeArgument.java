@@ -28,7 +28,7 @@ public class AnimalTypeArgument implements CustomArgumentType.Converted<AnimalTy
     public @NotNull AnimalType convert(String nativeType) throws CommandSyntaxException {
         try {
             return AnimalType.valueOf(nativeType.toUpperCase());
-        } catch (IllegalArgumentException notIceCream) {
+        } catch (IllegalArgumentException e) {
             throw NOT_TYPE.create(nativeType);
         }
     }
@@ -42,7 +42,7 @@ public class AnimalTypeArgument implements CustomArgumentType.Converted<AnimalTy
     public <S> @NotNull CompletableFuture<Suggestions> listSuggestions(@NotNull CommandContext<S> context, SuggestionsBuilder builder) {
         TYPES.stream()
                 .map(Object::toString)
-                .filter(name -> name.startsWith(builder.getRemainingLowerCase()))
+                .filter(name -> name.toLowerCase().startsWith(builder.getRemainingLowerCase()))
                 .forEach(builder::suggest);
         return builder.buildFuture();
     }
