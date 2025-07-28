@@ -60,21 +60,29 @@ public class WorldMenu extends View {
             }
         }));
 
-        ItemStack rightItemStack = ItemStack.of(Material.ARROW);
-        rightItemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll right!"));
-        player.getInventory().setItem(23, rightItemStack);
+        if (Township.getWorldManager().canMoveRight(sectionState.get(context))) {
+            ItemStack stack = ItemStack.of(Material.ARROW);
+            stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll right!"));
+            player.getInventory().setItem(23, stack);
+        }
 
-        ItemStack downItemStack = ItemStack.of(Material.ARROW);
-        downItemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll down!"));
-        player.getInventory().setItem(31, downItemStack);
+        if (Township.getWorldManager().canMoveDown(sectionState.get(context))) {
+            ItemStack stack = ItemStack.of(Material.ARROW);
+            stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll down!"));
+            player.getInventory().setItem(31, stack);
+        }
 
-        ItemStack leftItemStack = ItemStack.of(Material.ARROW);
-        leftItemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll left!"));
-        player.getInventory().setItem(21, leftItemStack);
+        if (Township.getWorldManager().canMoveLeft(sectionState.get(context))) {
+            ItemStack stack = ItemStack.of(Material.ARROW);
+            stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll left!"));
+            player.getInventory().setItem(21, stack);
+        }
 
-        ItemStack upItemStack = ItemStack.of(Material.ARROW);
-        upItemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll up!"));
-        player.getInventory().setItem(13, upItemStack);
+        if (Township.getWorldManager().canMoveUp(sectionState.get(context))) {
+            ItemStack stack = ItemStack.of(Material.ARROW);
+            stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll up!"));
+            player.getInventory().setItem(13, stack);
+        }
 
         ItemStack profileItemStack = ItemStack.of(Material.LIGHT_BLUE_CONCRETE);
         profileItemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<green>%s", user.getTownName()));
@@ -105,16 +113,16 @@ public class WorldMenu extends View {
     @Override
     public void onClick(@NotNull SlotClickContext context) {
         if (context.isOnEntityContainer()) {
-            if (context.getClickedSlot() == 68) {
+            if (context.getClickedSlot() == 68 && context.getItem() != null) {
                 context.openForPlayer(WorldMenu.class, sectionState.get(context) + 1);
                 openConfirmClose.set(false, context);
-            } else if (context.getClickedSlot() == 76) {
+            } else if (context.getClickedSlot() == 76 && context.getItem() != null) {
                 context.openForPlayer(WorldMenu.class, sectionState.get(context) + 8);
                 openConfirmClose.set(false, context);
-            } else if (context.getClickedSlot() == 66) {
+            } else if (context.getClickedSlot() == 66 && context.getItem() != null) {
                 context.openForPlayer(WorldMenu.class, sectionState.get(context) - 1);
                 openConfirmClose.set(false, context);
-            } else if (context.getClickedSlot() == 58) {
+            } else if (context.getClickedSlot() == 58 && context.getItem() != null) {
                 context.openForPlayer(WorldMenu.class, sectionState.get(context) - 8);
                 openConfirmClose.set(false, context);
             }
