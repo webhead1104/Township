@@ -7,5 +7,5 @@ import org.bukkit.inventory.ItemStack;
 public abstract class Tile {
     public abstract ItemStack render(SlotRenderContext context);
 
-    public abstract void onClick(SlotClickContext context);
+    public abstract boolean onClick(SlotClickContext context);
 }

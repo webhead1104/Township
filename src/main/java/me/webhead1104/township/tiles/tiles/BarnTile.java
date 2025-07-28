@@ -23,7 +23,8 @@ public class BarnTile extends Tile {
     }
 
     @Override
-    public void onClick(SlotClickContext context) {
+    public boolean onClick(SlotClickContext context) {
         Township.getBarnManager().openMenu(context.getPlayer(), 1);
+        return true;
     }
 }
