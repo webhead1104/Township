@@ -92,6 +92,7 @@ public class Trains {
             @Setter
             @AllArgsConstructor
             @ConfigSerializable
+            @NoArgsConstructor
             public static class TrainCarItem {
                 private ItemType itemType;
                 private int amount;

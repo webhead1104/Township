@@ -1,6 +1,7 @@
 package me.webhead1104.township.data.objects;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.data.enums.PlotType;
 import me.webhead1104.township.data.enums.TileSize;
@@ -13,6 +14,7 @@ import java.util.Map;
 @Setter
 @Getter
 @ConfigSerializable
+@NoArgsConstructor
 public class WorldSection {
     private final Map<Integer, Tile> slotMap = new HashMap<>();
     private int section;

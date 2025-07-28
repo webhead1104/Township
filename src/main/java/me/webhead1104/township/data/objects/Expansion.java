@@ -1,12 +1,14 @@
 package me.webhead1104.township.data.objects;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 @Getter
 @Setter
 @ConfigSerializable
+@NoArgsConstructor
 public class Expansion {
     public static final int LATEST_VERSION = 1;
     private int version = LATEST_VERSION;

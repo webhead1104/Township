@@ -1,6 +1,7 @@
 package me.webhead1104.township.data.objects;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.util.HashMap;
