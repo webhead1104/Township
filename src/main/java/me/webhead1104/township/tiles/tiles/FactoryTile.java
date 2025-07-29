@@ -25,7 +25,7 @@ public class FactoryTile extends Tile {
     @Override
     public boolean onClick(SlotClickContext context) {
         if (Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getFactories().getFactory(factoryType).isUnlocked()) {
-            Township.getFactoriesManager().openFactoryMenu(context.getPlayer(), factoryType);
+//            Township.getFactoriesManager().openFactoryMenu(context.getPlayer(), factoryType);
             return true;
         }
         return false;

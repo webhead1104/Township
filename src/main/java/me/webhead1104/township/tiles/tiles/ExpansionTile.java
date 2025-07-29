@@ -32,7 +32,7 @@ public class ExpansionTile extends Tile {
 
     @Override
     public boolean onClick(SlotClickContext context) {
-        Township.getExpansionManager().openExpansionMenu(context.getPlayer(), expansion);
+//        Township.getExpansionManager().openExpansionMenu(context.getPlayer(), expansion);
         return true;
     }
 }

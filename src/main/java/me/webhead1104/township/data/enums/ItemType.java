@@ -1,34 +1,35 @@
 package me.webhead1104.township.data.enums;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import me.webhead1104.township.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import static me.webhead1104.township.utils.Utils.getItemStackItem;
-
 @Getter
-@AllArgsConstructor
 public enum ItemType {
-    NONE(getItemStackItem("None Item", Material.BARRIER), -1, "none"),
-    WHEAT(getItemStackItem("Wheat", Material.WHEAT), 1, "wheat"),
-    CORN(getItemStackItem("Corn", Material.PLAYER_HEAD), 3, "corn"),
-    CARROT(getItemStackItem("Carrot", Material.CARROT), 5, "carrot"),
-    SUGARCANE(getItemStackItem("Sugar Cane", Material.SUGAR_CANE), 7, "sugarcane"),
-    BREAD(getItemStackItem("Bread", Material.BREAD), 5, "bread"),
-    COOKIE(getItemStackItem("Cookie", Material.COOKIE), 44, "cookie"),
-    BAGEL(getItemStackItem("Bagel", Material.PLAYER_HEAD), 55, "bagel"),
-    CREAM(getItemStackItem("Cream", Material.PLAYER_HEAD), 12, "cream"),
-    CHEESE(getItemStackItem("Cheese", Material.PLAYER_HEAD), 25, "cheese"),
-    SUGAR(getItemStackItem("Sugar", Material.SUGAR), 14, "sugar"),
-    MILK(getItemStackItem("Milk", Material.MILK_BUCKET), 7, "milk"),
-    EGG(getItemStackItem("Egg", Material.EGG), 10, "egg"),
-    PAINT(getItemStackItem("Paint", Material.PLAYER_HEAD), 100, "paint"),
-    HAMMER(getItemStackItem("Hammer", Material.PLAYER_HEAD), 100, "hammer"),
-    NAIL(getItemStackItem("Nail", Material.PLAYER_HEAD), 100, "nail"),
-    COW_FEED(getItemStackItem("Cow Feed", Material.PLAYER_HEAD), 1, "cow_feed"),
-    CHICKEN_FEED(getItemStackItem("Chicken Feed", Material.PLAYER_HEAD), 4, "chicken_feed");
+    NONE(Material.BARRIER, -1),
+    WHEAT(Material.WHEAT, 1),
+    CORN(Material.PLAYER_HEAD, 3),
+    CARROT(Material.CARROT, 5),
+    SUGARCANE(Material.SUGAR_CANE, 7),
+    BREAD(Material.BREAD, 5),
+    COOKIE(Material.COOKIE, 44),
+    BAGEL(Material.PLAYER_HEAD, 55),
+    CREAM(Material.PLAYER_HEAD, 12),
+    CHEESE(Material.PLAYER_HEAD, 25),
+    SUGAR(Material.SUGAR, 14),
+    MILK(Material.MILK_BUCKET, 7),
+    EGG(Material.EGG, 10),
+    PAINT(Material.PLAYER_HEAD, 100),
+    HAMMER(Material.PLAYER_HEAD, 100),
+    NAIL(Material.PLAYER_HEAD, 100),
+    COW_FEED(Material.PLAYER_HEAD, 1),
+    CHICKEN_FEED(Material.PLAYER_HEAD, 4);
     private final ItemStack itemStack;
     private final int sellPrice;
-    private final String ID;
+
+    ItemType(Material material, int sellPrice) {
+        this.itemStack = Utils.getItemStack(Utils.thing2(name()), material);
+        this.sellPrice = sellPrice;
+    }
 }

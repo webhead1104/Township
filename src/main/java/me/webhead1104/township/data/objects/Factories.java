@@ -8,9 +8,10 @@ import me.webhead1104.township.data.enums.RecipeType;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Getter
 @ConfigSerializable
@@ -35,7 +36,7 @@ public class Factories {
     @Setter
     @ConfigSerializable
     public static class Factory {
-        private final Map<Integer, RecipeType> waiting = new HashMap<>();
+        private final List<RecipeType> waiting = new ArrayList<>();
         private final Map<Integer, ItemType> completed = new HashMap<>();
         private RecipeType workingOn;
         private boolean unlocked;
@@ -43,7 +44,7 @@ public class Factories {
 
         public Factory() {
             for (int i = 0; i < 3; i++) {
-                this.waiting.put(i, RecipeType.NONE);
+                this.waiting.add(i, RecipeType.NONE);
                 this.completed.put(i, ItemType.NONE);
             }
             this.workingOn = RecipeType.NONE;
@@ -55,41 +56,20 @@ public class Factories {
             return waiting.get(slot);
         }
 
-        public void setWaiting(int slot, RecipeType waiting) {
-            this.waiting.put(slot, waiting);
+        public RecipeType removeFirstWaiting() {
+            return waiting.removeFirst();
+        }
+
+        public void addWaiting(RecipeType recipeType) {
+            waiting.addLast(recipeType);
         }
 
         public boolean hasWaiting() {
-            AtomicBoolean good = new AtomicBoolean(false);
-            waiting.forEach((key, value) -> {
-                if (!value.equals(RecipeType.NONE)) {
-                    good.set(true);
-                }
-            });
-            return good.get();
-        }
-
-        public int getFirstWaiting() {
-            for (int i = 2; i > -1; i--) {
-                if (!waiting.get(i).equals(RecipeType.NONE)) return i;
-            }
-            return -1;
+            return !waiting.isEmpty();
         }
 
         public boolean canAddWaiting() {
-            return waiting.containsValue(RecipeType.NONE);
-        }
-
-        public int addWaiting(RecipeType recipeType) {
-            int i = 0;
-            for (RecipeType value : waiting.values()) {
-                if (value.equals(RecipeType.NONE)) {
-                    waiting.put(i, recipeType);
-                    break;
-                }
-                i++;
-            }
-            return i;
+            return waiting.size() < 3;
         }
 
         public ItemType getCompleted(int slot) {
@@ -100,20 +80,27 @@ public class Factories {
             completed.put(slot, value);
         }
 
-        public int addCompleted(ItemType itemType) {
+        public void addCompleted(ItemType itemType) {
             int i = 0;
             for (ItemType value : completed.values()) {
                 if (value.equals(ItemType.NONE)) {
                     completed.put(i, itemType);
-                    return i;
+                    return;
                 }
                 i++;
             }
-            return -1;
         }
 
-        public boolean canStartWorking() {
-            return workingOn.equals(RecipeType.NONE) || waiting.containsValue(RecipeType.NONE);
+        public boolean canAddCompleted() {
+            return completed.containsValue(ItemType.NONE);
+        }
+
+        public boolean canAddWaitingOrWorkingOn() {
+            return workingOn.equals(RecipeType.NONE) || waiting.size() < 3;
+        }
+
+        public boolean canSetWorkingOn() {
+            return workingOn.equals(RecipeType.NONE);
         }
     }
 }

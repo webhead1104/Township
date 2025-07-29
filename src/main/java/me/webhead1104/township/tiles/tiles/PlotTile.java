@@ -32,9 +32,9 @@ public class PlotTile extends Tile {
     public boolean onClick(SlotClickContext context) {
         ItemStack cursor = context.getPlayer().getItemOnCursor();
         if (cursor.isEmpty()) {
-            Township.getPlotManager().openMenu(context.getPlayer());
+//            Township.getPlotManager().openMenu(context.getPlayer());
         } else {
-            Township.getPlotManager().plant(context.getPlayer(), context.getItem(), cursor);
+//            Township.getPlotManager().plant(context.getPlayer(), context.getItem(), cursor);
         }
         return true;
     }
