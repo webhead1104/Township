@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.dataVersions.UserVersion1;
 import org.bukkit.Bukkit;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-    public static final int LATEST_VERSION = 1;
+    public static final int LATEST_VERSION = 2;
     private int version = LATEST_VERSION;
     private UUID uuid;
     private String townName;
@@ -59,10 +60,15 @@ public class User {
         try {
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.buildAndLoadString(json);
             ConfigurationTransformation configurationTransformation = ConfigurationTransformation.versionedBuilder()
-                    .addVersion(LATEST_VERSION, ConfigurationTransformation.empty())
+                    .addVersion(1, UserVersion1.VERSIONED_TRANSFORMATION)
                     .build();
             configurationTransformation.apply(node);
-            return node.get(User.class);
+            User user = node.get(User.class);
+            if (user == null) {
+                throw new IllegalStateException("An error occurred whilst deserializing a user! Please report this to Webhead1104!\n USER IS NULL!!!");
+            }
+            Township.getDatabase().setData(user);
+            return user;
         } catch (Exception e) {
             Township.logger.error("An error occurred whilst updating a user! Please report the following stacktrace to Webhead1104:", e);
         }
