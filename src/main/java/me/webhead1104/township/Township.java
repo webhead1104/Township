@@ -39,13 +39,9 @@ public class Township extends JavaPlugin {
     @Getter
     private static WorldManager worldManager;
     @Getter
-    private static ExpansionManager expansionManager;
-    @Getter
     private static AnimalsManager animalsManager;
     @Getter
     private static FactoriesManager factoriesManager;
-    @Getter
-    private static PlotManager plotManager;
     @Getter
     private static InventoryManager inventoryManager;
     @Getter
@@ -77,13 +73,11 @@ public class Township extends JavaPlugin {
         database.connect();
         database.createTownshipTable();
         viewFrame = ViewFrame.create(this);
-        viewFrame.with(new AnimalMenu(), new FactoryMenu(), new WorldMenu(), new ExpansionMenu(), new ConfirmCloseMenu());
+        registerViews();
         viewFrame.register();
         worldManager = new WorldManager();
-        expansionManager = new ExpansionManager();
         animalsManager = new AnimalsManager();
         factoriesManager = new FactoriesManager();
-        plotManager = new PlotManager();
         inventoryManager = new InventoryManager();
         userManager = new UserManager();
         barnManager = new BarnManager();
@@ -111,5 +105,12 @@ public class Township extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new JoinListener(), this);
         this.getServer().getPluginManager().registerEvents(new LeaveListener(), this);
 //        this.getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
+    }
+
+    private void registerViews() {
+        viewFrame.with(
+                new AnimalMenu(), new FactoryMenu(), new WorldMenu(), new ExpansionMenu(),
+                new ConfirmCloseMenu(), new PlotMenu()
+        );
     }
 }

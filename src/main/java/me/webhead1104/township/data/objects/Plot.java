@@ -6,16 +6,18 @@ import lombok.Setter;
 import me.webhead1104.township.data.enums.PlotType;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
+import java.time.Instant;
+
 @Setter
 @Getter
 @ConfigSerializable
 @NoArgsConstructor
 public class Plot {
-    public static final int LATEST_VERSION = 1;
-    private int version = LATEST_VERSION;
     private int section;
     private int slot;
     private PlotType plotType;
+    private Instant instant = Instant.EPOCH;
+    private boolean claimable = false;
 
     public Plot(int section, int slot, PlotType plotType) {
         this.section = section;

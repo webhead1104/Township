@@ -7,8 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
-import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Expansion;
+import me.webhead1104.township.menus.ExpansionMenu;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Material;
@@ -32,7 +32,7 @@ public class ExpansionTile extends Tile {
 
     @Override
     public boolean onClick(SlotClickContext context) {
-        Township.getExpansionManager().openExpansionMenu(context.getPlayer(), expansion);
+        context.openForPlayer(ExpansionMenu.class, expansion);
         return true;
     }
 }
