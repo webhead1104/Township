@@ -25,6 +25,6 @@ public class Expansion {
     }
 
     public static Expansion defaultExpansion(int section, int slot) {
-        return new Expansion(section, slot, 100, 20);
+        return new Expansion(20, 100, slot, section);
     }
 }
