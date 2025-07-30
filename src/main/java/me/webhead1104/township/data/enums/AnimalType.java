@@ -18,6 +18,7 @@ public enum AnimalType {
     CHICKEN_COOP_3("Chicken Coop", chickenItemStack(), ItemType.CHICKEN_FEED, ItemType.EGG, 4, 15000, 39, 623, 3600);
     private final String name;
     private final Component menuTitle;
+    @Getter(value = lombok.AccessLevel.NONE)
     private final ItemStack animalItemStack;
     private final ItemType feedType;
     private final ItemType productType;
@@ -51,5 +52,9 @@ public enum AnimalType {
         ItemStack itemStack = ItemStack.of(Material.CHICKEN_SPAWN_EGG);
         itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>Chicken"));
         return itemStack;
+    }
+
+    public ItemStack getAnimalItemStack() {
+        return animalItemStack.clone();
     }
 }

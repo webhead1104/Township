@@ -25,11 +25,16 @@ public enum ItemType {
     NAIL(Material.PLAYER_HEAD, 100),
     COW_FEED(Material.PLAYER_HEAD, 1),
     CHICKEN_FEED(Material.PLAYER_HEAD, 4);
+    @Getter(value = lombok.AccessLevel.NONE)
     private final ItemStack itemStack;
     private final int sellPrice;
 
     ItemType(Material material, int sellPrice) {
         this.itemStack = Utils.getItemStack(Utils.thing2(name()), material);
         this.sellPrice = sellPrice;
+    }
+
+    public ItemStack getItemStack() {
+        return itemStack.clone();
     }
 }

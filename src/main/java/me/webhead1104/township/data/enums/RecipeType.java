@@ -19,6 +19,7 @@ public enum RecipeType {
     CREAM(Material.PLAYER_HEAD, ItemType.CREAM, Map.of(ItemType.MILK, 1), 438, 4, 5),
     CHEESE(Material.PLAYER_HEAD, ItemType.CHEESE, Map.of(ItemType.MILK, 2), 900, 6, 11),
     SUGAR(Material.SUGAR, ItemType.SUGAR, Map.of(ItemType.SUGARCANE, 1), 600, 7, 6);
+    @Getter(value = lombok.AccessLevel.NONE)
     private final ItemStack itemStack;
     private final ItemType resultItemType;
     private final Map<ItemType, Integer> recipeItems;
@@ -43,5 +44,9 @@ public enum RecipeType {
             }
         }
         return true;
+    }
+
+    public ItemStack getItemStack() {
+        return itemStack.clone();
     }
 }
