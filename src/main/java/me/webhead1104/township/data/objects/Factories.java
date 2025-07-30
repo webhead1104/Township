@@ -8,9 +8,7 @@ import me.webhead1104.township.data.enums.RecipeType;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -36,7 +34,7 @@ public class Factories {
     @Setter
     @ConfigSerializable
     public static class Factory {
-        private final List<RecipeType> waiting = new ArrayList<>();
+        private final Map<Integer, RecipeType> waiting = new HashMap<>();
         private final Map<Integer, ItemType> completed = new HashMap<>();
         private RecipeType workingOn;
         private boolean unlocked;
@@ -44,7 +42,7 @@ public class Factories {
 
         public Factory() {
             for (int i = 0; i < 3; i++) {
-                this.waiting.add(i, RecipeType.NONE);
+                this.waiting.put(i, RecipeType.NONE);
                 this.completed.put(i, ItemType.NONE);
             }
             this.workingOn = RecipeType.NONE;
@@ -57,19 +55,35 @@ public class Factories {
         }
 
         public RecipeType removeFirstWaiting() {
-            return waiting.removeFirst();
+            RecipeType recipeType = waiting.get(0);
+            for (int i = 1; i < 3; i++) {
+                waiting.put(i - 1, waiting.get(i));
+            }
+            waiting.put(2, RecipeType.NONE);
+
+            return recipeType;
         }
 
         public void addWaiting(RecipeType recipeType) {
-            waiting.addLast(recipeType);
+            for (int i = 0; i < 3; i++) {
+                if (!waiting.get(i).equals(RecipeType.NONE)) continue;
+                waiting.put(i, recipeType);
+                return;
+            }
         }
 
         public boolean hasWaiting() {
-            return !waiting.isEmpty();
+            for (RecipeType value : waiting.values()) {
+                if (!value.equals(RecipeType.NONE)) return true;
+            }
+            return false;
         }
 
         public boolean canAddWaiting() {
-            return waiting.size() < 3;
+            for (RecipeType value : waiting.values()) {
+                if (value.equals(RecipeType.NONE)) return true;
+            }
+            return false;
         }
 
         public ItemType getCompleted(int slot) {
@@ -96,7 +110,7 @@ public class Factories {
         }
 
         public boolean canAddWaitingOrWorkingOn() {
-            return workingOn.equals(RecipeType.NONE) || waiting.size() < 3;
+            return canSetWorkingOn() || canAddWaiting();
         }
 
         public boolean canSetWorkingOn() {
