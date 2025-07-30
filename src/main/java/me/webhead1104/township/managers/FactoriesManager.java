@@ -3,35 +3,26 @@ package me.webhead1104.township.managers;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.FactoryType;
-import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.data.enums.RecipeType;
 import me.webhead1104.township.data.objects.Barn;
-import me.webhead1104.township.data.objects.Factories;
-import me.webhead1104.township.data.objects.User;
-import me.webhead1104.township.utils.*;
+import me.webhead1104.township.menus.FactoryMenu;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 @NoArgsConstructor
 public class FactoriesManager {
 
+    public void openFactoryMenu(Player player, FactoryType factoryType) {
+        Township.getViewFrame().open(FactoryMenu.class, player, factoryType);
+    }
+
     //"12-14 completed, 27 being worked on,36-44 recipes"
-    public void openFactoryMenu(Player player, FactoryType type) {
+//    public void openFactoryMenu(Player player, FactoryType type) {
 //        try {
 //            player.getInventory().clear();
 //            player.setItemOnCursor(ItemStack.empty());
@@ -42,7 +33,7 @@ public class FactoriesManager {
 //            //recipes
 //            AtomicInteger recipeSlot = new AtomicInteger(45);
 //            for (RecipeType recipe : type.getRecipes()) {
-//                ItemBuilder builder = new ItemBuilder(recipe.getMenuItem());
+//                ItemBuilder builder = new ItemBuilder(recipe.getItemStack());
 //                builder.lore(calculateLore(recipe, user.getBarn()));
 //                builder.pdcSetString(Keys.recipeTypeKey, recipe.name());
 //                builder.pdcSetString(Keys.factoryTypeKey, type.name());
@@ -58,8 +49,8 @@ public class FactoriesManager {
 //                    builder.displayName(Msg.format("<red>Nothing is being made right now, <aqua>Maybe you should make something!"));
 //                } else {
 //                    builder = new ItemBuilder(MenuItems.waiting);
-//                    builder.displayName(new ItemBuilder(waiting.getMenuItem()).getDisplayName());
-//                    builder.material(waiting.getMenuItem().getType());
+//                    builder.displayName(new ItemBuilder(waiting.getItemStack()).getDisplayName());
+//                    builder.material(waiting.getItemStack().getType());
 //                    builder.pdcSetString(Keys.recipeTypeKey, waiting.name());
 //                    builder.pdcSetString(Keys.factoryTypeKey, type.name());
 //                }
@@ -104,7 +95,7 @@ public class FactoriesManager {
 //                        RecipeType workingOn = factories.getFactory(type).getWorkingOn();
 //                        int completed = factories.getFactory(type).addCompleted(workingOn.getItemType());
 //                        int completedSlot = 12 + completed;
-//                        ItemBuilder builder = new ItemBuilder(workingOn.getMenuItem());
+//                        ItemBuilder builder = new ItemBuilder(workingOn.getItemStack());
 //                        builder.lore(List.of(Msg.format("<green>Click to claim!")));
 //                        builder.pdcSetString(Keys.recipeTypeKey, workingOn.name());
 //                        builder.pdcSetString(Keys.factoryTypeKey, type.getID());
@@ -120,8 +111,8 @@ public class FactoriesManager {
 //                            factories.getFactory(type).setWorkingOn(waiting);
 //                            factories.getFactory(type).setWaiting(waitingFactorySlot, RecipeType.NONE);
 //                            ItemBuilder workingOnBuilder = new ItemBuilder(MenuItems.workingOn);
-//                            workingOnBuilder.material(workingOn.getMenuItem().getType());
-//                            workingOnBuilder.displayName(workingOn.getMenuItem().getItemMeta().displayName());
+//                            workingOnBuilder.material(workingOn.getItemStack().getType());
+//                            workingOnBuilder.displayName(workingOn.getItemStack().getItemMeta().displayName());
 //                            workingOnBuilder.lore(List.of(Msg.format("<gold>Time: " + Utils.format(Instant.now(), factories.getFactory(type).getInstant()))));
 //                            inventory.setItem(27, workingOnBuilder.build());
 //                            ItemBuilder waitingBuilder = new ItemBuilder(Material.HOPPER, "waiting");
@@ -145,7 +136,7 @@ public class FactoriesManager {
 //        } catch (Exception e) {
 //            Township.logger.error("error", e);
 //        }
-    }
+//    }
 
     public void collectItem(Player player, int completedSlot, FactoryType factoryType, RecipeType recipeType, Inventory inventory, int clickedSlot) {
 //        User user = Township.getUserManager().getUser(player.getUniqueId());
@@ -157,7 +148,7 @@ public class FactoriesManager {
 //        inventory.setItem(clickedSlot, builder.build());
     }
 
-    public void recipe(Player player, RecipeType recipeType, FactoryType factoryType, Inventory inventory, int clickedSlot) {
+//    public void recipe(Player player, RecipeType recipeType, FactoryType factoryType, Inventory inventory, int clickedSlot) {
 //        User user = Township.getUserManager().getUser(player.getUniqueId());
 //        Factories factories = user.getFactories();
 //        if (factories.getFactory(factoryType).canStartWorking()) {
@@ -194,7 +185,7 @@ public class FactoriesManager {
 //                inventory.setItem(clickedSlot, recipe.build());
 //            }
 //        }
-    }
+//    }
 
     private List<Component> calculateLore(RecipeType recipeType, Barn barn) {
 //        List<Component> lore = new ArrayList<>();

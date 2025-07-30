@@ -11,6 +11,7 @@ import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.*;
 import me.webhead1104.township.menus.AnimalMenu;
 import me.webhead1104.township.menus.ConfirmCloseMenu;
+import me.webhead1104.township.menus.FactoryMenu;
 import me.webhead1104.township.menus.WorldMenu;
 import me.webhead1104.township.serializers.InstantSerializer;
 import me.webhead1104.township.serializers.TileSerializer;
@@ -79,7 +80,7 @@ public class Township extends JavaPlugin {
         database.connect();
         database.createTownshipTable();
         viewFrame = ViewFrame.create(this);
-        viewFrame.with(new AnimalMenu(), new WorldMenu(), new ConfirmCloseMenu());
+        viewFrame.with(new AnimalMenu(), new FactoryMenu(), new WorldMenu(), new ConfirmCloseMenu());
         viewFrame.register();
         worldManager = new WorldManager();
         expansionManager = new ExpansionManager();

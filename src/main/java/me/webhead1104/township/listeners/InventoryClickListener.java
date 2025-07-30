@@ -4,9 +4,7 @@ import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.FactoryType;
 import me.webhead1104.township.data.enums.ItemType;
-import me.webhead1104.township.data.enums.PlotType;
 import me.webhead1104.township.data.enums.RecipeType;
-import me.webhead1104.township.data.objects.Expansion;
 import me.webhead1104.township.utils.ItemBuilder;
 import me.webhead1104.township.utils.Keys;
 import org.bukkit.entity.Player;
@@ -43,30 +41,19 @@ public class InventoryClickListener implements Listener {
                         Township.getFactoriesManager().collectItem(player, slot, factoryType, recipeType, event.getInventory(), event.getSlot());
                     }
                     //todo fix this mess
-                    case "bakery" -> Township.getFactoriesManager().openFactoryMenu(player, FactoryType.BAKERY);
-                    case "feed_mill_1" ->
-                            Township.getFactoriesManager().openFactoryMenu(player, FactoryType.FEED_MILL_1);
-                    case "feed_mill_2" ->
-                            Township.getFactoriesManager().openFactoryMenu(player, FactoryType.FEED_MILL_2);
-                    case "feed_mill_3" ->
-                            Township.getFactoriesManager().openFactoryMenu(player, FactoryType.FEED_MILL_3);
-                    case "dairy_factory" ->
-                            Township.getFactoriesManager().openFactoryMenu(player, FactoryType.DAIRY_FACTORY);
-                    case "sugar_factory" ->
-                            Township.getFactoriesManager().openFactoryMenu(player, FactoryType.SUGAR_FACTORY);
-                    case "expansion" -> {
-                        Expansion expansion = Expansion.fromJson(builder.pdcGetString(Keys.expansionDataKey));
-                        Township.getExpansionManager().openExpansionMenu(player, expansion);
-                    }
-                    case "expansion_buy" -> {
-                        Expansion expansion = Expansion.fromJson(builder.pdcGetString(Keys.expansionDataKey));
-                        Township.getExpansionManager().buyExpansion(player, expansion);
-                    }
-                    case "none_plot" -> {
-                        if (event.getCursor().isEmpty()) {
-                            Township.getPlotManager().openMenu(player);
-                        } else Township.getPlotManager().plant(player, item, event.getCursor());
-                    }
+//                    case "expansion" -> {
+//                        Expansion expansion = Expansion.fromJson(builder.pdcGetString(Keys.expansionDataKey));
+//                        Township.getExpansionManager().openExpansionMenu(player, expansion);
+//                    }
+//                    case "expansion_buy" -> {
+//                        Expansion expansion = Expansion.fromJson(builder.pdcGetString(Keys.expansionDataKey));
+//                        Township.getExpansionManager().buyExpansion(player, expansion);
+//                    }
+//                    case "none_plot" -> {
+//                        if (event.getCursor().isEmpty()) {
+//                            Township.getPlotManager().openMenu(player);
+//                        } else Township.getPlotManager().plant(player, item, event.getCursor());
+//                    }
                     case "barn_arrow" -> Township.getBarnManager().openMenu(player, builder.pdcGetInt(Keys.newPageKey));
                     case "barn" -> Township.getBarnManager().openMenu(player, 1);
                     case "barn_sell" -> {
@@ -112,27 +99,27 @@ public class InventoryClickListener implements Listener {
                     }
                 }
                 //plots
-                for (PlotType plotType : PlotType.values()) {
-                    if (plotType.equals(PlotType.NONE)) continue;
-                    if (itemID.equals(plotType.getId().toLowerCase() + "_type_select")) {
-                        Township.getPlotManager().selectCropType(plotType, player);
-                    } else if (itemID.equals(plotType.getId().toLowerCase())) {
-                        Township.getPlotManager().harvest(player, item);
-                    }
-                }
+//                for (PlotType plotType : PlotType.values()) {
+//                    if (plotType.equals(PlotType.NONE)) continue;
+//                    if (itemID.equals(plotType.getId().toLowerCase() + "_type_select")) {
+//                        Township.getPlotManager().selectCropType(plotType, player);
+//                    } else if (itemID.equals(plotType.getId().toLowerCase())) {
+//                        Township.getPlotManager().harvest(player, item);
+//                    }
+//                }
                 for (ItemType itemType : ItemType.values()) {
                     if (itemType.equals(ItemType.NONE)) continue;
-                    if (itemID.equals(itemType.getID().toLowerCase() + "_barn")) {
+                    if (itemID.equals(itemType.name().toLowerCase() + "_barn")) {
                         Township.getBarnManager().openSellMenu(player, itemType, 1);
                     }
                 }
-                for (RecipeType recipeType : RecipeType.values()) {
-                    if (recipeType.equals(RecipeType.NONE)) continue;
-                    if (itemID.equals(recipeType.getId())) {
-                        FactoryType factoryType = FactoryType.valueOf(builder.pdcGetString(Keys.factoryTypeKey).toUpperCase());
-                        Township.getFactoriesManager().recipe(player, recipeType, factoryType, event.getInventory(), event.getSlot());
-                    }
-                }
+//                for (RecipeType recipeType : RecipeType.values()) {
+//                    if (recipeType.equals(RecipeType.NONE)) continue;
+//                    if (itemID.equals(recipeType.getId())) {
+//                        FactoryType factoryType = FactoryType.valueOf(builder.pdcGetString(Keys.factoryTypeKey).toUpperCase());
+//                        Township.getFactoriesManager().recipe(player, recipeType, factoryType, event.getInventory(), event.getSlot());
+//                    }
+//                }
             }
         } else {
             if (event.getAction().equals(InventoryAction.DROP_ALL_CURSOR) ||

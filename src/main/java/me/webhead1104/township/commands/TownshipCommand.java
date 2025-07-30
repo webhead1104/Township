@@ -3,9 +3,10 @@ package me.webhead1104.township.commands;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.commands.arguments.AnimalTypeArgument;
 import me.webhead1104.township.commands.arguments.FactoryTypeArgument;
+import me.webhead1104.township.commands.arguments.ItemTypeArgument;
 import me.webhead1104.township.data.enums.AnimalType;
 import me.webhead1104.township.data.enums.FactoryType;
-import me.webhead1104.township.menus.WorldMenu;
+import me.webhead1104.township.data.enums.ItemType;
 import net.strokkur.commands.annotations.Command;
 import net.strokkur.commands.annotations.Description;
 import net.strokkur.commands.annotations.Executes;
@@ -25,9 +26,24 @@ public final class TownshipCommand {
         Township.getWorldManager().openWorldMenu(player);
     }
 
-    @Executes("test")
-    void test(CommandSender ignored, @Executor Player player) {
-        Township.getViewFrame().open(WorldMenu.class, player, Township.getUserManager().getUser(player.getUniqueId()).getSection());
+    @Executes("item get")
+    void getItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) ItemType itemType) {
+        ItemCommand.getItem(player, itemType);
+    }
+
+    @Executes("item set")
+    void setItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) ItemType itemType, int amount) {
+        ItemCommand.setItem(player, amount, itemType);
+    }
+
+    @Executes("item add")
+    void addItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) ItemType itemType, int amount) {
+        ItemCommand.addItem(player, amount, itemType);
+    }
+
+    @Executes("item remove")
+    void removeItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) ItemType itemType, int amount) {
+        ItemCommand.removeItem(player, amount, itemType);
     }
 
     @Executes("animal")

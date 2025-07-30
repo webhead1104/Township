@@ -36,8 +36,8 @@ public class BarnManager {
         for (Map.Entry<Integer, ItemType> entry : barnPageMap.get(page).entrySet()) {
             if (user.getBarn().getItem(entry.getValue()) == 0) continue;
             ItemType type = entry.getValue();
-            ItemBuilder builder = new ItemBuilder(type.getItemStack().getType(), type.getID() + "_barn");
-            builder.displayName(Msg.format("You have <aqua>" + barn.getItem(type) + "</aqua> of <yellow>" + Utils.thing2(type.getID()) + "</yellow>"));
+            ItemBuilder builder = new ItemBuilder(type.getItemStack().getType(), type.name() + "_barn");
+            builder.displayName(Msg.format("You have <aqua>" + barn.getItem(type) + "</aqua> of <yellow>" + Utils.thing2(type.name()) + "</yellow>"));
             builder.lore(List.of());
             builder.setRarity(ItemRarity.COMMON);
             inventory.setItem(i.getAndIncrement(), builder.build());
@@ -69,7 +69,7 @@ public class BarnManager {
         List<Component> lore = new ArrayList<>();
         user.getBarn().getItemMap().forEach((key, value) -> {
             if (value != 0) {
-                lore.add(Msg.format("<white>" + Utils.thing2(key.getID()) + ": " + value));
+                lore.add(Msg.format("<white>" + Utils.thing2(key.name()) + ": " + value));
             }
         });
         storage.lore(lore);
@@ -125,7 +125,7 @@ public class BarnManager {
 
         ItemBuilder sell = new ItemBuilder(MenuItems.barnSell);
         sell.material(Material.LIME_CONCRETE);
-        String name = Utils.thing2(itemType.getID());
+        String name = Utils.thing2(itemType.name());
         sell.displayName(Msg.format("<green>Click to sell <aqua>" + amount + " <green>of <yellow>" + name + " <green>for <aqua>" + (itemType.getSellPrice() * amount) + " <gold>coins!"));
         sell.pdcSetInt(Keys.barnSellAmountKey, amount);
         sell.pdcSetString(Keys.itemTypeKey, itemType.name());

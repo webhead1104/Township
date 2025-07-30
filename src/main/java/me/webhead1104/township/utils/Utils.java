@@ -61,7 +61,7 @@ public class Utils {
     }
 
 
-    public static ItemStack getItemStackItem(String name, Material material) {
+    public static ItemStack getItemStack(String name, Material material) {
         ItemStack itemStack = ItemStack.of(material);
         itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>%s", name));
         return itemStack;
