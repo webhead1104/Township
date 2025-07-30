@@ -10,8 +10,6 @@ import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 @ConfigSerializable
 @NoArgsConstructor
 public class Expansion {
-    public static final int LATEST_VERSION = 1;
-    private int version = LATEST_VERSION;
     private int section;
     private int slot;
     private int price;
