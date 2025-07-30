@@ -1,7 +1,5 @@
 package me.webhead1104.township.commands;
 
-import com.google.gson.GsonBuilder;
-import me.webhead1104.township.InstantAdapter;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.commands.arguments.AnimalTypeArgument;
 import me.webhead1104.township.commands.arguments.FactoryTypeArgument;
@@ -16,8 +14,6 @@ import net.strokkur.commands.annotations.Executor;
 import net.strokkur.commands.annotations.arguments.CustomArg;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.time.Instant;
 
 @Command("township")
 @Description("The main Township command.")
@@ -48,11 +44,6 @@ public final class TownshipCommand {
     @Executes("item remove")
     void removeItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) ItemType itemType, int amount) {
         ItemCommand.removeItem(player, amount, itemType);
-    }
-
-    @Executes("test")
-    void test(CommandSender ignored, @Executor Player player) {
-        System.out.println(new GsonBuilder().registerTypeAdapter(Instant.class, new InstantAdapter()).create().toJson(Township.getUserManager().getUser(player.getUniqueId()).getFactories().getFactory(FactoryType.BAKERY)));
     }
 
     @Executes("animal")
