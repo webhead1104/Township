@@ -38,6 +38,7 @@ public class WorldMenu extends View {
     public void onOpen(@NotNull OpenContext context) {
         context.getPlayer().getInventory().clear();
         context.getPlayer().setItemOnCursor(ItemStack.empty());
+        Township.getUserManager().getUser(context.getPlayer().getUniqueId()).setSection(sectionState.get(context));
     }
 
     @Override
