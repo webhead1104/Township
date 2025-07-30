@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.7-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
     compileOnly("org.spongepowered:configurate-gson:4.2.0")
     implementation("me.devnatan:inventory-framework-platform-paper:3.5.0")
     implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.0")
@@ -125,7 +125,7 @@ tasks {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.21.7")
+        minecraftVersion("1.21.8")
     }
     paperPluginYaml {
         // Defaults for name, version, and description are inherited from the Gradle project
