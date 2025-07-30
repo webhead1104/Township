@@ -39,10 +39,6 @@ public class Township extends JavaPlugin {
     @Getter
     private static WorldManager worldManager;
     @Getter
-    private static AnimalsManager animalsManager;
-    @Getter
-    private static FactoriesManager factoriesManager;
-    @Getter
     private static InventoryManager inventoryManager;
     @Getter
     private static UserManager userManager;
@@ -76,8 +72,6 @@ public class Township extends JavaPlugin {
         registerViews();
         viewFrame.register();
         worldManager = new WorldManager();
-        animalsManager = new AnimalsManager();
-        factoriesManager = new FactoriesManager();
         inventoryManager = new InventoryManager();
         userManager = new UserManager();
         barnManager = new BarnManager();

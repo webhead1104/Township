@@ -7,6 +7,7 @@ import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.AnimalType;
 import me.webhead1104.township.data.objects.Animals;
+import me.webhead1104.township.menus.AnimalMenu;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.tiles.TileUtils;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +26,7 @@ public class AnimalTile extends Tile {
     @Override
     public boolean onClick(SlotClickContext context) {
         if (Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getAnimals().getAnimalBuilding(animalType).isUnlocked()) {
-            Township.getAnimalsManager().openAnimalMenu(context.getPlayer(), animalType);
+            context.openForPlayer(AnimalMenu.class, animalType);
             return true;
         }
         return false;

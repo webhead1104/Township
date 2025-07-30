@@ -7,6 +7,7 @@ import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.FactoryType;
 import me.webhead1104.township.data.objects.Factories;
+import me.webhead1104.township.menus.FactoryMenu;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.tiles.TileUtils;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +26,7 @@ public class FactoryTile extends Tile {
     @Override
     public boolean onClick(SlotClickContext context) {
         if (Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getFactories().getFactory(factoryType).isUnlocked()) {
-//            Township.getFactoriesManager().openFactoryMenu(context.getPlayer(), factoryType);
+            context.openForPlayer(FactoryMenu.class, factoryType);
             return true;
         }
         return false;

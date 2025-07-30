@@ -14,6 +14,7 @@ import me.webhead1104.township.data.objects.Animals;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +45,7 @@ public class AnimalMenu extends View {
 
     @Override
     public void onClose(@NotNull CloseContext context) {
-        Township.getWorldManager().openWorldMenu(context.getPlayer());
+        Bukkit.getScheduler().runTaskLater(Township.getInstance(), () -> Township.getWorldManager().openWorldMenu(context.getPlayer()), 1);
     }
 
     @Override
@@ -57,7 +58,6 @@ public class AnimalMenu extends View {
         for (int i = 0; i < 6; ++i) {
             Animals.AnimalBuilding.Animal animal = animals.getAnimalBuilding(animalType).getAnimal(i);
 
-            //animal
             render.slot(slot).onRender(context -> {
                 if (!animal.getInstant().equals(Instant.EPOCH) && Instant.now().isAfter(animal.getInstant().minusSeconds(1))) {
                     animal.setFeed(false);
@@ -72,7 +72,6 @@ public class AnimalMenu extends View {
                 context.setItem(stack);
             });
 
-            //product
             render.slot(slot + 9).onRender(context -> {
                 if (!animal.isProduct()) {
                     context.setItem(ItemStack.empty());
@@ -87,7 +86,6 @@ public class AnimalMenu extends View {
             slot++;
         }
 
-        //animal feed
         render.slot(36).onRender(context -> {
             ItemStack stack = animalType.getFeedType().getItemStack();
             stack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<white>%s", user.getBarn().getItem(animalType.getFeedType())))));

@@ -7,6 +7,8 @@ import me.webhead1104.township.commands.arguments.ItemTypeArgument;
 import me.webhead1104.township.data.enums.AnimalType;
 import me.webhead1104.township.data.enums.FactoryType;
 import me.webhead1104.township.data.enums.ItemType;
+import me.webhead1104.township.menus.AnimalMenu;
+import me.webhead1104.township.menus.FactoryMenu;
 import net.strokkur.commands.annotations.Command;
 import net.strokkur.commands.annotations.Description;
 import net.strokkur.commands.annotations.Executes;
@@ -48,12 +50,12 @@ public final class TownshipCommand {
 
     @Executes("animal")
     void animals(CommandSender ignored, @Executor Player player, @CustomArg(AnimalTypeArgument.class) AnimalType animalType) {
-        Township.getAnimalsManager().openAnimalMenu(player, animalType);
+        Township.getViewFrame().open(AnimalMenu.class, player, animalType);
     }
 
     @Executes("factory")
     void factories(CommandSender ignored, @Executor Player player, @CustomArg(FactoryTypeArgument.class) FactoryType factoryType) {
-        Township.getFactoriesManager().openFactoryMenu(player, factoryType);
+        Township.getViewFrame().open(FactoryMenu.class, player, factoryType);
     }
 
     @Executes("cash")
