@@ -50,11 +50,6 @@ public final class TownshipCommand {
         ItemCommand.removeItem(player, amount, itemType);
     }
 
-    @Executes("test")
-    void test(CommandSender ignored, @Executor Player player) {
-        System.out.println(new GsonBuilder().registerTypeAdapter(Instant.class, new InstantAdapter()).create().toJson(Township.getUserManager().getUser(player.getUniqueId()).getFactories().getFactory(FactoryType.BAKERY)));
-    }
-
     @Executes("animal")
     void animals(CommandSender ignored, @Executor Player player, @CustomArg(AnimalTypeArgument.class) AnimalType animalType) {
         Township.getAnimalsManager().openAnimalMenu(player, animalType);
