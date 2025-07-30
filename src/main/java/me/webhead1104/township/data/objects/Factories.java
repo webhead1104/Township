@@ -26,10 +26,6 @@ public class Factories {
         return factoryBuildings.get(factoryType);
     }
 
-    public void setFactory(FactoryType factoryType, Factory factory) {
-        factoryBuildings.put(factoryType, factory);
-    }
-
     @Getter
     @Setter
     @ConfigSerializable
