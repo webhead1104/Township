@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.dataVersions.UserVersion1;
+import me.webhead1104.township.dataVersions.UserVersion2;
 import org.bukkit.Bukkit;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -60,6 +61,7 @@ public class User {
         try {
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.buildAndLoadString(json);
             ConfigurationTransformation configurationTransformation = ConfigurationTransformation.versionedBuilder()
+                    .addVersion(2, UserVersion2.VERSIONED_TRANSFORMATION)
                     .addVersion(1, UserVersion1.VERSIONED_TRANSFORMATION)
                     .build();
             configurationTransformation.apply(node);
