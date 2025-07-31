@@ -5,7 +5,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
-import me.webhead1104.township.Township;
+import me.webhead1104.township.menus.BarnMenu;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Material;
@@ -24,7 +24,7 @@ public class BarnTile extends Tile {
 
     @Override
     public boolean onClick(SlotClickContext context) {
-        Township.getBarnManager().openMenu(context.getPlayer(), 1);
+        context.openForPlayer(BarnMenu.class);
         return true;
     }
 }

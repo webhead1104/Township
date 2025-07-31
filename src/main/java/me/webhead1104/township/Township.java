@@ -75,7 +75,6 @@ public class Township extends JavaPlugin {
         inventoryManager = new InventoryManager();
         userManager = new UserManager();
         barnManager = new BarnManager();
-        barnManager.loadPages();
         barnManager.loadUpgrades();
         trainManager = new TrainManager();
         levelManager = new LevelManager();
@@ -104,7 +103,7 @@ public class Township extends JavaPlugin {
     private void registerViews() {
         viewFrame.with(
                 new AnimalMenu(), new FactoryMenu(), new WorldMenu(), new ExpansionMenu(),
-                new ConfirmCloseMenu(), new PlotMenu()
+                new ConfirmCloseMenu(), new PlotMenu(), new BarnMenu()
         );
     }
 }
