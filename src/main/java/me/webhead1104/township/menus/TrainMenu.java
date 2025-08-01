@@ -60,7 +60,6 @@ public class TrainMenu extends View {
             context.slot(trainSlot).updateOnClick().onRender(slotRenderContext -> {
                 Trains.Train train = trains.getTrain(finalI);
                 ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);
-                @SuppressWarnings("SpellCheckingInspection")
                 String textures = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmQ1YjBlM2FhNjExNjJhM2M2NTM4OTg1YzVjMTFjZWI5NmQ1NjA1YjNjZTkyMzRjODhmNGZiZDcyMzQ3NWQifX19";
                 itemStack.setData(DataComponentTypes.PROFILE, ResolvableProfile.resolvableProfile().addProperty(new ProfileProperty("textures", textures)));
                 if (!train.isUnlocked()) {
