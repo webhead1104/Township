@@ -8,7 +8,6 @@ import java.util.List;
 
 @Getter
 public enum FactoryType {
-    //todo add custom tile in world menu
     BAKERY("Bakery", List.of(RecipeType.BREAD, RecipeType.COOKIE, RecipeType.BAGEL), 2, 55, 125, 10),
     FEED_MILL_1("Feed Mill", List.of(RecipeType.COW_FEED, RecipeType.CHICKEN_FEED), 3, 60, 150, 11),
     FEED_MILL_2("Feed Mill", List.of(RecipeType.COW_FEED, RecipeType.CHICKEN_FEED), 19, 655, 2800, 120),

@@ -11,7 +11,6 @@ import java.time.Duration;
 
 @Getter
 public enum AnimalType {
-    //todo add custom tile in world menu
     COWSHED_1("Cowshed", cowItemStack(), ItemType.COW_FEED, ItemType.MILK, 3, 0, 1, 0, Duration.ofMinutes(20)),
     COWSHED_2("Cowshed", cowItemStack(), ItemType.COW_FEED, ItemType.MILK, 3, 1000, 15, 46, Duration.ofMinutes(20)),
     COWSHED_3("Cowshed", cowItemStack(), ItemType.COW_FEED, ItemType.MILK, 3, 5000, 22, 211, Duration.ofMinutes(20)),
