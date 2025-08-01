@@ -6,6 +6,7 @@ import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.menus.TrainMenu;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Material;
@@ -27,7 +28,7 @@ public class TrainTile extends Tile {
     @Override
     public boolean onClick(SlotClickContext context) {
         if (Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getTrains().isUnlocked()) {
-            Township.getTrainManager().openMenu(context.getPlayer());
+            context.openForPlayer(TrainMenu.class);
             return true;
         }
         return false;
