@@ -28,6 +28,10 @@ public class Trains {
         return trains.get(train);
     }
 
+    public void setTrain(int trainSlot, Train train) {
+        trains.put(trainSlot, train);
+    }
+
     @Getter
     @Setter
     @AllArgsConstructor
@@ -64,7 +68,7 @@ public class Trains {
             private int giveItemAmount;
 
             public TrainCar() {
-                Random random = new Random();
+                SplittableRandom random = new SplittableRandom();
                 List<ItemType> giveList = new ArrayList<>(Arrays.stream(ItemType.values()).toList());
                 List<ItemType> collectList = new ArrayList<>(List.of(ItemType.NAIL, ItemType.HAMMER, ItemType.PAINT));
                 giveList.remove(ItemType.NONE);

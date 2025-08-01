@@ -45,8 +45,6 @@ public class Township extends JavaPlugin {
     @Getter
     private static BarnManager barnManager;
     @Getter
-    private static TrainManager trainManager;
-    @Getter
     private static LevelManager levelManager;
     @Getter
     private static ViewFrame viewFrame;
@@ -76,7 +74,6 @@ public class Township extends JavaPlugin {
         userManager = new UserManager();
         barnManager = new BarnManager();
         barnManager.loadUpgrades();
-        trainManager = new TrainManager();
         levelManager = new LevelManager();
         levelManager.loadLevels();
         logger.info("Township initialized in {} mills!", System.currentTimeMillis() - start);
@@ -103,7 +100,7 @@ public class Township extends JavaPlugin {
     private void registerViews() {
         viewFrame.with(
                 new AnimalMenu(), new FactoryMenu(), new WorldMenu(), new ExpansionMenu(),
-                new ConfirmCloseMenu(), new PlotMenu(), new BarnMenu()
+                new ConfirmCloseMenu(), new PlotMenu(), new BarnMenu(), new TrainMenu()
         );
     }
 }
