@@ -56,7 +56,6 @@ public class ConfirmCloseMenu extends View {
         }).onClick(slotClickContext -> {
             Player player = slotClickContext.getPlayer();
             Township.getDatabase().setData(Township.getUserManager().getUser(player.getUniqueId()));
-            Township.getUserManager().removePlayerCloseHandler(player.getUniqueId());
             context.closeForEveryone();
             openWorld.set(false, slotClickContext);
             if (Township.getInventoryManager().getPlayerInventory(player.getUniqueId()).isPresent()) {

@@ -91,10 +91,8 @@ public class Township extends JavaPlugin {
     }
 
     public void registerListeners() {
-//        this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new JoinListener(), this);
         this.getServer().getPluginManager().registerEvents(new LeaveListener(), this);
-//        this.getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
     }
 
     private void registerViews() {
