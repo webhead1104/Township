@@ -86,7 +86,7 @@ public class PlotMenu extends View {
             if (user.getCoins() >= selectedPlotType.getPrice()) {
                 user.setCoins(user.getCoins() - selectedPlotType.getPrice());
                 plot.setPlotType(selectedPlotType);
-                plot.setInstant(Instant.now().plusSeconds(selectedPlotType.getTime()));
+                plot.setInstant(Instant.now().plusSeconds(selectedPlotType.getTime().getSeconds()));
                 plot.setClaimable(false);
                 ((PlotTile) user.getWorld().getSection(plot.getSection()).getSlot(plot.getSlot())).setPlot(plot);
                 slotClickContext.closeForPlayer();

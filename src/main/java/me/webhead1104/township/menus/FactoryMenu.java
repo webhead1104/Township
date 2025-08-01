@@ -74,7 +74,7 @@ public class FactoryMenu extends View {
                 recipeType.getRecipeItems().forEach((key, value) -> user.getBarn().removeAmountFromItem(key, value));
                 if (factory.canSetWorkingOn()) {
                     factory.setWorkingOn(recipeType);
-                    factory.setInstant(Instant.now().plusSeconds(recipeType.getTime()));
+                    factory.setInstant(Instant.now().plusSeconds(recipeType.getTime().getSeconds()));
                 } else if (factory.canAddWaiting()) {
                     factory.addWaiting(recipeType);
                 }
@@ -108,7 +108,7 @@ public class FactoryMenu extends View {
                     if (factory.hasWaiting()) {
                         RecipeType recipeType = factory.removeFirstWaiting();
                         factory.setWorkingOn(recipeType);
-                        factory.setInstant(Instant.now().plusSeconds(recipeType.getTime()));
+                        factory.setInstant(Instant.now().plusSeconds(recipeType.getTime().getSeconds()));
                     }
                 }
                 context.update();
@@ -156,7 +156,7 @@ public class FactoryMenu extends View {
                     if (factory.hasWaiting()) {
                         RecipeType recipeType = factory.removeFirstWaiting();
                         factory.setWorkingOn(recipeType);
-                        factory.setInstant(Instant.now().plusSeconds(recipeType.getTime()));
+                        factory.setInstant(Instant.now().plusSeconds(recipeType.getTime().getSeconds()));
                     }
                 }
                 context.update();

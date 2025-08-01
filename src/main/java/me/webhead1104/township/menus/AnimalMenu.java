@@ -96,7 +96,7 @@ public class AnimalMenu extends View {
                     Animals.AnimalBuilding.Animal animal = animals.getAnimalBuilding(animalType).getAnimal(i);
                     if (!animal.isFeed() && !animal.isProduct() && user.getBarn().getItem(animalType.getFeedType()) >= 1) {
                         animal.setFeed(true);
-                        animal.setInstant(Instant.now().plusSeconds(animalType.getTimeTakesToFeed()));
+                        animal.setInstant(Instant.now().plusSeconds(animalType.getTimeTakesToFeed().getSeconds()));
                         user.getBarn().removeAmountFromItem(animalType.getFeedType(), 1);
                     }
                 }
