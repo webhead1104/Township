@@ -60,7 +60,7 @@ public class User {
     public static User fromJson(String json) {
         try {
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.buildAndLoadString(json);
-            ConfigurationTransformation configurationTransformation = ConfigurationTransformation.versionedBuilder()
+            ConfigurationTransformation.Versioned configurationTransformation = ConfigurationTransformation.versionedBuilder()
                     .addVersion(2, UserVersion2.VERSIONED_TRANSFORMATION)
                     .addVersion(1, UserVersion1.VERSIONED_TRANSFORMATION)
                     .build();
