@@ -21,6 +21,7 @@ dependencies {
     compileOnly("org.spongepowered:configurate-gson:4.2.0")
     implementation("me.devnatan:inventory-framework-platform-paper:3.5.0")
     implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.0")
+    implementation("io.github.classgraph:classgraph:4.8.181")
 
     compileOnly("net.strokkur:strokk-commands-annotations:1.2.4-SNAPSHOT")
     annotationProcessor("net.strokkur:strokk-commands-processor:1.2.4-SNAPSHOT")
@@ -120,6 +121,8 @@ tasks {
         mergeServiceFiles()
         relocate("me.devnatan.inventoryframework", "me.webhead1104.township.libs.inventoryframework")
         relocate("com.tcoded.folialib", "me.webhead1104.township.libs.folialib")
+        relocate("io.github.classgraph","me.webhead1104.township.libs.classgraph")
+        relocate("nonapi.io.github.classgraph","me.webhead1104.township.libs.classgraph")
     }
     runServer {
         // Configure the Minecraft version for our task.

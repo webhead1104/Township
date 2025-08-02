@@ -72,6 +72,7 @@ public class Township extends JavaPlugin {
         worldManager = new WorldManager();
         inventoryManager = new InventoryManager();
         userManager = new UserManager();
+        userManager.loadDataVersions();
         barnManager = new BarnManager();
         barnManager.loadUpgrades();
         levelManager = new LevelManager();

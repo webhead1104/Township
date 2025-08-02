@@ -1,5 +1,6 @@
-package me.webhead1104.township.dataVersions;
+package me.webhead1104.township.dataVersions.dataVersions;
 
+import me.webhead1104.township.dataVersions.DataVersion;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.NodePath;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -8,13 +9,22 @@ import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 import java.time.Instant;
 import java.util.Map;
 
-public final class UserVersion1 {
+@SuppressWarnings("unused")
+public final class UserVersion1 implements DataVersion {
 
-    public static final ConfigurationTransformation VERSIONED_TRANSFORMATION = ConfigurationTransformation.builder()
-            .addAction(NodePath.path(), (path, node) -> {
-                injectInstantInPlotTiles(node);
-                return null;
-            }).build();
+    @Override
+    public ConfigurationTransformation getTransformation() {
+        return ConfigurationTransformation.builder()
+                .addAction(NodePath.path(), (path, node) -> {
+                    injectInstantInPlotTiles(node);
+                    return null;
+                }).build();
+    }
+
+    @Override
+    public int getVersion() {
+        return 1;
+    }
 
     private static void injectInstantInPlotTiles(ConfigurationNode node) throws SerializationException {
         if (node.isMap()) {

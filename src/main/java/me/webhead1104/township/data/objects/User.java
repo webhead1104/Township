@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.dataVersions.UserVersion1;
-import me.webhead1104.township.dataVersions.UserVersion2;
 import org.bukkit.Bukkit;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -60,11 +58,9 @@ public class User {
     public static User fromJson(String json) {
         try {
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.buildAndLoadString(json);
-            ConfigurationTransformation.Versioned configurationTransformation = ConfigurationTransformation.versionedBuilder()
-                    .addVersion(2, UserVersion2.VERSIONED_TRANSFORMATION)
-                    .addVersion(1, UserVersion1.VERSIONED_TRANSFORMATION)
-                    .build();
-            configurationTransformation.apply(node);
+            ConfigurationTransformation.VersionedBuilder versionedBuilder = ConfigurationTransformation.versionedBuilder();
+            Township.getUserManager().getDataVersions().forEach((version, dataVersion) -> versionedBuilder.addVersion(version, dataVersion.getTransformation()));
+            versionedBuilder.build().apply(node);
             User user = node.get(User.class);
             if (user == null) {
                 throw new IllegalStateException("An error occurred whilst deserializing a user! Please report this to Webhead1104!\n USER IS NULL!!!");

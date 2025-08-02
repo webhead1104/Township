@@ -1,14 +1,41 @@
 package me.webhead1104.township.managers;
 
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ScanResult;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.dataVersions.DataVersion;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Constructor;
 import java.util.*;
 
 @NoArgsConstructor
+@Getter
 public class UserManager {
-    public final Map<UUID, User> users = new HashMap<>();
+    private final Map<UUID, User> users = new HashMap<>();
+    private final Map<Integer, DataVersion> dataVersions = new HashMap<>();
+
+    public void loadDataVersions() {
+        ClassGraph graph = new ClassGraph().acceptPackages("me.webhead1104.township.dataVersions.dataVersions").enableAllInfo();
+
+        try (ScanResult result = graph.scan()) {
+            result.getClassesImplementing(DataVersion.class).loadClasses().forEach(clazz -> {
+                try {
+                    Constructor<?> constructor = clazz.getDeclaredConstructor();
+                    constructor.setAccessible(true);
+                    DataVersion dataVersion = (DataVersion) constructor.newInstance();
+                    dataVersions.put(dataVersion.getVersion(), dataVersion);
+                } catch (Exception e) {
+                    Township.logger.error("An error occurred whilst loading data versions!", e);
+                }
+            });
+        } catch (Exception e) {
+            Township.logger.error("An error occurred whilst loading data versions!", e);
+        }
+    }
 
     public @NotNull User getUser(UUID uuid) {
         Optional<User> user = Optional.ofNullable(users.get(uuid));
