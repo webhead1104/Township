@@ -2,15 +2,16 @@ package me.webhead1104.township.data.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
 import org.bukkit.Bukkit;
 import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.NodePath;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
-import org.spongepowered.configurate.transformation.TransformAction;
 
+import java.io.BufferedWriter;
+import java.io.StringWriter;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -18,8 +19,10 @@ import java.util.UUID;
 @Setter
 @ConfigSerializable
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
     public static final int LATEST_VERSION = 2;
+    private int version = LATEST_VERSION;
     private UUID uuid;
     private String townName;
     private PlayerLevel level;
@@ -57,12 +60,15 @@ public class User {
     public static User fromJson(String json) {
         try {
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.buildAndLoadString(json);
-            ConfigurationTransformation configurationTransformation = ConfigurationTransformation.versionedBuilder()
-                    .addVersion(2, ConfigurationTransformation.builder().build())
-                    .addVersion(1, ConfigurationTransformation.builder().addAction(NodePath.path("uuid"), TransformAction.rename("test")).build())
-                    .build();
-            configurationTransformation.apply(node);
-            return node.get(User.class);
+            ConfigurationTransformation.VersionedBuilder versionedBuilder = ConfigurationTransformation.versionedBuilder();
+            Township.getUserManager().getDataVersions().forEach((version, dataVersion) -> versionedBuilder.addVersion(version, dataVersion.getTransformation()));
+            versionedBuilder.build().apply(node);
+            User user = node.get(User.class);
+            if (user == null) {
+                throw new IllegalStateException("An error occurred whilst deserializing a user! Please report this to Webhead1104!\n USER IS NULL!!!");
+            }
+            Township.getDatabase().setData(user);
+            return user;
         } catch (Exception e) {
             Township.logger.error("An error occurred whilst updating a user! Please report the following stacktrace to Webhead1104:", e);
         }
@@ -71,6 +77,16 @@ public class User {
 
     @Override
     public String toString() {
-        return Township.GSON.toJson(this);
+        try {
+            StringWriter stringWriter = new StringWriter();
+            ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.build().createNode();
+            node.set(this);
+            Township.GSON_CONFIGURATION_LOADER
+                    .sink(() -> new BufferedWriter(stringWriter))
+                    .build().save(node);
+            return stringWriter.toString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

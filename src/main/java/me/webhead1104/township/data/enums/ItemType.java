@@ -1,32 +1,40 @@
 package me.webhead1104.township.data.enums;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import me.webhead1104.township.utils.MenuItems;
+import me.webhead1104.township.utils.Utils;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @Getter
-@AllArgsConstructor
 public enum ItemType {
-    NONE(MenuItems.none, -1, "none"),
-    WHEAT(MenuItems.wheat, 1, "wheat"),
-    CORN(MenuItems.corn, 3, "corn"),
-    CARROT(MenuItems.carrot, 5, "carrot"),
-    SUGARCANE(MenuItems.sugarcane, 7, "sugarcane"),
-    BREAD(MenuItems.bread, 5, "bread"),
-    COOKIE(MenuItems.cookie, 44, "cookie"),
-    BAGEL(MenuItems.bagel, 55, "bagel"),
-    COW_FEED(MenuItems.cowFeed, 1, "cow_feed"),
-    CHICKEN_FEED(MenuItems.chickenFeed, 4, "chicken_feed"),
-    CREAM(MenuItems.cream, 12, "cream"),
-    CHEESE(MenuItems.cheese, 25, "cheese"),
-    SUGAR(MenuItems.sugar, 14, "sugar"),
-    MILK(MenuItems.milk, 7, "milk"),
-    EGG(MenuItems.egg, 10, "egg"),
-    PAINT(MenuItems.paint, 100, "paint"),
-    HAMMER(MenuItems.hammer, 100, "hammer"),
-    NAIL(MenuItems.nail, 100, "nail");
+    NONE(Material.BARRIER, -1),
+    WHEAT(Material.WHEAT, 1),
+    CORN(Material.PLAYER_HEAD, 3),
+    CARROT(Material.CARROT, 5),
+    SUGARCANE(Material.SUGAR_CANE, 7),
+    BREAD(Material.BREAD, 5),
+    COOKIE(Material.COOKIE, 44),
+    BAGEL(Material.PLAYER_HEAD, 55),
+    CREAM(Material.PLAYER_HEAD, 12),
+    CHEESE(Material.PLAYER_HEAD, 25),
+    SUGAR(Material.SUGAR, 14),
+    MILK(Material.MILK_BUCKET, 7),
+    EGG(Material.EGG, 10),
+    PAINT(Material.PLAYER_HEAD, 100),
+    HAMMER(Material.PLAYER_HEAD, 100),
+    NAIL(Material.PLAYER_HEAD, 100),
+    COW_FEED(Material.PLAYER_HEAD, 1),
+    CHICKEN_FEED(Material.PLAYER_HEAD, 4);
+    @Getter(value = lombok.AccessLevel.NONE)
     private final ItemStack itemStack;
     private final int sellPrice;
-    private final String ID;
+
+    ItemType(Material material, int sellPrice) {
+        this.itemStack = Utils.getItemStack(Utils.thing2(name()), material);
+        this.sellPrice = sellPrice;
+    }
+
+    public ItemStack getItemStack() {
+        return itemStack.clone();
+    }
 }

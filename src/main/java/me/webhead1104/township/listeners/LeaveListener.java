@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitTask;
 
 @NoArgsConstructor
 public class LeaveListener implements Listener {
@@ -18,11 +17,6 @@ public class LeaveListener implements Listener {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         Township.getDatabase().setData(user);
         Township.getUserManager().removeUser(player.getUniqueId());
-        BukkitTask task = Township.getUserManager().menuTasks.get(player.getUniqueId());
-        if (task != null) {
-            Township.getUserManager().menuTasks.get(player.getUniqueId()).cancel();
-            Township.getUserManager().menuTasks.remove(player.getUniqueId());
-        }
         Township.logger.info("player {} has left. data has been saved!", player.getName());
     }
 }

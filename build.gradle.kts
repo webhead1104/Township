@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("com.gradleup.shadow") version "9.0.0-rc1"
+    id("com.gradleup.shadow") version "9.0.0-rc3"
     id("xyz.jpenilla.run-paper") version "2.3.1"
     id("io.freefair.lombok") version "8.14"
     id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.0"
@@ -13,11 +13,15 @@ repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://eldonexus.de/repository/maven-public/")
+    maven("https://repo.tcoded.com/releases")
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.7-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
     compileOnly("org.spongepowered:configurate-gson:4.2.0")
+    implementation("me.devnatan:inventory-framework-platform-paper:3.5.0")
+    implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.0")
+    implementation("io.github.classgraph:classgraph:4.8.181")
 
     compileOnly("net.strokkur:strokk-commands-annotations:1.2.4-SNAPSHOT")
     annotationProcessor("net.strokkur:strokk-commands-processor:1.2.4-SNAPSHOT")
@@ -115,12 +119,16 @@ tasks {
         archiveFileName.set("Township-${project.version}.jar")
         archiveClassifier.set("")
         mergeServiceFiles()
+        relocate("me.devnatan.inventoryframework", "me.webhead1104.township.libs.inventoryframework")
+        relocate("com.tcoded.folialib", "me.webhead1104.township.libs.folialib")
+        relocate("io.github.classgraph","me.webhead1104.township.libs.classgraph")
+        relocate("nonapi.io.github.classgraph","me.webhead1104.township.libs.classgraph")
     }
     runServer {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.21.7")
+        minecraftVersion("1.21.8")
     }
     paperPluginYaml {
         // Defaults for name, version, and description are inherited from the Gradle project

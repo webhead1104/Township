@@ -28,7 +28,7 @@ public class FactoryTypeArgument implements CustomArgumentType.Converted<Factory
     public @NotNull FactoryType convert(String nativeType) throws CommandSyntaxException {
         try {
             return FactoryType.valueOf(nativeType.toUpperCase());
-        } catch (IllegalArgumentException notIceCream) {
+        } catch (IllegalArgumentException e) {
             throw NOT_TYPE.create(nativeType);
         }
     }
@@ -42,7 +42,7 @@ public class FactoryTypeArgument implements CustomArgumentType.Converted<Factory
     public <S> @NotNull CompletableFuture<Suggestions> listSuggestions(@NotNull CommandContext<S> context, SuggestionsBuilder builder) {
         TYPES.stream()
                 .map(Object::toString)
-                .filter(name -> name.startsWith(builder.getRemainingLowerCase()))
+                .filter(name -> name.toLowerCase().startsWith(builder.getRemainingLowerCase()))
                 .forEach(builder::suggest);
         return builder.buildFuture();
     }

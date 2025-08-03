@@ -1,4 +1,4 @@
-package me.webhead1104.township.data.adapters;
+package me.webhead1104.township;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;

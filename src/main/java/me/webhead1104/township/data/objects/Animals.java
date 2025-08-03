@@ -2,6 +2,7 @@ package me.webhead1104.township.data.objects;
 
 import com.google.common.base.Preconditions;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.data.enums.AnimalType;
 import org.jetbrains.annotations.NotNull;
@@ -40,8 +41,9 @@ public class Animals {
     @Getter
     @Setter
     @ConfigSerializable
+    @NoArgsConstructor
     public static class AnimalBuilding {
-        private final Map<Integer, Animal> animals;
+        private Map<Integer, Animal> animals;
         private boolean unlocked;
 
         public AnimalBuilding(Map<Integer, Animal> animals, boolean unlocked) {
@@ -60,6 +62,7 @@ public class Animals {
         @Getter
         @Setter
         @ConfigSerializable
+        @NoArgsConstructor
         public static class Animal {
             private boolean feed;
             private boolean product;

@@ -1,41 +1,40 @@
 package me.webhead1104.township.managers;
 
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ScanResult;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.User;
-import org.apache.commons.lang3.Validate;
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitTask;
+import me.webhead1104.township.dataVersions.DataVersion;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Constructor;
 import java.util.*;
-import java.util.function.Consumer;
 
 @NoArgsConstructor
+@Getter
 public class UserManager {
-    public final Map<UUID, User> users = new HashMap<>();
-    public final Map<UUID, Consumer<UUID>> playerCloseHandlers = new HashMap<>();
-    public final Map<UUID, BukkitTask> menuTasks = new HashMap<>();
+    private final Map<UUID, User> users = new HashMap<>();
+    private final Map<Integer, DataVersion> dataVersions = new HashMap<>();
 
-    public boolean hasPlayerCloseHandler(@NotNull UUID uuid) {
-        Validate.notNull(uuid);
-        return playerCloseHandlers.containsKey(uuid);
-    }
+    public void loadDataVersions() {
+        ClassGraph graph = new ClassGraph().acceptPackages("me.webhead1104.township.dataVersions.dataVersions").enableAllInfo();
 
-    public @NotNull Consumer<UUID> getPlayerCloseHandler(@NotNull UUID uuid) {
-        Validate.notNull(uuid);
-        return Objects.requireNonNull(playerCloseHandlers.get(uuid));
-    }
-
-    public void addPlayerCloseHandler(@NotNull UUID uuid, @NotNull Consumer<UUID> handler) {
-        Validate.notNull(uuid);
-        Validate.notNull(handler);
-        Bukkit.getScheduler().runTaskLater(Township.getInstance(), () -> playerCloseHandlers.put(uuid, handler), 1);
-    }
-
-    public void removePlayerCloseHandler(@NotNull UUID uuid) {
-        Validate.notNull(uuid);
-        playerCloseHandlers.remove(uuid);
+        try (ScanResult result = graph.scan()) {
+            result.getClassesImplementing(DataVersion.class).loadClasses().forEach(clazz -> {
+                try {
+                    Constructor<?> constructor = clazz.getDeclaredConstructor();
+                    constructor.setAccessible(true);
+                    DataVersion dataVersion = (DataVersion) constructor.newInstance();
+                    dataVersions.put(dataVersion.getVersion(), dataVersion);
+                } catch (Exception e) {
+                    Township.logger.error("An error occurred whilst loading data versions!", e);
+                }
+            });
+        } catch (Exception e) {
+            Township.logger.error("An error occurred whilst loading data versions!", e);
+        }
     }
 
     public @NotNull User getUser(UUID uuid) {

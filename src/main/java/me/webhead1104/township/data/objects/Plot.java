@@ -1,40 +1,27 @@
 package me.webhead1104.township.data.objects;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.PlotType;
-import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
-import org.spongepowered.configurate.transformation.ConfigurationTransformation;
+
+import java.time.Instant;
 
 @Setter
 @Getter
-@AllArgsConstructor
 @ConfigSerializable
+@NoArgsConstructor
 public class Plot {
-    public static final int LATEST_VERSION = 1;
     private int section;
     private int slot;
     private PlotType plotType;
+    private Instant instant = Instant.EPOCH;
+    private boolean claimable = false;
 
-    public static Plot fromJson(String json) {
-        try {
-            ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.buildAndLoadString(json);
-            ConfigurationTransformation configurationTransformation = ConfigurationTransformation.versionedBuilder()
-                    .addVersion(LATEST_VERSION, ConfigurationTransformation.builder().build())
-                    .build();
-            configurationTransformation.apply(node);
-            return node.get(Plot.class);
-        } catch (Exception e) {
-            Township.logger.error("An error occurred whilst updating a plot! Please report the following stacktrace to Webhead1104:", e);
-        }
-        throw new IllegalStateException("An error occurred whilst deserializing a plot! Please report this to Webhead1104!");
-    }
-
-    @Override
-    public String toString() {
-        return Township.GSON.toJson(this);
+    public Plot(int section, int slot, PlotType plotType) {
+        this.section = section;
+        this.slot = slot;
+        this.plotType = plotType;
     }
 }

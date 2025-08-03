@@ -1,4 +1,4 @@
-package me.webhead1104.township.data.serializers;
+package me.webhead1104.township.serializers;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;

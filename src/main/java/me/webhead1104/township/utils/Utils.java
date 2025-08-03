@@ -1,26 +1,16 @@
 package me.webhead1104.township.utils;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import lombok.NoArgsConstructor;
-import me.webhead1104.township.Township;
 import org.apache.commons.lang3.StringUtils;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.UUID;
-import java.util.function.Consumer;
 
 @NoArgsConstructor
 public class Utils {
-
-    public static void openInventory(Player player, Inventory inventory, Consumer<UUID> handler, BukkitTask bukkitTask) {
-        Township.getUserManager().removePlayerCloseHandler(player.getUniqueId());
-        player.openInventory(inventory);
-        Township.getUserManager().menuTasks.put(player.getUniqueId(), bukkitTask);
-        Township.getUserManager().addPlayerCloseHandler(player.getUniqueId(), handler);
-    }
 
     public static String thing2(String string) {
         return StringUtils.capitalize(string.replaceAll("_", " ").toLowerCase());
@@ -55,5 +45,12 @@ public class Utils {
         }
 
         return formatted.toString().trim(); // Remove trailing space
+    }
+
+
+    public static ItemStack getItemStack(String name, Material material) {
+        ItemStack itemStack = ItemStack.of(material);
+        itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>%s", name));
+        return itemStack;
     }
 }

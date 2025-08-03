@@ -3,6 +3,7 @@ package me.webhead1104.township.data.objects;
 import com.google.common.base.Strings;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.utils.Msg;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @ConfigSerializable
+@NoArgsConstructor
 public class PlayerLevel {
     private int level;
     private long xp;
