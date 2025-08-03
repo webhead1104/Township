@@ -96,7 +96,7 @@ public class PlotMenu extends View {
         int i = 2;
         for (PlotType plotType : PlotType.values()) {
             if (plotType.equals(PlotType.NONE)) continue;
-            if (plotType.getLevelNeeded() > user.getLevel().getLevel()) continue;
+            if (plotType.getLevelNeeded() > user.getLevel()) continue;
             ItemStack itemStack = plotType.getMenuItem();
             String price;
             if (plotType.getPrice() == 0) {

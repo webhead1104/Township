@@ -90,11 +90,11 @@ public class WorldMenu extends View {
         player.getInventory().setItem(22, profileItemStack);
 
         ItemStack levelAndPopStack = ItemStack.of(Material.BLUE_CONCRETE);
-        levelAndPopStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<aqua>Level %d", user.getLevel().getLevel()));
-        if (Township.getLevelManager().getLevelMap().containsKey(user.getLevel().getLevel() + 1)) {
+        levelAndPopStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<aqua>Level %d", user.getLevel()));
+        if (Township.getLevelManager().getLevelMap().containsKey(user.getLevel() + 1)) {
             levelAndPopStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
-                    Msg.format("<aqua>Xp %d", user.getLevel().getXp()),
-                    Msg.format(user.getLevel().getProgressBar()),
+                    Msg.format("<aqua>Xp %d", user.getXp()),
+                    Msg.format(Township.getLevelManager().getProgressBar(player)),
                     Msg.format("<red>Population %d", user.getPopulation())
             )));
         } else {

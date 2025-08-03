@@ -21,11 +21,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-    public static final int LATEST_VERSION = 2;
+    public static final int LATEST_VERSION = 3;
     private int version = LATEST_VERSION;
     private UUID uuid;
     private String townName;
-    private PlayerLevel level;
+    private int level;
+    private long xp;
     private int population;
     private int maxPopulation;
     private long coins;
@@ -41,7 +42,8 @@ public class User {
         long start = System.currentTimeMillis();
         this.uuid = uuid;
         this.townName = Bukkit.getPlayer(uuid) == null ? "none" : String.format("%s's Town", Objects.requireNonNull(Bukkit.getPlayer(uuid)).getName());
-        this.level = new PlayerLevel(1, 0, uuid);
+        this.level = 1;
+        this.xp = 0;
         this.population = 60;
         this.maxPopulation = 60;
         this.coins = 0;
