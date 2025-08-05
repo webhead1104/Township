@@ -121,8 +121,8 @@ tasks {
         mergeServiceFiles()
         relocate("me.devnatan.inventoryframework", "me.webhead1104.township.libs.inventoryframework")
         relocate("com.tcoded.folialib", "me.webhead1104.township.libs.folialib")
-        relocate("io.github.classgraph","me.webhead1104.township.libs.classgraph")
-        relocate("nonapi.io.github.classgraph","me.webhead1104.township.libs.classgraph")
+        relocate("io.github.classgraph", "me.webhead1104.township.libs.classgraph")
+        relocate("nonapi.io.github.classgraph", "me.webhead1104.township.libs.classgraph")
     }
     runServer {
         // Configure the Minecraft version for our task.
