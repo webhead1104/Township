@@ -195,7 +195,6 @@ public class BarnMenu extends View {
 
     @Override
     public void onClick(@NotNull SlotClickContext context) {
-        System.out.println(context.getSlot());
         if (!context.isOnEntityContainer()) return;
         if (context.getSlot() == 81) {
             context.closeForPlayer();
