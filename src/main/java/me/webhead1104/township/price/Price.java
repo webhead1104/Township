@@ -1,4 +1,4 @@
-package me.webhead1104.township.data.interfaces;
+package me.webhead1104.township.price;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
@@ -8,7 +8,5 @@ public interface Price {
 
     boolean has(Player player);
 
-    Component neededComponent(Player player);
-
-    Component notEnoughComponent(Player player);
+    Component component(Player player);
 }

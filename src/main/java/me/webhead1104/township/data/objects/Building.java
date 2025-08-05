@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.TileSize;
-import me.webhead1104.township.data.interfaces.Price;
+import me.webhead1104.township.price.Price;
 import me.webhead1104.township.utils.ItemBuilder;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;

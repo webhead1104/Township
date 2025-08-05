@@ -1,17 +1,14 @@
-package me.webhead1104.township.data.impls;
+package me.webhead1104.township.price;
 
 import lombok.Getter;
-import lombok.Setter;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.interfaces.Price;
 import me.webhead1104.township.utils.Msg;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 @Getter
-@Setter
 public class CoinPrice implements Price {
-    private int amount;
+    private final int amount;
 
     public CoinPrice(int amount) {
         this.amount = amount;
@@ -28,15 +25,13 @@ public class CoinPrice implements Price {
     }
 
     @Override
-    public Component neededComponent(Player player) {
+    public Component component(Player player) {
         if (amount == 0) {
-            return Msg.format("<white>Free");
+            return Msg.format("Free");
         }
-        return Msg.format(String.format("<gold>Coins needed<white>: %s<aqua>/<white>%s", amount, Township.getUserManager().getUser(player.getUniqueId()).getCoins()));
-    }
-
-    @Override
-    public Component notEnoughComponent(Player player) {
-        return Msg.format("<red>You need <gold>%s<gold> more coins to purchase this!", Township.getUserManager().getUser(player.getUniqueId()).getCoins() - amount);
+        if (has(player)) {
+            return Msg.format("<gold>Coins<white>: <green>%d/%d", amount, Township.getUserManager().getUser(player.getUniqueId()).getCoins());
+        }
+        return Msg.format("<gold>Coins<white>: <red>%d/%d", amount, Township.getUserManager().getUser(player.getUniqueId()).getCoins());
     }
 }

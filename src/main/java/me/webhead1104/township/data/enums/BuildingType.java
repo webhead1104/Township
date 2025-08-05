@@ -1,9 +1,9 @@
 package me.webhead1104.township.data.enums;
 
 import lombok.Getter;
-import me.webhead1104.township.data.impls.CoinPrice;
 import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.ConstructionMaterials;
+import me.webhead1104.township.price.CoinPrice;
 
 import java.time.Duration;
 import java.util.HashMap;
