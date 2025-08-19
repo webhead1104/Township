@@ -177,4 +177,24 @@ public final class TownshipCommand {
     void lockTrain(CommandSender ignored, @Executor Player player, int train, boolean locked) {
         LockCommand.lockTrain(player, train, locked);
     }
+
+    @Executes("maxPopulation")
+    void maxPopulation(CommandSender ignored, @Executor Player player) {
+        MaxPopulationCommand.getPopulation(player);
+    }
+
+    @Executes("maxPopulation add")
+    void addMaxPopulation(CommandSender ignored, @Executor Player player, int amount) {
+        MaxPopulationCommand.addPopulation(player, amount);
+    }
+
+    @Executes("maxPopulation remove")
+    void removeMaxPopulation(CommandSender ignored, @Executor Player player, int amount) {
+        MaxPopulationCommand.removePopulation(player, amount);
+    }
+
+    @Executes("maxPopulation set")
+    void setMaxPopulation(CommandSender ignored, @Executor Player player, int amount) {
+        MaxPopulationCommand.setPopulation(player, amount);
+    }
 }

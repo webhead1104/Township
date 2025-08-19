@@ -1,11 +1,13 @@
 package me.webhead1104.township.data.objects;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.TileSize;
 import me.webhead1104.township.price.Price;
-import me.webhead1104.township.utils.ItemBuilder;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
 import net.kyori.adventure.text.Component;
@@ -19,6 +21,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class Building {
     private int levelNeeded;
     private int populationIncrease;
@@ -32,36 +35,18 @@ public class Building {
     private TileSize size;
     private String ID;
 
-    public Building(int levelNeeded, int populationIncrease, int maxPopulationIncrease, Price price, @Nullable ConstructionMaterials materials, @Nullable Duration timeToBuild, int xpGiven, TileSize size, String ID) {
-        this.levelNeeded = levelNeeded;
-        this.populationIncrease = populationIncrease;
-        this.maxPopulationIncrease = maxPopulationIncrease;
-        this.price = price;
-        this.materials = materials;
-        this.timeToBuild = timeToBuild;
-        this.xpGiven = xpGiven;
-        this.size = size;
-        this.ID = ID.toUpperCase();
-    }
+    public ItemStack getItemStack(Player player) {
+        ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);
+        itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(Utils.thing2(ID)));
 
-    public ItemStack getItemStack(String buildMenuName, Player player) {
-        ItemBuilder builder = new ItemBuilder(Material.PLAYER_HEAD, "build_menu_" + buildMenuName.toLowerCase() + "_" + ID.toLowerCase());
         Component populationLine;
         if (populationIncrease == 0 && maxPopulationIncrease > 0) {
             populationLine = Msg.format(String.format("<red>+%s Max Population", maxPopulationIncrease));
         } else {
             populationLine = Msg.format(String.format("<red>+%s Population", populationIncrease));
         }
-        builder.displayName(Msg.format("<aqua>" + Utils.thing2(ID)));
-        builder.lore(List.of(
-                Component.empty(),
-                Msg.format("<green>Loading..."),
-                Component.empty(),
-                populationLine,
-                Component.empty(),
-                Msg.format("<blue>Level needed<white>: %s<aqua>/<white>%s", levelNeeded, Township.getUserManager().getUser(player.getUniqueId()).getLevel().getLevel()),
-                price.neededComponent(player)
-        ));
-        return builder.build();
+
+        itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Component.empty(), Msg.format("<green>Loading..."), Component.empty(), populationLine, Component.empty(), Msg.format("<blue>Level needed<white>: %s<aqua>/<white>%s", levelNeeded, Township.getUserManager().getUser(player.getUniqueId()).getLevel()), price.component(player))));
+        return itemStack;
     }
 }
