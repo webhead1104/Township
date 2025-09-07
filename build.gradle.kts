@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("com.gradleup.shadow") version "9.1.0"
-    id("xyz.jpenilla.run-paper") version "2.3.1"
+    id("xyz.jpenilla.run-paper") version "3.0.0"
     id("io.freefair.lombok") version "8.14.2"
     id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
 }
