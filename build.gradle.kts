@@ -1,9 +1,9 @@
 plugins {
     id("java")
-    id("com.gradleup.shadow") version "9.0.2"
-    id("xyz.jpenilla.run-paper") version "2.3.1"
+    id("com.gradleup.shadow") version "9.1.0"
+    id("xyz.jpenilla.run-paper") version "3.0.0"
     id("io.freefair.lombok") version "8.14.2"
-    id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.0"
+    id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
 }
 
 group = "me.webhead1104"
@@ -19,8 +19,8 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
     compileOnly("org.spongepowered:configurate-gson:4.2.0")
-    implementation("me.devnatan:inventory-framework-platform-paper:3.5.1")
-    implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.1")
+    implementation("me.devnatan:inventory-framework-platform-paper:3.5.2")
+    implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.2")
     implementation("io.github.classgraph:classgraph:4.8.181")
 
     compileOnly("net.strokkur:strokk-commands-annotations:1.2.4-SNAPSHOT")
