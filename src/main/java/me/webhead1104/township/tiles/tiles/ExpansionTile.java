@@ -26,7 +26,6 @@ public class ExpansionTile extends Tile {
     public ItemStack render(SlotRenderContext context) {
         ItemStack itemStack = ItemStack.of(Material.PODZOL);
         itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("Expansion"));
-        itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<aqua>Click to open the expansion menu!"))));
         return itemStack;
     }
 
