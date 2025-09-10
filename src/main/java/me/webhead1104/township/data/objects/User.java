@@ -37,6 +37,7 @@ public class User {
     private Factories factories;
     private World world;
     private Trains trains;
+    private PurchasedBuildings purchasedBuildings;
 
     public User(UUID uuid) {
         long start = System.currentTimeMillis();
@@ -54,6 +55,7 @@ public class User {
         this.factories = new Factories();
         this.world = new World();
         this.trains = new Trains();
+        this.purchasedBuildings = new PurchasedBuildings();
         Township.logger.info("Finished creating a user in {} mills!", System.currentTimeMillis() - start);
     }
 

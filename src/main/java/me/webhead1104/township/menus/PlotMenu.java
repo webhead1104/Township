@@ -14,7 +14,7 @@ import me.webhead1104.township.data.enums.PlotType;
 import me.webhead1104.township.data.objects.Plot;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
-import me.webhead1104.township.tiles.tiles.PlotTile;
+import me.webhead1104.township.tiles.PlotTile;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

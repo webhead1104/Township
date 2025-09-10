@@ -5,8 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.data.enums.PlotType;
 import me.webhead1104.township.data.enums.TileSize;
-import me.webhead1104.township.tiles.Tile;
-import me.webhead1104.township.tiles.tiles.*;
+import me.webhead1104.township.tiles.*;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.util.HashMap;

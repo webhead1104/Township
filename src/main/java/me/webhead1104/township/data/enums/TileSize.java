@@ -7,8 +7,10 @@ import java.util.List;
 
 @Getter
 public enum TileSize {
+    SIZE_1X1(1, 1),
     SIZE_2X2(2, 2),
     SIZE_3X3(3, 3),
+    SIZE_2X1(1, 2),
     SIZE_1X3(1, 3);
     private final int height;
     private final int width;

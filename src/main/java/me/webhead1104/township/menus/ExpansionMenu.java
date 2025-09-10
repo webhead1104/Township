@@ -14,7 +14,7 @@ import me.webhead1104.township.data.enums.TileSize;
 import me.webhead1104.township.data.objects.Expansion;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
-import me.webhead1104.township.tiles.tiles.StaticWorldTile;
+import me.webhead1104.township.tiles.StaticWorldTile;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

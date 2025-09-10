@@ -109,6 +109,10 @@ public class WorldMenu extends View {
         coinsAndCashStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<yellow>Coins %d", user.getCoins()));
         coinsAndCashStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<green>Cash %d", user.getCash()))));
         player.getInventory().setItem(17, coinsAndCashStack);
+
+        ItemStack buildingMenuStack = ItemStack.of(Material.YELLOW_CONCRETE);
+        buildingMenuStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>Build Menu"));
+        player.getInventory().setItem(8, buildingMenuStack);
     }
 
     @Override
@@ -125,6 +129,9 @@ public class WorldMenu extends View {
                 openConfirmClose.set(false, context);
             } else if (context.getClickedSlot() == 58 && context.getItem() != null) {
                 context.openForPlayer(WorldMenu.class, sectionState.get(context) - 8);
+                openConfirmClose.set(false, context);
+            } else if (context.getClickedSlot() == 89 && context.getItem() != null) {
+                context.openForPlayer(BuildMenu.class);
                 openConfirmClose.set(false, context);
             }
         }

@@ -1,15 +1,15 @@
-package me.webhead1104.township.tiles.tiles;
+package me.webhead1104.township.tiles;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.FactoryType;
-import me.webhead1104.township.data.objects.Factories;
 import me.webhead1104.township.menus.FactoryMenu;
-import me.webhead1104.township.tiles.Tile;
-import me.webhead1104.township.tiles.TileUtils;
+import me.webhead1104.township.utils.Msg;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @AllArgsConstructor
@@ -19,8 +19,9 @@ public class FactoryTile extends Tile {
 
     @Override
     public ItemStack render(SlotRenderContext context) {
-        Factories.Factory factory = Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getFactories().getFactory(factoryType);
-        return TileUtils.createPurchableItemStack(factoryType.getName(), !factory.isUnlocked());
+        ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
+        itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(factoryType.getName()));
+        return itemStack;
     }
 
     @Override

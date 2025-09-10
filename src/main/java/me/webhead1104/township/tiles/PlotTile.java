@@ -1,4 +1,4 @@
-package me.webhead1104.township.tiles.tiles;
+package me.webhead1104.township.tiles;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
@@ -11,7 +11,6 @@ import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.PlotType;
 import me.webhead1104.township.data.objects.Plot;
 import me.webhead1104.township.menus.PlotMenu;
-import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
 import org.bukkit.inventory.ItemStack;

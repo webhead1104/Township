@@ -1,4 +1,4 @@
-package me.webhead1104.township.tiles.tiles;
+package me.webhead1104.township.tiles;
 
 import com.destroystokyo.paper.profile.ProfileProperty;
 import io.papermc.paper.datacomponent.DataComponentTypes;
@@ -6,7 +6,6 @@ import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.township.menus.BarnMenu;
-import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
