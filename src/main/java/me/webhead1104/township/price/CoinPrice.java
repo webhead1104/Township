@@ -25,13 +25,13 @@ public class CoinPrice implements Price {
     }
 
     @Override
-    public Component component(Player player) {
+    public Component getComponent(Player player) {
         if (amount == 0) {
             return Msg.format("Free");
         }
         if (has(player)) {
-            return Msg.format("<gold>Coins<white>: <green>%d/%d", amount, Township.getUserManager().getUser(player.getUniqueId()).getCoins());
+            return Msg.format("<gold>Coins<white>: <green>%d/%d", Township.getUserManager().getUser(player.getUniqueId()).getCoins(), amount);
         }
-        return Msg.format("<gold>Coins<white>: <red>%d/%d", amount, Township.getUserManager().getUser(player.getUniqueId()).getCoins());
+        return Msg.format("<gold>Coins<white>: <red>%d/%d", Township.getUserManager().getUser(player.getUniqueId()).getCoins(), amount);
     }
 }

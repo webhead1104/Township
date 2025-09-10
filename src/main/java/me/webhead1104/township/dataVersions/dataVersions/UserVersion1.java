@@ -12,20 +12,6 @@ import java.util.Map;
 @SuppressWarnings("unused")
 public final class UserVersion1 implements DataVersion {
 
-    @Override
-    public ConfigurationTransformation getTransformation() {
-        return ConfigurationTransformation.builder()
-                .addAction(NodePath.path(), (path, node) -> {
-                    injectInstantInPlotTiles(node);
-                    return null;
-                }).build();
-    }
-
-    @Override
-    public int getVersion() {
-        return 1;
-    }
-
     private static void injectInstantInPlotTiles(ConfigurationNode node) throws SerializationException {
         if (node.isMap()) {
             for (Map.Entry<Object, ? extends ConfigurationNode> entry : node.childrenMap().entrySet()) {
@@ -43,5 +29,19 @@ public final class UserVersion1 implements DataVersion {
                 injectInstantInPlotTiles(child);
             }
         }
+    }
+
+    @Override
+    public ConfigurationTransformation getTransformation() {
+        return ConfigurationTransformation.builder()
+                .addAction(NodePath.path(), (path, node) -> {
+                    injectInstantInPlotTiles(node);
+                    return null;
+                }).build();
+    }
+
+    @Override
+    public int getVersion() {
+        return 1;
     }
 }

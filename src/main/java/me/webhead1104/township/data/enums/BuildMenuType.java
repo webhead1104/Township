@@ -1,15 +1,14 @@
 package me.webhead1104.township.data.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.webhead1104.township.utils.Msg;
 import net.kyori.adventure.text.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Getter
+@AllArgsConstructor
 public enum BuildMenuType {
     HOUSING(Msg.format("Housing"),
             List.of(BuildingType.COTTAGE, BuildingType.CAPE_COD_COTTAGE, BuildingType.CHALET_BUNGALOW, BuildingType.CONCH_HOUSE, BuildingType.BUNGALOW)),
@@ -22,25 +21,5 @@ public enum BuildMenuType {
     SPECIAL(Msg.format("Special"),
             List.of(BuildingType.BARN, BuildingType.HELICOPTER, BuildingType.TRAIN, BuildingType.TOWN_HALL));
     private final Component menuTitle;
-    private final Map<Integer, List<BuildingType>> buildings = new HashMap<>();
-
-    BuildMenuType(Component menuTitle, List<BuildingType> buildings) {
-        this.menuTitle = menuTitle;
-        int page = 0;
-        int i = 0;
-        this.buildings.put(page, new ArrayList<>(6));
-        for (BuildingType buildingType : buildings) {
-            this.buildings.get(page).add(buildingType);
-            if (i == 6) {
-                page++;
-                i = 0;
-                this.buildings.put(page, new ArrayList<>(6));
-            }
-            i++;
-        }
-    }
-
-    public List<BuildingType> getBuildings(int page) {
-        return this.buildings.get(page);
-    }
+    private final List<BuildingType> buildings;
 }

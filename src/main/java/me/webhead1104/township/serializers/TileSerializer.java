@@ -18,10 +18,10 @@ public class TileSerializer implements TypeSerializer<Tile> {
 
     @Override
     public Tile deserialize(@NotNull Type type, @NotNull ConfigurationNode node) throws SerializationException {
-        String className = node.node(CLASS_KEY).getString();
-        if (className == null) {
+        if (node.node(CLASS_KEY).getString() == null) {
             throw new SerializationException("Cannot deserialize a Tile without a class name!");
         }
+        String className = "me.webhead1104.township.tiles." + node.node(CLASS_KEY).getString();
 
         try {
             Class<?> tileClass = Class.forName(className);
@@ -143,7 +143,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
         }
 
         Class<?> tileClass = obj.getClass();
-        node.node(CLASS_KEY).set(tileClass.getName());
+        node.node(CLASS_KEY).set(tileClass.getName().split("me.webhead1104.township.tiles.tiles.")[1]);
 
         ConfigurationNode propertiesNode = node.node(PROPERTIES_KEY);
 

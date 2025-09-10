@@ -8,5 +8,5 @@ public interface Price {
 
     boolean has(Player player);
 
-    Component component(Player player);
+    Component getComponent(Player player);
 }

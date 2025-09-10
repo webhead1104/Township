@@ -1,6 +1,5 @@
 package me.webhead1104.township.menus;
 
-import com.google.common.collect.ImmutableMap;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
@@ -51,10 +50,7 @@ public class BuildMenu extends View {
                 itemStack.setData(DataComponentTypes.RARITY, ItemRarity.COMMON);
                 slotRenderContext.setItem(itemStack);
             }).onClick(slotClickContext -> {
-                slotClickContext.openForPlayer(BuildMenuBuildingsMenu.class, ImmutableMap.of(
-                        "TYPE", buildMenuType,
-                        "PAGE", 0
-                ));
+                slotClickContext.openForPlayer(BuildMenuSelectBuildingMenu.class, buildMenuType);
                 openWorldMenu.set(false, slotClickContext);
             });
         }
