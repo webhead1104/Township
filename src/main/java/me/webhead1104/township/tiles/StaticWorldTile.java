@@ -1,4 +1,4 @@
-package me.webhead1104.township.tiles.tiles;
+package me.webhead1104.township.tiles;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
-import me.webhead1104.township.tiles.Tile;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

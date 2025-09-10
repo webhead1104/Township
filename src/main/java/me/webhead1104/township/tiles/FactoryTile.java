@@ -1,4 +1,4 @@
-package me.webhead1104.township.tiles.tiles;
+package me.webhead1104.township.tiles;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.FactoryType;
 import me.webhead1104.township.data.objects.Factories;
 import me.webhead1104.township.menus.FactoryMenu;
-import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.tiles.TileUtils;
 import org.bukkit.inventory.ItemStack;
 
