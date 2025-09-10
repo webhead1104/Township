@@ -143,7 +143,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
         }
 
         Class<?> tileClass = obj.getClass();
-        node.node(CLASS_KEY).set(tileClass.getName().split("me.webhead1104.township.tiles.tiles.")[1]);
+        node.node(CLASS_KEY).set(tileClass.getName().split("me.webhead1104.township.tiles.")[1]);
 
         ConfigurationNode propertiesNode = node.node(PROPERTIES_KEY);
 
