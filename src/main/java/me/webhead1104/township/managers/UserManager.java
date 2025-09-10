@@ -19,7 +19,7 @@ public class UserManager {
     private final Map<Integer, DataVersion> dataVersions = new HashMap<>();
 
     public void loadDataVersions() {
-        ClassGraph graph = new ClassGraph().acceptPackages("me.webhead1104.township.dataVersions.dataVersions").enableAllInfo();
+        ClassGraph graph = new ClassGraph().acceptPackages("me.webhead1104.township.dataVersions").enableAllInfo();
 
         try (ScanResult result = graph.scan()) {
             result.getClassesImplementing(DataVersion.class).loadClasses().forEach(clazz -> {

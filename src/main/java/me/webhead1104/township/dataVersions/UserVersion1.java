@@ -1,6 +1,5 @@
-package me.webhead1104.township.dataVersions.dataVersions;
+package me.webhead1104.township.dataVersions;
 
-import me.webhead1104.township.dataVersions.DataVersion;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.NodePath;
 import org.spongepowered.configurate.serialize.SerializationException;
