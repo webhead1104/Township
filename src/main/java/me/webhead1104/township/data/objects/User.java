@@ -21,7 +21,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-    public static final int LATEST_VERSION = 3;
+    public static final int LATEST_VERSION = 5;
     private int version = LATEST_VERSION;
     private UUID uuid;
     private String townName;

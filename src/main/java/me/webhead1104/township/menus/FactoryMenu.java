@@ -42,10 +42,6 @@ public class FactoryMenu extends View {
     public void onOpen(@NotNull OpenContext context) {
         FactoryType factoryType = this.factoryType.get(context);
         context.modifyConfig().title(factoryType.getMenuTitle());
-        if (!Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getFactories().getFactory(factoryType).isUnlocked()) {
-            context.setCancelled(true);
-            return;
-        }
         Player player = context.getPlayer();
         player.getInventory().clear();
         player.setItemOnCursor(ItemStack.empty());

@@ -36,8 +36,6 @@ public class AnimalMenu extends View {
     public void onOpen(@NotNull OpenContext context) {
         AnimalType animalType = this.animalType.get(context);
         context.modifyConfig().title(animalType.getMenuTitle());
-        if (!Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getAnimals().getAnimalBuilding(animalType).isUnlocked())
-            context.setCancelled(true);
         Player player = context.getPlayer();
         player.getInventory().clear();
         player.setItemOnCursor(ItemStack.empty());

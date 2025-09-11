@@ -158,16 +158,6 @@ public final class TownshipCommand {
         XpCommand.setXp(player, amount);
     }
 
-    @Executes("lock animal")
-    void lock(CommandSender ignored, @Executor Player player, @CustomArg(AnimalTypeArgument.class) AnimalType type, boolean locked) {
-        LockCommand.lock(player, type, locked);
-    }
-
-    @Executes("lock factory")
-    void lockFactory(CommandSender ignored, @Executor Player player, @CustomArg(FactoryTypeArgument.class) FactoryType type, boolean locked) {
-        LockCommand.lock(player, type, locked);
-    }
-
     @Executes("lock trains")
     void lockTrains(CommandSender ignored, @Executor Player player, boolean locked) {
         LockCommand.lockTrains(player, locked);

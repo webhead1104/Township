@@ -23,7 +23,7 @@ public class Animals {
             for (int i = 0; i < 6; i++) {
                 animalBuildings.put(i, new AnimalBuilding.Animal(false, false, i < 3, Instant.EPOCH));
             }
-            this.animalBuildings.put(animalType, new AnimalBuilding(animalBuildings, false));
+            this.animalBuildings.put(animalType, new AnimalBuilding(animalBuildings));
         }
     }
 
@@ -44,11 +44,9 @@ public class Animals {
     @NoArgsConstructor
     public static class AnimalBuilding {
         private Map<Integer, Animal> animals;
-        private boolean unlocked;
 
-        public AnimalBuilding(Map<Integer, Animal> animals, boolean unlocked) {
+        public AnimalBuilding(Map<Integer, Animal> animals) {
             this.animals = animals;
-            this.unlocked = unlocked;
         }
 
         public void setAnimal(int slot, @NotNull Animal animal) {

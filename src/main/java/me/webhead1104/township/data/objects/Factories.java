@@ -33,7 +33,6 @@ public class Factories {
         private final Map<Integer, RecipeType> waiting = new HashMap<>();
         private final Map<Integer, ItemType> completed = new HashMap<>();
         private RecipeType workingOn;
-        private boolean unlocked;
         private Instant instant;
 
         public Factory() {
@@ -42,7 +41,6 @@ public class Factories {
                 this.completed.put(i, ItemType.NONE);
             }
             this.workingOn = RecipeType.NONE;
-            this.unlocked = false;
             this.instant = Instant.EPOCH;
         }
 

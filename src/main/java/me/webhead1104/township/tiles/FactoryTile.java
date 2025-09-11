@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
-import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.FactoryType;
 import me.webhead1104.township.menus.FactoryMenu;
 import me.webhead1104.township.utils.Msg;
@@ -26,10 +25,7 @@ public class FactoryTile extends Tile {
 
     @Override
     public boolean onClick(SlotClickContext context) {
-        if (Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getFactories().getFactory(factoryType).isUnlocked()) {
-            context.openForPlayer(FactoryMenu.class, factoryType);
-            return true;
-        }
-        return false;
+        context.openForPlayer(FactoryMenu.class, factoryType);
+        return true;
     }
 }
