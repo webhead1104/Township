@@ -6,16 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public enum TileSize {
-    SIZE_1X1(1, 1),
-    SIZE_2X2(2, 2),
-    SIZE_3X3(3, 3),
-    SIZE_2X1(1, 2),
-    SIZE_1X3(1, 3);
+public class TileSize {
+    public static final TileSize SIZE_1X1 = new TileSize(1, 1);
+    public static final TileSize SIZE_2X2 = new TileSize(2, 2);
+    public static final TileSize SIZE_3X3 = new TileSize(3, 3);
+    public static final TileSize SIZE_2X1 = new TileSize(1, 2);
+    public static final TileSize SIZE_1X3 = new TileSize(1, 3);
+
     private final int height;
     private final int width;
 
-    TileSize(int height, int width) {
+    public TileSize(int height, int width) {
         this.height = height;
         this.width = width;
     }
