@@ -31,7 +31,7 @@ public class BarnManager {
             }
             int b = storage.get() + a.get();
             storage.set(b);
-            upgradeMap.put(i, new BarnUpgrade(i, i, storage.get() + a.get()));
+            upgradeMap.put(i, new BarnUpgrade(i, i, b));
         }
     }
 }
