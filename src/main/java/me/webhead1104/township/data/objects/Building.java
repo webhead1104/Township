@@ -37,7 +37,24 @@ public class Building {
     private Tile tile;
     private int xpGiven;
     private TileSize size;
+    private int slot;
+    private boolean needToBePlaced;
     private String ID;
+
+    public Building(int levelNeeded, int populationNeeded, int populationIncrease, int maxPopulationIncrease, Price price, @Nullable ConstructionMaterials materials,
+                    @Nullable Duration timeToBuild, Tile tile, int xpGiven, TileSize size, String ID) {
+        this.levelNeeded = levelNeeded;
+        this.populationNeeded = populationNeeded;
+        this.populationIncrease = populationIncrease;
+        this.maxPopulationIncrease = maxPopulationIncrease;
+        this.price = price;
+        this.materials = materials;
+        this.timeToBuild = timeToBuild;
+        this.tile = tile;
+        this.xpGiven = xpGiven;
+        this.size = size;
+        this.ID = ID;
+    }
 
     public ItemStack getItemStack(Player player) {
         ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);
@@ -53,19 +70,25 @@ public class Building {
             lore.add(Component.empty());
             lore.add(Msg.format(String.format("<red>+%s Population", populationIncrease)));
         }
-        if (Township.getUserManager().getUser(player.getUniqueId()).getLevel() >= levelNeeded) {
+        if (needToBePlaced) {
             lore.add(Component.empty());
-            lore.add(Msg.format("<blue>Level needed<white>: <green>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getLevel(), levelNeeded));
+            lore.add(Msg.format("<white>Something happned when you tried to place this."));
+            lore.add(Msg.format("<white>So you can try and place it again!"));
         } else {
-            lore.add(Component.empty());
-            lore.add(Msg.format("<blue>Level needed<white>: <red>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getLevel(), levelNeeded));
-        }
-        if (populationNeeded > 0) {
-            lore.add(Component.empty());
-            if (Township.getUserManager().getUser(player.getUniqueId()).getPopulation() >= populationNeeded) {
-                lore.add(Msg.format("<red>Population needed<white>: <green>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getPopulation(), populationNeeded));
+            if (Township.getUserManager().getUser(player.getUniqueId()).getLevel() >= levelNeeded) {
+                lore.add(Component.empty());
+                lore.add(Msg.format("<blue>Level needed<white>: <green>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getLevel(), levelNeeded));
             } else {
-                lore.add(Msg.format("<red>Population needed<white>: <red>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getPopulation(), populationNeeded));
+                lore.add(Component.empty());
+                lore.add(Msg.format("<blue>Level needed<white>: <red>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getLevel(), levelNeeded));
+            }
+            if (populationNeeded > 0) {
+                lore.add(Component.empty());
+                if (Township.getUserManager().getUser(player.getUniqueId()).getPopulation() >= populationNeeded) {
+                    lore.add(Msg.format("<red>Population needed<white>: <green>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getPopulation(), populationNeeded));
+                } else {
+                    lore.add(Msg.format("<red>Population needed<white>: <red>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getPopulation(), populationNeeded));
+                }
             }
         }
         lore.add(Component.empty());

@@ -31,26 +31,32 @@ public class BuildMenuSelectBuildingMenu extends View {
     private final State<BuildMenuType> typeState = initialState();
     private final MutableState<Boolean> openBuildMenuState = mutableState(true);
     private final State<Pagination> paginationState = buildComputedPaginationState(context -> typeState.get(context).getBuildings()).elementFactory((context, builder, index, buildingType) -> {
-        Building building = buildingType.getNextPurchableBuilding(context.getPlayer());
+        Building building = buildingType.getNextBuilding(context.getPlayer());
+        User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
         if (building == null) {
             ItemStack itemStack = new ItemStack(Material.BARRIER);
             itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<red>You have purchased the max amount of this building!"));
             builder.withItem(itemStack);
             return;
         }
+
         ItemStack itemStack = building.getItemStack(context.getPlayer());
-        User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
         List<Component> components = new ArrayList<>(Objects.requireNonNull(itemStack.getData(DataComponentTypes.LORE)).lines());
         components.set(1, Msg.format("<green>%s/%s purchased", user.getPurchasedBuildings().amountPurchased(buildingType), buildingType.getBuildings().size()));
         itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(components));
         builder.withItem(itemStack);
         builder.onClick(slotClickContext -> {
+            if (building.isNeedToBePlaced()) {
+                slotClickContext.openForPlayer(BuildPlaceMenu.class, ImmutableMap.of("BUILDING", building, "BUILDING_TYPE", buildingType, "BUILD_MENU_TYPE", typeState.get(slotClickContext)));
+                openBuildMenuState.set(false, slotClickContext);
+                return;
+            }
             if (building.getPrice().has(slotClickContext.getPlayer()) &&
                     user.getLevel() >= building.getLevelNeeded() &&
                     user.getPopulation() >= building.getPopulationNeeded()) {
                 building.getPrice().take(slotClickContext.getPlayer());
-                user.getPurchasedBuildings().purchase(buildingType, new ArrayList<>(buildingType.getBuildings().values()).indexOf(building));
-                slotClickContext.openForPlayer(BuildPlaceMenu.class, ImmutableMap.of("BUILDING", building, "BUILD_MENU_TYPE", typeState.get(slotClickContext)));
+                user.getPurchasedBuildings().purchase(buildingType, building.getSlot());
+                slotClickContext.openForPlayer(BuildPlaceMenu.class, ImmutableMap.of("BUILDING", building, "BUILDING_TYPE", buildingType, "BUILD_MENU_TYPE", typeState.get(slotClickContext)));
                 openBuildMenuState.set(false, slotClickContext);
             }
         });

@@ -7,6 +7,7 @@ import me.devnatan.inventoryframework.context.*;
 import me.devnatan.inventoryframework.state.*;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.BuildMenuType;
+import me.webhead1104.township.data.enums.BuildingType;
 import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.WorldSection;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 public class BuildPlaceMenu extends View {
     private final MutableIntState sectionState = mutableState(27);
     private final State<BuildMenuType> buildMenuTypeState = initialState("BUILD_MENU_TYPE");
+    private final State<BuildingType> buildingTypeState = initialState("BUILDING_TYPE");
     private final State<Building> buildingState = initialState("BUILDING");
     private final MutableIntState slotState = mutableState(0);
     private final MutableState<Boolean> canPlaceState = mutableState(false);
@@ -146,6 +148,11 @@ public class BuildPlaceMenu extends View {
                 for (Integer slot : building.getSize().toList(slotState.get(context))) {
                     user.getWorld().getSection(sectionState.get(context)).setSlot(slot, building.getTile());
                 }
+                user.getPurchasedBuildings().getPurchasedBuilding(buildingTypeState.get(context), building.getSlot()).ifPresent(purchasedBuilding -> {
+                    purchasedBuilding.setPlaced(true);
+                    purchasedBuilding.setSection(section);
+                });
+                user.getPurchasedBuildings().recalculatePopulation(context.getPlayer());
                 context.openForPlayer(WorldMenu.class, section);
                 openBuildingSelectMenu.set(false, context);
             }
