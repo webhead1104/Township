@@ -61,29 +61,7 @@ public class WorldMenu extends View {
             }
         }));
 
-        if (Township.getWorldManager().canMoveRight(sectionState.get(context))) {
-            ItemStack stack = ItemStack.of(Material.ARROW);
-            stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll right!"));
-            player.getInventory().setItem(23, stack);
-        }
-
-        if (Township.getWorldManager().canMoveDown(sectionState.get(context))) {
-            ItemStack stack = ItemStack.of(Material.ARROW);
-            stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll down!"));
-            player.getInventory().setItem(31, stack);
-        }
-
-        if (Township.getWorldManager().canMoveLeft(sectionState.get(context))) {
-            ItemStack stack = ItemStack.of(Material.ARROW);
-            stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll left!"));
-            player.getInventory().setItem(21, stack);
-        }
-
-        if (Township.getWorldManager().canMoveUp(sectionState.get(context))) {
-            ItemStack stack = ItemStack.of(Material.ARROW);
-            stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll up!"));
-            player.getInventory().setItem(13, stack);
-        }
+        Township.getWorldManager().applyArrows(player, sectionState.get(context));
 
         ItemStack profileItemStack = ItemStack.of(Material.LIGHT_BLUE_CONCRETE);
         profileItemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<green>%s", user.getTownName()));
