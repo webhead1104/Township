@@ -56,13 +56,14 @@ public class AnimalMenu extends View {
         int slot = 11;
         for (int i = 0; i < 6; ++i) {
             Animals.AnimalBuilding.Animal animal = animals.getAnimalBuilding(animalType).getAnimal(i);
-            context.slot(slot).onRender(slotRenderContext -> {
+            context.slot(slot).onUpdate(slotContext -> {
                 if (!animal.getInstant().equals(Instant.EPOCH) && Instant.now().isAfter(animal.getInstant().minusSeconds(1))) {
                     animal.setFeed(false);
                     animal.setProduct(true);
                     animal.setInstant(Instant.EPOCH);
-                    slotRenderContext.update();
+                    slotContext.update();
                 }
+            }).onRender(slotRenderContext -> {
                 ItemStack stack = animalType.getAnimalItemStack();
                 if (!animal.getInstant().equals(Instant.EPOCH)) {
                     stack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<gold>Time: %s", Utils.format(Instant.now(), animal.getInstant())))));
@@ -70,22 +71,16 @@ public class AnimalMenu extends View {
                 slotRenderContext.setItem(stack);
             });
 
-            context.slot(slot + 9).onRender(slotRenderContext -> {
-                if (!animal.isProduct()) {
-                    slotRenderContext.setItem(ItemStack.empty());
-                    return;
-                }
-                slotRenderContext.setItem(animalType.getProductType().getItemStack());
-            }).onClick(slotClickContext -> {
-                user.getBarn().addAmountToItem(animalType.getProductType(), 1);
-                Township.getLevelManager().addXp(slotClickContext.getPlayer(), animalType.getXpGivenOnClaim());
-                animal.setProduct(false);
-                slotClickContext.update();
-            });
+            context.slot(slot + 9).withItem(animalType.getProductType().getItemStack())
+                    .displayIf(animal::isProduct).updateOnClick().onClick(slotClickContext -> {
+                        user.getBarn().addAmountToItem(animalType.getProductType(), 1);
+                        Township.getLevelManager().addXp(slotClickContext.getPlayer(), animalType.getXpGivenOnClaim());
+                        animal.setProduct(false);
+                    });
             slot++;
         }
 
-        context.slot(36).onRender(slotRenderContext -> {
+        context.slot(36).updateOnClick().onRender(slotRenderContext -> {
             ItemStack stack = animalType.getFeedType().getItemStack();
             stack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<white>%s", user.getBarn().getItem(animalType.getFeedType())))));
             slotRenderContext.setItem(stack);
@@ -99,7 +94,6 @@ public class AnimalMenu extends View {
                         user.getBarn().removeAmountFromItem(animalType.getFeedType(), 1);
                     }
                 }
-                slotClickContext.update();
             }
         });
     }
