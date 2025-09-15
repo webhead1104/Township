@@ -9,7 +9,7 @@ public final class XpCommand {
 
     public static void addXp(Player player, long xp) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
-        user.setXp(user.getXp() + xp);
+        Township.getLevelManager().addXp(player, xp);
         player.sendMessage(Msg.format("<green>Added %d xp!", xp));
     }
 
