@@ -10,9 +10,9 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 @NoArgsConstructor
 public class Level {
     @Setting("xp_needed")
-    private long xpNeeded;
+    private int xpNeeded;
     @Setting("coins_given")
-    private long coinsGiven;
+    private int coinsGiven;
     @Setting("cash_given")
-    private long cashGiven;
+    private int cashGiven;
 }

@@ -107,7 +107,7 @@ public class BarnMenu extends View {
             if (itemType == ItemType.NONE) return;
             if (barn.getItem(itemType) < amount) return;
             barn.removeAmountFromItem(itemType, amount);
-            user.setCoins(user.getCoins() + (long) itemType.getSellPrice() * amount);
+            user.setCoins(user.getCoins() + itemType.getSellPrice() * amount);
             sellItem.set(ItemType.NONE, slotClickContext);
             sellAmount.set(1, slotClickContext);
             slotClickContext.openForPlayer(BarnMenu.class);

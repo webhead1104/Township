@@ -26,11 +26,11 @@ public class User {
     private UUID uuid;
     private String townName;
     private int level;
-    private long xp;
+    private int xp;
     private int population;
     private int maxPopulation;
-    private long coins;
-    private long cash;
+    private int coins;
+    private int cash;
     private int section;
     private Barn barn;
     private Animals animals;
