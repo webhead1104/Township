@@ -11,7 +11,7 @@ import java.time.Duration;
 
 @Getter
 public enum AnimalType {
-    COWSHED_1("Cowshed", Utils.getItemStack("Cow", Material.COW_SPAWN_EGG), ItemType.COW_FEED, ItemType.MILK, 3, Duration.ofMinutes(20)),
+    COWSHED_1("Cowshed", Utils.getItemStack("Cow", Material.COW_SPAWN_EGG), ItemType.COW_FEED, ItemType.MILK, 3, Duration.ofSeconds(20)),
     COWSHED_2("Cowshed", Utils.getItemStack("Cow", Material.COW_SPAWN_EGG), ItemType.COW_FEED, ItemType.MILK, 3, Duration.ofMinutes(20)),
     COWSHED_3("Cowshed", Utils.getItemStack("Cow", Material.COW_SPAWN_EGG), ItemType.COW_FEED, ItemType.MILK, 3, Duration.ofMinutes(20)),
     CHICKEN_COOP_1("Chicken Coop", Utils.getItemStack("Chicken", Material.COW_SPAWN_EGG), ItemType.CHICKEN_FEED, ItemType.EGG, 4, Duration.ofHours(1)),

@@ -78,6 +78,7 @@ public class AnimalMenu extends View {
                 slotRenderContext.setItem(animalType.getProductType().getItemStack());
             }).onClick(slotClickContext -> {
                 user.getBarn().addAmountToItem(animalType.getProductType(), 1);
+                Township.getLevelManager().addXp(slotClickContext.getPlayer(), animalType.getXpGivenOnClaim());
                 animal.setProduct(false);
                 slotClickContext.update();
             });

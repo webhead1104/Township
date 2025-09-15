@@ -142,6 +142,7 @@ public class TrainMenu extends View {
                         int amount = trainCar.getGiveItemAmount();
                         if (user.getBarn().getItem(itemType) >= amount) {
                             user.getBarn().removeAmountFromItem(itemType, amount);
+                            Township.getLevelManager().addXp(player, itemType.getXpGiven());
                             trainCar.setGiveItemAmount(0);
                             trainCar.setGiveItemType(ItemType.NONE);
                             AtomicBoolean good = new AtomicBoolean(true);
