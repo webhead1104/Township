@@ -27,46 +27,76 @@ public class LevelManager {
             long start = System.currentTimeMillis();
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.source(() -> new BufferedReader(new InputStreamReader(Objects.requireNonNull(LevelManager.class.getResourceAsStream("/levels.json"))))).build().load();
             int i = 1;
-            for (Level level : Objects.requireNonNull(node.getList(Level.class))) {
+            var list = node.getList(Level.class);
+            if (list == null || list.isEmpty()) {
+                Township.logger.error("No levels found in levels.json!");
+                return;
+            }
+            for (Level level : list) {
                 levelMap.put(i++, level);
             }
-            Township.logger.info("Levels loaded in {} mills!", System.currentTimeMillis() - start);
+            Township.logger.info("Loaded {} levels in {} ms!", levelMap.size(), System.currentTimeMillis() - start);
         } catch (Exception e) {
             Township.logger.error("An error occurred whilst loading the levels! Please report the following stacktrace to Webhead1104:", e);
         }
     }
 
     public void addXp(Player player, int amountOfXp) {
+        if (amountOfXp <= 0) return; // ignore non-positive xp changes here
         User user = Township.getUserManager().getUser(player.getUniqueId());
-        if (canLevelUp(player)) {
-            user.setXp(amountOfXp);
-        } else {
-            user.setXp(user.getXp() + amountOfXp);
+        user.setXp(user.getXp() + amountOfXp);
+        //noinspection StatementWithEmptyBody
+        while (canLevelUp(player)) {
         }
     }
 
     public boolean canLevelUp(Player player) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
-        if (Township.getLevelManager().getLevelMap().containsKey(user.getLevel() + 1)) {
-            if (user.getXp() >= Township.getLevelManager().getLevelMap().get(user.getLevel() + 1).getXpNeeded()) {
-                user.setLevel(user.getLevel() + 1);
-                user.setXp(0);
-                player.sendMessage(Msg.format("<green>You have leveled up! You are now level " + user.getLevel()));
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+        Level nextLevel = Township.getLevelManager().getLevelMap().get(user.getLevel() + 1);
+        if (nextLevel == null) {
             return false;
         }
+        int needed = nextLevel.getXpNeeded();
+        if (user.getXp() >= needed) {
+            // level up
+            user.setLevel(user.getLevel() + 1);
+            // subtract the XP required so overflow carries to next level
+            user.setXp(user.getXp() - needed);
+
+            // Apply rewards for reaching this level
+            int coinsReward = nextLevel.getCoinsGiven();
+            int cashReward = nextLevel.getCashGiven();
+            if (coinsReward > 0) user.setCoins(user.getCoins() + coinsReward);
+            if (cashReward > 0) user.setCash(user.getCash() + cashReward);
+
+            // Notify player
+            StringBuilder sb = new StringBuilder();
+            sb.append("<green>You have leveled up to level ").append(user.getLevel()).append("!");
+            if (coinsReward > 0 || cashReward > 0) {
+                sb.append(" <gray>(Rewards: ");
+                boolean added = false;
+                if (coinsReward > 0) {
+                    sb.append("<yellow>").append(coinsReward).append(" coins");
+                    added = true;
+                }
+                if (cashReward > 0) {
+                    sb.append(added ? "<gray>, " : "").append("<aqua>").append(cashReward).append(" cash");
+                }
+                sb.append("<gray>)");
+            }
+            player.sendMessage(Msg.format(sb.toString()));
+            return true;
+        }
+        return false;
     }
 
     public String getProgressBar(Player player) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
-        if (Township.getLevelManager().getLevelMap().containsKey(user.getLevel() + 1)) {
-            long max = Township.getLevelManager().getLevelMap().get(user.getLevel() + 1).getXpNeeded();
-            float percent = (float) user.getXp() / max;
-            int progressBars = (int) (16 * percent);
+        Level nextLevel = Township.getLevelManager().getLevelMap().get(user.getLevel() + 1);
+        if (nextLevel != null) {
+            int max = nextLevel.getXpNeeded();
+            float percent = max > 0 ? Math.min(1f, Math.max(0f, (float) user.getXp() / max)) : 0f;
+            int progressBars = Math.max(0, Math.min(16, (int) (16 * percent)));
 
             return Strings.repeat("<aqua>■", progressBars) + Strings.repeat("<gray>■", 16 - progressBars);
         } else {
