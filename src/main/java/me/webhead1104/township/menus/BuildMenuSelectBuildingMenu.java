@@ -47,7 +47,25 @@ public class BuildMenuSelectBuildingMenu extends View {
         builder.withItem(itemStack);
         builder.onClick(slotClickContext -> {
             if (building.isNeedToBePlaced()) {
-                slotClickContext.openForPlayer(BuildPlaceMenu.class, ImmutableMap.of("BUILDING", building, "BUILDING_TYPE", buildingType, "BUILD_MENU_TYPE", typeState.get(slotClickContext)));
+                BuildMenuType type = typeState.get(slotClickContext);
+                int startSection = Township.getUserManager().getUser(slotClickContext.getPlayer().getUniqueId()).getSection();
+                slotClickContext.openForPlayer(PlaceMenu.class, ImmutableMap.of(
+                        "TILE_SIZE", building.getSize(),
+                        "START_SECTION", startSection,
+                        "ON_PLACE", (PlaceMenu.PlaceAction) (ctx, section, anchor) -> {
+                            User u = Township.getUserManager().getUser(ctx.getPlayer().getUniqueId());
+                            for (Integer s : building.getSize().toList(anchor)) {
+                                u.getWorld().getSection(section).setSlot(s, building.getTile());
+                            }
+                            u.getPurchasedBuildings().getPurchasedBuilding(buildingType, building.getSlot()).ifPresent(pb -> {
+                                pb.setPlaced(true);
+                                pb.setSection(section);
+                            });
+                            u.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
+                            ctx.openForPlayer(WorldMenu.class, section);
+                        },
+                        "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type)
+                ));
                 openBuildMenuState.set(false, slotClickContext);
                 return;
             }
@@ -56,7 +74,25 @@ public class BuildMenuSelectBuildingMenu extends View {
                     user.getPopulation() >= building.getPopulationNeeded()) {
                 building.getPrice().take(slotClickContext.getPlayer());
                 user.getPurchasedBuildings().purchase(buildingType, building.getSlot());
-                slotClickContext.openForPlayer(BuildPlaceMenu.class, ImmutableMap.of("BUILDING", building, "BUILDING_TYPE", buildingType, "BUILD_MENU_TYPE", typeState.get(slotClickContext)));
+                BuildMenuType type = typeState.get(slotClickContext);
+                int startSection = Township.getUserManager().getUser(slotClickContext.getPlayer().getUniqueId()).getSection();
+                slotClickContext.openForPlayer(PlaceMenu.class, ImmutableMap.of(
+                        "TILE_SIZE", building.getSize(),
+                        "START_SECTION", startSection,
+                        "ON_PLACE", (PlaceMenu.PlaceAction) (ctx, section, anchor) -> {
+                            User u = Township.getUserManager().getUser(ctx.getPlayer().getUniqueId());
+                            for (Integer s : building.getSize().toList(anchor)) {
+                                u.getWorld().getSection(section).setSlot(s, building.getTile());
+                            }
+                            u.getPurchasedBuildings().getPurchasedBuilding(buildingType, building.getSlot()).ifPresent(pb -> {
+                                pb.setPlaced(true);
+                                pb.setSection(section);
+                            });
+                            u.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
+                            ctx.openForPlayer(WorldMenu.class, section);
+                        },
+                        "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type)
+                ));
                 openBuildMenuState.set(false, slotClickContext);
             }
         });
