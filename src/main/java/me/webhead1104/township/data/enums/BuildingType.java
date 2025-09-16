@@ -116,7 +116,7 @@ public enum BuildingType {
 
     //special
     BARN(createMap(
-            new Building(1, 0, 0, 0, new CoinPrice(0), null, null, new BarnTile(), 0, TileSize.SIZE_3X3, "BARN")
+            new Building(1, 0, 0, 0, new CoinPrice(0), null, null, new BarnTile(), 0, TileSize.SIZE_2X2, "BARN")
     )),
 
     HELICOPTER(createMap(
