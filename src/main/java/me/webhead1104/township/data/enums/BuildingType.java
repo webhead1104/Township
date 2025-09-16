@@ -133,6 +133,16 @@ public enum BuildingType {
         }
     }
 
+    private static Map<Integer, Building> createMap(Building... buildings) {
+        Map<Integer, Building> map = new HashMap<>();
+        int i = 0;
+        for (Building building : buildings) {
+            building.setSlot(i);
+            map.put(i++, building);
+        }
+        return map;
+    }
+
     @Nullable
     public Building getNextBuilding(Player player) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
@@ -152,16 +162,6 @@ public enum BuildingType {
             }
             return buildings.get(amountPurchased.slot() - 1);
         }
-    }
-
-    private static Map<Integer, Building> createMap(Building... buildings) {
-        Map<Integer, Building> map = new HashMap<>();
-        int i = 0;
-        for (Building building : buildings) {
-            building.setSlot(i);
-            map.put(i++, building);
-        }
-        return map;
     }
 
 }

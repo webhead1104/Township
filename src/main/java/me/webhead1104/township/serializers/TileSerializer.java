@@ -16,6 +16,32 @@ public class TileSerializer implements TypeSerializer<Tile> {
     private static final String CLASS_KEY = "class";
     private static final String PROPERTIES_KEY = "properties";
 
+    private static List<Field> collectAllFields(Class<?> clazz) {
+        List<Class<?>> hierarchy = new ArrayList<>();
+        Class<?> current = clazz;
+        while (current != null && Tile.class.isAssignableFrom(current)) {
+            hierarchy.add(current);
+            current = current.getSuperclass();
+        }
+        // Reverse to get super -> suborder
+        Collections.reverse(hierarchy);
+
+        List<Field> result = new ArrayList<>();
+        for (Class<?> c : hierarchy) {
+            for (Field f : c.getDeclaredFields()) {
+                if (Modifier.isStatic(f.getModifiers())) continue;
+                result.add(f);
+            }
+        }
+        return result;
+    }
+
+    private static boolean isTypeCompatible(Class<?> paramType, Object value) {
+        if (value == null) return false;
+        Class<?> p = ClassUtils.primitiveToWrapper(paramType);
+        return p.isInstance(value);
+    }
+
     @Override
     public Tile deserialize(@NotNull Type type, @NotNull ConfigurationNode node) throws SerializationException {
         if (node.node(CLASS_KEY).getString() == null) {
@@ -176,31 +202,5 @@ public class TileSerializer implements TypeSerializer<Tile> {
         } catch (Exception e) {
             throw new SerializationException("Error serializing Tile: " + e.getMessage());
         }
-    }
-
-    private static List<Field> collectAllFields(Class<?> clazz) {
-        List<Class<?>> hierarchy = new ArrayList<>();
-        Class<?> current = clazz;
-        while (current != null && Tile.class.isAssignableFrom(current)) {
-            hierarchy.add(current);
-            current = current.getSuperclass();
-        }
-        // Reverse to get super -> suborder
-        Collections.reverse(hierarchy);
-
-        List<Field> result = new ArrayList<>();
-        for (Class<?> c : hierarchy) {
-            for (Field f : c.getDeclaredFields()) {
-                if (Modifier.isStatic(f.getModifiers())) continue;
-                result.add(f);
-            }
-        }
-        return result;
-    }
-
-    private static boolean isTypeCompatible(Class<?> paramType, Object value) {
-        if (value == null) return false;
-        Class<?> p = ClassUtils.primitiveToWrapper(paramType);
-        return p.isInstance(value);
     }
 }

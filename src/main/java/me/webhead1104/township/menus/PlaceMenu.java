@@ -6,40 +6,26 @@ import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.*;
 import me.devnatan.inventoryframework.state.*;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.data.enums.TileSize;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.WorldSection;
-import me.webhead1104.township.data.enums.TileSize;
 import me.webhead1104.township.tiles.StaticWorldTile;
 import me.webhead1104.township.utils.Msg;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Generic placement view that highlights a target TileSize and lets caller provide actions.
- * Required initial states when opening:
- * - TILE_SIZE: TileSize (required)
- * - START_SECTION: Integer (optional; defaults to current user's section)
- * - ON_PLACE: PlaceAction (required) — called when player confirms placement; receives (context, section, anchor)
- * - ON_CANCEL: CancelAction (optional) — called if view is closed without confirming
- */
 public class PlaceMenu extends View {
-
-    public interface PlaceAction {
-        void onPlace(SlotClickContext context, int section, int anchor);
-    }
-
-    public interface CancelAction {
-        void onCancel(CloseContext context);
-    }
 
     private final MutableIntState sectionState = mutableState(27);
     private final State<TileSize> tileSizeState = initialState("TILE_SIZE");
     private final State<Integer> startSectionState = initialState("START_SECTION");
     private final State<PlaceAction> onPlaceState = initialState("ON_PLACE");
     private final State<CancelAction> onCancelState = initialState("ON_CANCEL");
-
+    private final State<Integer> startAnchorState = initialState("START_ANCHOR");
+    private final State<Component> titleState = initialState("TITLE");
     private final MutableIntState slotState = mutableState(0);
     private final MutableState<Boolean> canPlaceState = mutableState(false);
     private final MutableState<Boolean> placedState = mutableState(false);
@@ -49,20 +35,26 @@ public class PlaceMenu extends View {
         config.scheduleUpdate(1);
         config.cancelInteractions();
         config.size(6);
-        config.title(Msg.format("Place"));
     }
 
     @Override
     public void onOpen(@NotNull OpenContext context) {
+        context.modifyConfig().title(titleState.get(context));
         context.getPlayer().getInventory().clear();
         context.getPlayer().setItemOnCursor(ItemStack.empty());
         Integer start = startSectionState.get(context);
         if (start != null) {
             sectionState.set(start, context);
         } else {
-            // fallback to user's current section
             int current = Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getSection();
             sectionState.set(current, context);
+        }
+        Integer startAnchor = startAnchorState.get(context);
+        if (startAnchor != null) {
+            TileSize size = tileSizeState.get(context);
+            int adjusted = Township.getWorldManager().adjustPlacement(startAnchor, size);
+            slotState.set(adjusted, context);
+            canPlaceState.set(true, context);
         }
         context.update();
     }
@@ -97,12 +89,21 @@ public class PlaceMenu extends View {
 
     @Override
     public void onFirstRender(@NotNull RenderContext context) {
-        // Set canPlace true upon section change
         context.watchState(sectionState.internalId(), new StateWatcher() {
-            @Override public void stateRegistered(@NotNull State<?> state, Object caller) {}
-            @Override public void stateUnregistered(@NotNull State<?> state, Object caller) {}
-            @Override public void stateValueGet(@NotNull State<?> state, @NotNull StateValueHost host, @NotNull StateValue internalValue, Object rawValue) {}
-            @Override public void stateValueSet(@NotNull StateValueHost host, @NotNull StateValue value, Object rawOldValue, Object rawNewValue) {
+            @Override
+            public void stateRegistered(@NotNull State<?> state, Object caller) {
+            }
+
+            @Override
+            public void stateUnregistered(@NotNull State<?> state, Object caller) {
+            }
+
+            @Override
+            public void stateValueGet(@NotNull State<?> state, @NotNull StateValueHost host, @NotNull StateValue internalValue, Object rawValue) {
+            }
+
+            @Override
+            public void stateValueSet(@NotNull StateValueHost host, @NotNull StateValue value, Object rawOldValue, Object rawNewValue) {
                 canPlaceState.set(true, host);
             }
         });
@@ -166,5 +167,13 @@ public class PlaceMenu extends View {
                 place.onPlace(context, section, slotState.get(context));
             }
         }
+    }
+
+    public interface PlaceAction {
+        void onPlace(SlotClickContext context, int section, int anchor);
+    }
+
+    public interface CancelAction {
+        void onCancel(CloseContext context);
     }
 }

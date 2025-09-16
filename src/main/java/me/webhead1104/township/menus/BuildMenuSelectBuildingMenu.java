@@ -52,6 +52,7 @@ public class BuildMenuSelectBuildingMenu extends View {
                 slotClickContext.openForPlayer(PlaceMenu.class, ImmutableMap.of(
                         "TILE_SIZE", building.getSize(),
                         "START_SECTION", startSection,
+                        "TITLE", Msg.format("Place building"),
                         "ON_PLACE", (PlaceMenu.PlaceAction) (ctx, section, anchor) -> {
                             User u = Township.getUserManager().getUser(ctx.getPlayer().getUniqueId());
                             for (Integer s : building.getSize().toList(anchor)) {
@@ -79,6 +80,7 @@ public class BuildMenuSelectBuildingMenu extends View {
                 slotClickContext.openForPlayer(PlaceMenu.class, ImmutableMap.of(
                         "TILE_SIZE", building.getSize(),
                         "START_SECTION", startSection,
+                        "TITLE", Msg.format("Place building"),
                         "ON_PLACE", (PlaceMenu.PlaceAction) (ctx, section, anchor) -> {
                             User u = Township.getUserManager().getUser(ctx.getPlayer().getUniqueId());
                             for (Integer s : building.getSize().toList(anchor)) {

@@ -11,8 +11,13 @@ import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.data.enums.BuildingType;
+import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
+import me.webhead1104.township.data.objects.WorldSection;
+import me.webhead1104.township.tiles.BuildingTile;
+import me.webhead1104.township.tiles.StaticWorldTile;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -56,6 +61,59 @@ public class WorldMenu extends View {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         World world = user.getWorld();
         world.getSection(sectionState.get(context)).getSlotMap().forEach((key, tile) -> context.slot(key).updateOnClick().onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
+            if (clickContext.isShiftRightClick()) {
+                if (tile instanceof BuildingTile bt) {
+                    BuildingType buildingType = bt.getBuildingType();
+                    if (buildingType != null) {
+                        Building building = buildingType.getBuildings().get(bt.getBuildingSlot());
+                        if (building != null) {
+                            int clickedSlot = clickContext.getClickedSlot();
+                            WorldSection worldSection = Township.getUserManager().getUser(clickContext.getPlayer().getUniqueId()).getWorld().getSection(sectionState.get(clickContext));
+
+                            int anchor = Township.getWorldManager().findAnchor(clickedSlot, building.getSize(), worldSection, bt);
+
+                            if (anchor >= 0) {
+                                for (Integer s : building.getSize().toList(anchor)) {
+                                    worldSection.setSlot(s, StaticWorldTile.Type.GRASS.getTile());
+                                }
+
+                                final int anchorFinal = anchor;
+                                final int startSection = sectionState.get(clickContext);
+                                clickContext.openForPlayer(PlaceMenu.class, java.util.Map.of(
+                                        "TILE_SIZE", building.getSize(),
+                                        "START_SECTION", startSection,
+                                        "START_ANCHOR", anchor,
+                                        "TITLE", Msg.format("Edit"),
+                                        "ON_PLACE", (PlaceMenu.PlaceAction) (ctx, newSection, newAnchor) -> {
+                                            me.webhead1104.township.data.objects.User uu = me.webhead1104.township.Township.getUserManager().getUser(ctx.getPlayer().getUniqueId());
+                                            for (Integer s2 : building.getSize().toList(newAnchor)) {
+                                                uu.getWorld().getSection(newSection).setSlot(s2, building.getTile());
+                                            }
+                                            uu.getPurchasedBuildings().getPurchasedBuilding(buildingType, building.getSlot()).ifPresent(pb -> {
+                                                pb.setPlaced(true);
+                                                pb.setSection(newSection);
+                                            });
+                                            uu.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
+                                            ctx.openForPlayer(WorldMenu.class, newSection);
+                                        },
+                                        "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> {
+                                            me.webhead1104.township.data.objects.User uu = me.webhead1104.township.Township.getUserManager().getUser(cancelCtx.getPlayer().getUniqueId());
+                                            for (Integer s2 : building.getSize().toList(anchorFinal)) {
+                                                uu.getWorld().getSection(startSection).setSlot(s2, building.getTile());
+                                            }
+                                            me.webhead1104.township.Township.getViewFrame().open(WorldMenu.class, cancelCtx.getPlayer(), startSection);
+                                        }
+                                ));
+                                openConfirmClose.set(false, clickContext);
+                                return;
+                            }
+                        }
+                    }
+                }
+                clickContext.openForPlayer(WorldEditMenu.class, sectionState.get(clickContext));
+                openConfirmClose.set(false, clickContext);
+                return;
+            }
             if (tile.onClick(clickContext)) {
                 openConfirmClose.set(false, clickContext);
             }
@@ -91,6 +149,10 @@ public class WorldMenu extends View {
         ItemStack buildingMenuStack = ItemStack.of(Material.YELLOW_CONCRETE);
         buildingMenuStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>Build Menu"));
         player.getInventory().setItem(8, buildingMenuStack);
+
+        ItemStack editModeStack = ItemStack.of(Material.IRON_AXE);
+        editModeStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>Edit Mode"));
+        player.getInventory().setItem(7, editModeStack);
     }
 
     @Override
@@ -110,6 +172,9 @@ public class WorldMenu extends View {
                 openConfirmClose.set(false, context);
             } else if (context.getClickedSlot() == 89 && context.getItem() != null) {
                 context.openForPlayer(BuildMenu.class);
+                openConfirmClose.set(false, context);
+            } else if (context.getClickedSlot() == 88 && context.getItem() != null) {
+                context.openForPlayer(WorldEditMenu.class, sectionState.get(context));
                 openConfirmClose.set(false, context);
             }
         }

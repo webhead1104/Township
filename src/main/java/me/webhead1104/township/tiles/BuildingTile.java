@@ -19,4 +19,12 @@ public abstract class BuildingTile extends Tile {
     protected BuildingTile(int buildingSlot) {
         this.buildingSlot = buildingSlot;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof BuildingTile buildingTile) {
+            return buildingTile.getBuildingType() == buildingType && buildingTile.getBuildingSlot() == buildingSlot;
+        }
+        return super.equals(object);
+    }
 }

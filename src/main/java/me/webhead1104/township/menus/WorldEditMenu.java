@@ -10,14 +10,14 @@ import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.BuildMenuType;
-import me.webhead1104.township.data.enums.TileSize;
-import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.enums.BuildingType;
+import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.data.objects.WorldSection;
-import me.webhead1104.township.tiles.*;
+import me.webhead1104.township.tiles.BuildingTile;
+import me.webhead1104.township.tiles.StaticWorldTile;
+import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -26,7 +26,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class WorldEditMenu extends View {
     private final State<Integer> sectionState = initialState();
@@ -99,35 +98,32 @@ public class WorldEditMenu extends View {
     }
 
     private boolean handleTileClick(SlotClickContext context, Tile tile) {
-        // Non-movable tiles
-        if (tile instanceof StaticWorldTile || tile instanceof ExpansionTile || tile instanceof PlotTile) {
+        if (!(tile instanceof BuildingTile buildingTile)) {
             return false;
         }
 
-        // Resolve building and type from tile
-        BuildingType buildingType = resolveBuildingType(tile);
+        BuildingType buildingType = buildingTile.getBuildingType();
         if (buildingType == null) return false;
-        Building building = resolveBuilding(buildingType, tile);
+        Building building = buildingType.getBuildings().get(buildingTile.getBuildingSlot());
         if (building == null) return false;
 
-        // Determine anchor slot of the building relative to clicked slot
         int clickedSlot = context.getClickedSlot();
         User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
         WorldSection section = user.getWorld().getSection(sectionState.get(context));
 
-        int anchor = findAnchor(clickedSlot, building.getSize(), section, tile);
+        int anchor = Township.getWorldManager().findAnchor(clickedSlot, building.getSize(), section, buildingTile);
         if (anchor < 0) return false;
 
-        // Clear original area (pick up)
         for (Integer s : building.getSize().toList(anchor)) {
             section.setSlot(s, StaticWorldTile.Type.GRASS.getTile());
         }
 
-        // Open generic placement UI in edit mode, starting at current section
         int startSection = sectionState.get(context);
         context.openForPlayer(PlaceMenu.class, Map.of(
                 "TILE_SIZE", building.getSize(),
                 "START_SECTION", startSection,
+                "START_ANCHOR", anchor,
+                "TITLE", Msg.format("Edit"),
                 "ON_PLACE", (PlaceMenu.PlaceAction) (ctx, newSection, newAnchor) -> {
                     User u = Township.getUserManager().getUser(ctx.getPlayer().getUniqueId());
                     for (Integer s : building.getSize().toList(newAnchor)) {
@@ -149,65 +145,5 @@ public class WorldEditMenu extends View {
                 }
         ));
         return true;
-    }
-
-    private Building resolveBuilding(BuildingType type, Tile tile) {
-        for (Building b : type.getBuildings().values()) {
-            if (isSameTile(b.getTile(), tile)) return b;
-        }
-        // fallback to first defined, sizes are constant per type
-        return type.getBuildings().values().stream().findFirst().orElse(null);
-    }
-
-    private BuildingType resolveBuildingType(Tile tile) {
-        for (BuildingType type : BuildingType.values()) {
-            for (Building b : type.getBuildings().values()) {
-                if (isSameTile(b.getTile(), tile)) {
-                    return type;
-                }
-            }
-        }
-        return null;
-    }
-
-    private boolean isSameTile(Tile a, Tile b) {
-        if (a.getClass() != b.getClass()) return false;
-        if (a instanceof HouseTile ha && b instanceof HouseTile hb) {
-            return Objects.equals(ha.getHouseType(), hb.getHouseType());
-        }
-        if (a instanceof CommunityBuildingTile ca && b instanceof CommunityBuildingTile cb) {
-            return Objects.equals(ca.getCommunityBuildingType(), cb.getCommunityBuildingType());
-        }
-        if (a instanceof FactoryTile fa && b instanceof FactoryTile fb) {
-            return Objects.equals(fa.getFactoryType(), fb.getFactoryType());
-        }
-        if (a instanceof AnimalTile aa && b instanceof AnimalTile ab) {
-            return Objects.equals(aa.getAnimalType(), ab.getAnimalType());
-        }
-        if (a instanceof BarnTile && b instanceof BarnTile) return true;
-        if (a instanceof TrainTile && b instanceof TrainTile) return true;
-        return false;
-    }
-
-    private int findAnchor(int clickedSlot, TileSize size, WorldSection section, Tile matchTile) {
-        int clickedX = clickedSlot % 9;
-        int clickedY = clickedSlot / 9;
-        for (int dy = 0; dy < size.getHeight(); dy++) {
-            for (int dx = 0; dx < size.getWidth(); dx++) {
-                int anchorX = clickedX - dx;
-                int anchorY = clickedY - dy;
-                if (anchorX < 0 || anchorY < 0) continue;
-                int anchor = anchorY * 9 + anchorX;
-                // Validate all cells
-                boolean ok = true;
-                for (Integer s : size.toList(anchor)) {
-                    if (s < 0 || s >= 54) { ok = false; break; }
-                    Tile candidate = section.getSlot(s);
-                    if (!isSameTile(candidate, matchTile)) { ok = false; break; }
-                }
-                if (ok) return anchor;
-            }
-        }
-        return -1;
     }
 }
