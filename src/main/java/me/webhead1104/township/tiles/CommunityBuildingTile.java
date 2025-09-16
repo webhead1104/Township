@@ -1,7 +1,6 @@
 package me.webhead1104.township.tiles;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
@@ -13,9 +12,13 @@ import org.bukkit.inventory.ItemStack;
 
 @Getter
 @Setter
-@AllArgsConstructor
-public class CommunityBuildingTile extends Tile {
+public class CommunityBuildingTile extends BuildingTile {
     private final CommunityBuildingType communityBuildingType;
+
+    public CommunityBuildingTile(int buildingSlot, CommunityBuildingType communityBuildingType) {
+        super(communityBuildingType.getBuildingType(), buildingSlot);
+        this.communityBuildingType = communityBuildingType;
+    }
 
     @Override
     public ItemStack render(SlotRenderContext context) {

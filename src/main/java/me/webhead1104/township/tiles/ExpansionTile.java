@@ -1,7 +1,6 @@
 package me.webhead1104.township.tiles;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
@@ -14,9 +13,12 @@ import org.bukkit.inventory.ItemStack;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class ExpansionTile extends Tile {
     private Expansion expansion;
+
+    public ExpansionTile(Expansion expansion) {
+        this.expansion = expansion;
+    }
 
     @Override
     public ItemStack render(SlotRenderContext context) {

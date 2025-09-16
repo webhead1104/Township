@@ -5,12 +5,17 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
+import me.webhead1104.township.data.enums.BuildingType;
 import me.webhead1104.township.menus.BarnMenu;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class BarnTile extends Tile {
+public class BarnTile extends BuildingTile {
+    public BarnTile() {
+        super(BuildingType.BARN, 0);
+    }
+
     @Override
     public ItemStack render(SlotRenderContext context) {
         ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);

@@ -1,7 +1,6 @@
 package me.webhead1104.township.tiles;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
@@ -12,9 +11,13 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @Getter
-@AllArgsConstructor
-public class AnimalTile extends Tile {
+public class AnimalTile extends BuildingTile {
     private final AnimalType animalType;
+
+    public AnimalTile(int buildingSlot, AnimalType animalType) {
+        super(buildingSlot);
+        this.animalType = animalType;
+    }
 
     @Override
     public ItemStack render(SlotRenderContext context) {

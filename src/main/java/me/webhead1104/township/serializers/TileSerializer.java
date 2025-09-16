@@ -1,6 +1,7 @@
 package me.webhead1104.township.serializers;
 
 import me.webhead1104.township.tiles.Tile;
+import org.apache.commons.lang3.ClassUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -8,8 +9,7 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializer;
 
 import java.lang.reflect.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TileSerializer implements TypeSerializer<Tile> {
 
@@ -31,9 +31,13 @@ public class TileSerializer implements TypeSerializer<Tile> {
             }
 
             ConfigurationNode propertiesNode = node.node(PROPERTIES_KEY);
-            Field[] fields = tileClass.getDeclaredFields();
-            Map<String, Object> fieldValues = new HashMap<>();
-            for (Field field : fields) {
+
+            // Collect fields from the entire class hierarchy (super -> sub)
+            List<Field> allFields = collectAllFields(tileClass);
+
+            // Preserve insertion order to have deterministic behavior
+            Map<String, Object> fieldValues = new LinkedHashMap<>();
+            for (Field field : allFields) {
                 String fieldName = field.getName();
                 ConfigurationNode fieldNode = propertiesNode.node(fieldName);
                 if (fieldNode.virtual()) {
@@ -58,45 +62,54 @@ public class TileSerializer implements TypeSerializer<Tile> {
 
                 Parameter[] parameters = constructor.getParameters();
 
+                Set<String> used = new HashSet<>();
+
                 for (int i = 0; i < paramTypes.length; i++) {
                     Parameter param = parameters[i];
                     String paramName = param.getName();
+                    Class<?> pType = paramTypes[i];
 
+                    // Strategy A: exact name match
                     if (fieldValues.containsKey(paramName)) {
-                        args[i] = fieldValues.get(paramName);
-                    }
-                    // Check if the parameter name follows the "argN" pattern (synthetic name)
-                    else if (paramName.matches("arg\\d+")) {
-                        // If we have synthetic parameter names (arg0, arg1, etc.), try to match by position
-                        // This assumes the constructor parameters are in the same order as the fields
-                        if (i < fieldValues.size()) {
-                            String fieldName = (String) fieldValues.keySet().toArray()[i];
-                            Object value = fieldValues.get(fieldName);
-                            if (paramTypes[i].isInstance(value)) {
-                                args[i] = value;
-                            } else {
-                                canUseConstructor = false;
-                                break;
-                            }
+                        Object v = fieldValues.get(paramName);
+                        if (isTypeCompatible(pType, v)) {
+                            args[i] = v;
+                            used.add(paramName);
+                            continue;
                         } else {
                             canUseConstructor = false;
                             break;
                         }
-                    } else {
+                    }
+
+                    // Strategy B: synthetic name or no name data -> find the first unused compatible field by type
+                    boolean matched = false;
+                    for (Map.Entry<String, Object> entry : fieldValues.entrySet()) {
+                        if (used.contains(entry.getKey())) continue;
+                        Object v = entry.getValue();
+                        if (isTypeCompatible(pType, v)) {
+                            args[i] = v;
+                            used.add(entry.getKey());
+                            matched = true;
+                            break;
+                        }
+                    }
+                    if (!matched) {
                         canUseConstructor = false;
                         break;
                     }
                 }
+
                 if (canUseConstructor) {
                     constructor.setAccessible(true);
                     tile = (Tile) constructor.newInstance(args);
                     break;
                 }
 
-                // Strategy 2: If the constructor has exactly one parameter, and we have exactly one field value
+                // Strategy C: simple single-arg convenience
                 if (paramTypes.length == 1 && fieldValues.size() == 1) {
                     Object value = fieldValues.values().iterator().next();
-                    if (paramTypes[0].isInstance(value)) {
+                    if (isTypeCompatible(paramTypes[0], value)) {
                         constructor.setAccessible(true);
                         tile = (Tile) constructor.newInstance(value);
                         break;
@@ -104,17 +117,16 @@ public class TileSerializer implements TypeSerializer<Tile> {
                 }
             }
 
-            // Strategy 3: If no suitable constructor with parameters, try the no-args constructor
+            // Fallback: try the no-args constructor, then set fields reflectively
             if (tile == null) {
                 try {
                     Constructor<?> constructor = tileClass.getDeclaredConstructor();
                     constructor.setAccessible(true);
                     tile = (Tile) constructor.newInstance();
-                    for (Field field : fields) {
+                    for (Field field : allFields) {
                         if (Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers())) {
                             continue;
                         }
-
                         String fieldName = field.getName();
                         if (fieldValues.containsKey(fieldName)) {
                             field.setAccessible(true);
@@ -148,7 +160,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
         ConfigurationNode propertiesNode = node.node(PROPERTIES_KEY);
 
         try {
-            for (Field field : tileClass.getDeclaredFields()) {
+            for (Field field : collectAllFields(tileClass)) {
                 if (Modifier.isStatic(field.getModifiers())) {
                     continue;
                 }
@@ -164,5 +176,31 @@ public class TileSerializer implements TypeSerializer<Tile> {
         } catch (Exception e) {
             throw new SerializationException("Error serializing Tile: " + e.getMessage());
         }
+    }
+
+    private static List<Field> collectAllFields(Class<?> clazz) {
+        List<Class<?>> hierarchy = new ArrayList<>();
+        Class<?> current = clazz;
+        while (current != null && Tile.class.isAssignableFrom(current)) {
+            hierarchy.add(current);
+            current = current.getSuperclass();
+        }
+        // Reverse to get super -> suborder
+        Collections.reverse(hierarchy);
+
+        List<Field> result = new ArrayList<>();
+        for (Class<?> c : hierarchy) {
+            for (Field f : c.getDeclaredFields()) {
+                if (Modifier.isStatic(f.getModifiers())) continue;
+                result.add(f);
+            }
+        }
+        return result;
+    }
+
+    private static boolean isTypeCompatible(Class<?> paramType, Object value) {
+        if (value == null) return false;
+        Class<?> p = ClassUtils.primitiveToWrapper(paramType);
+        return p.isInstance(value);
     }
 }

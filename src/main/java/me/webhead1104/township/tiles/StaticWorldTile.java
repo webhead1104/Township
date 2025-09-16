@@ -11,9 +11,12 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @Getter
-@AllArgsConstructor
 public class StaticWorldTile extends Tile {
     private final Material material;
+
+    public StaticWorldTile(Material material) {
+        this.material = material;
+    }
 
     @Override
     public ItemStack render(SlotRenderContext context) {
