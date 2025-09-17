@@ -1,7 +1,6 @@
 package me.webhead1104.township.tiles;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
@@ -11,9 +10,13 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @Getter
-@AllArgsConstructor
-public class HouseTile extends Tile {
+public class HouseTile extends BuildingTile {
     private final HouseType houseType;
+
+    public HouseTile(int buildingSlot, HouseType houseType) {
+        super(houseType.getBuildingType(), buildingSlot);
+        this.houseType = houseType;
+    }
 
     @Override
     public ItemStack render(SlotRenderContext context) {

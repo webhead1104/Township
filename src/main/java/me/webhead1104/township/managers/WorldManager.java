@@ -3,7 +3,10 @@ package me.webhead1104.township.managers;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.TileSize;
+import me.webhead1104.township.data.objects.WorldSection;
 import me.webhead1104.township.menus.WorldMenu;
+import me.webhead1104.township.tiles.BuildingTile;
+import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -121,5 +124,32 @@ public class WorldManager {
         }
 
         return startY * 9 + startX;
+    }
+
+    public int findAnchor(int clickedSlot, TileSize size, WorldSection section, BuildingTile matchTile) {
+        int clickedX = clickedSlot % 9;
+        int clickedY = clickedSlot / 9;
+        for (int dy = 0; dy < size.getHeight(); dy++) {
+            for (int dx = 0; dx < size.getWidth(); dx++) {
+                int anchorX = clickedX - dx;
+                int anchorY = clickedY - dy;
+                if (anchorX < 0 || anchorY < 0) continue;
+                int anchor = anchorY * 9 + anchorX;
+                boolean ok = true;
+                for (Integer s : size.toList(anchor)) {
+                    if (s < 0 || s >= 54) {
+                        ok = false;
+                        break;
+                    }
+                    Tile candidate = section.getSlot(s);
+                    if (!matchTile.equals(candidate)) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if (ok) return anchor;
+            }
+        }
+        return -1;
     }
 }

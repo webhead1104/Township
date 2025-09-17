@@ -6,13 +6,18 @@ import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.data.enums.BuildingType;
 import me.webhead1104.township.menus.TrainMenu;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.ItemStack;
 
-public class TrainTile extends Tile {
+public class TrainTile extends BuildingTile {
+    public TrainTile() {
+        super(BuildingType.TRAIN, 0);
+    }
+
     @Override
     public ItemStack render(SlotRenderContext context) {
         ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);

@@ -1,7 +1,6 @@
 package me.webhead1104.township.tiles;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
@@ -11,10 +10,14 @@ import me.webhead1104.township.utils.Msg;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-@AllArgsConstructor
 @Getter
-public class FactoryTile extends Tile {
+public class FactoryTile extends BuildingTile {
     private final FactoryType factoryType;
+
+    public FactoryTile(int buildingSlot, FactoryType factoryType) {
+        super(buildingSlot);
+        this.factoryType = factoryType;
+    }
 
     @Override
     public ItemStack render(SlotRenderContext context) {

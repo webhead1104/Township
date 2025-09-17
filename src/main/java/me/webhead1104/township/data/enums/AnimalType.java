@@ -11,12 +11,12 @@ import java.time.Duration;
 
 @Getter
 public enum AnimalType {
-    COWSHED_1("Cowshed", Utils.getItemStack("Cow", Material.COW_SPAWN_EGG), ItemType.COW_FEED, ItemType.MILK, 3, Duration.ofSeconds(20)),
-    COWSHED_2("Cowshed", Utils.getItemStack("Cow", Material.COW_SPAWN_EGG), ItemType.COW_FEED, ItemType.MILK, 3, Duration.ofMinutes(20)),
-    COWSHED_3("Cowshed", Utils.getItemStack("Cow", Material.COW_SPAWN_EGG), ItemType.COW_FEED, ItemType.MILK, 3, Duration.ofMinutes(20)),
-    CHICKEN_COOP_1("Chicken Coop", Utils.getItemStack("Chicken", Material.COW_SPAWN_EGG), ItemType.CHICKEN_FEED, ItemType.EGG, 4, Duration.ofHours(1)),
-    CHICKEN_COOP_2("Chicken Coop", Utils.getItemStack("Chicken", Material.COW_SPAWN_EGG), ItemType.CHICKEN_FEED, ItemType.EGG, 4, Duration.ofHours(1)),
-    CHICKEN_COOP_3("Chicken Coop", Utils.getItemStack("Chicken", Material.COW_SPAWN_EGG), ItemType.CHICKEN_FEED, ItemType.EGG, 4, Duration.ofHours(1));
+    COWSHED_1("Cowshed", Utils.getItemStack("Cow", Material.COW_SPAWN_EGG), ItemType.COW_FEED, ItemType.MILK, 3, Duration.ofSeconds(20), BuildingType.COWSHED),
+    COWSHED_2("Cowshed", Utils.getItemStack("Cow", Material.COW_SPAWN_EGG), ItemType.COW_FEED, ItemType.MILK, 3, Duration.ofMinutes(20), BuildingType.COWSHED),
+    COWSHED_3("Cowshed", Utils.getItemStack("Cow", Material.COW_SPAWN_EGG), ItemType.COW_FEED, ItemType.MILK, 3, Duration.ofMinutes(20), BuildingType.COWSHED),
+    CHICKEN_COOP_1("Chicken Coop", Utils.getItemStack("Chicken", Material.COW_SPAWN_EGG), ItemType.CHICKEN_FEED, ItemType.EGG, 4, Duration.ofHours(1), BuildingType.CHICKEN_COOP),
+    CHICKEN_COOP_2("Chicken Coop", Utils.getItemStack("Chicken", Material.COW_SPAWN_EGG), ItemType.CHICKEN_FEED, ItemType.EGG, 4, Duration.ofHours(1), BuildingType.CHICKEN_COOP),
+    CHICKEN_COOP_3("Chicken Coop", Utils.getItemStack("Chicken", Material.COW_SPAWN_EGG), ItemType.CHICKEN_FEED, ItemType.EGG, 4, Duration.ofHours(1), BuildingType.CHICKEN_COOP);
     private final String name;
     private final Component menuTitle;
     @Getter(value = lombok.AccessLevel.NONE)
@@ -25,8 +25,9 @@ public enum AnimalType {
     private final ItemType productType;
     private final int xpGivenOnClaim;
     private final Duration timeTakesToFeed;
+    private final BuildingType buildingType;
 
-    AnimalType(String name, ItemStack animalItemStack, ItemType feedType, ItemType productType, int xpGivenOnClaim, Duration timeTakesToFeed) {
+    AnimalType(String name, ItemStack animalItemStack, ItemType feedType, ItemType productType, int xpGivenOnClaim, Duration timeTakesToFeed, BuildingType buildingType) {
         this.name = name;
         this.menuTitle = Msg.format("<gold>%s", name);
         this.animalItemStack = animalItemStack;
@@ -34,6 +35,7 @@ public enum AnimalType {
         this.productType = productType;
         this.xpGivenOnClaim = xpGivenOnClaim;
         this.timeTakesToFeed = timeTakesToFeed;
+        this.buildingType = buildingType;
     }
 
     public ItemStack getAnimalItemStack() {

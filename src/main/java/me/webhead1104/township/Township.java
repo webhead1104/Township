@@ -100,7 +100,7 @@ public class Township extends JavaPlugin {
         viewFrame.with(
                 new AnimalMenu(), new FactoryMenu(), new WorldMenu(), new ExpansionMenu(),
                 new ConfirmCloseMenu(), new PlotMenu(), new BarnMenu(), new TrainMenu(),
-                new BuildMenu(), new BuildMenuSelectBuildingMenu(), new BuildPlaceMenu()
+                new BuildMenu(), new BuildMenuSelectBuildingMenu(), new PlaceMenu(), new WorldEditMenu()
         );
     }
 }

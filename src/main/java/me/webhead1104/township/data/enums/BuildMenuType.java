@@ -15,7 +15,7 @@ public enum BuildMenuType {
     COMMUNITY(Msg.format("Community Buildings"),
             List.of(BuildingType.GROCERY_STORE, BuildingType.SCHOOL, BuildingType.HOSPITAL, BuildingType.POLICE_STATION, BuildingType.FIRE_STATION, BuildingType.POST_OFFICE)),
     FACTORIES(Msg.format("Factories"),
-            List.of(BuildingType.BAKERY, BuildingType.FEED_MILL, BuildingType.DAIRY_FACTORY, BuildingType.SUGAR_FACTORY, BuildingType.TEXTILE_FACTORY)),
+            List.of(BuildingType.BAKERY, BuildingType.FEED_MILL, BuildingType.DAIRY_FACTORY, BuildingType.SUGAR_FACTORY)),
     FARMING(Msg.format("Farming"),
             List.of(BuildingType.COWSHED, BuildingType.CHICKEN_COOP)),
     SPECIAL(Msg.format("Special"),
