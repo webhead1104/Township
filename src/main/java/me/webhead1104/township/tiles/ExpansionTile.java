@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
-import me.webhead1104.township.data.objects.Expansion;
 import me.webhead1104.township.menus.ExpansionMenu;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Material;
@@ -14,11 +13,6 @@ import org.bukkit.inventory.ItemStack;
 @Getter
 @Setter
 public class ExpansionTile extends Tile {
-    private Expansion expansion;
-
-    public ExpansionTile(Expansion expansion) {
-        this.expansion = expansion;
-    }
 
     @Override
     public ItemStack render(SlotRenderContext context) {
@@ -29,7 +23,7 @@ public class ExpansionTile extends Tile {
 
     @Override
     public boolean onClick(SlotClickContext context) {
-        context.openForPlayer(ExpansionMenu.class, expansion);
+        context.openForPlayer(ExpansionMenu.class, context.getClickedSlot());
         return true;
     }
 }
