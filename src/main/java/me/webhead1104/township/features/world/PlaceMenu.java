@@ -52,7 +52,7 @@ public class PlaceMenu extends View {
         Integer startAnchor = startAnchorState.get(context);
         if (startAnchor != null) {
             TileSize size = tileSizeState.get(context);
-            int adjusted = Township.getWorldManager().adjustPlacement(startAnchor, size);
+            int adjusted = WorldUtils.adjustPlacement(startAnchor, size);
             slotState.set(adjusted, context);
             canPlaceState.set(true, context);
         }
@@ -61,7 +61,7 @@ public class PlaceMenu extends View {
 
     @Override
     public void onUpdate(@NotNull Context context) {
-        Township.getWorldManager().applyArrows(context.getPlayer(), sectionState.get(context));
+        WorldUtils.applyArrows(context.getPlayer(), sectionState.get(context));
         placeConfirm(canPlaceState.get(context), context.getPlayer());
     }
 
@@ -131,8 +131,8 @@ public class PlaceMenu extends View {
                 slotRenderContext.setItem(ws.getSlot(idx).render(slotRenderContext));
             }).onClick(click -> {
                 TileSize size = tileSizeState.get(click);
-                int newSlot = Township.getWorldManager().adjustPlacement(click.getClickedSlot(), size);
-                if (!Township.getWorldManager().canPlace(newSlot, size)) return;
+                int newSlot = WorldUtils.adjustPlacement(click.getClickedSlot(), size);
+                if (!WorldUtils.canPlace(newSlot, size)) return;
                 slotState.set(newSlot, click);
                 sectionState.set(sectionState.get(click), click);
                 click.update();

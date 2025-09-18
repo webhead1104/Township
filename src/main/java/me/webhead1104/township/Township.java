@@ -12,7 +12,6 @@ import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.InventoryManager;
 import me.webhead1104.township.managers.UserManager;
-import me.webhead1104.township.managers.WorldManager;
 import me.webhead1104.township.serializers.DurationSerializer;
 import me.webhead1104.township.serializers.InstantSerializer;
 import me.webhead1104.township.serializers.TileSerializer;
@@ -44,8 +43,6 @@ public class Township extends JavaPlugin {
     @Getter
     private static Database database;
     @Getter
-    private static WorldManager worldManager;
-    @Getter
     private static InventoryManager inventoryManager;
     @Getter
     private static UserManager userManager;
@@ -70,7 +67,6 @@ public class Township extends JavaPlugin {
         database.connect();
         database.createTownshipTable();
         viewFrame = ViewFrame.create(this);
-        worldManager = new WorldManager();
         inventoryManager = new InventoryManager();
         userManager = new UserManager();
         userManager.loadDataVersions();

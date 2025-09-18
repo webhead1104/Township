@@ -1,10 +1,10 @@
-package me.webhead1104.township.managers;
+package me.webhead1104.township.features.world;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import lombok.experimental.UtilityClass;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.TileSize;
 import me.webhead1104.township.data.objects.WorldSection;
-import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.tiles.BuildingTile;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
@@ -12,21 +12,18 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class WorldManager {
+@UtilityClass
+public class WorldUtils {
 
-    public void openWorldMenu(Player player) {
-        openWorldMenu(player, Township.getUserManager().getUser(player.getUniqueId()).getSection());
-    }
-
-    public void openWorldMenu(Player player, int section) {
-        Township.getViewFrame().open(WorldMenu.class, player, section);
+    public static void openWorldMenu(Player player) {
+        Township.getViewFrame().open(WorldMenu.class, player, Township.getUserManager().getUser(player.getUniqueId()).getSection());
     }
 
     /**
      * @param slotIndex 0‑based index [0..53], row‑major order
      * @return true if there is a slot immediately to the right
      */
-    public boolean canMoveRight(int slotIndex) {
+    public static boolean canMoveRight(int slotIndex) {
         int x = slotIndex % 8;
         return x < 8 - 1;
     }
@@ -35,7 +32,7 @@ public class WorldManager {
      * @param slotIndex 0‑based index [0..53], row‑major order
      * @return true if there is a slot immediately to the left
      */
-    public boolean canMoveLeft(int slotIndex) {
+    public static boolean canMoveLeft(int slotIndex) {
         int x = slotIndex % 8;
         return x > 0;
     }
@@ -44,7 +41,7 @@ public class WorldManager {
      * @param slotIndex 0‑based index [0..53], row‑major order
      * @return true if there is a slot immediately below
      */
-    public boolean canMoveDown(int slotIndex) {
+    public static boolean canMoveDown(int slotIndex) {
         int y = slotIndex / 8;
         return y < 8 - 1;
     }
@@ -53,12 +50,12 @@ public class WorldManager {
      * @param slotIndex 0‑based index [0..53], row‑major order
      * @return true if there is a slot immediately above
      */
-    public boolean canMoveUp(int slotIndex) {
+    public static boolean canMoveUp(int slotIndex) {
         int y = slotIndex / 8;
         return y > 0;
     }
 
-    public void applyArrows(Player player, int section) {
+    public static void applyArrows(Player player, int section) {
         if (canMoveRight(section)) {
             ItemStack stack = ItemStack.of(Material.ARROW);
             stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<dark_green>Click to scroll right!"));
@@ -92,7 +89,7 @@ public class WorldManager {
         }
     }
 
-    public boolean canPlace(int startSlot, TileSize tileSize) {
+    public static boolean canPlace(int startSlot, TileSize tileSize) {
         int startX = startSlot % 9;
         int startY = startSlot / 9;
 
@@ -110,7 +107,7 @@ public class WorldManager {
         return true;
     }
 
-    public int adjustPlacement(int startSlot, TileSize tileSize) {
+    public static int adjustPlacement(int startSlot, TileSize tileSize) {
         int startX = startSlot % 9;
         int startY = startSlot / 9;
 
@@ -126,7 +123,7 @@ public class WorldManager {
         return startY * 9 + startX;
     }
 
-    public int findAnchor(int clickedSlot, TileSize size, WorldSection section, BuildingTile matchTile) {
+    public static int findAnchor(int clickedSlot, TileSize size, WorldSection section, BuildingTile matchTile) {
         int clickedX = clickedSlot % 9;
         int clickedY = clickedSlot / 9;
         for (int dy = 0; dy < size.getHeight(); dy++) {
