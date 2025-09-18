@@ -21,7 +21,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-    public static final int LATEST_VERSION = 5;
+    public static final int LATEST_VERSION = 6;
     private int version = LATEST_VERSION;
     private UUID uuid;
     private String townName;
@@ -38,6 +38,7 @@ public class User {
     private World world;
     private Trains trains;
     private PurchasedBuildings purchasedBuildings;
+    private int expansionsPurchased;
 
     public User(UUID uuid) {
         long start = System.currentTimeMillis();
@@ -56,6 +57,7 @@ public class User {
         this.world = new World();
         this.trains = new Trains();
         this.purchasedBuildings = new PurchasedBuildings();
+        this.expansionsPurchased = 0;
         Township.logger.info("Finished creating a user in {} mills!", System.currentTimeMillis() - start);
     }
 
