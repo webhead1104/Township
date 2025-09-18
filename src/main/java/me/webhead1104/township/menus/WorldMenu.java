@@ -64,7 +64,11 @@ public class WorldMenu extends View {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         World world = user.getWorld();
         world.getSection(sectionState.get(context)).getSlotMap().forEach((key, tile) ->
-                context.slot(key).updateOnClick().onUpdate(slotContext -> tile.onUpdate(world.getSection(sectionState.get(slotContext)), key))
+                context.slot(key).updateOnClick().onUpdate(slotContext -> {
+                            if (tile.onUpdate(slotContext, world.getSection(sectionState.get(slotContext)), key)) {
+                                openConfirmClose.set(false, slotContext);
+                            }
+                        })
                         .onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
                             if (clickContext.isShiftRightClick()) {
                                 if (tile instanceof BuildingTile bt) {

@@ -7,9 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
+import me.devnatan.inventoryframework.context.SlotContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.township.data.objects.WorldSection;
 import me.webhead1104.township.menus.ExpansionMenu;
+import me.webhead1104.township.menus.WorldMenu;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
 import org.bukkit.Material;
@@ -24,7 +26,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExpansionTile extends Tile {
-    private int slot;
     @Nullable
     private Instant instant;
 
@@ -55,12 +56,15 @@ public class ExpansionTile extends Tile {
     }
 
     @Override
-    public void onUpdate(WorldSection worldSection, int slot) {
-        if (instant == null) return;
+    public boolean onUpdate(SlotContext slotContext, WorldSection worldSection, int slot) {
+        if (instant == null) return false;
 
         if (Instant.now().isAfter(instant.minusSeconds(1))) {
             instant = null;
             worldSection.setSlot(slot, StaticWorldTile.Type.GRASS.getTile());
+            slotContext.openForPlayer(WorldMenu.class, worldSection.getSection());
+            return true;
         }
+        return false;
     }
 }
