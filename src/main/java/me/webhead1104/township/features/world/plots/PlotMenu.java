@@ -28,7 +28,6 @@ import java.util.Map;
 
 public class PlotMenu extends TownshipView {
     private final MutableState<Plot> plot = initialState();
-    private final MutableState<Boolean> openWorldMenu = mutableState(true);
     private final Map<Integer, PlotType> plotTypes = new HashMap<>();
     private PlotType selectedPlotType = PlotType.NONE;
 
@@ -68,7 +67,7 @@ public class PlotMenu extends TownshipView {
             if (key != plot.getSlot()) {
                 context.slot(key).onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
                     if (tile.onClick(clickContext)) {
-                        openWorldMenu.set(false, clickContext);
+                        openBackMenu.set(false, clickContext);
                     }
                 });
             }

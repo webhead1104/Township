@@ -8,7 +8,6 @@ import me.devnatan.inventoryframework.component.Pagination;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
-import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Building;
@@ -28,7 +27,6 @@ import java.util.Objects;
 
 public class BuildMenuSelectBuildingMenu extends TownshipView {
     private final State<BuildMenuType> typeState = initialState();
-    private final MutableState<Boolean> openBuildMenuState = mutableState(true);
     private final State<Pagination> paginationState = buildComputedPaginationState(context -> typeState.get(context).getBuildings()).elementFactory((context, builder, index, buildingType) -> {
         Building building = buildingType.getNextBuilding(context.getPlayer());
         User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
@@ -66,7 +64,7 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
                         },
                         "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type)
                 ));
-                openBuildMenuState.set(false, slotClickContext);
+                openBackMenu.set(false, slotClickContext);
                 return;
             }
             if (building.getPrice().has(slotClickContext.getPlayer()) &&
@@ -94,7 +92,7 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
                         },
                         "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type)
                 ));
-                openBuildMenuState.set(false, slotClickContext);
+                openBackMenu.set(false, slotClickContext);
             }
         });
     }).layoutTarget('B').build();

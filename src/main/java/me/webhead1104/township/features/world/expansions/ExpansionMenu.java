@@ -28,7 +28,6 @@ import java.util.List;
 public class ExpansionMenu extends TownshipView {
     private final MutableState<Integer> slotState = initialState();
     private final State<ExpansionDataLoader.Expansion> expansionState = computedState(context -> ExpansionDataLoader.get(Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getExpansionsPurchased() + 1));
-    private final MutableState<Boolean> openWorldMenu = mutableState(true);
 
     public ExpansionMenu() {
         super(WorldMenu.class);
@@ -59,7 +58,7 @@ public class ExpansionMenu extends TownshipView {
             if (!TileSize.SIZE_3X3.toList(slotState.get(context)).contains(key)) {
                 context.slot(key).onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
                     if (tile.onClick(clickContext)) {
-                        openWorldMenu.set(false, clickContext);
+                        openBackMenu.set(false, clickContext);
                     }
                 });
             }

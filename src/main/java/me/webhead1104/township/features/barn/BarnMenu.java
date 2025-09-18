@@ -25,7 +25,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class BarnMenu extends TownshipView {
-    private final MutableState<Boolean> openWorldMenu = mutableState(true);
     private final MutableState<ItemType> sellItem = mutableState(ItemType.NONE);
     private final MutableState<Integer> sellAmount = mutableState(1);
 

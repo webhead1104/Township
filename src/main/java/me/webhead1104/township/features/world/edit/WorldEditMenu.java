@@ -5,7 +5,6 @@ import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
-import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Building;
@@ -30,7 +29,6 @@ import java.util.Map;
 
 public class WorldEditMenu extends TownshipView {
     private final State<Integer> sectionState = initialState();
-    private final MutableState<Boolean> openConfirmClose = mutableState(true);
 
     public WorldEditMenu() {
         super(WorldMenu.class);
@@ -60,7 +58,7 @@ public class WorldEditMenu extends TownshipView {
 
         section.getSlotMap().forEach((key, tile) -> context.slot(key).updateOnClick().onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
             if (handleTileClick(clickContext, tile)) {
-                openConfirmClose.set(false, clickContext);
+                openBackMenu.set(false, clickContext);
             }
         }));
 
@@ -76,19 +74,19 @@ public class WorldEditMenu extends TownshipView {
         if (context.isOnEntityContainer()) {
             if (context.getClickedSlot() == 68 && context.getItem() != null) {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context) + 1);
-                openConfirmClose.set(false, context);
+                openBackMenu.set(false, context);
             } else if (context.getClickedSlot() == 76 && context.getItem() != null) {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context) + 8);
-                openConfirmClose.set(false, context);
+                openBackMenu.set(false, context);
             } else if (context.getClickedSlot() == 66 && context.getItem() != null) {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context) - 1);
-                openConfirmClose.set(false, context);
+                openBackMenu.set(false, context);
             } else if (context.getClickedSlot() == 58 && context.getItem() != null) {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context) - 8);
-                openConfirmClose.set(false, context);
+                openBackMenu.set(false, context);
             } else if (context.getClickedSlot() == 89 && context.getItem() != null) {
                 context.openForPlayer(WorldMenu.class, sectionState.get(context));
-                openConfirmClose.set(false, context);
+                openBackMenu.set(false, context);
             }
         }
     }

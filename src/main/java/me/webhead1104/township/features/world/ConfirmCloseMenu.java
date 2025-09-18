@@ -6,7 +6,6 @@ import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
-import me.devnatan.inventoryframework.state.MutableState;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
@@ -18,8 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class ConfirmCloseMenu extends TownshipView {
-    private final MutableState<Boolean> openWorld = mutableState(true);
-
     public ConfirmCloseMenu() {
         super(WorldMenu.class);
     }
@@ -50,7 +47,7 @@ public class ConfirmCloseMenu extends TownshipView {
             Player player = slotClickContext.getPlayer();
             Township.getDatabase().setData(Township.getUserManager().getUser(player.getUniqueId()));
             context.closeForEveryone();
-            openWorld.set(false, slotClickContext);
+            openBackMenu.set(false, slotClickContext);
             if (Township.getInventoryManager().getPlayerInventory(player.getUniqueId()).isPresent()) {
                 Township.getInventoryManager().returnItemsToPlayer(player);
             }

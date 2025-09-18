@@ -4,7 +4,6 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
-import me.devnatan.inventoryframework.state.MutableState;
 import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import org.bukkit.Material;
@@ -13,8 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class BuildMenu extends TownshipView {
-    private final MutableState<Boolean> openWorldMenu = mutableState(true);
-
     public BuildMenu() {
         super(WorldMenu.class);
     }
@@ -43,7 +40,7 @@ public class BuildMenu extends TownshipView {
                 slotRenderContext.setItem(itemStack);
             }).onClick(slotClickContext -> {
                 slotClickContext.openForPlayer(BuildMenuSelectBuildingMenu.class, buildMenuType);
-                openWorldMenu.set(false, slotClickContext);
+                openBackMenu.set(false, slotClickContext);
             });
         }
     }

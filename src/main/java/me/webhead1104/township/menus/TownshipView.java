@@ -8,8 +8,8 @@ import me.webhead1104.township.Township;
 import org.jetbrains.annotations.NotNull;
 
 public class TownshipView extends View {
-    private final Class<? extends View> closeClass;
-    private final MutableState<Boolean> openBackMenu = mutableState(true);
+    protected final Class<? extends View> closeClass;
+    protected final MutableState<Boolean> openBackMenu = mutableState(true);
     protected State<Object> initalData = computedState(context -> Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getSection());
 
     public TownshipView(Class<? extends View> closeClass) {
