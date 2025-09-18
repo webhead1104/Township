@@ -25,7 +25,7 @@ public class WorldSection {
             slotMap.put(i, StaticWorldTile.Type.GRASS.getTile());
             if (section != 27 && section != 28 && section != 35 && section != 36) {
                 for (Integer a : TileSize.SIZE_3X3.toList(i)) {
-                    ExpansionTile tile = new ExpansionTile(Expansion.defaultExpansion(section, i));
+                    ExpansionTile tile = new ExpansionTile(a, null);
                     slotMap.put(a, tile);
                 }
             }

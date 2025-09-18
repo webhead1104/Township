@@ -9,12 +9,14 @@ import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
+import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.TileSize;
-import me.webhead1104.township.data.objects.Expansion;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
-import me.webhead1104.township.tiles.StaticWorldTile;
+import me.webhead1104.township.data.objects.WorldSection;
+import me.webhead1104.township.dataLoaders.ExpansionDataLoader;
+import me.webhead1104.township.tiles.ExpansionTile;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -22,10 +24,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Instant;
 import java.util.List;
 
 public class ExpansionMenu extends View {
-    private final MutableState<Expansion> expansion = initialState();
+    private final MutableState<Integer> slotState = initialState();
+    private final State<ExpansionDataLoader.Expansion> expansionState = computedState(context -> ExpansionDataLoader.get(Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getExpansionsPurchased() + 1));
     private final MutableState<Boolean> openWorldMenu = mutableState(true);
 
     @Override
@@ -56,10 +60,10 @@ public class ExpansionMenu extends View {
         Player player = context.getPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());
         World world = user.getWorld();
-        Expansion expansion = this.expansion.get(context);
+        ExpansionDataLoader.Expansion expansion = expansionState.get(context);
 
         world.getSection(user.getSection()).getSlotMap().forEach((key, tile) -> {
-            if (!TileSize.SIZE_3X3.toList(expansion.getSlot()).contains(key)) {
+            if (!TileSize.SIZE_3X3.toList(slotState.get(context)).contains(key)) {
                 context.slot(key).onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
                     if (tile.onClick(clickContext)) {
                         openWorldMenu.set(false, clickContext);
@@ -67,10 +71,10 @@ public class ExpansionMenu extends View {
                 });
             }
         });
-        for (Integer i : TileSize.SIZE_3X3.toList(expansion.getSlot())) {
+        for (Integer i : TileSize.SIZE_3X3.toList(slotState.get(context))) {
             context.slot(i).onRender(slotRenderContext -> {
                 ItemStack itemStack = ItemStack.of(Material.RED_CONCRETE);
-                if (user.getPopulation() >= expansion.getPopulationNeeded() && user.getCoins() >= expansion.getPrice()) {
+                if (user.getPopulation() >= expansion.getPopulationNeeded() && user.getCoins() >= expansion.getCoinsNeeded()) {
                     itemStack = itemStack.withType(Material.LIME_CONCRETE);
                 }
                 itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("Expansion"));
@@ -80,12 +84,12 @@ public class ExpansionMenu extends View {
 
         ItemStack priceItem = ItemStack.of(Material.GOLD_BLOCK);
         String priceColor;
-        if (user.getCoins() >= expansion.getPrice()) {
+        if (user.getCoins() >= expansion.getCoinsNeeded()) {
             priceColor = "<green>";
         } else {
             priceColor = "<red>";
         }
-        priceItem.setData(DataComponentTypes.ITEM_NAME, Msg.format("<gold>Coins <white>needed: %s%d/%d", priceColor, user.getCoins(), expansion.getPrice()));
+        priceItem.setData(DataComponentTypes.ITEM_NAME, Msg.format("<gold>Coins <white>needed: %s%d/%d", priceColor, user.getCoins(), expansion.getCoinsNeeded()));
         player.getInventory().setItem(2, priceItem);
 
         ItemStack populationItem = ItemStack.of(Material.BLUE_CONCRETE);
@@ -99,14 +103,14 @@ public class ExpansionMenu extends View {
         player.getInventory().setItem(6, populationItem);
 
         ItemStack buyItem;
-        if (user.getPopulation() >= expansion.getPopulationNeeded() && user.getCoins() >= expansion.getPrice()) {
+        if (user.getPopulation() >= expansion.getPopulationNeeded() && user.getCoins() >= expansion.getCoinsNeeded()) {
             buyItem = ItemStack.of(Material.LIME_CONCRETE);
             buyItem.setData(DataComponentTypes.ITEM_NAME, Msg.format("<gold>Click to buy!"));
         } else {
             buyItem = ItemStack.of(Material.RED_CONCRETE);
             buyItem.setData(DataComponentTypes.ITEM_NAME, Msg.format("<red>:("));
         }
-        buyItem.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<gold>Coins <white>needed: %s%d/%d", priceColor, user.getCoins(), expansion.getPrice()), Msg.format("<red>Population <white>needed: %s%d/%d", populationColor, user.getPopulation(), expansion.getPopulationNeeded()))));
+        buyItem.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<gold>Coins <white>needed: %s%d/%d", priceColor, user.getCoins(), expansion.getCoinsNeeded()), Msg.format("<red>Population <white>needed: %s%d/%d", populationColor, user.getPopulation(), expansion.getPopulationNeeded()))));
         player.getInventory().setItem(4, buyItem);
 
         ItemStack backButton = ItemStack.of(Material.BARRIER);
@@ -119,9 +123,15 @@ public class ExpansionMenu extends View {
         if (!context.isOnEntityContainer()) return;
         if (context.getSlot() == 85 && context.getItem() != null && context.getItem().getType() == Material.LIME_CONCRETE) {
             User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
-            if (user.getCoins() >= expansion.get(context).getPrice() && user.getPopulation() >= expansion.get(context).getPopulationNeeded()) {
-                user.setCoins(user.getCoins() - expansion.get(context).getPrice());
-                TileSize.SIZE_3X3.toList(expansion.get(context).getSlot()).forEach(slot -> user.getWorld().getSection(user.getSection()).setSlot(slot, StaticWorldTile.Type.GRASS.getTile()));
+            ExpansionDataLoader.Expansion expansion = expansionState.get(context);
+            if (user.getCoins() >= expansion.getCoinsNeeded() && user.getPopulation() >= expansion.getPopulationNeeded()) {
+                user.setCoins(user.getCoins() - expansion.getCoinsNeeded());
+                Township.getLevelManager().addXp(context.getPlayer(), expansion.getXp());
+                WorldSection section = user.getWorld().getSection(user.getSection());
+                TileSize.SIZE_3X3.toList(slotState.get(context)).forEach(slot -> {
+                    ExpansionTile expansionTile = (ExpansionTile) section.getSlot(slot);
+                    expansionTile.setInstant(Instant.now().plus(expansion.getTime()));
+                });
                 context.closeForPlayer();
             }
         } else if (context.getSlot() == 81) {

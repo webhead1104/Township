@@ -5,6 +5,8 @@ build
 !**/src/test/**/build/
 run
 .idea
+/scripts/node_modules
+/scripts/package-lock.json
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

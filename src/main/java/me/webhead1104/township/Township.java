@@ -6,17 +6,21 @@ import lombok.NoArgsConstructor;
 import me.devnatan.inventoryframework.ViewFrame;
 import me.webhead1104.township.commands.TownshipCommandBrigadier;
 import me.webhead1104.township.data.Database;
+import me.webhead1104.township.dataLoaders.DataLoader;
 import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.*;
 import me.webhead1104.township.menus.*;
+import me.webhead1104.township.serializers.DurationSerializer;
 import me.webhead1104.township.serializers.InstantSerializer;
 import me.webhead1104.township.serializers.TileSerializer;
 import me.webhead1104.township.tiles.Tile;
+import me.webhead1104.township.utils.ClassGraphUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
 
+import java.time.Duration;
 import java.time.Instant;
 
 @NoArgsConstructor
@@ -25,6 +29,7 @@ public class Township extends JavaPlugin {
     public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder()
             .defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
                 builder.register(t -> t == Instant.class, new InstantSerializer());
+                builder.register(t -> t == Duration.class, new DurationSerializer());
                 builder.register(t -> {
                     if (t instanceof Class<?> clazz) {
                         return clazz == Tile.class || Tile.class.isAssignableFrom(clazz);
@@ -75,6 +80,9 @@ public class Township extends JavaPlugin {
         userManager.loadDataVersions();
         barnManager = new BarnManager();
         barnManager.loadUpgrades();
+        for (DataLoader clazz : ClassGraphUtils.getImplementedClasses(DataLoader.class, "me.webhead1104.township.dataLoaders")) {
+            clazz.load();
+        }
         levelManager = new LevelManager();
         levelManager.loadLevels();
         logger.info("Township initialized in {} mills!", System.currentTimeMillis() - start);
