@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public final class XpCommand {
 
     public static void addXp(Player player, int xp) {
-        Township.getLevelManager().addXp(player, xp);
+        Township.getUserManager().getUser(player.getUniqueId()).addXp(xp);
         player.sendMessage(Msg.format("<green>Added %d xp!", xp));
     }
 

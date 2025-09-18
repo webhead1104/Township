@@ -126,7 +126,7 @@ public class ExpansionMenu extends View {
             ExpansionDataLoader.Expansion expansion = expansionState.get(context);
             if (user.getCoins() >= expansion.getCoinsNeeded() && user.getPopulation() >= expansion.getPopulationNeeded()) {
                 user.setCoins(user.getCoins() - expansion.getCoinsNeeded());
-                Township.getLevelManager().addXp(context.getPlayer(), expansion.getXp());
+                user.addXp(expansion.getXp());
                 WorldSection section = user.getWorld().getSection(user.getSection());
                 TileSize.SIZE_3X3.toList(slotState.get(context)).forEach(slot -> {
                     ExpansionTile expansionTile = (ExpansionTile) section.getSlot(slot);

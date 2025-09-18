@@ -74,7 +74,7 @@ public class AnimalMenu extends View {
             context.slot(slot + 9).withItem(animalType.getProductType().getItemStack())
                     .displayIf(animal::isProduct).updateOnClick().onClick(slotClickContext -> {
                         user.getBarn().addAmountToItem(animalType.getProductType(), 1);
-                        Township.getLevelManager().addXp(slotClickContext.getPlayer(), animalType.getXpGivenOnClaim());
+                        user.addXp(animalType.getXpGivenOnClaim());
                         animal.setProduct(false);
                     });
             slot++;

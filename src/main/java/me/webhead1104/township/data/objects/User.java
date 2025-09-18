@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.dataLoaders.LevelDataLoader;
+import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -92,5 +94,52 @@ public class User {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void addXp(int amountOfXp) {
+        if (amountOfXp <= 0) return; // ignore non-positive xp changes here
+        xp = xp + amountOfXp;
+        //noinspection StatementWithEmptyBody
+        while (canLevelUp()) {
+        }
+    }
+
+    public boolean canLevelUp() {
+        LevelDataLoader.Level nextLevel = LevelDataLoader.get(level + 1);
+        if (nextLevel == null) {
+            return false;
+        }
+        int needed = nextLevel.getXpNeeded();
+        if (xp >= needed) {
+            // level up
+            level = level + 1;
+            // subtract the XP required so overflow carries to next level
+            xp = xp - needed;
+
+            // Apply rewards for reaching this level
+            int coinsReward = nextLevel.getCoinsGiven();
+            int cashReward = nextLevel.getCashGiven();
+            if (coinsReward > 0) coins = coins + coinsReward;
+            if (cashReward > 0) cash = cash + cashReward;
+
+            // Notify player
+            StringBuilder sb = new StringBuilder();
+            sb.append("<green>You have leveled up to level ").append(level).append("!");
+            if (coinsReward > 0 || cashReward > 0) {
+                sb.append(" <gray>(Rewards: ");
+                boolean added = false;
+                if (coinsReward > 0) {
+                    sb.append("<yellow>").append(coinsReward).append(" coins");
+                    added = true;
+                }
+                if (cashReward > 0) {
+                    sb.append(added ? "<gray>, " : "").append("<aqua>").append(cashReward).append(" cash");
+                }
+                sb.append("<gray>)");
+            }
+            Bukkit.getPlayer(uuid).sendMessage(Msg.format(sb.toString()));
+            return true;
+        }
+        return false;
     }
 }

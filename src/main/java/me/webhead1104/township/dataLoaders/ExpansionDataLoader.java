@@ -3,7 +3,6 @@ package me.webhead1104.township.dataLoaders;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.managers.LevelManager;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
@@ -21,17 +20,21 @@ public class ExpansionDataLoader implements DataLoader {
     private static final List<Expansion> expansions = new ArrayList<>();
 
     public static Expansion get(int i) {
-        if (i == 1) {
-            return expansions.getFirst();
+        try {
+            if (i == 1) {
+                return expansions.getFirst();
+            }
+            return expansions.get(i);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
         }
-        return expansions.get(i);
     }
 
     @Override
     public void load() {
         try {
             long start = System.currentTimeMillis();
-            ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.source(() -> new BufferedReader(new InputStreamReader(Objects.requireNonNull(LevelManager.class.getResourceAsStream("/data/expansions.json"))))).build().load();
+            ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.source(() -> new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/data/expansions.json"))))).build().load();
             var list = node.getList(Expansion.class);
             if (list == null || list.isEmpty()) {
                 throw new RuntimeException("No expansions found!");

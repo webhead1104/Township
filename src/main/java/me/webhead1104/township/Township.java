@@ -50,8 +50,6 @@ public class Township extends JavaPlugin {
     @Getter
     private static BarnManager barnManager;
     @Getter
-    private static LevelManager levelManager;
-    @Getter
     private static ViewFrame viewFrame;
     @Getter
     private static Township instance;
@@ -83,8 +81,6 @@ public class Township extends JavaPlugin {
         for (DataLoader clazz : ClassGraphUtils.getImplementedClasses(DataLoader.class, "me.webhead1104.township.dataLoaders")) {
             clazz.load();
         }
-        levelManager = new LevelManager();
-        levelManager.loadLevels();
         logger.info("Township initialized in {} mills!", System.currentTimeMillis() - start);
     }
 

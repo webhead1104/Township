@@ -1,5 +1,6 @@
 package me.webhead1104.township.menus;
 
+import com.google.common.base.Strings;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.devnatan.inventoryframework.View;
@@ -16,9 +17,11 @@ import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.data.objects.WorldSection;
+import me.webhead1104.township.dataLoaders.LevelDataLoader;
 import me.webhead1104.township.tiles.BuildingTile;
 import me.webhead1104.township.tiles.StaticWorldTile;
 import me.webhead1104.township.utils.Msg;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -129,10 +132,10 @@ public class WorldMenu extends View {
 
         ItemStack levelAndPopStack = ItemStack.of(Material.BLUE_CONCRETE);
         levelAndPopStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<aqua>Level %d", user.getLevel()));
-        if (Township.getLevelManager().getLevelMap().containsKey(user.getLevel() + 1)) {
+        if (LevelDataLoader.get(user.getLevel() + 1) != null) {
             levelAndPopStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                     Msg.format("<aqua>Xp %d", user.getXp()),
-                    Msg.format(Township.getLevelManager().getProgressBar(player)),
+                    getLevelProgressBar(user),
                     Msg.format("<red>Population %d", user.getPopulation())
             )));
         } else {
@@ -179,6 +182,21 @@ public class WorldMenu extends View {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context));
                 openConfirmClose.set(false, context);
             }
+        }
+    }
+
+    private Component getLevelProgressBar(User user) {
+        System.out.printf("LEVEL = %d XP = %d next level xp needed = %s", user.getLevel(), user.getXp(), LevelDataLoader.get(user.getLevel() + 1).getXpNeeded()).println();
+        LevelDataLoader.Level nextLevel = LevelDataLoader.get(user.getLevel() + 1);
+        System.out.println(nextLevel);
+        if (nextLevel != null) {
+            int max = nextLevel.getXpNeeded();
+            float percent = max > 0 ? Math.min(1f, Math.max(0f, (float) user.getXp() / max)) : 0f;
+            int progressBars = Math.max(0, Math.min(16, (int) (16 * percent)));
+
+            return Msg.format(Strings.repeat("<aqua>■", progressBars) + Strings.repeat("<gray>■", 16 - progressBars));
+        } else {
+            return Msg.format("<dark_red>You have reached the max level!");
         }
     }
 }

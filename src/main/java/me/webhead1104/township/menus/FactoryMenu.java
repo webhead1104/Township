@@ -145,7 +145,7 @@ public class FactoryMenu extends View {
             }).onClick(slotClickContext -> {
                 if (factory.getCompleted(finalI).equals(ItemType.NONE)) return;
                 user.getBarn().addAmountToItem(factory.getCompleted(finalI), 1);
-                Township.getLevelManager().addXp(slotClickContext.getPlayer(), factory.getCompleted(finalI).getXpGiven());
+                user.addXp(factory.getCompleted(finalI).getXpGiven());
                 factory.setCompleted(finalI, ItemType.NONE);
                 if (factory.getInstant().equals(Instant.EPOCH) && !factory.getWorkingOn().equals(RecipeType.NONE)) {
                     factory.addCompleted(factory.getWorkingOn().getResultItemType());
