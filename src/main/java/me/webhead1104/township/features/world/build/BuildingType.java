@@ -1,11 +1,14 @@
-package me.webhead1104.township.data.enums;
+package me.webhead1104.township.features.world.build;
 
 import lombok.Getter;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.data.enums.TileSize;
 import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.ConstructionMaterials;
 import me.webhead1104.township.data.objects.PurchasedBuildings;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.features.animals.AnimalType;
+import me.webhead1104.township.features.factories.FactoryType;
 import me.webhead1104.township.price.CoinPrice;
 import me.webhead1104.township.tiles.*;
 import org.bukkit.entity.Player;

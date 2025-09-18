@@ -1,4 +1,4 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.world.build;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.devnatan.inventoryframework.View;
@@ -8,7 +8,6 @@ import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.BuildMenuType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemRarity;

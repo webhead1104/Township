@@ -1,4 +1,4 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.trains;
 
 import com.destroystokyo.paper.profile.ProfileProperty;
 import io.papermc.paper.datacomponent.DataComponentTypes;

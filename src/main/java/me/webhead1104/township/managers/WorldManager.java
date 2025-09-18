@@ -4,7 +4,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.TileSize;
 import me.webhead1104.township.data.objects.WorldSection;
-import me.webhead1104.township.menus.WorldMenu;
+import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.tiles.BuildingTile;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;

@@ -1,4 +1,4 @@
-package me.webhead1104.township.data.enums;
+package me.webhead1104.township.features.world.build;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

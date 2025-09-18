@@ -1,6 +1,8 @@
-package me.webhead1104.township.data.enums;
+package me.webhead1104.township.features.animals;
 
 import lombok.Getter;
+import me.webhead1104.township.data.enums.ItemType;
+import me.webhead1104.township.features.world.build.BuildingType;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
 import net.kyori.adventure.text.Component;

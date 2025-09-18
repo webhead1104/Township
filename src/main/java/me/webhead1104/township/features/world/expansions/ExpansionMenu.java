@@ -1,4 +1,4 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.world.expansions;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
@@ -15,7 +15,6 @@ import me.webhead1104.township.data.enums.TileSize;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.data.objects.WorldSection;
-import me.webhead1104.township.dataLoaders.ExpansionDataLoader;
 import me.webhead1104.township.tiles.ExpansionTile;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;

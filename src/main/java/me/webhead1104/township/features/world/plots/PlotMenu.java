@@ -1,4 +1,4 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.world.plots;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
@@ -10,7 +10,6 @@ import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.PlotType;
 import me.webhead1104.township.data.objects.Plot;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;

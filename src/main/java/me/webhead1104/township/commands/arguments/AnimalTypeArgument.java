@@ -9,7 +9,7 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import io.papermc.paper.command.brigadier.MessageComponentSerializer;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
-import me.webhead1104.township.data.enums.AnimalType;
+import me.webhead1104.township.features.animals.AnimalType;
 import me.webhead1104.township.utils.Msg;
 import org.jetbrains.annotations.NotNull;
 

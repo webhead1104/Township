@@ -1,4 +1,4 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.barn;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
@@ -203,7 +203,7 @@ public class BarnMenu extends View {
         if (context.getSlot() == 89) {
             if (canUpgrade(context.getPlayer())) {
                 User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
-                BarnUpgrade newUpgrade = Township.getBarnManager().getUpgradeMap().get(user.getBarn().getBarnUpgrade().getId() + 1);
+                BarnUpgrade newUpgrade = BarnUpdateDataLoader.get(user.getBarn().getBarnUpgrade().getId());
                 user.getBarn().setBarnUpgrade(newUpgrade);
                 user.getBarn().removeAmountFromItem(ItemType.HAMMER, newUpgrade.getToolsNeeded());
                 user.getBarn().removeAmountFromItem(ItemType.NAIL, newUpgrade.getToolsNeeded());

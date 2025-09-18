@@ -1,4 +1,4 @@
-package me.webhead1104.township.data.enums;
+package me.webhead1104.township.features.factories;
 
 import lombok.Getter;
 import me.webhead1104.township.utils.Msg;

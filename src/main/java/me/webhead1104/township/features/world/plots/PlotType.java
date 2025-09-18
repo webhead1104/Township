@@ -1,8 +1,9 @@
-package me.webhead1104.township.data.enums;
+package me.webhead1104.township.features.world.plots;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import lombok.Getter;
+import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

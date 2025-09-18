@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
-import me.webhead1104.township.data.enums.CommunityBuildingType;
+import me.webhead1104.township.features.world.build.CommunityBuildingType;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

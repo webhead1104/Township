@@ -1,6 +1,7 @@
-package me.webhead1104.township.data.enums;
+package me.webhead1104.township.features.factories;
 
 import lombok.Getter;
+import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.data.objects.Barn;
 import me.webhead1104.township.utils.Utils;
 import org.bukkit.Material;

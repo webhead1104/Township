@@ -1,4 +1,4 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.world;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.devnatan.inventoryframework.View;

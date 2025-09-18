@@ -1,4 +1,4 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.world;
 
 import com.google.common.base.Strings;
 import io.papermc.paper.datacomponent.DataComponentTypes;
@@ -12,12 +12,14 @@ import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.BuildingType;
 import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.data.objects.WorldSection;
 import me.webhead1104.township.dataLoaders.LevelDataLoader;
+import me.webhead1104.township.features.world.build.BuildMenu;
+import me.webhead1104.township.features.world.build.BuildingType;
+import me.webhead1104.township.features.world.edit.WorldEditMenu;
 import me.webhead1104.township.tiles.BuildingTile;
 import me.webhead1104.township.tiles.StaticWorldTile;
 import me.webhead1104.township.utils.Msg;

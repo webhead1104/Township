@@ -1,4 +1,4 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.world.build;
 
 import com.google.common.collect.ImmutableMap;
 import io.papermc.paper.datacomponent.DataComponentTypes;
@@ -13,9 +13,10 @@ import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.BuildMenuType;
 import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.features.world.PlaceMenu;
+import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.utils.Msg;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;

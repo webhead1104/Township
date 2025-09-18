@@ -3,14 +3,16 @@ package me.webhead1104.township;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewFrame;
 import me.webhead1104.township.commands.TownshipCommandBrigadier;
 import me.webhead1104.township.data.Database;
 import me.webhead1104.township.dataLoaders.DataLoader;
 import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
-import me.webhead1104.township.managers.*;
-import me.webhead1104.township.menus.*;
+import me.webhead1104.township.managers.InventoryManager;
+import me.webhead1104.township.managers.UserManager;
+import me.webhead1104.township.managers.WorldManager;
 import me.webhead1104.township.serializers.DurationSerializer;
 import me.webhead1104.township.serializers.InstantSerializer;
 import me.webhead1104.township.serializers.TileSerializer;
@@ -48,8 +50,6 @@ public class Township extends JavaPlugin {
     @Getter
     private static UserManager userManager;
     @Getter
-    private static BarnManager barnManager;
-    @Getter
     private static ViewFrame viewFrame;
     @Getter
     private static Township instance;
@@ -70,17 +70,12 @@ public class Township extends JavaPlugin {
         database.connect();
         database.createTownshipTable();
         viewFrame = ViewFrame.create(this);
-        registerViews();
-        viewFrame.register();
         worldManager = new WorldManager();
         inventoryManager = new InventoryManager();
         userManager = new UserManager();
         userManager.loadDataVersions();
-        barnManager = new BarnManager();
-        barnManager.loadUpgrades();
-        for (DataLoader clazz : ClassGraphUtils.getImplementedClasses(DataLoader.class, "me.webhead1104.township.dataLoaders")) {
-            clazz.load();
-        }
+        loadDataLoaders();
+        registerViews();
         logger.info("Township initialized in {} mills!", System.currentTimeMillis() - start);
     }
 
@@ -100,11 +95,17 @@ public class Township extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new LeaveListener(), this);
     }
 
+    private void loadDataLoaders() {
+        for (DataLoader clazz : ClassGraphUtils.getImplementedClasses(DataLoader.class, "me.webhead1104.township")) {
+            clazz.load();
+        }
+    }
+
     private void registerViews() {
-        viewFrame.with(
-                new AnimalMenu(), new FactoryMenu(), new WorldMenu(), new ExpansionMenu(),
-                new ConfirmCloseMenu(), new PlotMenu(), new BarnMenu(), new TrainMenu(),
-                new BuildMenu(), new BuildMenuSelectBuildingMenu(), new PlaceMenu(), new WorldEditMenu()
-        );
+        for (View view : ClassGraphUtils.getExtendedClasses(View.class, "me.webhead1104.township")) {
+            viewFrame.with(view);
+        }
+
+        viewFrame.register();
     }
 }
