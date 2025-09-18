@@ -2,7 +2,6 @@ package me.webhead1104.township.features.world.plots;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
-import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.CloseContext;
 import me.devnatan.inventoryframework.context.OpenContext;
@@ -13,9 +12,10 @@ import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Plot;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
+import me.webhead1104.township.features.world.WorldMenu;
+import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.tiles.PlotTile;
 import me.webhead1104.township.utils.Msg;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -26,11 +26,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlotMenu extends View {
+public class PlotMenu extends TownshipView {
     private final MutableState<Plot> plot = initialState();
     private final MutableState<Boolean> openWorldMenu = mutableState(true);
     private final Map<Integer, PlotType> plotTypes = new HashMap<>();
     private PlotType selectedPlotType = PlotType.NONE;
+
+    public PlotMenu() {
+        super(WorldMenu.class);
+    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
@@ -48,11 +52,7 @@ public class PlotMenu extends View {
 
     @Override
     public void onClose(@NotNull CloseContext context) {
-        Bukkit.getScheduler().runTaskLater(Township.getInstance(), () -> {
-            if (openWorldMenu.get(context)) {
-                Township.getWorldManager().openWorldMenu(context.getPlayer());
-            }
-        }, 1);
+        super.onClose(context);
         plotTypes.clear();
         selectedPlotType = PlotType.NONE;
     }

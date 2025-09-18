@@ -3,9 +3,7 @@ package me.webhead1104.township.features.world;
 import com.google.common.base.Strings;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
-import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
-import me.devnatan.inventoryframework.context.CloseContext;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
@@ -20,11 +18,11 @@ import me.webhead1104.township.dataLoaders.LevelDataLoader;
 import me.webhead1104.township.features.world.build.BuildMenu;
 import me.webhead1104.township.features.world.build.BuildingType;
 import me.webhead1104.township.features.world.edit.WorldEditMenu;
+import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.tiles.BuildingTile;
 import me.webhead1104.township.tiles.StaticWorldTile;
 import me.webhead1104.township.utils.Msg;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -32,9 +30,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class WorldMenu extends View {
+public class WorldMenu extends TownshipView {
     private final State<Integer> sectionState = initialState();
     private final MutableState<Boolean> openConfirmClose = mutableState(true);
+
+    public WorldMenu() {
+        super(ConfirmCloseMenu.class);
+    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
@@ -42,6 +44,7 @@ public class WorldMenu extends View {
         config.cancelInteractions();
         config.size(6);
         config.title(Msg.format("World Menu"));
+        initalData = null;
     }
 
     @Override
@@ -49,15 +52,6 @@ public class WorldMenu extends View {
         context.getPlayer().getInventory().clear();
         context.getPlayer().setItemOnCursor(ItemStack.empty());
         Township.getUserManager().getUser(context.getPlayer().getUniqueId()).setSection(sectionState.get(context));
-    }
-
-    @Override
-    public void onClose(@NotNull CloseContext context) {
-        Bukkit.getScheduler().runTaskLater(Township.getInstance(), () -> {
-            if (openConfirmClose.get(context)) {
-                Township.getViewFrame().open(ConfirmCloseMenu.class, context.getPlayer());
-            }
-        }, 1);
     }
 
     @Override
@@ -81,7 +75,7 @@ public class WorldMenu extends View {
                                             int clickedSlot = clickContext.getClickedSlot();
                                             WorldSection worldSection = Township.getUserManager().getUser(clickContext.getPlayer().getUniqueId()).getWorld().getSection(sectionState.get(clickContext));
 
-                                            int anchor = Township.getWorldManager().findAnchor(clickedSlot, building.getSize(), worldSection, bt);
+                                            int anchor = WorldUtils.findAnchor(clickedSlot, building.getSize(), worldSection, bt);
 
                                             if (anchor >= 0) {
                                                 for (Integer s : building.getSize().toList(anchor)) {
@@ -130,7 +124,7 @@ public class WorldMenu extends View {
                             }
                         }));
 
-        Township.getWorldManager().applyArrows(player, sectionState.get(context));
+        WorldUtils.applyArrows(player, sectionState.get(context));
 
         ItemStack profileItemStack = ItemStack.of(Material.LIGHT_BLUE_CONCRETE);
         profileItemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<green>%s", user.getTownName()));

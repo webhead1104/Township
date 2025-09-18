@@ -4,18 +4,17 @@ import com.destroystokyo.paper.profile.ProfileProperty;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
-import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
-import me.devnatan.inventoryframework.context.CloseContext;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.data.objects.Trains;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.features.world.WorldMenu;
+import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +23,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class TrainMenu extends View {
+public class TrainMenu extends TownshipView {
+
+    public TrainMenu() {
+        super(WorldMenu.class);
+    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
@@ -42,11 +45,6 @@ public class TrainMenu extends View {
         }
         context.getPlayer().getInventory().clear();
         context.getPlayer().setItemOnCursor(ItemStack.empty());
-    }
-
-    @Override
-    public void onClose(@NotNull CloseContext context) {
-        Bukkit.getScheduler().runTaskLater(Township.getInstance(), () -> Township.getWorldManager().openWorldMenu(context.getPlayer()), 1);
     }
 
     @Override
