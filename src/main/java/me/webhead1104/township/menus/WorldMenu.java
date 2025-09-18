@@ -190,9 +190,7 @@ public class WorldMenu extends View {
     }
 
     private Component getLevelProgressBar(User user) {
-        System.out.printf("LEVEL = %d XP = %d next level xp needed = %s", user.getLevel(), user.getXp(), LevelDataLoader.get(user.getLevel() + 1).getXpNeeded()).println();
         LevelDataLoader.Level nextLevel = LevelDataLoader.get(user.getLevel() + 1);
-        System.out.println(nextLevel);
         if (nextLevel != null) {
             int max = nextLevel.getXpNeeded();
             float percent = max > 0 ? Math.min(1f, Math.max(0f, (float) user.getXp() / max)) : 0f;
