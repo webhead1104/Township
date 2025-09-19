@@ -94,6 +94,11 @@ public class Township extends JavaPlugin {
     private void loadDataLoaders() {
         for (DataLoader clazz : ClassGraphUtils.getImplementedClasses(DataLoader.class, "me.webhead1104.township")) {
             clazz.load();
+            try {
+                clazz.load();
+            } catch (Exception e) {
+                logger.error("Failed to load data loader: {}", clazz.getClass().getName(), e);
+            }
         }
     }
 
