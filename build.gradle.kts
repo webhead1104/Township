@@ -4,6 +4,7 @@ plugins {
     id("xyz.jpenilla.run-paper") version "3.0.0"
     id("io.freefair.lombok") version "8.14.2"
     id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
+    id("com.diffplug.spotless") version "7.2.1"
 }
 
 group = "me.webhead1104"
@@ -138,5 +139,13 @@ tasks {
         description.set("A remake of the game Township by Playrix in Minecraft")
         loader.set("me.webhead1104.township.utils.GeneratedClassloader")
         website.set("https://github.com/Webhead1104/Township")
+    }
+
+    spotless {
+        ratchetFrom = "origin/master"
+        java {
+            idea().withDefaults(true)
+            formatAnnotations()
+        }
     }
 }

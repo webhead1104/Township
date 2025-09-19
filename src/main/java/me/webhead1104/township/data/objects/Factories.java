@@ -2,9 +2,9 @@ package me.webhead1104.township.data.objects;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.webhead1104.township.data.enums.FactoryType;
 import me.webhead1104.township.data.enums.ItemType;
-import me.webhead1104.township.data.enums.RecipeType;
+import me.webhead1104.township.features.factories.FactoryType;
+import me.webhead1104.township.features.factories.RecipeType;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.time.Instant;

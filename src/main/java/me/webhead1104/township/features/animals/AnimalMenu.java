@@ -1,21 +1,19 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.animals;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
-import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
-import me.devnatan.inventoryframework.context.CloseContext;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.AnimalType;
 import me.webhead1104.township.data.objects.Animals;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.features.world.WorldMenu;
+import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -23,9 +21,13 @@ import org.jetbrains.annotations.NotNull;
 import java.time.Instant;
 import java.util.List;
 
-public class AnimalMenu extends View {
+public class AnimalMenu extends TownshipView {
     private final MutableState<AnimalType> animalTypeState = initialState();
     private final State<User> userState = computedState(context -> Township.getUserManager().getUser(context.getPlayer().getUniqueId()));
+
+    public AnimalMenu() {
+        super(WorldMenu.class);
+    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
@@ -41,11 +43,6 @@ public class AnimalMenu extends View {
         Player player = context.getPlayer();
         player.getInventory().clear();
         player.setItemOnCursor(ItemStack.empty());
-    }
-
-    @Override
-    public void onClose(@NotNull CloseContext context) {
-        Bukkit.getScheduler().runTask(Township.getInstance(), () -> Township.getWorldManager().openWorldMenu(context.getPlayer()));
     }
 
     @Override

@@ -2,7 +2,7 @@ package me.webhead1104.township.tiles;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.webhead1104.township.data.enums.BuildingType;
+import me.webhead1104.township.features.world.build.BuildingType;
 
 @Getter
 @Setter

@@ -1,22 +1,20 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.world.build;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
-import me.devnatan.inventoryframework.context.CloseContext;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
-import me.devnatan.inventoryframework.state.MutableState;
-import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.BuildMenuType;
-import org.bukkit.Bukkit;
+import me.webhead1104.township.features.world.WorldMenu;
+import me.webhead1104.township.menus.TownshipView;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class BuildMenu extends View {
-    private final MutableState<Boolean> openWorldMenu = mutableState(true);
+public class BuildMenu extends TownshipView {
+    public BuildMenu() {
+        super(WorldMenu.class);
+    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
@@ -32,15 +30,6 @@ public class BuildMenu extends View {
     }
 
     @Override
-    public void onClose(@NotNull CloseContext context) {
-        Bukkit.getScheduler().runTaskLater(Township.getInstance(), () -> {
-            if (openWorldMenu.get(context)) {
-                Township.getWorldManager().openWorldMenu(context.getPlayer());
-            }
-        }, 1);
-    }
-
-    @Override
     public void onFirstRender(@NotNull RenderContext context) {
         int i = 2;
         for (BuildMenuType buildMenuType : BuildMenuType.values()) {
@@ -51,7 +40,7 @@ public class BuildMenu extends View {
                 slotRenderContext.setItem(itemStack);
             }).onClick(slotClickContext -> {
                 slotClickContext.openForPlayer(BuildMenuSelectBuildingMenu.class, buildMenuType);
-                openWorldMenu.set(false, slotClickContext);
+                openBackMenu.set(false, slotClickContext);
             });
         }
     }

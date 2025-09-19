@@ -1,24 +1,22 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.world.build;
 
 import com.google.common.collect.ImmutableMap;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
-import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.component.Pagination;
-import me.devnatan.inventoryframework.context.CloseContext;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
-import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.BuildMenuType;
 import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.features.world.PlaceMenu;
+import me.webhead1104.township.features.world.WorldMenu;
+import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -27,9 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class BuildMenuSelectBuildingMenu extends View {
+public class BuildMenuSelectBuildingMenu extends TownshipView {
     private final State<BuildMenuType> typeState = initialState();
-    private final MutableState<Boolean> openBuildMenuState = mutableState(true);
     private final State<Pagination> paginationState = buildComputedPaginationState(context -> typeState.get(context).getBuildings()).elementFactory((context, builder, index, buildingType) -> {
         Building building = buildingType.getNextBuilding(context.getPlayer());
         User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
@@ -67,7 +64,7 @@ public class BuildMenuSelectBuildingMenu extends View {
                         },
                         "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type)
                 ));
-                openBuildMenuState.set(false, slotClickContext);
+                openBackMenu.set(false, slotClickContext);
                 return;
             }
             if (building.getPrice().has(slotClickContext.getPlayer()) &&
@@ -95,10 +92,14 @@ public class BuildMenuSelectBuildingMenu extends View {
                         },
                         "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type)
                 ));
-                openBuildMenuState.set(false, slotClickContext);
+                openBackMenu.set(false, slotClickContext);
             }
         });
     }).layoutTarget('B').build();
+
+    public BuildMenuSelectBuildingMenu() {
+        super(BuildMenu.class);
+    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
@@ -109,20 +110,12 @@ public class BuildMenuSelectBuildingMenu extends View {
         config.layout(
                 "<BBBBBBB>",
                 "b********");
+        initalData = null;
     }
 
     @Override
     public void onOpen(@NotNull OpenContext context) {
         context.getPlayer().getInventory().clear();
-    }
-
-    @Override
-    public void onClose(@NotNull CloseContext context) {
-        Bukkit.getScheduler().runTaskLater(Township.getInstance(), () -> {
-            if (openBuildMenuState.get(context)) {
-                Township.getViewFrame().open(BuildMenu.class, context.getPlayer());
-            }
-        }, 1);
     }
 
     @Override

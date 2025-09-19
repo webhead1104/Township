@@ -1,17 +1,14 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.world;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
-import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
-import me.devnatan.inventoryframework.context.CloseContext;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
-import me.devnatan.inventoryframework.state.MutableState;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -19,8 +16,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ConfirmCloseMenu extends View {
-    private final MutableState<Boolean> openWorld = mutableState(true);
+public class ConfirmCloseMenu extends TownshipView {
+    public ConfirmCloseMenu() {
+        super(WorldMenu.class);
+    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
@@ -36,15 +35,6 @@ public class ConfirmCloseMenu extends View {
     }
 
     @Override
-    public void onClose(@NotNull CloseContext context) {
-        Bukkit.getScheduler().runTaskLater(Township.getInstance(), () -> {
-            if (openWorld.get(context)) {
-                Township.getViewFrame().open(WorldMenu.class, context.getPlayer(), Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getSection());
-            }
-        }, 1);
-    }
-
-    @Override
     public void onFirstRender(@NotNull RenderContext context) {
         context.slot(4).onRender(slotRenderContext -> {
             ItemStack itemStack = ItemStack.of(Material.RED_CONCRETE);
@@ -57,7 +47,7 @@ public class ConfirmCloseMenu extends View {
             Player player = slotClickContext.getPlayer();
             Township.getDatabase().setData(Township.getUserManager().getUser(player.getUniqueId()));
             context.closeForEveryone();
-            openWorld.set(false, slotClickContext);
+            openBackMenu.set(false, slotClickContext);
             if (Township.getInventoryManager().getPlayerInventory(player.getUniqueId()).isPresent()) {
                 Township.getInventoryManager().returnItemsToPlayer(player);
             }

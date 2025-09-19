@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.BuildingType;
+import me.webhead1104.township.features.world.build.BuildingType;
 import org.bukkit.entity.Player;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 

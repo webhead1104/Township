@@ -1,10 +1,8 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.world.expansions;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
-import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
-import me.devnatan.inventoryframework.context.CloseContext;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
@@ -15,10 +13,10 @@ import me.webhead1104.township.data.enums.TileSize;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.data.objects.WorldSection;
-import me.webhead1104.township.dataLoaders.ExpansionDataLoader;
+import me.webhead1104.township.features.world.WorldMenu;
+import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.tiles.ExpansionTile;
 import me.webhead1104.township.utils.Msg;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -27,10 +25,13 @@ import org.jetbrains.annotations.NotNull;
 import java.time.Instant;
 import java.util.List;
 
-public class ExpansionMenu extends View {
+public class ExpansionMenu extends TownshipView {
     private final MutableState<Integer> slotState = initialState();
     private final State<ExpansionDataLoader.Expansion> expansionState = computedState(context -> ExpansionDataLoader.get(Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getExpansionsPurchased() + 1));
-    private final MutableState<Boolean> openWorldMenu = mutableState(true);
+
+    public ExpansionMenu() {
+        super(WorldMenu.class);
+    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
@@ -47,15 +48,6 @@ public class ExpansionMenu extends View {
     }
 
     @Override
-    public void onClose(@NotNull CloseContext context) {
-        Bukkit.getScheduler().runTaskLater(Township.getInstance(), () -> {
-            if (openWorldMenu.get(context)) {
-                Township.getWorldManager().openWorldMenu(context.getPlayer());
-            }
-        }, 1);
-    }
-
-    @Override
     public void onFirstRender(@NotNull RenderContext context) {
         Player player = context.getPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());
@@ -66,7 +58,7 @@ public class ExpansionMenu extends View {
             if (!TileSize.SIZE_3X3.toList(slotState.get(context)).contains(key)) {
                 context.slot(key).onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
                     if (tile.onClick(clickContext)) {
-                        openWorldMenu.set(false, clickContext);
+                        openBackMenu.set(false, clickContext);
                     }
                 });
             }

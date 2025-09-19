@@ -1,25 +1,25 @@
-package me.webhead1104.township.menus;
+package me.webhead1104.township.features.world.edit;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
-import me.devnatan.inventoryframework.context.CloseContext;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
-import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.BuildingType;
 import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.data.objects.WorldSection;
+import me.webhead1104.township.features.world.PlaceMenu;
+import me.webhead1104.township.features.world.WorldMenu;
+import me.webhead1104.township.features.world.WorldUtils;
+import me.webhead1104.township.features.world.build.BuildingType;
+import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.tiles.BuildingTile;
 import me.webhead1104.township.tiles.StaticWorldTile;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -27,9 +27,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public class WorldEditMenu extends View {
+public class WorldEditMenu extends TownshipView {
     private final State<Integer> sectionState = initialState();
-    private final MutableState<Boolean> openConfirmClose = mutableState(true);
+
+    public WorldEditMenu() {
+        super(WorldMenu.class);
+    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
@@ -47,15 +50,6 @@ public class WorldEditMenu extends View {
     }
 
     @Override
-    public void onClose(@NotNull CloseContext context) {
-        Bukkit.getScheduler().runTaskLater(Township.getInstance(), () -> {
-            if (openConfirmClose.get(context)) {
-                Township.getWorldManager().openWorldMenu(context.getPlayer(), sectionState.get(context));
-            }
-        }, 1);
-    }
-
-    @Override
     public void onFirstRender(@NotNull RenderContext context) {
         Player player = context.getPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());
@@ -64,11 +58,11 @@ public class WorldEditMenu extends View {
 
         section.getSlotMap().forEach((key, tile) -> context.slot(key).updateOnClick().onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
             if (handleTileClick(clickContext, tile)) {
-                openConfirmClose.set(false, clickContext);
+                openBackMenu.set(false, clickContext);
             }
         }));
 
-        Township.getWorldManager().applyArrows(player, sectionState.get(context));
+        WorldUtils.applyArrows(player, sectionState.get(context));
 
         ItemStack exitEdit = ItemStack.of(Material.BARRIER);
         exitEdit.setData(DataComponentTypes.ITEM_NAME, Msg.format("<red>Exit Edit"));
@@ -80,19 +74,19 @@ public class WorldEditMenu extends View {
         if (context.isOnEntityContainer()) {
             if (context.getClickedSlot() == 68 && context.getItem() != null) {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context) + 1);
-                openConfirmClose.set(false, context);
+                openBackMenu.set(false, context);
             } else if (context.getClickedSlot() == 76 && context.getItem() != null) {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context) + 8);
-                openConfirmClose.set(false, context);
+                openBackMenu.set(false, context);
             } else if (context.getClickedSlot() == 66 && context.getItem() != null) {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context) - 1);
-                openConfirmClose.set(false, context);
+                openBackMenu.set(false, context);
             } else if (context.getClickedSlot() == 58 && context.getItem() != null) {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context) - 8);
-                openConfirmClose.set(false, context);
+                openBackMenu.set(false, context);
             } else if (context.getClickedSlot() == 89 && context.getItem() != null) {
                 context.openForPlayer(WorldMenu.class, sectionState.get(context));
-                openConfirmClose.set(false, context);
+                openBackMenu.set(false, context);
             }
         }
     }
@@ -111,7 +105,7 @@ public class WorldEditMenu extends View {
         User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
         WorldSection section = user.getWorld().getSection(sectionState.get(context));
 
-        int anchor = Township.getWorldManager().findAnchor(clickedSlot, building.getSize(), section, buildingTile);
+        int anchor = WorldUtils.findAnchor(clickedSlot, building.getSize(), section, buildingTile);
         if (anchor < 0) return false;
 
         for (Integer s : building.getSize().toList(anchor)) {

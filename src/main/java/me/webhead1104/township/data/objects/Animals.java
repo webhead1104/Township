@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.webhead1104.township.data.enums.AnimalType;
+import me.webhead1104.township.features.animals.AnimalType;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 

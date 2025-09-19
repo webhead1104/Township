@@ -4,11 +4,12 @@ import me.webhead1104.township.Township;
 import me.webhead1104.township.commands.arguments.AnimalTypeArgument;
 import me.webhead1104.township.commands.arguments.FactoryTypeArgument;
 import me.webhead1104.township.commands.arguments.ItemTypeArgument;
-import me.webhead1104.township.data.enums.AnimalType;
-import me.webhead1104.township.data.enums.FactoryType;
 import me.webhead1104.township.data.enums.ItemType;
-import me.webhead1104.township.menus.AnimalMenu;
-import me.webhead1104.township.menus.FactoryMenu;
+import me.webhead1104.township.features.animals.AnimalMenu;
+import me.webhead1104.township.features.animals.AnimalType;
+import me.webhead1104.township.features.factories.FactoryMenu;
+import me.webhead1104.township.features.factories.FactoryType;
+import me.webhead1104.township.features.world.WorldUtils;
 import net.strokkur.commands.annotations.Command;
 import net.strokkur.commands.annotations.Description;
 import net.strokkur.commands.annotations.Executes;
@@ -25,7 +26,7 @@ public final class TownshipCommand {
     void execute(CommandSender ignored, @Executor Player player) {
         if (!player.getInventory().isEmpty()) Township.getInventoryManager().addPlayerInventory(player);
         player.getInventory().clear();
-        Township.getWorldManager().openWorldMenu(player);
+        WorldUtils.openWorldMenu(player);
     }
 
     @Executes("item get")
