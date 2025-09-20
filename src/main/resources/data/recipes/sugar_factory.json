@@ -1,0 +1,12 @@
+[
+  {
+    "key": "sugar",
+    "material": "minecraft:sugar",
+    "ingredients": {
+      "sugarcane": 1
+    },
+    "time": "20m",
+    "level_needed": 7,
+    "xp_given": 6
+  }
+]

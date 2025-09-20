@@ -18,14 +18,14 @@ import java.util.Objects;
 @Getter
 public class ExpansionDataLoader implements DataLoader {
     @Getter
-    private static final List<Expansion> expansions = new ArrayList<>();
+    private static final List<Expansion> list = new ArrayList<>();
 
     public static Expansion get(int i) {
         try {
             if (i == 1) {
-                return expansions.getFirst();
+                return list.getFirst();
             }
-            return expansions.get(i);
+            return list.get(i);
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
@@ -36,12 +36,12 @@ public class ExpansionDataLoader implements DataLoader {
         try {
             long start = System.currentTimeMillis();
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.source(() -> new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/data/expansions.json"))))).build().load();
-            var list = node.getList(Expansion.class);
-            if (list == null || list.isEmpty()) {
+            var nodeList = node.getList(Expansion.class);
+            if (nodeList == null || list.isEmpty()) {
                 throw new RuntimeException("No expansions found!");
             }
-            expansions.addAll(list);
-            Township.logger.info("Loaded {} expansions in {} ms!", expansions.size(), System.currentTimeMillis() - start);
+            list.addAll(nodeList);
+            Township.logger.info("Loaded {} expansions in {} ms!", list.size(), System.currentTimeMillis() - start);
         } catch (Exception e) {
             throw new RuntimeException("An error occurred whilst loading expansions! Please report the following stacktrace to Webhead1104:", e);
         }

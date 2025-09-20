@@ -14,9 +14,11 @@ import me.webhead1104.township.managers.InventoryManager;
 import me.webhead1104.township.managers.UserManager;
 import me.webhead1104.township.serializers.DurationSerializer;
 import me.webhead1104.township.serializers.InstantSerializer;
+import me.webhead1104.township.serializers.KeySerializer;
 import me.webhead1104.township.serializers.TileSerializer;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.ClassGraphUtils;
+import net.kyori.adventure.key.Key;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
@@ -29,8 +31,9 @@ public class Township extends JavaPlugin {
 
     public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder()
             .defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
-                builder.register(t -> t == Instant.class, new InstantSerializer());
-                builder.register(t -> t == Duration.class, new DurationSerializer());
+                builder.register(Instant.class, new InstantSerializer());
+                builder.register(Duration.class, new DurationSerializer());
+                builder.register(Key.class, new KeySerializer());
                 builder.register(t -> {
                     if (t instanceof Class<?> clazz) {
                         return clazz == Tile.class || Tile.class.isAssignableFrom(clazz);
@@ -63,6 +66,7 @@ public class Township extends JavaPlugin {
         registerListeners();
         saveDefaultConfig();
         logger = getSLF4JLogger();
+        logger.debug("HELLO WORLD!!!!");
         database = new Database(this);
         database.connect();
         database.createTownshipTable();

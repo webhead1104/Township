@@ -130,6 +130,8 @@ tasks {
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
         minecraftVersion("1.21.8")
+
+        jvmArgs("-Dlog4j2.configurationFile=log4j2.xml")
     }
     paperPluginYaml {
         // Defaults for name, version, and description are inherited from the Gradle project

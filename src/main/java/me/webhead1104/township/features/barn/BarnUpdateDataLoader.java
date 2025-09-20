@@ -14,11 +14,11 @@ import java.util.Objects;
 
 public class BarnUpdateDataLoader implements DataLoader {
     @Getter
-    private static final List<BarnUpgrade> upgrades = new ArrayList<>();
+    private static final List<BarnUpgrade> list = new ArrayList<>();
 
     public static BarnUpgrade get(int i) {
         try {
-            return upgrades.get(i);
+            return list.get(i);
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
@@ -29,12 +29,12 @@ public class BarnUpdateDataLoader implements DataLoader {
         try {
             long start = System.currentTimeMillis();
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.source(() -> new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/data/barnUpgrades.json"))))).build().load();
-            var list = node.getList(BarnUpgrade.class);
-            if (list == null || list.isEmpty()) {
+            var nodeList = node.getList(BarnUpgrade.class);
+            if (nodeList == null || list.isEmpty()) {
                 throw new RuntimeException("No barn upgrades found!");
             }
-            upgrades.addAll(list);
-            Township.logger.info("Loaded {} barn upgrades in {} ms!", upgrades.size(), System.currentTimeMillis() - start);
+            list.addAll(nodeList);
+            Township.logger.info("Loaded {} barn upgrades in {} ms!", list.size(), System.currentTimeMillis() - start);
         } catch (Exception e) {
             throw new RuntimeException("An error occurred whilst loading barn upgrades! Please report the following stacktrace to Webhead1104:", e);
         }
