@@ -1,6 +1,7 @@
 package me.webhead1104.township.features.world;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableMap;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
@@ -15,7 +16,6 @@ import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.data.objects.WorldSection;
 import me.webhead1104.township.dataLoaders.LevelDataLoader;
 import me.webhead1104.township.features.world.build.BuildMenu;
-import me.webhead1104.township.features.world.build.BuildingType;
 import me.webhead1104.township.features.world.edit.WorldEditMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.tiles.BuildingTile;
@@ -65,52 +65,47 @@ public class WorldMenu extends TownshipView {
                         })
                         .onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
                             if (clickContext.isShiftRightClick()) {
-                                if (tile instanceof BuildingTile bt) {
-                                    BuildingType buildingType = bt.getBuildingType();
-                                    if (buildingType != null) {
-                                        Building building = buildingType.getBuildings().get(bt.getBuildingSlot());
-                                        if (building != null) {
-                                            int clickedSlot = clickContext.getClickedSlot();
-                                            WorldSection worldSection = Township.getUserManager().getUser(clickContext.getPlayer().getUniqueId()).getWorld().getSection(sectionState.get(clickContext));
+                                if (tile instanceof BuildingTile buildingTile) {
+                                    Building building = buildingTile.getBuildingType().getBuildings().get(buildingTile.getBuildingSlot());
+                                    int clickedSlot = clickContext.getClickedSlot();
+                                    WorldSection worldSection = Township.getUserManager().getUser(clickContext.getPlayer().getUniqueId()).getWorld().getSection(sectionState.get(clickContext));
 
-                                            int anchor = WorldUtils.findAnchor(clickedSlot, building.getSize(), worldSection, bt);
+                                    int anchor = WorldUtils.findAnchor(clickedSlot, building.getSize(), worldSection, buildingTile);
 
-                                            if (anchor >= 0) {
-                                                for (Integer s : building.getSize().toList(anchor)) {
-                                                    worldSection.setSlot(s, StaticWorldTile.Type.GRASS.getTile());
-                                                }
-
-                                                final int anchorFinal = anchor;
-                                                final int startSection = sectionState.get(clickContext);
-                                                clickContext.openForPlayer(PlaceMenu.class, java.util.Map.of(
-                                                        "TILE_SIZE", building.getSize(),
-                                                        "START_SECTION", startSection,
-                                                        "START_ANCHOR", anchor,
-                                                        "TITLE", Msg.format("Edit"),
-                                                        "ON_PLACE", (PlaceMenu.PlaceAction) (ctx, newSection, newAnchor) -> {
-                                                            me.webhead1104.township.data.objects.User uu = me.webhead1104.township.Township.getUserManager().getUser(ctx.getPlayer().getUniqueId());
-                                                            for (Integer s2 : building.getSize().toList(newAnchor)) {
-                                                                uu.getWorld().getSection(newSection).setSlot(s2, building.getTile());
-                                                            }
-                                                            uu.getPurchasedBuildings().getPurchasedBuilding(buildingType, building.getSlot()).ifPresent(pb -> {
-                                                                pb.setPlaced(true);
-                                                                pb.setSection(newSection);
-                                                            });
-                                                            uu.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
-                                                            ctx.openForPlayer(WorldMenu.class, newSection);
-                                                        },
-                                                        "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> {
-                                                            me.webhead1104.township.data.objects.User uu = me.webhead1104.township.Township.getUserManager().getUser(cancelCtx.getPlayer().getUniqueId());
-                                                            for (Integer s2 : building.getSize().toList(anchorFinal)) {
-                                                                uu.getWorld().getSection(startSection).setSlot(s2, building.getTile());
-                                                            }
-                                                            me.webhead1104.township.Township.getViewFrame().open(WorldMenu.class, cancelCtx.getPlayer(), startSection);
-                                                        }
-                                                ));
-                                                openBackMenu.set(false, clickContext);
-                                                return;
-                                            }
+                                    if (anchor >= 0) {
+                                        for (Integer s : building.getSize().toList(anchor)) {
+                                            worldSection.setSlot(s, StaticWorldTile.Type.GRASS.getTile());
                                         }
+
+                                        final int anchorFinal = anchor;
+                                        final int startSection = sectionState.get(clickContext);
+                                        clickContext.openForPlayer(PlaceMenu.class, ImmutableMap.of(
+                                                "TILE_SIZE", building.getSize(),
+                                                "START_SECTION", startSection,
+                                                "START_ANCHOR", anchor,
+                                                "TITLE", Msg.format("Edit"),
+                                                "ON_PLACE", (PlaceMenu.PlaceAction) (ctx, newSection, newAnchor) -> {
+                                                    User uu = Township.getUserManager().getUser(ctx.getPlayer().getUniqueId());
+                                                    for (Integer s2 : building.getSize().toList(newAnchor)) {
+                                                        uu.getWorld().getSection(newSection).setSlot(s2, building.getTile());
+                                                    }
+                                                    uu.getPurchasedBuildings().getPurchasedBuilding(buildingTile.getBuildingType(), building.getSlot()).ifPresent(pb -> {
+                                                        pb.setPlaced(true);
+                                                        pb.setSection(newSection);
+                                                    });
+                                                    uu.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
+                                                    ctx.openForPlayer(WorldMenu.class, newSection);
+                                                },
+                                                "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> {
+                                                    User uu = Township.getUserManager().getUser(cancelCtx.getPlayer().getUniqueId());
+                                                    for (Integer s2 : building.getSize().toList(anchorFinal)) {
+                                                        uu.getWorld().getSection(startSection).setSlot(s2, building.getTile());
+                                                    }
+                                                    Township.getViewFrame().open(WorldMenu.class, cancelCtx.getPlayer(), startSection);
+                                                }
+                                        ));
+                                        openBackMenu.set(false, clickContext);
+                                        return;
                                     }
                                 }
                                 clickContext.openForPlayer(WorldEditMenu.class, sectionState.get(clickContext));
