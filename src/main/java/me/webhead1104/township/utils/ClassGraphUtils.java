@@ -41,6 +41,10 @@ public class ClassGraphUtils {
         try (ScanResult result = graph.scan()) {
             result.getSubclasses(clazz).loadClasses().forEach(foundClass -> {
                 try {
+                    if (!foundClass.getPackage().getName().startsWith(packageName)) {
+                        return;
+                    }
+
                     Constructor<?> constructor = foundClass.getDeclaredConstructor();
                     constructor.setAccessible(true);
                     //noinspection unchecked

@@ -20,10 +20,10 @@ public class TownshipView extends View {
     public void onClose(@NotNull CloseContext context) {
         nextTick(() -> {
             if (openBackMenu.get(context)) {
-                if (initalData.get(context) == null) {
-                    context.openForPlayer(closeClass);
+                if (initalData == null) {
+                    Township.getViewFrame().open(closeClass, context.getPlayer());
                 } else {
-                    context.openForPlayer(closeClass, initalData.get(context));
+                    Township.getViewFrame().open(closeClass, context.getPlayer(), initalData.get(context));
                 }
             }
         });
