@@ -103,7 +103,7 @@ public class Township extends JavaPlugin {
     }
 
     private void registerViews() {
-        for (View view : ClassGraphUtils.getExtendedClasses(View.class, "me.webhead1104.township")) {
+        for (View view : ClassGraphUtils.getExtendedClasses(View.class, "me.webhead1104.township.features")) {
             viewFrame.with(view);
         }
 
