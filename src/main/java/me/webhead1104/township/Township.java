@@ -54,6 +54,8 @@ public class Township extends JavaPlugin {
     @Override
     public void onLoad() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS.newHandler(event -> TownshipCommandBrigadier.register(event.registrar())));
+        //todo fix shift edit plot actually working
+        //todo make a option to make a tile unmovable
     }
 
     @Override
@@ -93,7 +95,6 @@ public class Township extends JavaPlugin {
 
     private void loadDataLoaders() {
         for (DataLoader clazz : ClassGraphUtils.getImplementedClasses(DataLoader.class, "me.webhead1104.township")) {
-            clazz.load();
             try {
                 clazz.load();
             } catch (Exception e) {
