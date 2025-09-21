@@ -37,7 +37,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
     }
 
     private static boolean isTypeCompatible(Class<?> paramType, Object value) {
-        if (value == null) return false;
+        if (value == null) return true; // null is compatible with any reference type
         Class<?> p = ClassUtils.primitiveToWrapper(paramType);
         return p.isInstance(value);
     }
@@ -69,7 +69,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
                 if (fieldNode.virtual()) {
                     continue;
                 }
-                Object value = fieldNode.get(field.getGenericType());
+                Object value = fieldNode.get(field.getType());
                 fieldValues.put(fieldName, value);
             }
 
@@ -82,12 +82,10 @@ public class TileSerializer implements TypeSerializer<Tile> {
                     continue;
                 }
 
-                // Strategy 1: Try to match by field name
+                // Strategy 1: Try to match by field name and type
                 boolean canUseConstructor = true;
                 Object[] args = new Object[paramTypes.length];
-
                 Parameter[] parameters = constructor.getParameters();
-
                 Set<String> used = new HashSet<>();
 
                 for (int i = 0; i < paramTypes.length; i++) {
@@ -108,7 +106,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
                         }
                     }
 
-                    // Strategy B: synthetic name or no name data -> find the first unused compatible field by type
+                    // Strategy B: Match by type only (for synthetic parameter names)
                     boolean matched = false;
                     for (Map.Entry<String, Object> entry : fieldValues.entrySet()) {
                         if (used.contains(entry.getKey())) continue;
@@ -131,16 +129,6 @@ public class TileSerializer implements TypeSerializer<Tile> {
                     tile = (Tile) constructor.newInstance(args);
                     break;
                 }
-
-                // Strategy C: simple single-arg convenience
-                if (paramTypes.length == 1 && fieldValues.size() == 1) {
-                    Object value = fieldValues.values().iterator().next();
-                    if (isTypeCompatible(paramTypes[0], value)) {
-                        constructor.setAccessible(true);
-                        tile = (Tile) constructor.newInstance(value);
-                        break;
-                    }
-                }
             }
 
             // Fallback: try the no-args constructor, then set fields reflectively
@@ -160,7 +148,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
                         }
                     }
                 } catch (NoSuchMethodException e) {
-                    throw new SerializationException("Could not find a suitable constructor for class: " + className);
+                    throw new SerializationException("Could not find a suitable constructor for class: " + className + ". Available field values: " + fieldValues);
                 }
             }
 
@@ -168,7 +156,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
         } catch (ClassNotFoundException e) {
             throw new SerializationException("Could not find class: " + className);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new SerializationException("Could not create instance of class: " + className);
+            throw new SerializationException("Could not create instance of class: " + className + ". Cause: " + e.getCause());
         } catch (Exception e) {
             throw new SerializationException("Error deserializing Tile: " + e.getMessage());
         }
@@ -187,9 +175,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
 
         try {
             for (Field field : collectAllFields(tileClass)) {
-                if (Modifier.isStatic(field.getModifiers())) {
-                    continue;
-                }
+                if (Modifier.isStatic(field.getModifiers())) continue;
                 field.setAccessible(true);
                 String fieldName = field.getName();
                 Object value = field.get(obj);
