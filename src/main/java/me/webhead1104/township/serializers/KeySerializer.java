@@ -16,15 +16,15 @@ public class KeySerializer implements TypeSerializer<Key> {
         String key = node.getString();
         if (key == null) throw new SerializationException("Cannot deserialize a null key!");
         if (key.contains(":")) {
-            return Key.key(key);
+            return Key.key(key.toLowerCase());
         }
-        return Key.key("township", key);
+        return Key.key("township", key.toLowerCase());
     }
 
 
     @Override
     public void serialize(@NotNull Type type, @Nullable Key obj, @NotNull ConfigurationNode node) throws SerializationException {
         if (obj == null) throw new SerializationException("Cannot serialize a null Key!");
-        node.set(obj.value());
+        node.set(obj.value().toLowerCase());
     }
 }
