@@ -29,8 +29,8 @@ public class BarnUpdateDataLoader implements DataLoader {
         try {
             long start = System.currentTimeMillis();
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.source(() -> new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/data/barnUpgrades.json"))))).build().load();
-            var nodeList = node.getList(BarnUpgrade.class);
-            if (nodeList == null || list.isEmpty()) {
+            List<BarnUpgrade> nodeList = node.getList(BarnUpgrade.class);
+            if (nodeList == null || nodeList.isEmpty()) {
                 throw new RuntimeException("No barn upgrades found!");
             }
             list.addAll(nodeList);

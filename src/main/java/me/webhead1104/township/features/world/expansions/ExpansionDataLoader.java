@@ -36,8 +36,8 @@ public class ExpansionDataLoader implements DataLoader {
         try {
             long start = System.currentTimeMillis();
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.source(() -> new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/data/expansions.json"))))).build().load();
-            var nodeList = node.getList(Expansion.class);
-            if (nodeList == null || list.isEmpty()) {
+            List<Expansion> nodeList = node.getList(Expansion.class);
+            if (nodeList == null || nodeList.isEmpty()) {
                 throw new RuntimeException("No expansions found!");
             }
             list.addAll(nodeList);
