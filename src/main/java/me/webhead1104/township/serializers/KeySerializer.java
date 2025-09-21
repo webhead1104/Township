@@ -25,6 +25,10 @@ public class KeySerializer implements TypeSerializer<Key> {
     @Override
     public void serialize(@NotNull Type type, @Nullable Key obj, @NotNull ConfigurationNode node) throws SerializationException {
         if (obj == null) throw new SerializationException("Cannot serialize a null Key!");
-        node.set(obj.value().toLowerCase());
+        if (obj.namespace().equals("township")) {
+            node.set(obj.value().toLowerCase());
+        } else {
+            node.set(obj.asString());
+        }
     }
 }
