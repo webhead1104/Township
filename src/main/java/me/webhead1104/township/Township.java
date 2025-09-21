@@ -40,7 +40,7 @@ public class Township extends JavaPlugin {
                     return false;
                 }, new TileSerializer());
             }));
-
+    public static final Key noneKey = key("none");
     public static Logger logger;
     @Getter
     private static Database database;
@@ -52,6 +52,10 @@ public class Township extends JavaPlugin {
     private static ViewFrame viewFrame;
     @Getter
     private static Township instance;
+
+    public static Key key(String string) {
+        return Key.key("township", string);
+    }
 
     @Override
     public void onLoad() {

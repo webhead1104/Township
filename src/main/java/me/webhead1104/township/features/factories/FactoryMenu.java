@@ -11,6 +11,7 @@ import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.data.objects.Barn;
 import me.webhead1104.township.data.objects.Factories;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.dataLoaders.RecipeDataLoader;
 import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
@@ -56,19 +57,19 @@ public class FactoryMenu extends TownshipView {
         Factories.Factory factory = user.getFactories().getFactory(factoryType);
 
         int recipeSlot = 45;
-        for (RecipeType recipeType : factoryType.getRecipes()) {
+        for (RecipeDataLoader.Recipe recipe : factoryType.getRecipes()) {
             context.slot(recipeSlot++).onRender(slotRenderContext -> {
-                ItemStack stack = recipeType.getItemStack();
-                stack.setData(DataComponentTypes.LORE, calculateLore(recipeType, user.getBarn()));
+                ItemStack stack = recipe.getResult().getItemStack();
+                stack.setData(DataComponentTypes.LORE, calculateLore(recipe, user.getBarn()));
                 slotRenderContext.setItem(stack);
             }).updateOnClick().onClick(slotClickContext -> {
-                if (!factory.canAddWaitingOrWorkingOn() || !recipeType.hasRequiredItems(user.getBarn())) return;
-                recipeType.getRecipeItems().forEach((key, value) -> user.getBarn().removeAmountFromItem(key, value));
+                if (!factory.canAddWaitingOrWorkingOn() || !recipe.hasRequiredItems(user.getBarn())) return;
+                recipe.getIngredients().forEach((key, value) -> user.getBarn().removeAmountFromItem(key, value));
                 if (factory.canSetWorkingOn()) {
-                    factory.setWorkingOn(recipeType);
-                    factory.setInstant(Instant.now().plusSeconds(recipeType.getTime().getSeconds()));
+                    factory.setWorkingOn(recipe);
+                    factory.setInstant(Instant.now().plusSeconds(recipe.getTime().getSeconds()));
                 } else if (factory.canAddWaiting()) {
-                    factory.addWaiting(recipeType);
+                    factory.addWaiting(recipe);
                 }
                 context.update();
             });
@@ -78,14 +79,14 @@ public class FactoryMenu extends TownshipView {
         for (int i = 0; i < 3; i++) {
             int finalI = i;
             context.slot(waitingSlot++).onRender(slotRenderContext -> {
-                if (factory.getWaiting(finalI).equals(RecipeType.NONE)) {
+                if (factory.getRealWaiting(finalI).equals(Township.noneKey)) {
                     ItemStack stack = ItemStack.of(Material.HOPPER);
                     stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<red>Nothing is being made right now"));
                     stack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<grey>Maybe you should make something!"))));
                     slotRenderContext.setItem(stack);
                     return;
                 }
-                ItemStack stack = factory.getWaiting(finalI).getItemStack();
+                ItemStack stack = factory.getWaiting(finalI).getResult().getItemStack();
                 stack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<dark_green>Waiting..."))));
                 slotRenderContext.setItem(stack);
             });
@@ -95,17 +96,17 @@ public class FactoryMenu extends TownshipView {
             if (!factory.getInstant().equals(Instant.EPOCH) && Instant.now().isAfter(factory.getInstant().minusSeconds(1))) {
                 factory.setInstant(Instant.EPOCH);
                 if (factory.canAddCompleted()) {
-                    factory.addCompleted(factory.getWorkingOn().getResultItemType());
-                    factory.setWorkingOn(RecipeType.NONE);
+                    factory.addCompleted(factory.getWorkingOn().getResult());
+                    factory.setRealWorkingOn(Township.noneKey);
                     if (factory.hasWaiting()) {
-                        RecipeType recipeType = factory.removeFirstWaiting();
-                        factory.setWorkingOn(recipeType);
-                        factory.setInstant(Instant.now().plusSeconds(recipeType.getTime().getSeconds()));
+                        RecipeDataLoader.Recipe recipe = factory.removeFirstWaiting();
+                        factory.setWorkingOn(recipe);
+                        factory.setInstant(Instant.now().plusSeconds(recipe.getTime().getSeconds()));
                     }
                 }
                 context.update();
             }
-            if (factory.getWorkingOn().equals(RecipeType.NONE)) {
+            if (factory.getRealWorkingOn().equals(Township.noneKey)) {
                 ItemStack stack = ItemStack.of(Material.RED_CANDLE);
                 stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<red>Nothing is being made right now"));
                 stack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<grey>Maybe you should make something!"))));
@@ -113,12 +114,12 @@ public class FactoryMenu extends TownshipView {
                 return;
             }
             if (factory.getInstant().equals(Instant.EPOCH)) {
-                ItemStack stack = factory.getWorkingOn().getItemStack();
+                ItemStack stack = factory.getWorkingOn().getResult().getItemStack();
                 stack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<red>Your production queue is full!"))));
                 slotRenderContext.setItem(stack);
                 return;
             }
-            ItemStack stack = factory.getWorkingOn().getItemStack();
+            ItemStack stack = factory.getWorkingOn().getResult().getItemStack();
             stack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<gold>Time: %s", Utils.format(Instant.now(), factory.getInstant())))));
             slotRenderContext.setItem(stack);
         });
@@ -143,13 +144,13 @@ public class FactoryMenu extends TownshipView {
                 user.getBarn().addAmountToItem(factory.getCompleted(finalI), 1);
                 user.addXp(factory.getCompleted(finalI).getXpGiven());
                 factory.setCompleted(finalI, ItemType.NONE);
-                if (factory.getInstant().equals(Instant.EPOCH) && !factory.getWorkingOn().equals(RecipeType.NONE)) {
-                    factory.addCompleted(factory.getWorkingOn().getResultItemType());
-                    factory.setWorkingOn(RecipeType.NONE);
+                if (factory.getInstant().equals(Instant.EPOCH) && !factory.getRealWorkingOn().equals(Township.noneKey)) {
+                    factory.addCompleted(factory.getWorkingOn().getResult());
+                    factory.setRealWorkingOn(Township.noneKey);
                     if (factory.hasWaiting()) {
-                        RecipeType recipeType = factory.removeFirstWaiting();
-                        factory.setWorkingOn(recipeType);
-                        factory.setInstant(Instant.now().plusSeconds(recipeType.getTime().getSeconds()));
+                        RecipeDataLoader.Recipe recipe = factory.removeFirstWaiting();
+                        factory.setWorkingOn(recipe);
+                        factory.setInstant(Instant.now().plusSeconds(recipe.getTime().getSeconds()));
                     }
                 }
                 context.update();
@@ -157,9 +158,9 @@ public class FactoryMenu extends TownshipView {
         }
     }
 
-    private ItemLore calculateLore(RecipeType recipeType, Barn barn) {
+    private ItemLore calculateLore(RecipeDataLoader.Recipe recipe, Barn barn) {
         List<Component> lore = new ArrayList<>();
-        recipeType.getRecipeItems().forEach((itemType, value) -> {
+        recipe.getIngredients().forEach((itemType, value) -> {
             if (barn.getItem(itemType) >= value) {
                 lore.add(Msg.format("<white>%s: <green>%d/%d", Utils.thing2(itemType.name()), barn.getItem(itemType), value));
             } else {

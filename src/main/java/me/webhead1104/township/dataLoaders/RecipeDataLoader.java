@@ -3,10 +3,13 @@ package me.webhead1104.township.dataLoaders;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.data.enums.ItemType;
+import me.webhead1104.township.data.objects.Barn;
 import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.PostProcess;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.io.BufferedReader;
@@ -94,16 +97,30 @@ public class RecipeDataLoader implements DataLoader {
         @Setting("material")
         private Material material;
         @Setting("result")
-        private ItemDataLoader.Item result = ItemDataLoader.get(key);
+        private ItemType result;
         @Setting("result_amount")
         private int resultAmount = 0;
         @Setting("ingredients")
-        private Map<ItemDataLoader.Item, Integer> ingredients;
+        private Map<ItemType, Integer> ingredients;
         @Setting("time")
         private Duration time;
         @Setting("level_needed")
         private int levelNeeded;
         @Setting("xp_given")
         private int xpGiven;
+
+        @PostProcess
+        private void postProcess() {
+            result = ItemType.valueOf(key.value().toUpperCase());
+        }
+
+        public boolean hasRequiredItems(Barn barn) {
+            for (Map.Entry<ItemType, Integer> entry : ingredients.entrySet()) {
+                if (barn.getItem(entry.getKey()) < entry.getValue()) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
