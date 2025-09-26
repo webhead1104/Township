@@ -20,7 +20,7 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
     compileOnly("org.spongepowered:configurate-gson:4.2.0")
-    implementation("me.devnatan:inventory-framework-platform-paper:3.5.3")
+    implementation("me.devnatan:inventory-framework-platform-paper:3.5.4")
     implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.4")
     implementation("io.github.classgraph:classgraph:4.8.181")
 
