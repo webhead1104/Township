@@ -16,6 +16,8 @@ import me.webhead1104.township.serializers.*;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.ClassGraphUtils;
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.KeyPattern;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
@@ -33,6 +35,7 @@ public class Township extends JavaPlugin {
                 builder.register(Duration.class, new DurationSerializer());
                 builder.register(Key.class, new KeySerializer());
                 builder.register(Material.class, new MaterialSerializer());
+                builder.register(Component.class, new ComponentSerializer());
                 builder.register(t -> {
                     if (t instanceof Class<?> clazz) {
                         return clazz == Tile.class || Tile.class.isAssignableFrom(clazz);
@@ -71,7 +74,6 @@ public class Township extends JavaPlugin {
         registerListeners();
         saveDefaultConfig();
         logger = getSLF4JLogger();
-        logger.debug("HELLO WORLD!!!!");
         database = new Database(this);
         database.connect();
         database.createTownshipTable();
