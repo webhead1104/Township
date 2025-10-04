@@ -23,7 +23,6 @@ public class TileSerializer implements TypeSerializer<Tile> {
             hierarchy.add(current);
             current = current.getSuperclass();
         }
-        // Reverse to get super -> suborder
         Collections.reverse(hierarchy);
 
         List<Field> result = new ArrayList<>();
@@ -37,7 +36,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
     }
 
     private static boolean isTypeCompatible(Class<?> paramType, Object value) {
-        if (value == null) return true; // null is compatible with any reference type
+        if (value == null) return true;
         Class<?> p = ClassUtils.primitiveToWrapper(paramType);
         return p.isInstance(value);
     }
@@ -58,19 +57,18 @@ public class TileSerializer implements TypeSerializer<Tile> {
 
             ConfigurationNode propertiesNode = node.node(PROPERTIES_KEY);
 
-            // Collect fields from the entire class hierarchy (super -> sub)
             List<Field> allFields = collectAllFields(tileClass);
 
-            // Preserve insertion order to have deterministic behavior
             Map<String, Object> fieldValues = new LinkedHashMap<>();
-            for (Field field : allFields) {
-                String fieldName = field.getName();
-                ConfigurationNode fieldNode = propertiesNode.node(fieldName);
-                if (fieldNode.virtual()) {
-                    continue;
+            if (!propertiesNode.virtual()) {
+                for (Field field : allFields) {
+                    String fieldName = field.getName();
+                    ConfigurationNode fieldNode = propertiesNode.node(fieldName);
+                    if (!fieldNode.virtual()) {
+                        Object value = fieldNode.get(field.getType());
+                        fieldValues.put(fieldName, value);
+                    }
                 }
-                Object value = fieldNode.get(field.getType());
-                fieldValues.put(fieldName, value);
             }
 
             Tile tile = null;
@@ -82,7 +80,6 @@ public class TileSerializer implements TypeSerializer<Tile> {
                     continue;
                 }
 
-                // Strategy 1: Try to match by field name and type
                 boolean canUseConstructor = true;
                 Object[] args = new Object[paramTypes.length];
                 Parameter[] parameters = constructor.getParameters();
@@ -106,7 +103,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
                         }
                     }
 
-                    // Strategy B: Match by type only (for synthetic parameter names)
+                    // Strategy B: Match by type only
                     boolean matched = false;
                     for (Map.Entry<String, Object> entry : fieldValues.entrySet()) {
                         if (used.contains(entry.getKey())) continue;
@@ -118,9 +115,14 @@ public class TileSerializer implements TypeSerializer<Tile> {
                             break;
                         }
                     }
+
                     if (!matched) {
-                        canUseConstructor = false;
-                        break;
+                        if (!pType.isPrimitive()) {
+                            args[i] = null;
+                        } else {
+                            canUseConstructor = false;
+                            break;
+                        }
                     }
                 }
 
@@ -142,13 +144,19 @@ public class TileSerializer implements TypeSerializer<Tile> {
                             continue;
                         }
                         String fieldName = field.getName();
+                        field.setAccessible(true);
+
                         if (fieldValues.containsKey(fieldName)) {
-                            field.setAccessible(true);
                             field.set(tile, fieldValues.get(fieldName));
+                        } else {
+                            // Explicitly set to null if not in properties
+                            if (!field.getType().isPrimitive()) {
+                                field.set(tile, null);
+                            }
                         }
                     }
                 } catch (NoSuchMethodException e) {
-                    throw new SerializationException("Could not find a suitable constructor for class: " + className + ". Available field values: " + fieldValues);
+                    throw new SerializationException("Could not find a suitable constructor for class: " + className);
                 }
             }
 
@@ -174,6 +182,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
         ConfigurationNode propertiesNode = node.node(PROPERTIES_KEY);
 
         try {
+            boolean hasNonNullFields = false;
             for (Field field : collectAllFields(tileClass)) {
                 if (Modifier.isStatic(field.getModifiers())) continue;
                 field.setAccessible(true);
@@ -181,7 +190,13 @@ public class TileSerializer implements TypeSerializer<Tile> {
                 Object value = field.get(obj);
                 if (value != null) {
                     propertiesNode.node(fieldName).set(field.getGenericType(), value);
+                    hasNonNullFields = true;
                 }
+            }
+
+            // If no non-null fields were serialized, remove the properties node
+            if (!hasNonNullFields) {
+                node.removeChild(PROPERTIES_KEY);
             }
         } catch (IllegalAccessException e) {
             throw new SerializationException("Error accessing fields of Tile: " + e.getMessage());

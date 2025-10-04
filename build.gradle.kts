@@ -26,6 +26,16 @@ dependencies {
 
     compileOnly("net.strokkur:strokk-commands-annotations:1.2.4-SNAPSHOT")
     annotationProcessor("net.strokkur:strokk-commands-processor:1.2.4-SNAPSHOT")
+
+    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.79.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.spongepowered:configurate-gson:4.2.0")
+    testImplementation("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 java {
@@ -151,3 +161,4 @@ tasks {
         }
     }
 }
+
