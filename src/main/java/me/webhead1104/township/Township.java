@@ -53,7 +53,7 @@ public class Township extends JavaPlugin {
     @Getter
     private static Township instance;
 
-    public static Key key(String string) {
+    public static Key key(@KeyPattern String string) {
         return Key.key("township", string);
     }
 
