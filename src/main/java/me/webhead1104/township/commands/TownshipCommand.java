@@ -4,12 +4,11 @@ import me.webhead1104.township.Township;
 import me.webhead1104.township.commands.arguments.AnimalTypeArgument;
 import me.webhead1104.township.commands.arguments.FactoryTypeArgument;
 import me.webhead1104.township.commands.arguments.ItemTypeArgument;
-import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.features.animals.AnimalMenu;
 import me.webhead1104.township.features.animals.AnimalType;
 import me.webhead1104.township.features.factories.FactoryMenu;
-import me.webhead1104.township.features.factories.FactoryType;
 import me.webhead1104.township.features.world.WorldUtils;
+import net.kyori.adventure.key.Key;
 import net.strokkur.commands.annotations.Command;
 import net.strokkur.commands.annotations.Description;
 import net.strokkur.commands.annotations.Executes;
@@ -30,23 +29,23 @@ public final class TownshipCommand {
     }
 
     @Executes("item get")
-    void getItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) ItemType itemType) {
-        ItemCommand.getItem(player, itemType);
+    void getItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) Key key) {
+        ItemCommand.getItem(player, key);
     }
 
     @Executes("item set")
-    void setItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) ItemType itemType, int amount) {
-        ItemCommand.setItem(player, amount, itemType);
+    void setItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) Key key, int amount) {
+        ItemCommand.setItem(player, amount, key);
     }
 
     @Executes("item add")
-    void addItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) ItemType itemType, int amount) {
-        ItemCommand.addItem(player, amount, itemType);
+    void addItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) Key key, int amount) {
+        ItemCommand.addItem(player, amount, key);
     }
 
     @Executes("item remove")
-    void removeItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) ItemType itemType, int amount) {
-        ItemCommand.removeItem(player, amount, itemType);
+    void removeItem(CommandSender ignored, @Executor Player player, @CustomArg(ItemTypeArgument.class) Key key, int amount) {
+        ItemCommand.removeItem(player, amount, key);
     }
 
     @Executes("animal")
@@ -55,7 +54,7 @@ public final class TownshipCommand {
     }
 
     @Executes("factory")
-    void factories(CommandSender ignored, @Executor Player player, @CustomArg(FactoryTypeArgument.class) FactoryType factoryType) {
+    void factories(CommandSender ignored, @Executor Player player, @CustomArg(FactoryTypeArgument.class) Key factoryType) {
         Township.getViewFrame().open(FactoryMenu.class, player, factoryType);
     }
 

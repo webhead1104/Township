@@ -8,13 +8,14 @@ import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.data.objects.Trains;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.dataLoaders.ItemType;
 import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -89,19 +90,19 @@ public class TrainMenu extends TownshipView {
                     if (!train.isUnlocked() || !train.isInStation()) return;
                     Trains.Train.TrainCar car = train.getTrainCar(finalJ);
                     if (train.isClaimItems()) {
-                        if (car.getClaimItemType().equals(ItemType.NONE)) {
+                        if (car.getClaimItemType().equals(Township.noneKey)) {
                             ItemStack itemStack = ItemStack.of(Material.IRON_INGOT);
                             itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<green>Item claimed!"));
                             slotRenderContext.setItem(itemStack);
                             return;
                         }
                         ItemStack itemStack = ItemStack.of(Material.CHEST);
-                        itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(Utils.thing2(car.getClaimItemType().name())));
+                        itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(Utils.thing2(car.getClaimItemType().value())));
                         itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<white>%d", car.getClaimItemAmount()))));
                         slotRenderContext.setItem(itemStack);
                         return;
                     }
-                    if (car.getGiveItemType().equals(ItemType.NONE)) {
+                    if (car.getGiveItemType().equals(Township.noneKey)) {
                         ItemStack itemStack = ItemStack.of(Material.IRON_INGOT);
                         itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<green>Items gave!"));
                         slotRenderContext.setItem(itemStack);
@@ -109,7 +110,7 @@ public class TrainMenu extends TownshipView {
                     }
 
                     ItemStack itemStack = ItemStack.of(Material.HOPPER);
-                    itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(Utils.thing2(car.getGiveItemType().name())));
+                    itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(Utils.thing2(car.getGiveItemType().value())));
                     if (user.getBarn().getItem(car.getGiveItemType()) >= car.getGiveItemAmount()) {
                         itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<green>%d/%d", user.getBarn().getItem(car.getGiveItemType()), car.getGiveItemAmount()))));
                     } else {
@@ -121,11 +122,11 @@ public class TrainMenu extends TownshipView {
                     Trains.Train.TrainCar trainCar = trains.getTrain(finalI).getTrainCar(finalJ);
                     if (train.isClaimItems()) {
                         user.getBarn().addAmountToItem(trainCar.getClaimItemType(), trainCar.getClaimItemAmount());
-                        trainCar.setClaimItemType(ItemType.NONE);
+                        trainCar.setClaimItemType(Township.noneKey);
                         trainCar.setClaimItemAmount(0);
                         AtomicBoolean good = new AtomicBoolean(true);
                         train.getTrainCars().forEach((key, value) -> {
-                            if (!value.getClaimItemType().equals(ItemType.NONE) && value.getClaimItemAmount() != 0)
+                            if (!value.getClaimItemType().equals(Township.noneKey) && value.getClaimItemAmount() != 0)
                                 good.set(false);
                         });
                         if (good.get()) {
@@ -135,17 +136,17 @@ public class TrainMenu extends TownshipView {
                             user.getTrains().setTrain(finalI, newTrain);
                         }
                     } else {
-                        if (trainCar.getGiveItemType().equals(ItemType.NONE)) return;
-                        ItemType itemType = trainCar.getGiveItemType();
+                        if (trainCar.getGiveItemType().equals(Township.noneKey)) return;
+                        Key itemType = trainCar.getGiveItemType();
                         int amount = trainCar.getGiveItemAmount();
                         if (user.getBarn().getItem(itemType) >= amount) {
                             user.getBarn().removeAmountFromItem(itemType, amount);
-                            user.addXp(itemType.getXpGiven());
+                            user.addXp(ItemType.get(itemType).getXpGiven());
                             trainCar.setGiveItemAmount(0);
-                            trainCar.setGiveItemType(ItemType.NONE);
+                            trainCar.setGiveItemType(Township.noneKey);
                             AtomicBoolean good = new AtomicBoolean(true);
                             train.getTrainCars().forEach((key, value) -> {
-                                if (!value.getGiveItemType().equals(ItemType.NONE) && value.getGiveItemAmount() != 0)
+                                if (!value.getGiveItemType().equals(Township.noneKey) && value.getGiveItemAmount() != 0)
                                     good.set(false);
                             });
                             if (good.get()) {

@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.webhead1104.township.data.enums.ItemType;
+import me.webhead1104.township.Township;
+import me.webhead1104.township.dataLoaders.ItemType;
+import net.kyori.adventure.key.Key;
 import org.apache.commons.lang3.Validate;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
@@ -62,17 +64,18 @@ public class Trains {
         @AllArgsConstructor
         @ConfigSerializable
         public static class TrainCar {
-            private ItemType claimItemType;
+            private Key claimItemType;
             private int claimItemAmount;
-            private ItemType giveItemType;
+            private Key giveItemType;
             private int giveItemAmount;
 
             public TrainCar() {
                 SplittableRandom random = new SplittableRandom();
-                List<ItemType> giveList = new ArrayList<>(Arrays.stream(ItemType.values()).toList());
-                List<ItemType> collectList = new ArrayList<>(List.of(ItemType.NAIL, ItemType.HAMMER, ItemType.PAINT));
-                giveList.remove(ItemType.NONE);
-                giveList.removeAll(List.of(ItemType.NAIL, ItemType.HAMMER, ItemType.PAINT));
+                List<Key> giveList = new ArrayList<>(ItemType.keys());
+                giveList.remove(Township.noneKey);
+                giveList.removeAll(List.of(Township.key("nail"), Township.key("hammer"), Township.key("paint")));
+
+                List<Key> collectList = new ArrayList<>(List.of(Township.key("nail"), Township.key("hammer"), Township.key("paint")));
 
                 this.claimItemType = collectList.get(random.nextInt(0, collectList.size()));
                 this.claimItemAmount = random.nextInt(1, 32);

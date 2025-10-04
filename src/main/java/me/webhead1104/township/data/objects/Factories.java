@@ -2,9 +2,10 @@ package me.webhead1104.township.data.objects;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.webhead1104.township.data.enums.ItemType;
+import me.webhead1104.township.Township;
+import me.webhead1104.township.dataLoaders.ItemType;
 import me.webhead1104.township.features.factories.FactoryType;
-import me.webhead1104.township.features.factories.RecipeType;
+import net.kyori.adventure.key.Key;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.time.Instant;
@@ -14,85 +15,90 @@ import java.util.Map;
 @Getter
 @ConfigSerializable
 public class Factories {
-    private final Map<FactoryType, Factory> factoryBuildings = new HashMap<>();
+    private final Map<Key, Factory> factoryBuildings = new HashMap<>();
 
     public Factories() {
-        for (FactoryType value : FactoryType.values()) {
-            factoryBuildings.put(value, new Factory());
+        for (FactoryType.Factory value : FactoryType.factoryValues()) {
+            factoryBuildings.put(value.getKey(), new Factory());
         }
     }
 
-    public Factory getFactory(FactoryType factoryType) {
+    public Factory getFactory(Key factoryType) {
         return factoryBuildings.get(factoryType);
     }
 
+
+    @ConfigSerializable
     @Getter
     @Setter
-    @ConfigSerializable
     public static class Factory {
-        private final Map<Integer, RecipeType> waiting = new HashMap<>();
-        private final Map<Integer, ItemType> completed = new HashMap<>();
-        private RecipeType workingOn;
+        private final Map<Integer, Key> waiting = new HashMap<>();
+        private final Map<Integer, Key> completed = new HashMap<>();
+        private Key workingOn;
         private Instant instant;
 
         public Factory() {
             for (int i = 0; i < 3; i++) {
-                this.waiting.put(i, RecipeType.NONE);
-                this.completed.put(i, ItemType.NONE);
+                this.waiting.put(i, Township.noneKey);
+                this.completed.put(i, Township.noneKey);
             }
-            this.workingOn = RecipeType.NONE;
+            this.workingOn = Township.noneKey;
             this.instant = Instant.EPOCH;
         }
 
-        public RecipeType getWaiting(int slot) {
-            return waiting.get(slot);
+        public FactoryType.Recipe getWaiting(int slot) {
+            return FactoryType.getRecipe(waiting.get(slot));
         }
 
-        public RecipeType removeFirstWaiting() {
-            RecipeType recipeType = waiting.get(0);
+        public void setCompleted(int slot, Key item) {
+            completed.put(slot, item);
+        }
+
+        public ItemType.Item getCompleted(int slot) {
+            return ItemType.get(completed.get(slot));
+        }
+
+        public FactoryType.Recipe getWorkingOn() {
+            return FactoryType.getRecipe(workingOn);
+        }
+
+        public FactoryType.Recipe removeFirstWaiting() {
+            FactoryType.Recipe recipe = getWaiting(0);
             for (int i = 1; i < 3; i++) {
                 waiting.put(i - 1, waiting.get(i));
             }
-            waiting.put(2, RecipeType.NONE);
+            waiting.put(2, Township.noneKey);
 
-            return recipeType;
+            return recipe;
         }
 
-        public void addWaiting(RecipeType recipeType) {
+        public void addWaiting(Key key) {
             for (int i = 0; i < 3; i++) {
-                if (!waiting.get(i).equals(RecipeType.NONE)) continue;
-                waiting.put(i, recipeType);
+                if (!waiting.get(i).equals(Township.noneKey)) continue;
+                waiting.put(i, key);
                 return;
             }
         }
 
         public boolean hasWaiting() {
-            for (RecipeType value : waiting.values()) {
-                if (!value.equals(RecipeType.NONE)) return true;
+            for (Key value : waiting.values()) {
+                if (!value.equals(Township.noneKey)) return true;
             }
             return false;
         }
 
         public boolean canAddWaiting() {
-            for (RecipeType value : waiting.values()) {
-                if (value.equals(RecipeType.NONE)) return true;
+            for (Key value : waiting.values()) {
+                if (value.equals(Township.noneKey)) return true;
             }
             return false;
         }
 
-        public ItemType getCompleted(int slot) {
-            return completed.get(slot);
-        }
-
-        public void setCompleted(int slot, ItemType value) {
-            completed.put(slot, value);
-        }
-
-        public void addCompleted(ItemType itemType) {
+        public void addCompleted(Key key) {
             int i = 0;
-            for (ItemType value : completed.values()) {
-                if (value.equals(ItemType.NONE)) {
-                    completed.put(i, itemType);
+            for (Key value : completed.values()) {
+                if (value.equals(Township.noneKey)) {
+                    completed.put(i, key);
                     return;
                 }
                 i++;
@@ -100,7 +106,7 @@ public class Factories {
         }
 
         public boolean canAddCompleted() {
-            return completed.containsValue(ItemType.NONE);
+            return completed.containsValue(Township.noneKey);
         }
 
         public boolean canAddWaitingOrWorkingOn() {
@@ -108,7 +114,7 @@ public class Factories {
         }
 
         public boolean canSetWorkingOn() {
-            return workingOn.equals(RecipeType.NONE);
+            return workingOn.equals(Township.noneKey);
         }
     }
 }

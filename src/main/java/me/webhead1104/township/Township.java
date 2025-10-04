@@ -12,11 +12,13 @@ import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.InventoryManager;
 import me.webhead1104.township.managers.UserManager;
-import me.webhead1104.township.serializers.DurationSerializer;
-import me.webhead1104.township.serializers.InstantSerializer;
-import me.webhead1104.township.serializers.TileSerializer;
+import me.webhead1104.township.serializers.*;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.ClassGraphUtils;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.KeyPattern;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
@@ -29,8 +31,11 @@ public class Township extends JavaPlugin {
 
     public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder()
             .defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
-                builder.register(t -> t == Instant.class, new InstantSerializer());
-                builder.register(t -> t == Duration.class, new DurationSerializer());
+                builder.register(Instant.class, new InstantSerializer());
+                builder.register(Duration.class, new DurationSerializer());
+                builder.register(Key.class, new KeySerializer());
+                builder.register(Material.class, new MaterialSerializer());
+                builder.register(Component.class, new ComponentSerializer());
                 builder.register(t -> {
                     if (t instanceof Class<?> clazz) {
                         return clazz == Tile.class || Tile.class.isAssignableFrom(clazz);
@@ -38,7 +43,7 @@ public class Township extends JavaPlugin {
                     return false;
                 }, new TileSerializer());
             }));
-
+    public static final Key noneKey = key("none");
     public static Logger logger;
     @Getter
     private static Database database;
@@ -50,6 +55,10 @@ public class Township extends JavaPlugin {
     private static ViewFrame viewFrame;
     @Getter
     private static Township instance;
+
+    public static Key key(@KeyPattern String string) {
+        return Key.key("township", string);
+    }
 
     @Override
     public void onLoad() {

@@ -30,7 +30,7 @@ public class LevelDataLoader implements DataLoader {
         try {
             long start = System.currentTimeMillis();
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.source(() -> new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/data/levels.json"))))).build().load();
-            var list = node.getList(Level.class);
+            List<Level> list = node.getList(Level.class);
             if (list == null || list.isEmpty()) {
                 throw new RuntimeException("No levels found!");
             }

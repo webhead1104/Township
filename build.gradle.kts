@@ -2,9 +2,9 @@ plugins {
     id("java")
     id("com.gradleup.shadow") version "9.2.2"
     id("xyz.jpenilla.run-paper") version "3.0.1"
-    id("io.freefair.lombok") version "8.14.2"
+    id("io.freefair.lombok") version "9.0.0"
     id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
-    id("com.diffplug.spotless") version "7.2.1"
+    id("com.diffplug.spotless") version "8.0.0"
 }
 
 group = "me.webhead1104"
@@ -18,14 +18,24 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.9-R0.1-SNAPSHOT")
     compileOnly("org.spongepowered:configurate-gson:4.2.0")
     implementation("me.devnatan:inventory-framework-platform-paper:3.5.4")
     implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.4")
     implementation("io.github.classgraph:classgraph:4.8.181")
 
-    compileOnly("net.strokkur:strokk-commands-annotations:1.2.4-SNAPSHOT")
-    annotationProcessor("net.strokkur:strokk-commands-processor:1.2.4-SNAPSHOT")
+    compileOnly("net.strokkur:commands-annotations:1.4.2")
+    annotationProcessor("net.strokkur:commands-processor:1.4.2")
+
+    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.79.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.0.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.0")
+    testImplementation("org.spongepowered:configurate-gson:4.2.0")
+    testImplementation("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 java {
@@ -126,13 +136,11 @@ tasks {
         relocate("nonapi.io.github.classgraph", "me.webhead1104.township.libs.classgraph")
     }
     runServer {
-        // Configure the Minecraft version for our task.
-        // This is the only required configuration besides applying the plugin.
-        // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.21.8")
+        minecraftVersion("1.21.9")
+
+        jvmArgs("-Dlog4j2.configurationFile=log4j2.xml")
     }
     paperPluginYaml {
-        // Defaults for name, version, and description are inherited from the Gradle project
         main.set("me.webhead1104.township.Township")
         apiVersion.set("1.21")
         author.set("Webhead1104")

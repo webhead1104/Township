@@ -8,14 +8,14 @@ import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.ItemType;
 import me.webhead1104.township.data.objects.Barn;
 import me.webhead1104.township.data.objects.BarnUpgrade;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.dataLoaders.ItemType;
 import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
-import me.webhead1104.township.utils.Utils;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemRarity;
@@ -25,8 +25,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class BarnMenu extends TownshipView {
-    private final MutableState<ItemType> sellItem = mutableState(ItemType.NONE);
+    private static final Key hammerKey = Township.key("hammer");
     private final MutableState<Integer> sellAmount = mutableState(1);
+    private static final Key nailKey = Township.key("nail");
+    private static final Key paintKey = Township.key("paint");
+    private final MutableState<Key> sellItem = mutableState(Township.noneKey);
+
 
     public BarnMenu() {
         super(WorldMenu.class);
@@ -52,26 +56,25 @@ public class BarnMenu extends TownshipView {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         Barn barn = user.getBarn();
         int i = 0;
-        for (ItemType itemType : ItemType.values()) {
-            if (itemType.equals(ItemType.NONE)) continue;
-            if (barn.getItem(itemType) == 0) continue;
+        for (ItemType.Item item : ItemType.values()) {
+            if (item.equals(Township.noneKey)) continue;
+            if (barn.getItem(item) == 0) continue;
             context.slot(i++).updateOnClick().onRender(slotRenderContext -> {
-                ItemStack stack = itemType.getItemStack();
-                stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("%s: <yellow>%d", Utils.thing2(itemType.name()), barn.getItem(itemType)));
+                ItemStack stack = item.getItemStack();
+                stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("%s: <yellow>%d", item.getName(), barn.getItem(item)));
                 stack.setData(DataComponentTypes.RARITY, ItemRarity.COMMON);
                 slotRenderContext.setItem(stack);
             }).onClick(slotClickContext -> {
-                if (barn.getItem(itemType) == 0) return;
-                sellItem.set(itemType, slotClickContext);
+                if (barn.getItem(item) == 0) return;
+                sellItem.set(item.getKey(), slotClickContext);
                 sellAmount.set(1, slotClickContext);
                 context.update();
             });
         }
 
         context.slot(48).onRender(slotRenderContext -> {
-            ItemType itemType = sellItem.get(slotRenderContext);
+            if (sellItem.get(slotRenderContext) == Township.noneKey) return;
             int amount = sellAmount.get(slotRenderContext);
-            if (itemType == ItemType.NONE) return;
             if (amount != 1) {
                 ItemStack itemStack = ItemStack.of(Material.RED_CANDLE);
                 itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<red>Click to decrease the amount!"));
@@ -79,48 +82,47 @@ public class BarnMenu extends TownshipView {
                 slotRenderContext.setItem(itemStack);
             }
         }).onClick(slotClickContext -> {
-            ItemType itemType = sellItem.get(slotClickContext);
+            if (sellItem.get(slotClickContext) == Township.noneKey) return;
             int amount = sellAmount.get(slotClickContext);
-            if (itemType == ItemType.NONE) return;
             if (amount == 1) return;
             sellAmount.set(amount - 1, slotClickContext);
             slotClickContext.update();
         });
 
         context.slot(49).onRender(slotRenderContext -> {
-            ItemType itemType = sellItem.get(slotRenderContext);
+            ItemType.Item item = ItemType.get(sellItem.get(slotRenderContext));
+            if (item.getKey() == Township.noneKey) return;
             int amount = sellAmount.get(slotRenderContext);
-            if (itemType == ItemType.NONE) return;
             ItemStack itemStack = ItemStack.of(Material.LIME_CONCRETE);
-            itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<green>Click to sell <aqua>%d <green>of <yellow>%s <green>for <aqua>%d <gold>coins!", amount, Utils.thing2(itemType.name()), itemType.getSellPrice() * amount));
+            itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<green>Click to sell <aqua>%d <green>of <yellow>%s <green>for <aqua>%d <gold>coins!", amount, item.getName(), item.getSellPrice() * amount));
             slotRenderContext.setItem(itemStack);
         }).onClick(slotClickContext -> {
-            ItemType itemType = sellItem.get(slotClickContext);
+            ItemType.Item item = ItemType.get(sellItem.get(slotClickContext));
+            if (item.getKey() == Township.noneKey) return;
             int amount = sellAmount.get(slotClickContext);
-            if (itemType == ItemType.NONE) return;
-            if (barn.getItem(itemType) < amount) return;
-            barn.removeAmountFromItem(itemType, amount);
-            user.setCoins(user.getCoins() + itemType.getSellPrice() * amount);
-            sellItem.set(ItemType.NONE, slotClickContext);
+            if (barn.getItem(item) < amount) return;
+            barn.removeAmountFromItem(item, amount);
+            user.setCoins(user.getCoins() + item.getSellPrice() * amount);
+            sellItem.set(Township.noneKey, slotClickContext);
             sellAmount.set(1, slotClickContext);
             slotClickContext.openForPlayer(BarnMenu.class);
         });
 
         context.slot(50).onRender(slotRenderContext -> {
-            ItemType itemType = sellItem.get(slotRenderContext);
+            Key key = sellItem.get(slotRenderContext);
+            if (key == Township.noneKey) return;
             int amount = sellAmount.get(slotRenderContext);
-            if (itemType == ItemType.NONE) return;
-            if (barn.getItem(itemType) > amount) {
+            if (barn.getItem(key) > amount) {
                 ItemStack itemStack = ItemStack.of(Material.GREEN_CANDLE);
                 itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<green>Click to increase the amount!"));
                 itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<blue>Currently at %d", amount))));
                 slotRenderContext.setItem(itemStack);
             }
         }).onClick(slotClickContext -> {
-            ItemType itemType = sellItem.get(slotClickContext);
+            Key key = sellItem.get(slotClickContext);
             int amount = sellAmount.get(slotClickContext);
-            if (itemType == ItemType.NONE) return;
-            if (barn.getItem(itemType) <= amount) return;
+            if (key == Township.noneKey) return;
+            if (barn.getItem(key) <= amount) return;
             sellAmount.set(amount + 1, slotClickContext);
             slotClickContext.update();
         });
@@ -136,7 +138,7 @@ public class BarnMenu extends TownshipView {
         ItemLore.Builder storageLore = ItemLore.lore();
         barn.getItemMap().forEach((key, value) -> {
             if (value != 0) {
-                storageLore.addLine(Msg.format("<white>%s: <yellow>%d", Utils.thing2(key.name()), value));
+                storageLore.addLine(Msg.format("<white>%s: <yellow>%d", ItemType.get(key).getName(), value));
             }
         });
         storage.setData(DataComponentTypes.LORE, storageLore.build());
@@ -151,25 +153,25 @@ public class BarnMenu extends TownshipView {
             upgrade = ItemStack.of(Material.RED_CONCRETE);
             upgradeLore.addLine(Msg.format("<red>You need to get more materials to upgrade!"));
         }
-        if (barn.getItem(ItemType.HAMMER) >= barn.getBarnUpgrade().getToolsNeeded()) {
-            upgradeLore.addLine(Msg.format("<white>Hammers: <green>%d/%d", barn.getItem(ItemType.HAMMER), barn.getBarnUpgrade().getToolsNeeded()));
+        if (barn.getItem(hammerKey) >= barn.getBarnUpgrade().getToolsNeeded()) {
+            upgradeLore.addLine(Msg.format("<white>Hammers: <green>%d/%d", barn.getItem(hammerKey), barn.getBarnUpgrade().getToolsNeeded()));
 
         } else {
-            upgradeLore.addLine(Msg.format("<white>Hammers: <red>%d/%d", barn.getItem(ItemType.HAMMER), barn.getBarnUpgrade().getToolsNeeded()));
+            upgradeLore.addLine(Msg.format("<white>Hammers: <red>%d/%d", barn.getItem(hammerKey), barn.getBarnUpgrade().getToolsNeeded()));
         }
 
-        if (barn.getItem(ItemType.NAIL) >= barn.getBarnUpgrade().getToolsNeeded()) {
-            upgradeLore.addLine(Msg.format("<white>Nails: <green>%d/%d", barn.getItem(ItemType.NAIL), barn.getBarnUpgrade().getToolsNeeded()));
+        if (barn.getItem(nailKey) >= barn.getBarnUpgrade().getToolsNeeded()) {
+            upgradeLore.addLine(Msg.format("<white>Nails: <green>%d/%d", barn.getItem(nailKey), barn.getBarnUpgrade().getToolsNeeded()));
 
         } else {
-            upgradeLore.addLine(Msg.format("<white>Nails: <red>%d/%d", barn.getItem(ItemType.NAIL), barn.getBarnUpgrade().getToolsNeeded()));
+            upgradeLore.addLine(Msg.format("<white>Nails: <red>%d/%d", barn.getItem(nailKey), barn.getBarnUpgrade().getToolsNeeded()));
         }
 
-        if (barn.getItem(ItemType.PAINT) >= barn.getBarnUpgrade().getToolsNeeded()) {
-            upgradeLore.addLine(Msg.format("<white>Paint buckets: <green>%d/%d", barn.getItem(ItemType.PAINT), barn.getBarnUpgrade().getToolsNeeded()));
+        if (barn.getItem(paintKey) >= barn.getBarnUpgrade().getToolsNeeded()) {
+            upgradeLore.addLine(Msg.format("<white>Paint buckets: <green>%d/%d", barn.getItem(paintKey), barn.getBarnUpgrade().getToolsNeeded()));
 
         } else {
-            upgradeLore.addLine(Msg.format("<white>Paint buckets: <red>%d/%d", barn.getItem(ItemType.HAMMER), barn.getBarnUpgrade().getToolsNeeded()));
+            upgradeLore.addLine(Msg.format("<white>Paint buckets: <red>%d/%d", barn.getItem(hammerKey), barn.getBarnUpgrade().getToolsNeeded()));
         }
         upgrade.setData(DataComponentTypes.LORE, upgradeLore.build());
         upgrade.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>Barn level: %d", barn.getBarnUpgrade().getId()));
@@ -183,7 +185,7 @@ public class BarnMenu extends TownshipView {
     public boolean canUpgrade(Player player) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         int toolsNeeded = user.getBarn().getBarnUpgrade().getToolsNeeded();
-        return user.getBarn().getItem(ItemType.HAMMER) >= toolsNeeded && user.getBarn().getItem(ItemType.NAIL) >= toolsNeeded && user.getBarn().getItem(ItemType.PAINT) >= toolsNeeded;
+        return user.getBarn().getItem(hammerKey) >= toolsNeeded && user.getBarn().getItem(nailKey) >= toolsNeeded && user.getBarn().getItem(paintKey) >= toolsNeeded;
     }
 
     @Override
@@ -198,9 +200,9 @@ public class BarnMenu extends TownshipView {
                 User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
                 BarnUpgrade newUpgrade = BarnUpdateDataLoader.get(user.getBarn().getBarnUpgrade().getId());
                 user.getBarn().setBarnUpgrade(newUpgrade);
-                user.getBarn().removeAmountFromItem(ItemType.HAMMER, newUpgrade.getToolsNeeded());
-                user.getBarn().removeAmountFromItem(ItemType.NAIL, newUpgrade.getToolsNeeded());
-                user.getBarn().removeAmountFromItem(ItemType.PAINT, newUpgrade.getToolsNeeded());
+                user.getBarn().removeAmountFromItem(hammerKey, newUpgrade.getToolsNeeded());
+                user.getBarn().removeAmountFromItem(nailKey, newUpgrade.getToolsNeeded());
+                user.getBarn().removeAmountFromItem(paintKey, newUpgrade.getToolsNeeded());
                 context.openForPlayer(BarnMenu.class);
             }
         }

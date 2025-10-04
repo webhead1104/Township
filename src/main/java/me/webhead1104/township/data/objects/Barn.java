@@ -2,7 +2,9 @@ package me.webhead1104.township.data.objects;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.webhead1104.township.data.enums.ItemType;
+import me.webhead1104.township.Township;
+import me.webhead1104.township.dataLoaders.ItemType;
+import net.kyori.adventure.key.Key;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.util.HashMap;
@@ -12,50 +14,67 @@ import java.util.Map;
 @Setter
 @ConfigSerializable
 public class Barn {
-    private final Map<ItemType, Integer> itemMap = new HashMap<>();
+    private final Map<Key, Integer> itemMap = new HashMap<>();
     private BarnUpgrade barnUpgrade = new BarnUpgrade(1, 2, 70);
 
     public Barn() {
-        for (ItemType type : ItemType.values()) {
-            if (type == ItemType.NONE) continue;
-            if (type == ItemType.COW_FEED) {
-                itemMap.put(type, 12);
+        //fixme
+        for (ItemType.Item type : ItemType.values()) {
+            if (type.equals(Township.noneKey)) continue;
+            if (type.equals(Township.key("cow_feed"))) {
+                itemMap.put(type.getKey(), 12);
                 continue;
             }
-            if (type == ItemType.CHICKEN_FEED) {
-                itemMap.put(type, 12);
+            if (type.equals(Township.key("chicken_feed"))) {
+                itemMap.put(type.getKey(), 12);
                 continue;
             }
-            if (type.equals(ItemType.PAINT)) {
-                itemMap.put(type, 20);
+            if (type.equals(Township.key("paint"))) {
+                itemMap.put(type.getKey(), 20);
                 continue;
             }
-            if (type.equals(ItemType.NAIL)) {
-                itemMap.put(type, 20);
+            if (type.equals(Township.key("nail"))) {
+                itemMap.put(type.getKey(), 20);
                 continue;
             }
-            if (type.equals(ItemType.HAMMER)) {
-                itemMap.put(type, 20);
+            if (type.equals(Township.key("hammer"))) {
+                itemMap.put(type.getKey(), 20);
                 continue;
             }
-            itemMap.put(type, 0);
+            itemMap.put(type.getKey(), 0);
         }
     }
 
-    public int getItem(ItemType type) {
-        return itemMap.get(type);
+    public int getItem(ItemType.Item item) {
+        return getItem(item.getKey());
     }
 
-    public void setItem(ItemType type, int value) {
-        itemMap.put(type, value);
+    public int getItem(Key key) {
+        return itemMap.getOrDefault(key, 0);
     }
 
-    public void addAmountToItem(ItemType type, int amount) {
-        itemMap.put(type, getItem(type) + amount);
+    public void setItem(ItemType.Item item, int amount) {
+        setItem(item.getKey(), amount);
     }
 
-    public void removeAmountFromItem(ItemType type, int amount) {
-        itemMap.put(type, getItem(type) - amount);
+    public void setItem(Key key, int value) {
+        itemMap.put(key, value);
+    }
+
+    public void addAmountToItem(ItemType.Item item, int amount) {
+        addAmountToItem(item.getKey(), amount);
+    }
+
+    public void addAmountToItem(Key key, int amount) {
+        itemMap.put(key, getItem(key) + amount);
+    }
+
+    public void removeAmountFromItem(ItemType.Item item, int amount) {
+        removeAmountFromItem(item.getKey(), amount);
+    }
+
+    public void removeAmountFromItem(Key key, int amount) {
+        itemMap.put(key, getItem(key) - amount);
     }
 
     public int getStorage() {
