@@ -1,0 +1,110 @@
+[
+  {
+    "key": "none",
+    "material": "minecraft:barrier",
+    "sell_price": -1,
+    "xp_given": -1
+  },
+  {
+    "key": "wheat",
+    "material": "minecraft:wheat",
+    "sell_price": 1,
+    "xp_given": 1
+  },
+  {
+    "key": "corn",
+    "material": "minecraft:player_head",
+    "sell_price": 3,
+    "xp_given": 1
+  },
+  {
+    "key": "carrot",
+    "material": "minecraft:carrot",
+    "sell_price": 5,
+    "xp_given": 2
+  },
+  {
+    "key": "sugarcane",
+    "material": "minecraft:sugar_cane",
+    "sell_price": 7,
+    "xp_given": 3
+  },
+  {
+    "key": "bread",
+    "material": "minecraft:bread",
+    "sell_price": 5,
+    "xp_given": 2
+  },
+  {
+    "key": "cookie",
+    "material": "minecraft:cookie",
+    "sell_price": 44,
+    "xp_given": 19
+  },
+  {
+    "key": "bagel",
+    "material": "minecraft:player_head",
+    "sell_price": 55,
+    "xp_given": 24
+  },
+  {
+    "key": "cream",
+    "material": "minecraft:player_head",
+    "sell_price": 12,
+    "xp_given": 5
+  },
+  {
+    "key": "cheese",
+    "material": "minecraft:player_head",
+    "sell_price": 25,
+    "xp_given": 11
+  },
+  {
+    "key": "sugar",
+    "material": "minecraft:sugar",
+    "sell_price": 14,
+    "xp_given": 6
+  },
+  {
+    "key": "milk",
+    "material": "minecraft:milk_bucket",
+    "sell_price": 7,
+    "xp_given": 3
+  },
+  {
+    "key": "egg",
+    "material": "minecraft:egg",
+    "sell_price": 10,
+    "xp_given": 4
+  },
+  {
+    "key": "paint",
+    "material": "minecraft:player_head",
+    "sell_price": 100,
+    "xp_given": 0
+  },
+  {
+    "key": "hammer",
+    "material": "minecraft:player_head",
+    "sell_price": 100,
+    "xp_given": 0
+  },
+  {
+    "key": "nail",
+    "material": "minecraft:player_head",
+    "sell_price": 100,
+    "xp_given": 0
+  },
+  {
+    "key": "cow_feed",
+    "material": "minecraft:player_head",
+    "sell_price": 1,
+    "xp_given": 0
+  },
+  {
+    "key": "chicken_feed",
+    "material": "minecraft:player_head",
+    "sell_price": 4,
+    "xp_given": 0
+  }
+]

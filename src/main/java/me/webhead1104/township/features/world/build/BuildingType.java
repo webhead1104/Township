@@ -8,7 +8,6 @@ import me.webhead1104.township.data.objects.ConstructionMaterials;
 import me.webhead1104.township.data.objects.PurchasedBuildings;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.features.animals.AnimalType;
-import me.webhead1104.township.features.factories.FactoryType;
 import me.webhead1104.township.price.CoinPrice;
 import me.webhead1104.township.tiles.*;
 import org.bukkit.entity.Player;
@@ -80,22 +79,22 @@ public enum BuildingType {
 
     //factories
     BAKERY(createMap(
-            new Building(2, 55, 0, 0, new CoinPrice(125), null, Duration.ofSeconds(3), new FactoryTile(0, FactoryType.BAKERY), 10, TileSize.SIZE_2X2, "BAKERY")
+            new Building(2, 55, 0, 0, new CoinPrice(125), null, Duration.ofSeconds(3), new FactoryTile(0, Township.key("bakery")), 10, TileSize.SIZE_2X2, "BAKERY")
     )),
 
     FEED_MILL(createMap(
-            new Building(3, 60, 0, 0, new CoinPrice(150), null, Duration.ofSeconds(40), new FactoryTile(0, FactoryType.FEED_MILL_1), 11, TileSize.SIZE_2X2, "FEED_MILL"),
-            new Building(19, 655, 0, 0, new CoinPrice(2800), null, Duration.ofHours(16), new FactoryTile(1, FactoryType.FEED_MILL_1), 120, TileSize.SIZE_2X2, "FEED_MILL"),
-            new Building(44, 60, 0, 0, new CoinPrice(150), null, Duration.ofSeconds(40), new FactoryTile(2, FactoryType.FEED_MILL_1), 11, TileSize.SIZE_2X2, "FEED_MILL")
+            new Building(3, 60, 0, 0, new CoinPrice(150), null, Duration.ofSeconds(40), new FactoryTile(0, Township.key("feed_mill_1")), 11, TileSize.SIZE_2X2, "FEED_MILL"),
+            new Building(19, 655, 0, 0, new CoinPrice(2800), null, Duration.ofHours(16), new FactoryTile(1, Township.key("feed_mill_2")), 120, TileSize.SIZE_2X2, "FEED_MILL"),
+            new Building(44, 60, 0, 0, new CoinPrice(150), null, Duration.ofSeconds(40), new FactoryTile(2, Township.key("feed_mill_3")), 11, TileSize.SIZE_2X2, "FEED_MILL")
 
     )),
 
     DAIRY_FACTORY(createMap(
-            new Building(4, 65, 0, 0, new CoinPrice(175), null, Duration.ofHours(1), new FactoryTile(0, FactoryType.DAIRY_FACTORY), 12, TileSize.SIZE_2X2, "DAIRY_FACTORY")
+            new Building(4, 65, 0, 0, new CoinPrice(175), null, Duration.ofHours(1), new FactoryTile(0, Township.key("dairy_factory")), 12, TileSize.SIZE_2X2, "DAIRY_FACTORY")
     )),
 
     SUGAR_FACTORY(createMap(
-            new Building(7, 75, 0, 0, new CoinPrice(250), null, Duration.ofHours(2), new FactoryTile(0, FactoryType.SUGAR_FACTORY), 15, TileSize.SIZE_2X2, "SUGAR_FACTORY")
+            new Building(7, 75, 0, 0, new CoinPrice(250), null, Duration.ofHours(2), new FactoryTile(0, Township.key("sugar_factory")), 15, TileSize.SIZE_2X2, "SUGAR_FACTORY")
     )),
 
     //farming
