@@ -9,7 +9,7 @@ import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.TileSize;
+import me.webhead1104.township.data.TileSize;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.data.objects.WorldSection;

@@ -26,9 +26,9 @@ import java.util.List;
 
 public class BarnMenu extends TownshipView {
     private static final Key hammerKey = Township.key("hammer");
-    private final MutableState<Integer> sellAmount = mutableState(1);
     private static final Key nailKey = Township.key("nail");
     private static final Key paintKey = Township.key("paint");
+    private final MutableState<Integer> sellAmount = mutableState(1);
     private final MutableState<Key> sellItem = mutableState(Township.noneKey);
 
 

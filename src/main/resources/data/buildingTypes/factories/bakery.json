@@ -1,0 +1,20 @@
+[
+  {
+    "key": "bakery",
+    "level_needed": 2,
+    "population_needed": 55,
+    "price": {
+      "type": "coin",
+      "amount": 125
+    },
+    "time": "3s",
+    "size": "2x2",
+    "xp": 10,
+    "tile": {
+      "class": "FactoryTile",
+      "properties": {
+        "factoryType": "bakery"
+      }
+    }
+  }
+]

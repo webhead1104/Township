@@ -7,7 +7,8 @@
     "feed": "cow_feed",
     "product": "milk",
     "xp_claim": 3,
-    "time": "20S"
+    "time": "20S",
+    "building_key": "cowshed"
   },
   {
     "key": "cowshed_2",
@@ -17,7 +18,8 @@
     "feed": "cow_feed",
     "product": "milk",
     "xp_claim": 3,
-    "time": "20M"
+    "time": "20M",
+    "building_key": "cowshed"
   },
   {
     "key": "cowshed_3",
@@ -27,7 +29,8 @@
     "feed": "cow_feed",
     "product": "milk",
     "xp_claim": 3,
-    "time": "20M"
+    "time": "20M",
+    "building_key": "cowshed"
   },
   {
     "key": "chicken_coop_1",
@@ -37,7 +40,8 @@
     "feed": "chicken_feed",
     "product": "egg",
     "xp_claim": 4,
-    "time": "1H"
+    "time": "1H",
+    "building_key": "chicken_coop"
   },
   {
     "key": "chicken_coop_2",
@@ -47,7 +51,8 @@
     "feed": "chicken_feed",
     "product": "egg",
     "xp_claim": 4,
-    "time": "1H"
+    "time": "1H",
+    "building_key": "chicken_coop"
   },
   {
     "key": "chicken_coop_3",
@@ -57,6 +62,7 @@
     "feed": "chicken_feed",
     "product": "egg",
     "xp_claim": 4,
-    "time": "1H"
+    "time": "1H",
+    "building_key": "chicken_coop"
   }
 ]

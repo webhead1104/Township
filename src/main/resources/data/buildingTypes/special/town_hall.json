@@ -1,0 +1,13 @@
+[
+  {
+    "key": "town_hall",
+    "level_needed": 6,
+    "size": "2x2",
+    "tile": {
+      "class": "StaticWorldTile",
+      "properties": {
+        "material": "minecraft:cobblestone"
+      }
+    }
+  }
+]

@@ -3,7 +3,7 @@ package me.webhead1104.township.features.world;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import lombok.experimental.UtilityClass;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.TileSize;
+import me.webhead1104.township.data.TileSize;
 import me.webhead1104.township.data.objects.WorldSection;
 import me.webhead1104.township.tiles.BuildingTile;
 import me.webhead1104.township.tiles.Tile;
@@ -93,8 +93,8 @@ public class WorldUtils {
         int startX = startSlot % 9;
         int startY = startSlot / 9;
 
-        for (int dy = 0; dy < tileSize.getHeight(); dy++) {
-            for (int dx = 0; dx < tileSize.getWidth(); dx++) {
+        for (int dy = 0; dy < tileSize.height(); dy++) {
+            for (int dx = 0; dx < tileSize.width(); dx++) {
                 int x = startX + dx;
                 int y = startY + dy;
 
@@ -111,13 +111,13 @@ public class WorldUtils {
         int startX = startSlot % 9;
         int startY = startSlot / 9;
 
-        if (startX + tileSize.getWidth() > 9) {
-            startX = 9 - tileSize.getWidth();
+        if (startX + tileSize.width() > 9) {
+            startX = 9 - tileSize.width();
         }
 
         int totalRows = 54 / 9;
-        if (startY + tileSize.getHeight() > totalRows) {
-            startY = totalRows - tileSize.getHeight();
+        if (startY + tileSize.height() > totalRows) {
+            startY = totalRows - tileSize.height();
         }
 
         return startY * 9 + startX;
@@ -126,8 +126,8 @@ public class WorldUtils {
     public static int findAnchor(int clickedSlot, TileSize size, WorldSection section, BuildingTile matchTile) {
         int clickedX = clickedSlot % 9;
         int clickedY = clickedSlot / 9;
-        for (int dy = 0; dy < size.getHeight(); dy++) {
-            for (int dx = 0; dx < size.getWidth(); dx++) {
+        for (int dy = 0; dy < size.height(); dy++) {
+            for (int dx = 0; dx < size.width(); dx++) {
                 int anchorX = clickedX - dx;
                 int anchorY = clickedY - dy;
                 if (anchorX < 0 || anchorY < 0) continue;

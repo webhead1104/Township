@@ -1,5 +1,6 @@
 package me.webhead1104.township.tiles;
 
+import com.google.errorprone.annotations.Keep;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +16,9 @@ import org.bukkit.inventory.ItemStack;
 public class CommunityBuildingTile extends BuildingTile {
     private final CommunityBuildingType communityBuildingType;
 
-    public CommunityBuildingTile(int buildingSlot, CommunityBuildingType communityBuildingType) {
-        super(communityBuildingType.getBuildingType(), buildingSlot);
+    @Keep
+    public CommunityBuildingTile(CommunityBuildingType communityBuildingType) {
+        super(communityBuildingType.getBuildingType(), 0);
         this.communityBuildingType = communityBuildingType;
     }
 

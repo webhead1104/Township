@@ -7,19 +7,19 @@ import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.data.objects.WorldSection;
+import me.webhead1104.township.dataLoaders.BuildingType;
 import me.webhead1104.township.features.world.PlaceMenu;
 import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.features.world.WorldUtils;
-import me.webhead1104.township.features.world.build.BuildingType;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.tiles.BuildingTile;
 import me.webhead1104.township.tiles.StaticWorldTile;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -96,9 +96,9 @@ public class WorldEditMenu extends TownshipView {
             return false;
         }
 
-        BuildingType buildingType = buildingTile.getBuildingType();
-        if (buildingType == null) return false;
-        Building building = buildingType.getBuildings().get(buildingTile.getBuildingSlot());
+        Key key = buildingTile.getBuildingType();
+        if (key == null) return false;
+        BuildingType.Building building = BuildingType.get(key).get(buildingTile.getBuildingSlot());
         if (building == null) return false;
 
         int clickedSlot = context.getClickedSlot();
@@ -123,7 +123,7 @@ public class WorldEditMenu extends TownshipView {
                     for (Integer s : building.getSize().toList(newAnchor)) {
                         u.getWorld().getSection(newSection).setSlot(s, building.getTile());
                     }
-                    u.getPurchasedBuildings().getPurchasedBuilding(buildingType, building.getSlot()).ifPresent(pb -> {
+                    u.getPurchasedBuildings().getPurchasedBuilding(key, building.getSlot()).ifPresent(pb -> {
                         pb.setPlaced(true);
                         pb.setSection(newSection);
                     });

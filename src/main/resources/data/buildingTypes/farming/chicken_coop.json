@@ -1,0 +1,53 @@
+[
+  {
+    "key": "chicken_coop",
+    "level_needed": 5,
+    "size": "2x2",
+    "time": "1h",
+    "xp": 13,
+    "price": {
+      "type": "coin",
+      "amount": 200
+    },
+    "tile": {
+      "class": "AnimalTile",
+      "properties": {
+        "animalType": "chicken_coop_1"
+      }
+    }
+  },
+  {
+    "key": "chicken_coop",
+    "level_needed": 24,
+    "size": "2x2",
+    "time": "1d4h",
+    "xp": 128,
+    "price": {
+      "type": "coin",
+      "amount": 3000
+    },
+    "tile": {
+      "class": "AnimalTile",
+      "properties": {
+        "animalType": "chicken_coop_2"
+      }
+    }
+  },
+  {
+    "key": "chicken_coop",
+    "level_needed": 39,
+    "size": "2x2",
+    "time": "1d16h",
+    "xp": 623,
+    "price": {
+      "type": "coin",
+      "amount": 15000
+    },
+    "tile": {
+      "class": "AnimalTile",
+      "properties": {
+        "animalType": "chicken_coop_3"
+      }
+    }
+  }
+]

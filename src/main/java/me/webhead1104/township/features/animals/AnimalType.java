@@ -69,6 +69,8 @@ public class AnimalType implements DataLoader {
         private int claimXp;
         @Setting("time")
         private Duration time;
+        @Setting("building_key")
+        private Key buildingKey;
         private transient Component menuTitle;
 
         private void postProcess() {

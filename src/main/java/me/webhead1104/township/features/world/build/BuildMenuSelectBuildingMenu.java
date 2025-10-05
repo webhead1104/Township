@@ -10,12 +10,14 @@ import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.dataLoaders.BuildMenuType;
+import me.webhead1104.township.dataLoaders.BuildingType;
 import me.webhead1104.township.features.world.PlaceMenu;
 import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -26,9 +28,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class BuildMenuSelectBuildingMenu extends TownshipView {
-    private final State<BuildMenuType> typeState = initialState();
+    private final State<Key> keyState = initialState();
+    private final State<BuildMenuType.BuildMenu> typeState = computedState(context -> BuildMenuType.get(keyState.get(context)));
     private final State<Pagination> paginationState = buildComputedPaginationState(context -> typeState.get(context).getBuildings()).elementFactory((context, builder, index, buildingType) -> {
-        Building building = buildingType.getNextBuilding(context.getPlayer());
+        BuildingType.Building building = BuildingType.getNextBuilding(context.getPlayer(), buildingType);
         User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
         if (building == null) {
             ItemStack itemStack = new ItemStack(Material.BARRIER);
@@ -39,12 +42,12 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
 
         ItemStack itemStack = building.getItemStack(context.getPlayer());
         List<Component> components = new ArrayList<>(Objects.requireNonNull(itemStack.getData(DataComponentTypes.LORE)).lines());
-        components.set(1, Msg.format("<green>%s/%s purchased", user.getPurchasedBuildings().amountPurchased(buildingType), buildingType.getBuildings().size()));
+        components.set(1, Msg.format("<green>%s/%s purchased", user.getPurchasedBuildings().amountPurchased(buildingType), BuildingType.get(buildingType).size()));
         itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(components));
         builder.withItem(itemStack);
         builder.onClick(slotClickContext -> {
             if (building.isNeedToBePlaced()) {
-                BuildMenuType type = typeState.get(slotClickContext);
+                BuildMenuType.BuildMenu type = typeState.get(slotClickContext);
                 int startSection = Township.getUserManager().getUser(slotClickContext.getPlayer().getUniqueId()).getSection();
                 slotClickContext.openForPlayer(PlaceMenu.class, ImmutableMap.of(
                         "TILE_SIZE", building.getSize(),
@@ -67,17 +70,12 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
                 openBackMenu.set(false, slotClickContext);
                 return;
             }
-            if (building.getPrice().has(slotClickContext.getPlayer()) &&
-                    user.getLevel() >= building.getLevelNeeded() &&
-                    user.getPopulation() >= building.getPopulationNeeded()) {
+            if (building.getPrice().has(slotClickContext.getPlayer()) && user.getLevel() >= building.getLevelNeeded() && user.getPopulation() >= building.getPopulationNeeded()) {
                 building.getPrice().take(slotClickContext.getPlayer());
                 user.getPurchasedBuildings().purchase(buildingType, building.getSlot());
-                BuildMenuType type = typeState.get(slotClickContext);
+                BuildMenuType.BuildMenu type = typeState.get(slotClickContext);
                 int startSection = Township.getUserManager().getUser(slotClickContext.getPlayer().getUniqueId()).getSection();
-                slotClickContext.openForPlayer(PlaceMenu.class, ImmutableMap.of(
-                        "TILE_SIZE", building.getSize(),
-                        "START_SECTION", startSection,
-                        "TITLE", Msg.format("Place building"),
+                slotClickContext.openForPlayer(PlaceMenu.class, ImmutableMap.of("TILE_SIZE", building.getSize(), "START_SECTION", startSection, "TITLE", Msg.format("Place building"),
                         "ON_PLACE", (PlaceMenu.PlaceAction) (ctx, section, anchor) -> {
                             User u = Township.getUserManager().getUser(ctx.getPlayer().getUniqueId());
                             for (Integer s : building.getSize().toList(anchor)) {
@@ -89,9 +87,7 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
                             });
                             u.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
                             ctx.openForPlayer(WorldMenu.class, section);
-                        },
-                        "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type)
-                ));
+                        }, "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type.getKey())));
                 openBackMenu.set(false, slotClickContext);
             }
         });
@@ -128,18 +124,15 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
         }).onClick(SlotClickContext::closeForPlayer);
 
         context.layoutSlot('>').onRender(slotRenderContext -> {
-                    ItemStack itemStack = ItemStack.of(Material.ARROW);
-                    itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>Next Page"));
-                    slotRenderContext.setItem(itemStack);
-                }).updateOnStateChange(paginationState)
-                .displayIf(() -> pagination.currentPageIndex() < pagination.lastPageIndex())
-                .onClick(pagination::advance);
+            ItemStack itemStack = ItemStack.of(Material.ARROW);
+            itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>Next Page"));
+            slotRenderContext.setItem(itemStack);
+        }).updateOnStateChange(paginationState).displayIf(() -> pagination.currentPageIndex() < pagination.lastPageIndex()).onClick(pagination::advance);
 
         context.layoutSlot('<').onRender(slotRenderContext -> {
-                    ItemStack itemStack = ItemStack.of(Material.ARROW);
-                    itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>Previous Page"));
-                    slotRenderContext.setItem(itemStack);
-                }).displayIf(() -> pagination.currentPageIndex() != 0)
-                .onClick(pagination::back);
+            ItemStack itemStack = ItemStack.of(Material.ARROW);
+            itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>Previous Page"));
+            slotRenderContext.setItem(itemStack);
+        }).displayIf(() -> pagination.currentPageIndex() != 0).onClick(pagination::back);
     }
 }
