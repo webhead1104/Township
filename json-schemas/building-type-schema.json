@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Buildings Configuration",
+  "type": "array",
+  "description": "Array of building types",
+  "items": {
+    "type": "object",
+    "title": "Building",
+    "properties": {
+      "key": {
+        "type": "string"
+      },
+      "level_needed": {
+        "type": "integer",
+        "description": "Required level to construct this building",
+        "minimum": 0
+      },
+      "population_needed": {
+        "type": "integer",
+        "description": "Required population to construct this building",
+        "minimum": 0
+      },
+      "population_increase": {
+        "type": "integer",
+        "description": "Amount of population this building adds",
+        "minimum": 0
+      },
+      "max_population_increase": {
+        "type": "integer",
+        "description": "Maximum population increase from this building",
+        "minimum": 0
+      },
+      "price": {
+        "type": "object",
+        "description": "Cost to construct this building",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "coin"
+            ],
+            "description": "Type of currency"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "Amount of currency required",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "type",
+          "amount"
+        ]
+      },
+      "construction_materials": {
+        "type": "object",
+        "description": "Materials required to construct this building",
+        "properties": {
+          "glass": {
+            "type": "integer",
+            "description": "Amount of glass required",
+            "minimum": 0
+          },
+          "brick": {
+            "type": "integer",
+            "description": "Amount of brick required",
+            "minimum": 0
+          },
+          "slab": {
+            "type": "integer",
+            "description": "Amount of slab required",
+            "minimum": 0
+          }
+        }
+      },
+      "time": {
+        "type": "string",
+        "description": "Time required to construct (e.g., 1s, 5m, 2h)",
+        "pattern": "^(?:(\\d+)\\s*d)?\\s*(?:(\\d+)\\s*h)?\\s*(?:(\\d+)\\s*(?:m|min))?\\s*(?:(\\d+)\\s*s)?$"
+      },
+      "xp": {
+        "type": "integer",
+        "description": "Experience points gained from constructing",
+        "minimum": 0
+      },
+      "size": {
+        "type": "string",
+        "description": "Size of the building in WIDTHxHEIGHT format",
+        "pattern": "^[0-9]+x[0-9]+$"
+      }
+    },
+    "required": [
+      "key",
+      "level_needed",
+      "size"
+    ]
+  }
+}

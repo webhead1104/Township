@@ -1,12 +1,14 @@
 package me.webhead1104.township.data.objects;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
+@ConfigSerializable
 public class ConstructionMaterials {
     private int glass;
     private int brick;

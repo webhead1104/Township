@@ -1,0 +1,25 @@
+[
+  {
+    "key": "post_office",
+    "level_needed": 9,
+    "max_population_increase": 40,
+    "price": {
+      "type": "coin",
+      "amount": 100
+    },
+    "construction_materials": {
+      "glass": 2,
+      "brick": 1,
+      "slab": 3
+    },
+    "tile": {
+      "class": "CommunityBuildingTile",
+      "properties": {
+        "communityBuildingType": "POST_OFFICE"
+      }
+    },
+    "time": "1h30m",
+    "xp": 80,
+    "size": "2x1"
+  }
+]

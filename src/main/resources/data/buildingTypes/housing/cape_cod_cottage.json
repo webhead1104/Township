@@ -1,0 +1,86 @@
+[
+  {
+    "key": "cape_cod_cottage",
+    "level_needed": 1,
+    "population_increase": 10,
+    "size": "1x1",
+    "tile": {
+      "class": "HouseTile",
+      "properties": {
+        "houseType": "CAPE_COD_COTTAGE"
+      }
+    }
+  },
+  {
+    "key": "cape_cod_cottage",
+    "level_needed": 5,
+    "population_increase": 10,
+    "price": {
+      "type": "coin",
+      "amount": 10
+    },
+    "tile": {
+      "class": "HouseTile",
+      "properties": {
+        "houseType": "CAPE_COD_COTTAGE"
+      }
+    },
+    "time": "10m",
+    "xp": 10,
+    "size": "1x1"
+  },
+  {
+    "key": "cape_cod_cottage",
+    "level_needed": 6,
+    "population_increase": 10,
+    "price": {
+      "type": "coin",
+      "amount": 10
+    },
+    "tile": {
+      "class": "HouseTile",
+      "properties": {
+        "houseType": "CAPE_COD_COTTAGE"
+      }
+    },
+    "time": "10m",
+    "xp": 10,
+    "size": "1x1"
+  },
+  {
+    "key": "cape_cod_cottage",
+    "level_needed": 7,
+    "population_increase": 10,
+    "price": {
+      "type": "coin",
+      "amount": 10
+    },
+    "tile": {
+      "class": "HouseTile",
+      "properties": {
+        "houseType": "CAPE_COD_COTTAGE"
+      }
+    },
+    "time": "10m",
+    "xp": 10,
+    "size": "1x1"
+  },
+  {
+    "key": "cape_cod_cottage",
+    "level_needed": 8,
+    "population_increase": 10,
+    "price": {
+      "type": "coin",
+      "amount": 10
+    },
+    "tile": {
+      "class": "HouseTile",
+      "properties": {
+        "houseType": "CAPE_COD_COTTAGE"
+      }
+    },
+    "time": "10m",
+    "xp": 10,
+    "size": "1x1"
+  }
+]

@@ -21,7 +21,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FactoryType implements DataLoader {
     private static final Map<Key, Factory> factories = new HashMap<>();
-    @Getter
     private static final Map<Key, Recipe> recipes = new HashMap<>();
 
     public static Collection<Factory> factoryValues() {
@@ -78,6 +77,8 @@ public class FactoryType implements DataLoader {
         private List<Recipe> recipes;
         @Setting("menu_title")
         private Component menuTitle;
+        @Setting("building_key")
+        private Key buildingKey;
 
         @PostProcess
         private void postProcess() {

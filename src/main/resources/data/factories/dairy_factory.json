@@ -1,5 +1,6 @@
 {
   "key": "dairy_factory",
+  "building_key": "dairy_factory",
   "ingredients": [
     {
       "key": "cream",

@@ -1,5 +1,6 @@
 package me.webhead1104.township.tiles;
 
+import com.google.errorprone.annotations.Keep;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import lombok.Getter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
@@ -13,8 +14,9 @@ import org.bukkit.inventory.ItemStack;
 public class HouseTile extends BuildingTile {
     private final HouseType houseType;
 
-    public HouseTile(int buildingSlot, HouseType houseType) {
-        super(houseType.getBuildingType(), buildingSlot);
+    @Keep
+    protected HouseTile(HouseType houseType) {
+        super(houseType.getBuildingType(), 0);
         this.houseType = houseType;
     }
 

@@ -1,0 +1,10 @@
+[
+  {
+    "key": "barn",
+    "level_needed": 1,
+    "size": "3x3",
+    "tile": {
+      "class": "BarnTile"
+    }
+  }
+]

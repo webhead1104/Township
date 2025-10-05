@@ -6,7 +6,7 @@ import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.*;
 import me.devnatan.inventoryframework.state.*;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.enums.TileSize;
+import me.webhead1104.township.data.TileSize;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.WorldSection;
 import me.webhead1104.township.tiles.StaticWorldTile;

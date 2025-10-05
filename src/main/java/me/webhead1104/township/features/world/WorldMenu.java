@@ -10,10 +10,10 @@ import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.data.objects.WorldSection;
+import me.webhead1104.township.dataLoaders.BuildingType;
 import me.webhead1104.township.dataLoaders.LevelDataLoader;
 import me.webhead1104.township.features.world.build.BuildMenu;
 import me.webhead1104.township.features.world.edit.WorldEditMenu;
@@ -66,7 +66,7 @@ public class WorldMenu extends TownshipView {
                         .onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
                             if (clickContext.isShiftRightClick()) {
                                 if (tile instanceof BuildingTile buildingTile) {
-                                    Building building = buildingTile.getBuildingType().getBuildings().get(buildingTile.getBuildingSlot());
+                                    BuildingType.Building building = BuildingType.get(buildingTile.getBuildingType()).get(buildingTile.getBuildingSlot());
                                     int clickedSlot = clickContext.getClickedSlot();
                                     WorldSection worldSection = Township.getUserManager().getUser(clickContext.getPlayer().getUniqueId()).getWorld().getSection(sectionState.get(clickContext));
 

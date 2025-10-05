@@ -1,0 +1,13 @@
+[
+  {
+    "key": "helicopter",
+    "level_needed": 3,
+    "size": "3x3",
+    "tile": {
+      "class": "StaticWorldTile",
+      "properties": {
+        "material": "minecraft:black_concrete"
+      }
+    }
+  }
+]
