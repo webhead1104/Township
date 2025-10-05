@@ -2,7 +2,6 @@ package me.webhead1104.township.dataLoaders;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.utils.Utils;
 import net.kyori.adventure.key.Key;
@@ -17,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@Slf4j
 public class ItemType implements DataLoader {
     public static final Map<Key, Item> values = new HashMap<>();
 
