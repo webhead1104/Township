@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.features.animals.AnimalType;
+import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
@@ -15,25 +16,19 @@ import java.util.Map;
 @Getter
 @ConfigSerializable
 public class Animals {
-    private final Map<AnimalType, AnimalBuilding> animalBuildings = new HashMap<>();
+    private final Map<Key, AnimalBuilding> animalBuildings = new HashMap<>();
 
     public Animals() {
-        for (AnimalType animalType : AnimalType.values()) {
+        for (AnimalType.Animal animal : AnimalType.values()) {
             Map<Integer, AnimalBuilding.Animal> animalBuildings = new HashMap<>();
             for (int i = 0; i < 6; i++) {
                 animalBuildings.put(i, new AnimalBuilding.Animal(false, false, i < 3, Instant.EPOCH));
             }
-            this.animalBuildings.put(animalType, new AnimalBuilding(animalBuildings));
+            this.animalBuildings.put(animal.getKey(), new AnimalBuilding(animalBuildings));
         }
     }
 
-    public void setAnimalBuilding(@NotNull AnimalType animalType, @NotNull AnimalBuilding animal) {
-        Preconditions.checkNotNull(animalType);
-        Preconditions.checkNotNull(animal);
-        animalBuildings.replace(animalType, animal);
-    }
-
-    public AnimalBuilding getAnimalBuilding(@NotNull AnimalType animalType) {
+    public AnimalBuilding getAnimalBuilding(@NotNull Key animalType) {
         Preconditions.checkNotNull(animalType);
         return animalBuildings.get(animalType);
     }
@@ -47,10 +42,6 @@ public class Animals {
 
         public AnimalBuilding(Map<Integer, Animal> animals) {
             this.animals = animals;
-        }
-
-        public void setAnimal(int slot, @NotNull Animal animal) {
-            animals.put(slot, Preconditions.checkNotNull(animal));
         }
 
         public Animal getAnimal(int slot) {

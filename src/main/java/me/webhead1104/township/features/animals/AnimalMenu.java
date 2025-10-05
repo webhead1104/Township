@@ -5,7 +5,6 @@ import io.papermc.paper.datacomponent.item.ItemLore;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
-import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Animals;
@@ -14,6 +13,7 @@ import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
+import net.kyori.adventure.key.Key;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +22,8 @@ import java.time.Instant;
 import java.util.List;
 
 public class AnimalMenu extends TownshipView {
-    private final MutableState<AnimalType> animalTypeState = initialState();
+    private final State<Key> keyState = initialState();
+    private final State<AnimalType.Animal> animalState = computedState(context -> AnimalType.get(keyState.get(context)));
     private final State<User> userState = computedState(context -> Township.getUserManager().getUser(context.getPlayer().getUniqueId()));
 
     public AnimalMenu() {
@@ -38,8 +39,8 @@ public class AnimalMenu extends TownshipView {
 
     @Override
     public void onOpen(@NotNull OpenContext context) {
-        AnimalType animalType = animalTypeState.get(context);
-        context.modifyConfig().title(animalType.getMenuTitle());
+        AnimalType.Animal animal = animalState.get(context);
+        context.modifyConfig().title(animal.getMenuTitle());
         Player player = context.getPlayer();
         player.getInventory().clear();
         player.setItemOnCursor(ItemStack.empty());
@@ -49,10 +50,10 @@ public class AnimalMenu extends TownshipView {
     public void onFirstRender(@NotNull RenderContext context) {
         User user = userState.get(context);
         Animals animals = user.getAnimals();
-        AnimalType animalType = animalTypeState.get(context);
+        AnimalType.Animal animalType = animalState.get(context);
         int slot = 11;
         for (int i = 0; i < 6; ++i) {
-            Animals.AnimalBuilding.Animal animal = animals.getAnimalBuilding(animalType).getAnimal(i);
+            Animals.AnimalBuilding.Animal animal = animals.getAnimalBuilding(animalType.getKey()).getAnimal(i);
             context.slot(slot).onUpdate(slotContext -> {
                 if (!animal.getInstant().equals(Instant.EPOCH) && Instant.now().isAfter(animal.getInstant().minusSeconds(1))) {
                     animal.setFeed(false);
@@ -68,27 +69,27 @@ public class AnimalMenu extends TownshipView {
                 slotRenderContext.setItem(stack);
             });
 
-            context.slot(slot + 9).withItem(animalType.getProductType().getItemStack())
+            context.slot(slot + 9).withItem(animalType.getProduct().getItemStack())
                     .displayIf(animal::isProduct).updateOnClick().onClick(slotClickContext -> {
-                        user.getBarn().addAmountToItem(animalType.getProductType(), 1);
-                        user.addXp(animalType.getXpGivenOnClaim());
+                        user.getBarn().addAmountToItem(animalType.getProduct(), 1);
+                        user.addXp(animalType.getClaimXp());
                         animal.setProduct(false);
                     });
             slot++;
         }
 
         context.slot(36).updateOnClick().onRender(slotRenderContext -> {
-            ItemStack stack = animalType.getFeedType().getItemStack();
-            stack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<white>%s", user.getBarn().getItem(animalType.getFeedType())))));
+            ItemStack stack = animalType.getFeed().getItemStack();
+            stack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<white>%s", user.getBarn().getItem(animalType.getFeedKey())))));
             slotRenderContext.setItem(stack);
         }).onClick(slotClickContext -> {
-            if (user.getBarn().getItem(animalType.getFeedType()) >= 1) {
+            if (user.getBarn().getItem(animalType.getFeedKey()) >= 1) {
                 for (int i = 0; i < 6; ++i) {
-                    Animals.AnimalBuilding.Animal animal = animals.getAnimalBuilding(animalType).getAnimal(i);
-                    if (!animal.isFeed() && !animal.isProduct() && user.getBarn().getItem(animalType.getFeedType()) >= 1) {
+                    Animals.AnimalBuilding.Animal animal = animals.getAnimalBuilding(animalType.getKey()).getAnimal(i);
+                    if (!animal.isFeed() && !animal.isProduct() && user.getBarn().getItem(animalType.getFeedKey()) >= 1) {
                         animal.setFeed(true);
-                        animal.setInstant(Instant.now().plusSeconds(animalType.getTimeTakesToFeed().getSeconds()));
-                        user.getBarn().removeAmountFromItem(animalType.getFeedType(), 1);
+                        animal.setInstant(Instant.now().plusSeconds(animalType.getTime().getSeconds()));
+                        user.getBarn().removeAmountFromItem(animalType.getFeedKey(), 1);
                     }
                 }
             }

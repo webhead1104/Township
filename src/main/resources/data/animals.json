@@ -1,0 +1,62 @@
+[
+  {
+    "key": "cowshed_1",
+    "name": "Cowshed",
+    "animal_name": "Cow",
+    "material": "minecraft:cow_spawn_egg",
+    "feed": "cow_feed",
+    "product": "milk",
+    "xp_claim": 3,
+    "time": "20S"
+  },
+  {
+    "key": "cowshed_2",
+    "name": "Cowshed",
+    "animal_name": "Cow",
+    "material": "minecraft:cow_spawn_egg",
+    "feed": "cow_feed",
+    "product": "milk",
+    "xp_claim": 3,
+    "time": "20M"
+  },
+  {
+    "key": "cowshed_3",
+    "name": "Cowshed",
+    "animal_name": "Cow",
+    "material": "minecraft:cow_spawn_egg",
+    "feed": "cow_feed",
+    "product": "milk",
+    "xp_claim": 3,
+    "time": "20M"
+  },
+  {
+    "key": "chicken_coop_1",
+    "name": "Chicken Coop",
+    "animal_name": "Chicken",
+    "material": "minecraft:cow_spawn_egg",
+    "feed": "chicken_feed",
+    "product": "egg",
+    "xp_claim": 4,
+    "time": "1H"
+  },
+  {
+    "key": "chicken_coop_2",
+    "name": "Chicken Coop",
+    "animal_name": "Chicken",
+    "material": "minecraft:cow_spawn_egg",
+    "feed": "chicken_feed",
+    "product": "egg",
+    "xp_claim": 4,
+    "time": "1H"
+  },
+  {
+    "key": "chicken_coop_3",
+    "name": "Chicken Coop",
+    "animal_name": "Chicken",
+    "material": "minecraft:cow_spawn_egg",
+    "feed": "chicken_feed",
+    "product": "egg",
+    "xp_claim": 4,
+    "time": "1H"
+  }
+]

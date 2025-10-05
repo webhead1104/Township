@@ -7,7 +7,6 @@ import me.webhead1104.township.data.objects.Building;
 import me.webhead1104.township.data.objects.ConstructionMaterials;
 import me.webhead1104.township.data.objects.PurchasedBuildings;
 import me.webhead1104.township.data.objects.User;
-import me.webhead1104.township.features.animals.AnimalType;
 import me.webhead1104.township.price.CoinPrice;
 import me.webhead1104.township.tiles.*;
 import org.bukkit.entity.Player;
@@ -99,15 +98,15 @@ public enum BuildingType {
 
     //farming
     COWSHED(createMap(
-            new Building(1, 0, 0, 0, new CoinPrice(0), null, null, new AnimalTile(0, AnimalType.COWSHED_1), 0, TileSize.SIZE_2X2, "COWSHED"),
-            new Building(15, 0, 0, 0, new CoinPrice(1000), null, Duration.ofHours(14), new AnimalTile(1, AnimalType.COWSHED_2), 0, TileSize.SIZE_2X2, "COWSHED"),
-            new Building(22, 0, 0, 0, new CoinPrice(5000), null, Duration.ofDays(1).plusHours(2), new AnimalTile(2, AnimalType.COWSHED_3), 0, TileSize.SIZE_2X2, "COWSHED")
+            new Building(1, 0, 0, 0, new CoinPrice(0), null, null, new AnimalTile(0, Township.key("cowshed_1")), 0, TileSize.SIZE_2X2, "COWSHED"),
+            new Building(15, 0, 0, 0, new CoinPrice(1000), null, Duration.ofHours(14), new AnimalTile(1, Township.key("cowshed_2")), 0, TileSize.SIZE_2X2, "COWSHED"),
+            new Building(22, 0, 0, 0, new CoinPrice(5000), null, Duration.ofDays(1).plusHours(2), new AnimalTile(2, Township.key("cowshed_3")), 0, TileSize.SIZE_2X2, "COWSHED")
     )),
 
     CHICKEN_COOP(createMap(
-            new Building(5, 0, 0, 0, new CoinPrice(200), null, Duration.ofHours(1), new AnimalTile(0, AnimalType.CHICKEN_COOP_1), 13, TileSize.SIZE_2X2, "CHICKEN_COOP"),
-            new Building(24, 0, 0, 0, new CoinPrice(3000), null, Duration.ofDays(1).plusHours(4), new AnimalTile(1, AnimalType.CHICKEN_COOP_2), 13, TileSize.SIZE_2X2, "CHICKEN_COOP"),
-            new Building(39, 0, 0, 0, new CoinPrice(15000), null, Duration.ofDays(1).plusHours(16), new AnimalTile(2, AnimalType.CHICKEN_COOP_3), 13, TileSize.SIZE_2X2, "CHICKEN_COOP")
+            new Building(5, 0, 0, 0, new CoinPrice(200), null, Duration.ofHours(1), new AnimalTile(0, Township.key("chicken_coop_1")), 13, TileSize.SIZE_2X2, "CHICKEN_COOP"),
+            new Building(24, 0, 0, 0, new CoinPrice(3000), null, Duration.ofDays(1).plusHours(4), new AnimalTile(1, Township.key("chicken_coop_2")), 13, TileSize.SIZE_2X2, "CHICKEN_COOP"),
+            new Building(39, 0, 0, 0, new CoinPrice(15000), null, Duration.ofDays(1).plusHours(16), new AnimalTile(2, Township.key("chicken_coop_3")), 13, TileSize.SIZE_2X2, "CHICKEN_COOP")
     )),
 
     //special

@@ -5,7 +5,6 @@ import me.webhead1104.township.commands.arguments.AnimalTypeArgument;
 import me.webhead1104.township.commands.arguments.FactoryTypeArgument;
 import me.webhead1104.township.commands.arguments.ItemTypeArgument;
 import me.webhead1104.township.features.animals.AnimalMenu;
-import me.webhead1104.township.features.animals.AnimalType;
 import me.webhead1104.township.features.factories.FactoryMenu;
 import me.webhead1104.township.features.world.WorldUtils;
 import net.kyori.adventure.key.Key;
@@ -49,7 +48,7 @@ public final class TownshipCommand {
     }
 
     @Executes("animal")
-    void animals(CommandSender ignored, @Executor Player player, @CustomArg(AnimalTypeArgument.class) AnimalType animalType) {
+    void animals(CommandSender ignored, @Executor Player player, @CustomArg(AnimalTypeArgument.class) Key animalType) {
         Township.getViewFrame().open(AnimalMenu.class, player, animalType);
     }
 

@@ -7,14 +7,15 @@ import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.township.features.animals.AnimalMenu;
 import me.webhead1104.township.features.animals.AnimalType;
 import me.webhead1104.township.utils.Msg;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @Getter
 public class AnimalTile extends BuildingTile {
-    private final AnimalType animalType;
+    private final Key animalType;
 
-    public AnimalTile(int buildingSlot, AnimalType animalType) {
+    public AnimalTile(int buildingSlot, Key animalType) {
         super(buildingSlot);
         this.animalType = animalType;
     }
@@ -22,7 +23,7 @@ public class AnimalTile extends BuildingTile {
     @Override
     public ItemStack render(SlotRenderContext context) {
         ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
-        itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(animalType.getName()));
+        itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(AnimalType.get(animalType).getName()));
         return itemStack;
     }
 
