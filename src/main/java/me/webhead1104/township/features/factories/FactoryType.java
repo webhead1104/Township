@@ -11,21 +11,13 @@ import me.webhead1104.township.utils.Utils;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 public class FactoryType implements DataLoader {
     private static final Map<Key, Factory> factories = new HashMap<>();
@@ -52,60 +44,19 @@ public class FactoryType implements DataLoader {
     public void load() {
         long start = System.currentTimeMillis();
         try {
-            List<Factory> factories = new ArrayList<>();
-
-            String jarPath = FactoryType.class.getProtectionDomain()
-                    .getCodeSource()
-                    .getLocation()
-                    .getPath();
-
-            jarPath = URLDecoder.decode(jarPath, StandardCharsets.UTF_8);
-
-            try (JarFile jar = new JarFile(jarPath)) {
-                Enumeration<JarEntry> entries = jar.entries();
-                while (entries.hasMoreElements()) {
-                    JarEntry entry = entries.nextElement();
-
-                    if (!entry.isDirectory()
-                            && entry.getName().startsWith("data/factories/")
-                            && entry.getName().endsWith(".json")) {
-
-                        Township.logger.debug("Loading factory file: {}", entry.getName());
-
-                        try (InputStream inputStream = jar.getInputStream(entry);
-                             BufferedReader reader = new BufferedReader(
-                                     new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-
-                            ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER
-                                    .source(() -> reader)
-                                    .build()
-                                    .load();
-
-                            List<Factory> fileFactories = node.getList(Factory.class);
-                            if (fileFactories != null) {
-                                factories.addAll(fileFactories);
-                                Township.logger.debug("Loaded {} factories from {}", fileFactories.size(), entry.getName());
-                                fileFactories.forEach(factory -> {
-                                    for (Recipe recipe : factory.getRecipes()) {
-                                        recipes.put(recipe.getKey(), recipe);
-                                    }
-                                    Recipe recipe = new Recipe();
-                                    recipe.key = Township.noneKey;
-                                    recipes.put(Township.noneKey, recipe);
-                                });
-                                Township.logger.debug("Loaded {} recipes from {}", recipes.size(), entry.getName());
-                            }
-                        }
-                    }
-                }
+            List<Factory> factories = new ArrayList<>(getListFromMultipleFiles("/data/factories", Factory.class));
+            List<Recipe> recipes = new ArrayList<>();
+            for (Factory factory : factories) {
+                FactoryType.factories.put(factory.getKey(), factory);
+                recipes.addAll(factory.getRecipes());
             }
 
-            for (Factory factory : factories) {
-                if (factory.getKey() != null) {
-                    FactoryType.factories.put(factory.getKey(), factory);
-                } else {
-                    Township.logger.warn("Found factory with null key, skipping...");
-                }
+            Recipe noneRecipe = new Recipe();
+            noneRecipe.key = Township.noneKey;
+            recipes.add(noneRecipe);
+
+            for (Recipe recipe : recipes) {
+                FactoryType.recipes.put(recipe.getKey(), recipe);
             }
 
             Township.logger.info("Loaded {} factories in {} ms!", FactoryType.factories.size(), System.currentTimeMillis() - start);
