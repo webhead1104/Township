@@ -4,28 +4,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.dataLoaders.DataLoader;
-import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 public class ExpansionDataLoader implements DataLoader {
     @Getter
-    private static final List<Expansion> list = new ArrayList<>();
+    private static final List<Expansion> values = new ArrayList<>();
 
     public static Expansion get(int i) {
         try {
             if (i == 1) {
-                return list.getFirst();
+                return values.getFirst();
             }
-            return list.get(i);
+            return values.get(i);
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
@@ -34,14 +30,9 @@ public class ExpansionDataLoader implements DataLoader {
     @Override
     public void load() {
         try {
-            long start = System.currentTimeMillis();
-            ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.source(() -> new BufferedReader(new InputStreamReader(Objects.requireNonNull(getClass().getResourceAsStream("/data/expansions.json"))))).build().load();
-            List<Expansion> nodeList = node.getList(Expansion.class);
-            if (nodeList == null || nodeList.isEmpty()) {
-                throw new RuntimeException("No expansions found!");
-            }
-            list.addAll(nodeList);
-            Township.logger.info("Loaded {} expansions in {} ms!", list.size(), System.currentTimeMillis() - start);
+            List<Expansion> list = getListFromFile("/data/expansions.json", Expansion.class);
+            values.addAll(list);
+            Township.logger.info("Loaded {} expansions!", values.size());
         } catch (Exception e) {
             throw new RuntimeException("An error occurred whilst loading expansions! Please report the following stacktrace to Webhead1104:", e);
         }
