@@ -16,4 +16,15 @@ public abstract class Tile {
     public boolean onUpdate(SlotContext slotContext, WorldSection worldSection, int slot) {
         return false;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        return obj != null && getClass() == obj.getClass();
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
