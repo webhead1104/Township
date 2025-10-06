@@ -7,11 +7,14 @@ import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewFrame;
 import me.webhead1104.township.commands.TownshipCommandBrigadier;
 import me.webhead1104.township.data.Database;
+import me.webhead1104.township.data.TileSize;
+import me.webhead1104.township.dataLoaders.BuildingType;
 import me.webhead1104.township.dataLoaders.DataLoader;
 import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.InventoryManager;
 import me.webhead1104.township.managers.UserManager;
+import me.webhead1104.township.price.Price;
 import me.webhead1104.township.serializers.*;
 import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.ClassGraphUtils;
@@ -29,20 +32,21 @@ import java.time.Instant;
 @NoArgsConstructor
 public class Township extends JavaPlugin {
 
-    public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder()
-            .defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
-                builder.register(Instant.class, new InstantSerializer());
-                builder.register(Duration.class, new DurationSerializer());
-                builder.register(Key.class, new KeySerializer());
-                builder.register(Material.class, new MaterialSerializer());
-                builder.register(Component.class, new ComponentSerializer());
-                builder.register(t -> {
-                    if (t instanceof Class<?> clazz) {
-                        return clazz == Tile.class || Tile.class.isAssignableFrom(clazz);
-                    }
-                    return false;
-                }, new TileSerializer());
-            }));
+    public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder().defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
+        builder.register(Instant.class, new InstantSerializer());
+        builder.register(Duration.class, new DurationSerializer());
+        builder.register(Key.class, new KeySerializer());
+        builder.register(Material.class, new MaterialSerializer());
+        builder.register(Component.class, new ComponentSerializer());
+        builder.register(Price.class, new PriceSerializer());
+        builder.register(TileSize.class, new TileSizeSerializer());
+        builder.register(t -> {
+            if (t instanceof Class<?> clazz) {
+                return clazz == Tile.class || Tile.class.isAssignableFrom(clazz);
+            }
+            return false;
+        }, new TileSerializer());
+    }));
     public static final Key noneKey = key("none");
     public static Logger logger;
     @Getter
@@ -63,8 +67,8 @@ public class Township extends JavaPlugin {
     @Override
     public void onLoad() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS.newHandler(event -> TownshipCommandBrigadier.register(event.registrar())));
-        //todo fix shift edit plot actually working
-        //todo make a option to make a tile unmovable
+        // todo fix shift edit plot actually working
+        // todo make a option to make a tile unmovable
     }
 
     @Override
@@ -103,13 +107,17 @@ public class Township extends JavaPlugin {
     }
 
     private void loadDataLoaders() {
-        for (DataLoader clazz : ClassGraphUtils.getImplementedClasses(DataLoader.class, "me.webhead1104.township")) {
+        for (DataLoader dataLoader : ClassGraphUtils.getImplementedClasses(DataLoader.class, "me.webhead1104.township")) {
             try {
-                clazz.load();
+                if (dataLoader instanceof BuildingType) {
+                    continue;
+                }
+                dataLoader.load();
             } catch (Exception e) {
-                logger.error("Failed to load data loader: {}", clazz.getClass().getName(), e);
+                logger.error("Failed to load data loader: {}", dataLoader.getClass().getName(), e);
             }
         }
+        new BuildingType().load();
     }
 
     private void registerViews() {

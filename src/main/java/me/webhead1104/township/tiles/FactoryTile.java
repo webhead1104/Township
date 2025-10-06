@@ -1,5 +1,6 @@
 package me.webhead1104.township.tiles;
 
+import com.google.errorprone.annotations.Keep;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import lombok.Getter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
@@ -15,8 +16,9 @@ import org.bukkit.inventory.ItemStack;
 public class FactoryTile extends BuildingTile {
     private final Key factoryType;
 
-    public FactoryTile(int buildingSlot, Key factoryType) {
-        super(buildingSlot);
+    @Keep
+    public FactoryTile(Key factoryType) {
+        super(FactoryType.getFactory(factoryType).getBuildingKey(), 0);
         this.factoryType = factoryType;
     }
 

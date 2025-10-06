@@ -1,0 +1,74 @@
+[
+  {
+    "key": "cottage",
+    "level_needed": 4,
+    "population_increase": 5,
+    "price": {
+      "type": "coin",
+      "amount": 5
+    },
+    "time": "1m",
+    "xp": 5,
+    "size": "1x1",
+    "tile": {
+      "class": "HouseTile",
+      "properties": {
+        "houseType": "COTTAGE"
+      }
+    }
+  },
+  {
+    "key": "cottage",
+    "level_needed": 4,
+    "population_increase": 5,
+    "price": {
+      "type": "coin",
+      "amount": 5
+    },
+    "tile": {
+      "class": "HouseTile",
+      "properties": {
+        "houseType": "COTTAGE"
+      }
+    },
+    "time": "1m",
+    "xp": 5,
+    "size": "1x1"
+  },
+  {
+    "key": "cottage",
+    "level_needed": 4,
+    "population_increase": 5,
+    "price": {
+      "type": "coin",
+      "amount": 5
+    },
+    "tile": {
+      "class": "HouseTile",
+      "properties": {
+        "houseType": "COTTAGE"
+      }
+    },
+    "time": "1m",
+    "xp": 5,
+    "size": "1x1"
+  },
+  {
+    "key": "cottage",
+    "level_needed": 5,
+    "population_increase": 5,
+    "price": {
+      "type": "coin",
+      "amount": 5
+    },
+    "tile": {
+      "class": "HouseTile",
+      "properties": {
+        "houseType": "COTTAGE"
+      }
+    },
+    "time": "1m",
+    "xp": 5,
+    "size": "1x1"
+  }
+]

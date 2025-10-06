@@ -1,0 +1,25 @@
+[
+  {
+    "key": "hospital",
+    "level_needed": 6,
+    "max_population_increase": 25,
+    "price": {
+      "type": "coin",
+      "amount": 40
+    },
+    "construction_materials": {
+      "glass": 1,
+      "brick": 1,
+      "slab": 1
+    },
+    "tile": {
+      "class": "CommunityBuildingTile",
+      "properties": {
+        "communityBuildingType": "HOSPITAL"
+      }
+    },
+    "time": "20m",
+    "xp": 50,
+    "size": "2x1"
+  }
+]

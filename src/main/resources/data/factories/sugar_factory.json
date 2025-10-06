@@ -1,5 +1,6 @@
 {
   "key": "sugar_factory",
+  "building_key": "sugar_factory",
   "ingredients": [
     {
       "key": "sugar",

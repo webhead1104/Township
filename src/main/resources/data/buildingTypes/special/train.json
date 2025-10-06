@@ -1,0 +1,10 @@
+[
+  {
+    "key": "train",
+    "level_needed": 5,
+    "size": "1x3",
+    "tile": {
+      "class": "TrainTile"
+    }
+  }
+]

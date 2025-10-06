@@ -3,7 +3,7 @@ package me.webhead1104.township.data.objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.webhead1104.township.data.enums.TileSize;
+import me.webhead1104.township.data.TileSize;
 import me.webhead1104.township.features.world.plots.PlotType;
 import me.webhead1104.township.tiles.*;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -32,7 +32,7 @@ public class WorldSection {
             if (section == 27) {
                 PlotTile plotTile = new PlotTile(new Plot(section, 34, PlotType.NONE));
                 slotMap.put(34, plotTile);
-                for (int a : TileSize.SIZE_2X2.toList(0)) {
+                for (int a : TileSize.SIZE_3X3.toList(0)) {
                     slotMap.put(a, new BarnTile());
                 }
             }
@@ -44,7 +44,6 @@ public class WorldSection {
         }
         this.section = section;
     }
-
 
     public void setSlot(int slot, Tile tile) {
         slotMap.put(slot, tile);

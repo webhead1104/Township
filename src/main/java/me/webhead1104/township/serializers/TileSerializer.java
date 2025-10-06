@@ -58,6 +58,13 @@ public class TileSerializer implements TypeSerializer<Tile> {
             ConfigurationNode propertiesNode = node.node(PROPERTIES_KEY);
 
             List<Field> allFields = collectAllFields(tileClass);
+            // Collect only fields declared on the concrete class (not inherited)
+            Set<String> declaredFieldNames = new HashSet<>();
+            for (Field f : tileClass.getDeclaredFields()) {
+                if (!Modifier.isStatic(f.getModifiers())) {
+                    declaredFieldNames.add(f.getName());
+                }
+            }
 
             Map<String, Object> fieldValues = new LinkedHashMap<>();
             if (!propertiesNode.virtual()) {
@@ -104,15 +111,31 @@ public class TileSerializer implements TypeSerializer<Tile> {
                     }
 
                     // Strategy B: Match by type only
+                    // Prefer matches for fields declared on the concrete class (avoid inherited clashes)
                     boolean matched = false;
+                    // First pass: only declared-on-class fields
                     for (Map.Entry<String, Object> entry : fieldValues.entrySet()) {
                         if (used.contains(entry.getKey())) continue;
+                        if (!declaredFieldNames.contains(entry.getKey())) continue;
                         Object v = entry.getValue();
                         if (isTypeCompatible(pType, v)) {
                             args[i] = v;
                             used.add(entry.getKey());
                             matched = true;
                             break;
+                        }
+                    }
+                    // Second pass: any remaining fields
+                    if (!matched) {
+                        for (Map.Entry<String, Object> entry : fieldValues.entrySet()) {
+                            if (used.contains(entry.getKey())) continue;
+                            Object v = entry.getValue();
+                            if (isTypeCompatible(pType, v)) {
+                                args[i] = v;
+                                used.add(entry.getKey());
+                                matched = true;
+                                break;
+                            }
                         }
                     }
 

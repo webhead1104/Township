@@ -1,0 +1,53 @@
+[
+  {
+    "key": "housing",
+    "menu_title": "Housing",
+    "buildings": [
+      "cottage",
+      "cape_cod_cottage",
+      "chalet_bungalow",
+      "conch_house",
+      "bungalow"
+    ]
+  },
+  {
+    "key": "community_buildings",
+    "menu_title": "Community Buildings",
+    "buildings": [
+      "grocery_store",
+      "school",
+      "hospital",
+      "police_station",
+      "fire_station",
+      "post_office"
+    ]
+  },
+  {
+    "key": "factories",
+    "menu_title": "Factories",
+    "buildings": [
+      "bakery",
+      "feed_mill",
+      "dairy_factory",
+      "sugar_factory"
+    ]
+  },
+  {
+    "key": "farming",
+    "menu_title": "Farming",
+    "buildings": [
+      "cowshed",
+      "chicken_coop"
+    ]
+  },
+  {
+    "key": "special",
+    "menu_title": "Special",
+    "buildings": [
+      "barn",
+      "helicopter",
+      "train",
+      "town_hall"
+    ]
+  }
+]

@@ -24,7 +24,10 @@ public interface DataLoader {
             if (stream == null) {
                 throw new IllegalStateException("Could not find resource file: " + path);
             }
-            return Township.GSON_CONFIGURATION_LOADER.source(() -> new BufferedReader(new InputStreamReader(stream))).build().load();
+            return Township.GSON_CONFIGURATION_LOADER
+                    .source(() -> new BufferedReader(new InputStreamReader(stream)))
+                    .build()
+                    .load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -35,9 +38,7 @@ public interface DataLoader {
 
         String searchPath = path.startsWith("/") ? path.substring(1) : path;
 
-        try (ScanResult scanResult = new ClassGraph()
-                .acceptPaths(searchPath)
-                .scan()) {
+        try (ScanResult scanResult = new ClassGraph().acceptPaths(searchPath).scan()) {
 
             ResourceList resources = scanResult.getResourcesWithExtension("json");
 
@@ -62,7 +63,10 @@ public interface DataLoader {
             if (result.isEmpty()) {
                 throw new RuntimeException("List is empty for path `" + path + "`!");
             }
-            Township.logger.debug("Took {} to load list from path `{}`", stopwatch.stop().elapsed().toMillis(), path);
+            Township.logger.debug(
+                    "Took {} to load list from path `{}`",
+                    stopwatch.stop().elapsed().toMillis(),
+                    path);
             return result;
         } catch (SerializationException e) {
             throw new RuntimeException("An error occurred whilst getting a list from file `" + path + "`!", e);
@@ -83,7 +87,10 @@ public interface DataLoader {
             if (results.isEmpty()) {
                 throw new RuntimeException("No files found in `" + path + "`!");
             }
-            Township.logger.debug("Took {} to load list from files from path `{}`", stopwatch.stop().elapsed().toMillis(), path);
+            Township.logger.debug(
+                    "Took {} to load list from files from path `{}`",
+                    stopwatch.stop().elapsed().toMillis(),
+                    path);
             return results;
         } catch (SerializationException e) {
             throw new RuntimeException("An error occurred whilst getting a list from files `" + path + "`!", e);

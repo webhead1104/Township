@@ -1,6 +1,7 @@
 {
   "key": "feed_mill_2",
   "name": "Feed Mill",
+  "building_key": "feed_mill",
   "recipes": [
     {
       "key": "cow_feed",

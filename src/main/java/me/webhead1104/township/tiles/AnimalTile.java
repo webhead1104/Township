@@ -1,5 +1,6 @@
 package me.webhead1104.township.tiles;
 
+import com.google.errorprone.annotations.Keep;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import lombok.Getter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
@@ -15,8 +16,9 @@ import org.bukkit.inventory.ItemStack;
 public class AnimalTile extends BuildingTile {
     private final Key animalType;
 
-    public AnimalTile(int buildingSlot, Key animalType) {
-        super(buildingSlot);
+    @Keep
+    public AnimalTile(Key animalType) {
+        super(AnimalType.get(animalType).getBuildingKey(), 0);
         this.animalType = animalType;
     }
 

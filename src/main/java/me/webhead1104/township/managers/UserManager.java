@@ -6,6 +6,7 @@ import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.dataVersions.DataVersion;
 import me.webhead1104.township.utils.ClassGraphUtils;
 import org.jetbrains.annotations.NotNull;
+import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 import java.util.*;
 
@@ -13,11 +14,14 @@ import java.util.*;
 @Getter
 public class UserManager {
     private final Map<UUID, User> users = new HashMap<>();
-    private final Map<Integer, DataVersion> dataVersions = new HashMap<>();
+    private final List<DataVersion> dataVersions = new ArrayList<>();
+    private final ConfigurationTransformation.VersionedBuilder versionedBuilder = ConfigurationTransformation.versionedBuilder();
 
     public void loadDataVersions() {
-        for (DataVersion implementedClass : ClassGraphUtils.getImplementedClasses(DataVersion.class, "me.webhead1104.township.dataVersions")) {
-            dataVersions.put(implementedClass.getVersion(), implementedClass);
+        dataVersions.addAll(ClassGraphUtils.getImplementedClasses(DataVersion.class, "me.webhead1104.township.dataVersions"));
+        versionedBuilder.versionKey("version");
+        for (DataVersion dataVersion : dataVersions) {
+            versionedBuilder.addVersion(dataVersion.getVersion(), dataVersion.getTransformation());
         }
     }
 
