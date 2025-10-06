@@ -10,7 +10,6 @@ import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
-import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 import java.io.BufferedWriter;
 import java.io.StringWriter;
@@ -66,9 +65,7 @@ public class User {
     public static User fromJson(String json) {
         try {
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.buildAndLoadString(json);
-            ConfigurationTransformation.VersionedBuilder versionedBuilder = ConfigurationTransformation.versionedBuilder();
-            Township.getUserManager().getDataVersions().forEach((version, dataVersion) -> versionedBuilder.addVersion(version, dataVersion.getTransformation()));
-            versionedBuilder.build().apply(node);
+            Township.getUserManager().getVersionedBuilder().build().apply(node);
             User user = node.get(User.class);
             if (user == null) {
                 throw new IllegalStateException("An error occurred whilst deserializing a user! Please report this to Webhead1104!\n USER IS NULL!!!");
@@ -87,9 +84,7 @@ public class User {
             StringWriter stringWriter = new StringWriter();
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.build().createNode();
             node.set(this);
-            Township.GSON_CONFIGURATION_LOADER
-                    .sink(() -> new BufferedWriter(stringWriter))
-                    .build().save(node);
+            Township.GSON_CONFIGURATION_LOADER.sink(() -> new BufferedWriter(stringWriter)).build().save(node);
             return stringWriter.toString();
         } catch (Exception e) {
             throw new RuntimeException(e);
