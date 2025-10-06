@@ -1,5 +1,6 @@
 package me.webhead1104.township.dataVersions;
 
+import com.google.errorprone.annotations.Keep;
 import net.kyori.adventure.key.Key;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -7,8 +8,8 @@ import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 import static org.spongepowered.configurate.NodePath.path;
 
-@SuppressWarnings("unused")
-public class UserVersion7 implements DataVersion {
+@Keep
+public final class UserVersion7 implements DataVersion {
     @Override
     public ConfigurationTransformation getTransformation() {
         return ConfigurationTransformation.builder()

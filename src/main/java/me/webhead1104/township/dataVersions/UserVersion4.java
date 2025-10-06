@@ -1,12 +1,13 @@
 package me.webhead1104.township.dataVersions;
 
+import com.google.errorprone.annotations.Keep;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 import static org.spongepowered.configurate.NodePath.path;
 
-@SuppressWarnings("unused")
-public class UserVersion4 implements DataVersion {
+@Keep
+public final class UserVersion4 implements DataVersion {
     @Override
     public ConfigurationTransformation getTransformation() {
         return ConfigurationTransformation.builder()

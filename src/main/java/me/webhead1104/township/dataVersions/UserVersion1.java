@@ -1,5 +1,6 @@
 package me.webhead1104.township.dataVersions;
 
+import com.google.errorprone.annotations.Keep;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.NodePath;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -8,7 +9,7 @@ import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 import java.time.Instant;
 import java.util.Map;
 
-@SuppressWarnings("unused")
+@Keep
 public final class UserVersion1 implements DataVersion {
 
     private static void injectInstantInPlotTiles(ConfigurationNode node) throws SerializationException {

@@ -1,11 +1,12 @@
 package me.webhead1104.township.dataVersions;
 
+import com.google.errorprone.annotations.Keep;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 import static org.spongepowered.configurate.NodePath.path;
 
-@SuppressWarnings("unused")
-public class UserVersion3 implements DataVersion {
+@Keep
+public final class UserVersion3 implements DataVersion {
 
     @Override
     public ConfigurationTransformation getTransformation() {
