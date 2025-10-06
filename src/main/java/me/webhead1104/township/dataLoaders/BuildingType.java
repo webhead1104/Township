@@ -97,7 +97,7 @@ public class BuildingType implements DataLoader {
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
-    public static class Building {
+    public static final class Building {
         @NotNull
         @Setting("key")
         private Key key;
