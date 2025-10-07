@@ -17,6 +17,10 @@ public abstract class Tile {
         return false;
     }
 
+    @ApiStatus.OverrideOnly
+    public void onLoad(WorldSection worldSection, int slot) {
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
