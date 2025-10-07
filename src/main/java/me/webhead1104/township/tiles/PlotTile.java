@@ -2,27 +2,38 @@ package me.webhead1104.township.tiles;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Plot;
+import me.webhead1104.township.data.objects.WorldSection;
 import me.webhead1104.township.features.world.plots.PlotMenu;
 import me.webhead1104.township.features.world.plots.PlotType;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.Instant;
 import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
-public class PlotTile extends Tile {
+public class PlotTile extends BuildingTile {
     private Plot plot;
+
+    public PlotTile(@Nullable Plot plot) {
+        super(Township.key("plot"), 0);
+        this.plot = plot;
+    }
+
+    @Override
+    public void onLoad(WorldSection worldSection, int slot) {
+        if (plot != null) return;
+        plot = new Plot(worldSection.getSection(), slot, PlotType.NONE);
+    }
 
     @Override
     public ItemStack render(SlotRenderContext context) {

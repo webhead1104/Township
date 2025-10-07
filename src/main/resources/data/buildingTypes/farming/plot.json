@@ -1,0 +1,86 @@
+[
+  {
+    "key": "plot",
+    "level_needed": 0,
+    "size": "1x1",
+    "tile": {
+      "class": "PlotTile"
+    }
+  },
+  {
+    "key": "plot",
+    "level_needed": 0,
+    "size": "1x1",
+    "tile": {
+      "class": "PlotTile"
+    }
+  },
+  {
+    "key": "plot",
+    "level_needed": 0,
+    "size": "1x1",
+    "tile": {
+      "class": "PlotTile"
+    }
+  },
+  {
+    "key": "plot",
+    "level_needed": 0,
+    "size": "1x1",
+    "tile": {
+      "class": "PlotTile"
+    }
+  },
+  {
+    "key": "plot",
+    "level_needed": 0,
+    "size": "1x1",
+    "tile": {
+      "class": "PlotTile"
+    }
+  },
+  {
+    "key": "plot",
+    "level_needed": 0,
+    "size": "1x1",
+    "tile": {
+      "class": "PlotTile"
+    }
+  },
+  {
+    "key": "plot",
+    "level_needed": 2,
+    "population_needed": 65,
+    "size": "1x1",
+    "tile": {
+      "class": "PlotTile"
+    }
+  },
+  {
+    "key": "plot",
+    "level_needed": 3,
+    "population_needed": 70,
+    "size": "1x1",
+    "tile": {
+      "class": "PlotTile"
+    }
+  },
+  {
+    "key": "plot",
+    "level_needed": 4,
+    "population_needed": 75,
+    "size": "1x1",
+    "tile": {
+      "class": "PlotTile"
+    }
+  },
+  {
+    "key": "plot",
+    "level_needed": 5,
+    "population_needed": 85,
+    "size": "1x1",
+    "tile": {
+      "class": "PlotTile"
+    }
+  }
+]

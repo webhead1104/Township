@@ -36,6 +36,7 @@
     "key": "farming",
     "menu_title": "Farming",
     "buildings": [
+      "plot",
       "cowshed",
       "chicken_coop"
     ]
