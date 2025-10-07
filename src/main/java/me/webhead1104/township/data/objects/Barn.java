@@ -18,7 +18,6 @@ public class Barn {
     private BarnUpgrade barnUpgrade = new BarnUpgrade(1, 2, 70);
 
     public Barn() {
-        //fixme
         for (ItemType.Item type : ItemType.values()) {
             if (type.equals(Township.noneKey)) continue;
             if (type.equals(Township.key("cow_feed"))) {
@@ -39,9 +38,7 @@ public class Barn {
             }
             if (type.equals(Township.key("hammer"))) {
                 itemMap.put(type.getKey(), 20);
-                continue;
             }
-            itemMap.put(type.getKey(), 0);
         }
     }
 
@@ -50,6 +47,7 @@ public class Barn {
     }
 
     public int getItem(Key key) {
+        remov0Item(key);
         return itemMap.getOrDefault(key, 0);
     }
 
@@ -59,6 +57,7 @@ public class Barn {
 
     public void setItem(Key key, int value) {
         itemMap.put(key, value);
+        remov0Item(key);
     }
 
     public void addAmountToItem(ItemType.Item item, int amount) {
@@ -67,6 +66,7 @@ public class Barn {
 
     public void addAmountToItem(Key key, int amount) {
         itemMap.put(key, getItem(key) + amount);
+        remov0Item(key);
     }
 
     public void removeAmountFromItem(ItemType.Item item, int amount) {
@@ -75,6 +75,14 @@ public class Barn {
 
     public void removeAmountFromItem(Key key, int amount) {
         itemMap.put(key, getItem(key) - amount);
+        remov0Item(key);
+    }
+
+    private void remov0Item(Key key) {
+        if (!itemMap.containsKey(key)) return;
+        if (itemMap.get(key) <= 0) {
+            itemMap.remove(key);
+        }
     }
 
     public int getStorage() {
