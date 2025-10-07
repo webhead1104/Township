@@ -42,7 +42,7 @@ public class BuildingType implements DataLoader {
 
     public static List<Building> get(Key key) {
         if (!values.containsKey(key)) {
-            throw new RuntimeException("Building does not exist! key:" + key.asString());
+            throw new RuntimeException("Building does not exist! key: " + key.asString());
         }
         return values.get(key);
     }
@@ -91,7 +91,7 @@ public class BuildingType implements DataLoader {
                 values.put(buildings.getFirst().key(), buildings);
             }
         } catch (Exception e) {
-            throw new RuntimeException("An error occurred whilst loading factories! Please report the following stacktrace to Webhead1104:", e);
+            throw new RuntimeException("An error occurred whilst loading building types! Please report the following stacktrace to Webhead1104:", e);
         }
         Township.logger.info("Loaded {} buildings in {} ms!", values.size(), stopwatch.elapsed().toMillis());
     }
