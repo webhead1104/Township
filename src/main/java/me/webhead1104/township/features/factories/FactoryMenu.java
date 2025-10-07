@@ -46,9 +46,7 @@ public class FactoryMenu extends TownshipView {
     public void onOpen(@NotNull OpenContext context) {
         FactoryType.Factory factory = this.factoryState.get(context);
         context.modifyConfig().title(factory.getMenuTitle());
-        Player player = context.getPlayer();
-        player.getInventory().clear();
-        player.setItemOnCursor(ItemStack.empty());
+        super.onOpen(context);
     }
 
     @Override

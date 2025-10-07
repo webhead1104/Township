@@ -3,7 +3,6 @@ package me.webhead1104.township.features.world;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
-import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.webhead1104.township.Township;
@@ -29,12 +28,6 @@ public class ConfirmCloseMenu extends TownshipView {
     }
 
     @Override
-    public void onOpen(@NotNull OpenContext context) {
-        context.getPlayer().getInventory().clear();
-        context.getPlayer().setItemOnCursor(ItemStack.empty());
-    }
-
-    @Override
     public void onFirstRender(@NotNull RenderContext context) {
         context.slot(4).onRender(slotRenderContext -> {
             ItemStack itemStack = ItemStack.of(Material.RED_CONCRETE);
@@ -44,10 +37,10 @@ public class ConfirmCloseMenu extends TownshipView {
                     Msg.format("<green>Or if don't want to close township hit the Esc key or click the back button!"))));
             slotRenderContext.setItem(itemStack);
         }).onClick(slotClickContext -> {
-            Player player = slotClickContext.getPlayer();
-            Township.getDatabase().setData(Township.getUserManager().getUser(player.getUniqueId()));
+            Township.getDatabase().setData(userState.get(slotClickContext));
             context.closeForEveryone();
             openBackMenu.set(false, slotClickContext);
+            Player player = slotClickContext.getPlayer();
             if (Township.getInventoryManager().getPlayerInventory(player.getUniqueId()).isPresent()) {
                 Township.getInventoryManager().returnItemsToPlayer(player);
             }

@@ -6,7 +6,6 @@ import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.state.State;
-import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Animals;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.features.world.WorldMenu;
@@ -14,7 +13,6 @@ import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
 import net.kyori.adventure.key.Key;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +22,6 @@ import java.util.List;
 public class AnimalMenu extends TownshipView {
     private final State<Key> keyState = initialState();
     private final State<AnimalType.Animal> animalState = computedState(context -> AnimalType.get(keyState.get(context)));
-    private final State<User> userState = computedState(context -> Township.getUserManager().getUser(context.getPlayer().getUniqueId()));
 
     public AnimalMenu() {
         super(WorldMenu.class);
@@ -41,9 +38,7 @@ public class AnimalMenu extends TownshipView {
     public void onOpen(@NotNull OpenContext context) {
         AnimalType.Animal animal = animalState.get(context);
         context.modifyConfig().title(animal.getMenuTitle());
-        Player player = context.getPlayer();
-        player.getInventory().clear();
-        player.setItemOnCursor(ItemStack.empty());
+        super.onOpen(context);
     }
 
     @Override

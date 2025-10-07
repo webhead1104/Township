@@ -4,7 +4,6 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.CloseContext;
-import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
@@ -41,12 +40,6 @@ public class PlotMenu extends TownshipView {
         config.cancelInteractions();
         config.size(6);
         config.title(Msg.format("Plot Menu"));
-    }
-
-    @Override
-    public void onOpen(@NotNull OpenContext context) {
-        context.getPlayer().getInventory().clear();
-        context.getPlayer().setItemOnCursor(ItemStack.empty());
     }
 
     @Override

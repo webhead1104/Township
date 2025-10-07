@@ -44,8 +44,7 @@ public class TrainMenu extends TownshipView {
             context.setCancelled(true);
             return;
         }
-        context.getPlayer().getInventory().clear();
-        context.getPlayer().setItemOnCursor(ItemStack.empty());
+        super.onOpen(context);
     }
 
     @Override

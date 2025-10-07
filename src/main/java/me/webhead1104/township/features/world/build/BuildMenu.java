@@ -2,7 +2,6 @@ package me.webhead1104.township.features.world.build;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
-import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.webhead1104.township.dataLoaders.BuildMenuType;
 import me.webhead1104.township.features.world.WorldMenu;
@@ -23,11 +22,6 @@ public class BuildMenu extends TownshipView {
         config.cancelInteractions();
         config.size(18);
         config.title("Build Menu");
-    }
-
-    @Override
-    public void onOpen(@NotNull OpenContext context) {
-        context.getPlayer().getInventory().clear();
     }
 
     @Override

@@ -5,7 +5,6 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.component.Pagination;
-import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
@@ -32,7 +31,6 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
     private final State<BuildMenuType.BuildMenu> typeState = computedState(context -> BuildMenuType.get(keyState.get(context)));
     private final State<Pagination> paginationState = buildComputedPaginationState(context -> typeState.get(context).getBuildings()).elementFactory((context, builder, index, buildingType) -> {
         BuildingType.Building building = BuildingType.getNextBuilding(context.getPlayer(), buildingType);
-        User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
         if (building == null) {
             ItemStack itemStack = new ItemStack(Material.BARRIER);
             itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<red>You have purchased the max amount of this building!"));
@@ -42,7 +40,7 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
 
         ItemStack itemStack = building.getItemStack(context.getPlayer());
         List<Component> components = new ArrayList<>(Objects.requireNonNull(itemStack.getData(DataComponentTypes.LORE)).lines());
-        components.set(1, Msg.format("<green>%s/%s purchased", user.getPurchasedBuildings().amountPurchased(buildingType), BuildingType.get(buildingType).size()));
+        components.set(1, Msg.format("<green>%s/%s purchased", userState.get(context).getPurchasedBuildings().amountPurchased(buildingType), BuildingType.get(buildingType).size()));
         itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(components));
         builder.withItem(itemStack);
         builder.onClick(slotClickContext -> {
@@ -54,15 +52,15 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
                         "START_SECTION", startSection,
                         "TITLE", Msg.format("Place building"),
                         "ON_PLACE", (PlaceMenu.PlaceAction) (ctx, section, anchor) -> {
-                            User u = Township.getUserManager().getUser(ctx.getPlayer().getUniqueId());
+                            User user = userState.get(ctx);
                             for (Integer s : building.getSize().toList(anchor)) {
-                                u.getWorld().getSection(section).setSlot(s, building.getTile());
+                                user.getWorld().getSection(section).setSlot(s, building.getTile());
                             }
-                            u.getPurchasedBuildings().getPurchasedBuilding(buildingType, building.getSlot()).ifPresent(pb -> {
+                            user.getPurchasedBuildings().getPurchasedBuilding(buildingType, building.getSlot()).ifPresent(pb -> {
                                 pb.setPlaced(true);
                                 pb.setSection(section);
                             });
-                            u.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
+                            user.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
                             ctx.openForPlayer(WorldMenu.class, section);
                         },
                         "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type)
@@ -70,6 +68,7 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
                 openBackMenu.set(false, slotClickContext);
                 return;
             }
+            User user = userState.get(slotClickContext);
             if (building.getPrice().has(slotClickContext.getPlayer()) && user.getLevel() >= building.getLevelNeeded() && user.getPopulation() >= building.getPopulationNeeded()) {
                 building.getPrice().take(slotClickContext.getPlayer());
                 user.getPurchasedBuildings().purchase(buildingType, building.getSlot());
@@ -106,12 +105,7 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
         config.layout(
                 "<BBBBBBB>",
                 "b********");
-        initalData = null;
-    }
-
-    @Override
-    public void onOpen(@NotNull OpenContext context) {
-        context.getPlayer().getInventory().clear();
+        initialData = null;
     }
 
     @Override

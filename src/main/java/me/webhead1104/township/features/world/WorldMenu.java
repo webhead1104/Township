@@ -42,14 +42,13 @@ public class WorldMenu extends TownshipView {
         config.cancelInteractions();
         config.size(6);
         config.title(Msg.format("World Menu"));
-        initalData = null;
+        initialData = null;
     }
 
     @Override
     public void onOpen(@NotNull OpenContext context) {
-        context.getPlayer().getInventory().clear();
-        context.getPlayer().setItemOnCursor(ItemStack.empty());
         Township.getUserManager().getUser(context.getPlayer().getUniqueId()).setSection(sectionState.get(context));
+        super.onOpen(context);
     }
 
     @Override
