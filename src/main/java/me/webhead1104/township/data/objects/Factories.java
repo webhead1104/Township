@@ -19,7 +19,7 @@ public class Factories {
 
     public Factories() {
         for (FactoryType.Factory value : FactoryType.factoryValues()) {
-            factoryBuildings.put(value.getKey(), new Factory());
+            factoryBuildings.put(value.key(), new Factory());
         }
     }
 

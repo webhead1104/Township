@@ -86,7 +86,7 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
                             });
                             u.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
                             ctx.openForPlayer(WorldMenu.class, section);
-                        }, "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type.getKey())));
+                        }, "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type.key())));
                 openBackMenu.set(false, slotClickContext);
             }
         });

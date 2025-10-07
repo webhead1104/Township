@@ -21,29 +21,29 @@ public class Barn {
         for (ItemType.Item type : ItemType.values()) {
             if (type.equals(Township.noneKey)) continue;
             if (type.equals(Township.key("cow_feed"))) {
-                itemMap.put(type.getKey(), 12);
+                itemMap.put(type.key(), 12);
                 continue;
             }
             if (type.equals(Township.key("chicken_feed"))) {
-                itemMap.put(type.getKey(), 12);
+                itemMap.put(type.key(), 12);
                 continue;
             }
             if (type.equals(Township.key("paint"))) {
-                itemMap.put(type.getKey(), 20);
+                itemMap.put(type.key(), 20);
                 continue;
             }
             if (type.equals(Township.key("nail"))) {
-                itemMap.put(type.getKey(), 20);
+                itemMap.put(type.key(), 20);
                 continue;
             }
             if (type.equals(Township.key("hammer"))) {
-                itemMap.put(type.getKey(), 20);
+                itemMap.put(type.key(), 20);
             }
         }
     }
 
     public int getItem(ItemType.Item item) {
-        return getItem(item.getKey());
+        return getItem(item.key());
     }
 
     public int getItem(Key key) {
@@ -52,7 +52,7 @@ public class Barn {
     }
 
     public void setItem(ItemType.Item item, int amount) {
-        setItem(item.getKey(), amount);
+        setItem(item.key(), amount);
     }
 
     public void setItem(Key key, int value) {
@@ -61,7 +61,7 @@ public class Barn {
     }
 
     public void addAmountToItem(ItemType.Item item, int amount) {
-        addAmountToItem(item.getKey(), amount);
+        addAmountToItem(item.key(), amount);
     }
 
     public void addAmountToItem(Key key, int amount) {
@@ -70,7 +70,7 @@ public class Barn {
     }
 
     public void removeAmountFromItem(ItemType.Item item, int amount) {
-        removeAmountFromItem(item.getKey(), amount);
+        removeAmountFromItem(item.key(), amount);
     }
 
     public void removeAmountFromItem(Key key, int amount) {

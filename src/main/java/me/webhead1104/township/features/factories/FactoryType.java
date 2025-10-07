@@ -1,5 +1,6 @@
 package me.webhead1104.township.features.factories;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
@@ -9,8 +10,10 @@ import me.webhead1104.township.dataLoaders.ItemType;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
@@ -46,7 +49,7 @@ public class FactoryType implements DataLoader {
             List<Factory> factories = new ArrayList<>(getListFromMultipleFiles("/data/factories", Factory.class));
             List<Recipe> recipes = new ArrayList<>();
             for (Factory factory : factories) {
-                FactoryType.factories.put(factory.getKey(), factory);
+                FactoryType.factories.put(factory.key(), factory);
                 recipes.addAll(factory.getRecipes());
             }
 
@@ -68,8 +71,9 @@ public class FactoryType implements DataLoader {
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
-    public static class Factory {
+    public static class Factory implements Keyed {
         @Setting("key")
+        @Getter(value = AccessLevel.NONE)
         private Key key;
         @Setting("name")
         private String name;
@@ -88,6 +92,11 @@ public class FactoryType implements DataLoader {
             if (menuTitle == null) {
                 menuTitle = Msg.format("<gold>%s", name);
             }
+        }
+
+        @Override
+        public @NotNull Key key() {
+            return key;
         }
 
         public boolean equals(Key key) {

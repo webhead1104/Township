@@ -24,7 +24,7 @@ public class Animals {
             for (int i = 0; i < 6; i++) {
                 animalBuildings.put(i, new AnimalBuilding.Animal(false, false, i < 3, Instant.EPOCH));
             }
-            this.animalBuildings.put(animal.getKey(), new AnimalBuilding(animalBuildings));
+            this.animalBuildings.put(animal.key(), new AnimalBuilding(animalBuildings));
         }
     }
 

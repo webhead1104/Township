@@ -1,10 +1,13 @@
 package me.webhead1104.township.dataLoaders;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
@@ -29,7 +32,7 @@ public class BuildMenuType implements DataLoader {
         try {
             List<BuildMenu> list = getListFromFile("/data/buildMenuTypes.json", BuildMenu.class);
             for (BuildMenu buildMenu : list) {
-                values.put(buildMenu.getKey(), buildMenu);
+                values.put(buildMenu.key(), buildMenu);
             }
             Township.logger.info("Loaded {} build menus!", values.size());
         } catch (Exception e) {
@@ -42,12 +45,18 @@ public class BuildMenuType implements DataLoader {
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
-    public static final class BuildMenu {
+    public static final class BuildMenu implements Keyed {
         @Setting("key")
+        @Getter(value = AccessLevel.NONE)
         private Key key;
         @Setting("menu_title")
         private Component menuTitle;
         @Setting("buildings")
         private List<Key> buildings;
+
+        @Override
+        public @NotNull Key key() {
+            return key;
+        }
     }
 }

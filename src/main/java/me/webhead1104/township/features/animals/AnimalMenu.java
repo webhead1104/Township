@@ -48,7 +48,7 @@ public class AnimalMenu extends TownshipView {
         AnimalType.Animal animalType = animalState.get(context);
         int slot = 11;
         for (int i = 0; i < 6; ++i) {
-            Animals.AnimalBuilding.Animal animal = animals.getAnimalBuilding(animalType.getKey()).getAnimal(i);
+            Animals.AnimalBuilding.Animal animal = animals.getAnimalBuilding(animalType.key()).getAnimal(i);
             context.slot(slot).onUpdate(slotContext -> {
                 if (!animal.getInstant().equals(Instant.EPOCH) && Instant.now().isAfter(animal.getInstant().minusSeconds(1))) {
                     animal.setFeed(false);
@@ -80,7 +80,7 @@ public class AnimalMenu extends TownshipView {
         }).onClick(slotClickContext -> {
             if (user.getBarn().getItem(animalType.getFeedKey()) >= 1) {
                 for (int i = 0; i < 6; ++i) {
-                    Animals.AnimalBuilding.Animal animal = animals.getAnimalBuilding(animalType.getKey()).getAnimal(i);
+                    Animals.AnimalBuilding.Animal animal = animals.getAnimalBuilding(animalType.key()).getAnimal(i);
                     if (!animal.isFeed() && !animal.isProduct() && user.getBarn().getItem(animalType.getFeedKey()) >= 1) {
                         animal.setFeed(true);
                         animal.setInstant(Instant.now().plusSeconds(animalType.getTime().getSeconds()));

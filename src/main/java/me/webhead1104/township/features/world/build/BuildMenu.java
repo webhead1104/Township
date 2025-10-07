@@ -34,7 +34,7 @@ public class BuildMenu extends TownshipView {
                 itemStack.setData(DataComponentTypes.RARITY, ItemRarity.COMMON);
                 slotRenderContext.setItem(itemStack);
             }).onClick(slotClickContext -> {
-                slotClickContext.openForPlayer(BuildMenuSelectBuildingMenu.class, buildMenu.getKey());
+                slotClickContext.openForPlayer(BuildMenuSelectBuildingMenu.class, buildMenu.key());
                 openBackMenu.set(false, slotClickContext);
             });
         }

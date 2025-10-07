@@ -3,6 +3,7 @@ package me.webhead1104.township.dataLoaders;
 import com.google.common.base.Stopwatch;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
@@ -17,6 +18,7 @@ import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -82,11 +84,11 @@ public class BuildingType implements DataLoader {
                 for (Building building : buildings) {
                     building.slot = i++;
                     if (building.getTile() instanceof BuildingTile buildingTile) {
-                        buildingTile.setBuildingType(building.getKey());
+                        buildingTile.setBuildingType(building.key());
                         buildingTile.setBuildingSlot(building.getSlot());
                     }
                 }
-                values.put(buildings.getFirst().getKey(), buildings);
+                values.put(buildings.getFirst().key(), buildings);
             }
         } catch (Exception e) {
             throw new RuntimeException("An error occurred whilst loading factories! Please report the following stacktrace to Webhead1104:", e);
@@ -97,9 +99,10 @@ public class BuildingType implements DataLoader {
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
-    public static final class Building {
+    public static final class Building implements Keyed {
         @NotNull
         @Setting("key")
+        @Getter(value = AccessLevel.NONE)
         private Key key;
         @Setting("level_needed")
         private int levelNeeded;
@@ -136,6 +139,11 @@ public class BuildingType implements DataLoader {
             if (price == null) {
                 price = new NoopPrice();
             }
+        }
+
+        @Override
+        public @NotNull Key key() {
+            return key;
         }
 
         public ItemStack getItemStack(Player player) {

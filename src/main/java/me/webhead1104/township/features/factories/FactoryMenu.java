@@ -54,7 +54,7 @@ public class FactoryMenu extends TownshipView {
         Player player = context.getPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());
         FactoryType.Factory factoryData = this.factoryState.get(context);
-        Factories.Factory factory = user.getFactories().getFactory(factoryData.getKey());
+        Factories.Factory factory = user.getFactories().getFactory(factoryData.key());
 
         int recipeSlot = 45;
         for (FactoryType.Recipe recipe : factoryData.getRecipes()) {
@@ -96,7 +96,7 @@ public class FactoryMenu extends TownshipView {
             if (!factory.getInstant().equals(Instant.EPOCH) && Instant.now().isAfter(factory.getInstant().minusSeconds(1))) {
                 factory.setInstant(Instant.EPOCH);
                 if (factory.canAddCompleted()) {
-                    factory.addCompleted(factory.getWorkingOn().getResult().getKey());
+                    factory.addCompleted(factory.getWorkingOn().getResult().key());
                     factory.setWorkingOn(Township.noneKey);
                     if (factory.hasWaiting()) {
                         FactoryType.Recipe recipe = factory.removeFirstWaiting();
@@ -145,7 +145,7 @@ public class FactoryMenu extends TownshipView {
                 user.addXp(factory.getCompleted(finalI).getXpGiven());
                 factory.setCompleted(finalI, Township.noneKey);
                 if (factory.getInstant().equals(Instant.EPOCH) && !factory.getWorkingOn().equals(Township.noneKey)) {
-                    factory.addCompleted(factory.getWorkingOn().getResult().getKey());
+                    factory.addCompleted(factory.getWorkingOn().getResult().key());
                     factory.setWorkingOn(Township.noneKey);
                     if (factory.hasWaiting()) {
                         FactoryType.Recipe recipe = factory.removeFirstWaiting();

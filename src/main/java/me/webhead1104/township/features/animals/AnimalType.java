@@ -1,5 +1,6 @@
 package me.webhead1104.township.features.animals;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
@@ -8,9 +9,11 @@ import me.webhead1104.township.dataLoaders.ItemType;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
@@ -38,7 +41,7 @@ public class AnimalType implements DataLoader {
             List<Animal> list = getListFromFile("/data/animals.json", Animal.class);
             for (Animal animal : list) {
                 animal.postProcess();
-                values.put(animal.getKey(), animal);
+                values.put(animal.key(), animal);
             }
             Township.logger.info("Loaded {} animals!", values.size());
         } catch (Exception e) {
@@ -49,8 +52,9 @@ public class AnimalType implements DataLoader {
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
-    public static class Animal {
+    public static class Animal implements Keyed {
         @Setting("key")
+        @Getter(value = AccessLevel.NONE)
         private Key key;
         @Setting("name")
         private String name;
@@ -78,6 +82,11 @@ public class AnimalType implements DataLoader {
             this.feed = ItemType.get(feedKey);
             this.product = ItemType.get(productKey);
             this.menuTitle = Msg.format("<gold>%s", name);
+        }
+
+        @Override
+        public @NotNull Key key() {
+            return key;
         }
 
         public ItemStack getItemStack() {

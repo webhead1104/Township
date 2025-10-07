@@ -1,12 +1,15 @@
 package me.webhead1104.township.dataLoaders;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.utils.Utils;
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.Keyed;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
@@ -33,7 +36,7 @@ public class ItemType implements DataLoader {
             List<Item> list = getListFromFile("/data/items.json", Item.class);
             for (Item item : list) {
                 item.postProcess();
-                values.put(item.getKey(), item);
+                values.put(item.key(), item);
             }
             Township.logger.info("Loaded {} items!", values.size());
         } catch (Exception e) {
@@ -44,8 +47,9 @@ public class ItemType implements DataLoader {
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
-    public static class Item {
+    public static class Item implements Keyed {
         @Setting("key")
+        @Getter(value = AccessLevel.NONE)
         private Key key;
         @Setting("material")
         private Material material;
@@ -67,6 +71,11 @@ public class ItemType implements DataLoader {
 
         public boolean equals(Key key) {
             return Objects.equals(this.key, key);
+        }
+
+        @Override
+        public @NotNull Key key() {
+            return key;
         }
     }
 }
