@@ -4,7 +4,7 @@ import com.google.errorprone.annotations.Keep;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 @Keep
-public class UserVersion9 implements DataVersion {
+public final class UserVersion9 implements DataVersion {
     @Override
     public ConfigurationTransformation getTransformation() {
         return (rootNode) -> rootNode.node("barn", "item-map").childrenMap().forEach((key, value) -> {
