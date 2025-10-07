@@ -91,6 +91,7 @@ public class WorldEditMenu extends TownshipView {
     }
 
     private boolean handleTileClick(SlotClickContext context, Tile tile) {
+        if (tile.isImmovable()) return false;
         if (!(tile instanceof BuildingTile buildingTile)) {
             return false;
         }

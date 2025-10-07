@@ -36,4 +36,9 @@ public class TrainTile extends BuildingTile {
         }
         return false;
     }
+
+    @Override
+    public boolean isImmovable() {
+        return true;
+    }
 }
