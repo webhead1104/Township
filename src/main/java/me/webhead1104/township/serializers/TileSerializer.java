@@ -187,7 +187,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
         } catch (ClassNotFoundException e) {
             throw new SerializationException("Could not find class: " + className);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new SerializationException("Could not create instance of class: " + className + ". Cause: " + e.getCause());
+            throw new SerializationException(Tile.class, "Could not create instance of class: " + className + ". Cause: " + e.getCause(), e);
         } catch (Exception e) {
             throw new SerializationException("Error deserializing Tile: " + e.getMessage());
         }
