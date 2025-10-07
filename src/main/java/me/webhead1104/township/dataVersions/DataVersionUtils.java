@@ -12,15 +12,12 @@ import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @UtilityClass
 public class DataVersionUtils {
 
-    public static ConfigurationTransformation replaceBuilding(Tile tile, int tileAmount) {
+    public static ConfigurationTransformation replaceBuilding(Tile tile) {
         return (rootNode) -> {
-            AtomicInteger replacedCount = new AtomicInteger(0);
-
             ConfigurationNode worldMapNode = rootNode.node("world", "world-map");
             worldMapNode.childrenMap().forEach((sectionKey, sectionNode) -> {
                 ConfigurationNode slotMapNode = sectionNode.node("slot-map");
@@ -29,17 +26,12 @@ public class DataVersionUtils {
                     try {
                         if (tile.equals(slotNode.get(Tile.class))) {
                             new TileSerializer().serialize(Tile.class, StaticWorldTile.Type.GRASS.getTile(), slotNode);
-                            replacedCount.incrementAndGet();
                         }
                     } catch (SerializationException e) {
                         throw new RuntimeException(e);
                     }
                 });
             });
-
-            if (replacedCount.get() != tileAmount) {
-                throw new RuntimeException("Expected to replace " + tileAmount + " tiles but replaced " + replacedCount.get());
-            }
         };
     }
 
