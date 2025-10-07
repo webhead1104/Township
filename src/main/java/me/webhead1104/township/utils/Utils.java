@@ -1,7 +1,7 @@
 package me.webhead1104.township.utils;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import java.time.Duration;
 import java.time.Instant;
 
-@NoArgsConstructor
+@UtilityClass
 public class Utils {
 
     public static String thing2(String string) {
