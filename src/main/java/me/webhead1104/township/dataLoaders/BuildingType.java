@@ -165,12 +165,14 @@ public class BuildingType implements DataLoader {
                 lore.add(Msg.format("<white>Something happened when you tried to place this."));
                 lore.add(Msg.format("<white>So you can try and place it again!"));
             } else {
-                if (Township.getUserManager().getUser(player.getUniqueId()).getLevel() >= levelNeeded) {
-                    lore.add(Component.empty());
-                    lore.add(Msg.format("<blue>Level needed<white>: <green>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getLevel(), levelNeeded));
-                } else {
-                    lore.add(Component.empty());
-                    lore.add(Msg.format("<blue>Level needed<white>: <red>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getLevel(), levelNeeded));
+                if (levelNeeded > 0) {
+                    if (Township.getUserManager().getUser(player.getUniqueId()).getLevel() >= levelNeeded) {
+                        lore.add(Component.empty());
+                        lore.add(Msg.format("<blue>Level needed<white>: <green>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getLevel(), levelNeeded));
+                    } else {
+                        lore.add(Component.empty());
+                        lore.add(Msg.format("<blue>Level needed<white>: <red>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getLevel(), levelNeeded));
+                    }
                 }
                 if (populationNeeded > 0) {
                     lore.add(Component.empty());
