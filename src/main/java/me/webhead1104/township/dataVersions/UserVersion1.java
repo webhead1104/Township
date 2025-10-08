@@ -2,7 +2,6 @@ package me.webhead1104.township.dataVersions;
 
 import com.google.errorprone.annotations.Keep;
 import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.NodePath;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
@@ -33,11 +32,7 @@ public final class UserVersion1 implements DataVersion {
 
     @Override
     public ConfigurationTransformation getTransformation() {
-        return ConfigurationTransformation.builder()
-                .addAction(NodePath.path(), (path, node) -> {
-                    injectInstantInPlotTiles(node);
-                    return null;
-                }).build();
+        return UserVersion1::injectInstantInPlotTiles;
     }
 
     @Override

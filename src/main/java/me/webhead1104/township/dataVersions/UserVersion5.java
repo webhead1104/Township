@@ -9,15 +9,13 @@ import static org.spongepowered.configurate.NodePath.path;
 public final class UserVersion5 implements DataVersion {
     @Override
     public ConfigurationTransformation getTransformation() {
-        return ConfigurationTransformation.builder()
-                .addAction(path("animals", "animal-buildings"), (key, node) -> {
-                    node.childrenMap().forEach((buildingKey, buildingNode) -> buildingNode.node("unlocked").raw(null));
-                    return null;
-                }).addAction(path("factories", "factory-buildings"), (key, node) -> {
-                    node.childrenMap().forEach((buildingKey, buildingNode) -> buildingNode.node("unlocked").raw(null));
-                    return null;
-                })
-                .build();
+        return ConfigurationTransformation.chain(
+                node ->
+                        node.node(path("animals", "animal-buildings")).childrenMap().forEach((buildingKey, buildingNode) ->
+                                buildingNode.node("unlocked").raw(null)),
+
+                node -> node.node(path("factories", "factory-buildings")).childrenMap()
+                        .forEach((buildingKey, buildingNode) -> buildingNode.node("unlocked").raw(null)));
     }
 
     @Override

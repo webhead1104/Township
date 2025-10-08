@@ -17,6 +17,9 @@ public class PriceSerializer implements TypeSerializer<Price> {
         if (node.node("type").virtual()) {
             throw new SerializationException("Cannot deserialize Price");
         }
+        if (node.node("type").getString() == null) {
+            throw new RuntimeException("Price not found!");
+        }
         if (node.node("type").getString().equals("coin")) {
             return new CoinPrice(node.node("amount").getInt());
         }

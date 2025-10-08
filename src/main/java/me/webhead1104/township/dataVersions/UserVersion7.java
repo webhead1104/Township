@@ -12,24 +12,18 @@ import static org.spongepowered.configurate.NodePath.path;
 public final class UserVersion7 implements DataVersion {
     @Override
     public ConfigurationTransformation getTransformation() {
-        return ConfigurationTransformation.builder()
-                .addAction(path("world", "world-map"), (worldPath, worldNode) -> {
-                    worldNode.childrenMap().forEach((sectionKey, sectionNode) -> {
-                        sectionNode.node("slot-map").childrenMap().forEach((slotKey, slotNode) -> {
-                            ConfigurationNode propertiesNode = slotNode.node("properties");
-                            if (slotNode.node("class").getString().equals("StaticWorldTile")) {
-                                ConfigurationNode materialNode = propertiesNode.node("material");
-                                try {
-                                    materialNode.set(Key.key(materialNode.getString().toLowerCase()));
-                                } catch (SerializationException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        });
-                    });
-                    return null;
-                })
-                .build();
+        return node -> node.node(path("world", "world-map")).childrenMap().forEach((sectionKey, sectionNode) ->
+                sectionNode.node("slot-map").childrenMap().forEach((slotKey, slotNode) -> {
+                    ConfigurationNode propertiesNode = slotNode.node("properties");
+                    if (slotNode.node("class").getString("unknown class").equals("StaticWorldTile")) {
+                        ConfigurationNode materialNode = propertiesNode.node("material");
+                        try {
+                            materialNode.set(Key.key(materialNode.getString().toLowerCase()));
+                        } catch (SerializationException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }));
     }
 
     @Override

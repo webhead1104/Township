@@ -3,7 +3,6 @@ package me.webhead1104.township.dataLoaders;
 import com.google.common.base.Stopwatch;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.Resource;
-import io.github.classgraph.ResourceList;
 import io.github.classgraph.ScanResult;
 import me.webhead1104.township.Township;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -39,10 +38,7 @@ public interface DataLoader {
         String searchPath = path.startsWith("/") ? path.substring(1) : path;
 
         try (ScanResult scanResult = new ClassGraph().acceptPaths(searchPath).scan()) {
-
-            ResourceList resources = scanResult.getResourcesWithExtension("json");
-
-            for (Resource resource : resources) {
+            for (Resource resource : scanResult.getResourcesWithExtension("json")) {
                 String resourcePath = "/" + resource.getPath();
                 Township.logger.debug("Loading file: {}", resourcePath);
                 list.add(getNodeFromFile(resourcePath));
@@ -60,8 +56,8 @@ public interface DataLoader {
         }
         try {
             List<T> result = node.getList(clazz);
-            if (result.isEmpty()) {
-                throw new RuntimeException("List is empty for path `" + path + "`!");
+            if (result == null || result.isEmpty()) {
+                throw new RuntimeException("List is null or empty for path `" + path + "`!");
             }
             Township.logger.debug(
                     "Took {} to load list from path `{}`",
@@ -76,8 +72,8 @@ public interface DataLoader {
     default <T> List<T> getListFromMultipleFiles(String path, Class<T> clazz) {
         Stopwatch stopwatch = Stopwatch.createStarted();
         List<ConfigurationNode> nodes = getNodesFromMultipleFiles(path);
-        if (nodes.isEmpty()) {
-            throw new RuntimeException("List of nodes is empty!");
+        if (nodes == null || nodes.isEmpty()) {
+            throw new RuntimeException("List of nodes is null or empty!");
         }
         try {
             List<T> results = new ArrayList<>();
