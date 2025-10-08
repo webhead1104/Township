@@ -1,7 +1,7 @@
 {
   "key": "dairy_factory",
   "building_key": "dairy_factory",
-  "ingredients": [
+  "recipes": [
     {
       "key": "cream",
       "material": "minecraft:player_head",

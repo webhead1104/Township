@@ -1,7 +1,7 @@
 {
   "key": "sugar_factory",
   "building_key": "sugar_factory",
-  "ingredients": [
+  "recipes": [
     {
       "key": "sugar",
       "material": "minecraft:sugar",
