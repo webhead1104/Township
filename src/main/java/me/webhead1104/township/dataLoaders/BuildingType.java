@@ -81,6 +81,9 @@ public class BuildingType implements DataLoader {
                 }
 
                 List<Building> buildings = node.getList(Building.class);
+                if (buildings == null) {
+                    throw new NullPointerException("List is empty!");
+                }
                 int i = 0;
                 for (Building building : buildings) {
                     building.slot = i++;
@@ -186,6 +189,9 @@ public class BuildingType implements DataLoader {
                 }
             }
             lore.add(Component.empty());
+            if (price == null) {
+                throw new NullPointerException("Price is null");
+            }
             lore.add(price.getComponent(player));
 
             itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
