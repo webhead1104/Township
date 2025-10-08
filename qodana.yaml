@@ -11,7 +11,7 @@ version: "1.0"
 
 projectJDK: "21"
 profile:
-  name: qodana.starter
+  name: qodana.recommended
 linter: jetbrains/qodana-jvm-community:2025.2
 
 #Disable inspections
