@@ -13,7 +13,3 @@ projectJDK: "21"
 profile:
   name: qodana.recommended
 linter: jetbrains/qodana-jvm-community:2025.2
-
-#Disable inspections
-exclude:
-  - name: UnstableApiUsage
