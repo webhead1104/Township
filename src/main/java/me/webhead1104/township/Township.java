@@ -40,12 +40,7 @@ public class Township extends JavaPlugin {
         builder.register(Component.class, new ComponentSerializer());
         builder.register(Price.class, new PriceSerializer());
         builder.register(TileSize.class, new TileSizeSerializer());
-        builder.register(t -> {
-            if (t instanceof Class<?> clazz) {
-                return clazz == Tile.class || Tile.class.isAssignableFrom(clazz);
-            }
-            return false;
-        }, new TileSerializer());
+        builder.register(Tile.class, new TileSerializer());
     }));
     public static final Key noneKey = key("none");
     public static Logger logger;
