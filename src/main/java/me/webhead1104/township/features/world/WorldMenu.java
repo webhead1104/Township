@@ -94,7 +94,7 @@ public class WorldMenu extends TownshipView {
                                                     pb.setPlaced(true);
                                                     pb.setSection(newSection);
                                                 });
-                                                uu.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
+                                                uu.recalculatePopulation();
                                                 ctx.openForPlayer(WorldMenu.class, newSection);
                                             },
                                             "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> {

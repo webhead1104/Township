@@ -4,14 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import me.webhead1104.township.Township;
 import me.webhead1104.township.dataLoaders.BuildingType;
 import net.kyori.adventure.key.Key;
-import org.bukkit.entity.Player;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
 @ConfigSerializable
@@ -60,18 +57,6 @@ public class PurchasedBuildings {
     public Optional<PurchasedBuilding> getPurchasedBuilding(Key buildingType, int slot) {
         if (!purchasedBuildings.containsKey(buildingType)) return Optional.empty();
         return Optional.ofNullable(purchasedBuildings.get(buildingType).get(slot));
-    }
-
-    public void recalculatePopulation(Player player) {
-        AtomicInteger population = new AtomicInteger();
-        AtomicInteger maxPopulation = new AtomicInteger();
-        purchasedBuildings.forEach((buildingType, list) -> list.forEach(value -> {
-            BuildingType.Building building = value.getBuilding();
-            population.addAndGet(building.getPopulationIncrease());
-            maxPopulation.addAndGet(building.getMaxPopulationIncrease());
-        }));
-        Township.getUserManager().getUser(player.getUniqueId()).setPopulation(population.get());
-        Township.getUserManager().getUser(player.getUniqueId()).setMaxPopulation(maxPopulation.get());
     }
 
     public record Wrapper(int slot, boolean placed) {

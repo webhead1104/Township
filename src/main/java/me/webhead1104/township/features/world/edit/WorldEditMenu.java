@@ -127,7 +127,7 @@ public class WorldEditMenu extends TownshipView {
                         pb.setPlaced(true);
                         pb.setSection(newSection);
                     });
-                    u.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
+                    u.recalculatePopulation();
                     ctx.openForPlayer(WorldMenu.class, newSection);
                 },
                 "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> {

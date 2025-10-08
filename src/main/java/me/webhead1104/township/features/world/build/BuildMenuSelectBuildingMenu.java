@@ -60,7 +60,7 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
                                 pb.setPlaced(true);
                                 pb.setSection(section);
                             });
-                            user.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
+                            user.recalculatePopulation();
                             ctx.openForPlayer(WorldMenu.class, section);
                         },
                         "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type)
@@ -84,7 +84,7 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
                                 pb.setPlaced(true);
                                 pb.setSection(section);
                             });
-                            u.getPurchasedBuildings().recalculatePopulation(ctx.getPlayer());
+                            u.recalculatePopulation();
                             ctx.openForPlayer(WorldMenu.class, section);
                         }, "ON_CANCEL", (PlaceMenu.CancelAction) cancelCtx -> Township.getViewFrame().open(BuildMenuSelectBuildingMenu.class, cancelCtx.getPlayer(), type.key())));
                 openBackMenu.set(false, slotClickContext);

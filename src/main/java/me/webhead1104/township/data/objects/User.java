@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.dataLoaders.BuildingType;
 import me.webhead1104.township.dataLoaders.LevelDataLoader;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
@@ -15,6 +16,7 @@ import java.io.BufferedWriter;
 import java.io.StringWriter;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
 @Setter
@@ -70,6 +72,7 @@ public class User {
             if (user == null) {
                 throw new IllegalStateException("An error occurred whilst deserializing a user! Please report this to Webhead1104!\n USER IS NULL!!!");
             }
+            user.recalculatePopulation();
             Township.getDatabase().setData(user);
             return user;
         } catch (Exception e) {
@@ -89,6 +92,19 @@ public class User {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void recalculatePopulation() {
+        AtomicInteger population = new AtomicInteger(60);
+        AtomicInteger maxPopulation = new AtomicInteger(60);
+        purchasedBuildings.getPurchasedBuildings().forEach((buildingType, list) ->
+                list.stream().filter(PurchasedBuildings.PurchasedBuilding::isPlaced).forEach(value -> {
+                    BuildingType.Building building = value.getBuilding();
+                    population.addAndGet(building.getPopulationIncrease());
+                    maxPopulation.addAndGet(building.getMaxPopulationIncrease());
+                }));
+        this.population = population.get();
+        this.maxPopulation = maxPopulation.get();
     }
 
     public void addXp(int amountOfXp) {
