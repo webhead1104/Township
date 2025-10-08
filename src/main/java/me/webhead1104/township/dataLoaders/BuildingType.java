@@ -137,7 +137,7 @@ public class BuildingType implements DataLoader {
         private void postProcess() {
             name = Utils.thing2(key.value());
             if (price == null) {
-                price = new NoopPrice();
+                price = NoopPrice.INSTANCE;
             }
         }
 

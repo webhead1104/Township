@@ -5,6 +5,8 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 public class NoopPrice implements Price {
+    public static final NoopPrice INSTANCE = new NoopPrice();
+
     @Override
     public void take(Player player) {
     }
