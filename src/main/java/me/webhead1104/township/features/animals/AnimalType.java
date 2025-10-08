@@ -15,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.time.Duration;
@@ -53,29 +54,38 @@ public class AnimalType implements DataLoader {
     @ConfigSerializable
     @NoArgsConstructor
     public static class Animal implements Keyed {
-        @Setting("key")
+        @Required
         @Getter(value = AccessLevel.NONE)
+        @Setting("key")
         private Key key;
+        @Required
         @Setting("name")
         private String name;
+        @Required
         @Setting("animal_name")
         private String animalName;
+        @Required
         @Setting("material")
         private Material animalMaterial;
-        private transient ItemStack animalItemStack;
+        @Required
         @Setting("feed")
         private Key feedKey;
-        private transient ItemType.Item feed;
+        @Required
         @Setting("product")
         private Key productKey;
-        private transient ItemType.Item product;
+        @Required
         @Setting("xp_claim")
         private int claimXp;
+        @Required
         @Setting("time")
         private Duration time;
+        @Required
         @Setting("building_key")
         private Key buildingKey;
         private transient Component menuTitle;
+        private transient ItemStack animalItemStack;
+        private transient ItemType.Item feed;
+        private transient ItemType.Item product;
 
         private void postProcess() {
             this.animalItemStack = Utils.getItemStack(animalName, animalMaterial);

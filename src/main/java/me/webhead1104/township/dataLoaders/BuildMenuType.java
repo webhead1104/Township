@@ -9,6 +9,7 @@ import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.util.Collection;
@@ -46,13 +47,16 @@ public class BuildMenuType implements DataLoader {
     @ConfigSerializable
     @NoArgsConstructor
     public static final class BuildMenu implements Keyed {
-        @Setting("key")
+        @Required
         @Getter(value = AccessLevel.NONE)
+        @Setting("key")
         private Key key;
-        @Setting("menu_title")
-        private Component menuTitle;
+        @Required
         @Setting("buildings")
         private List<Key> buildings;
+        @Required
+        @Setting("menu_title")
+        private Component menuTitle;
 
         @Override
         public @NotNull Key key() {

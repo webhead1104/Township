@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.util.ArrayList;
@@ -36,10 +37,13 @@ public class LevelDataLoader implements DataLoader {
     @ConfigSerializable
     @NoArgsConstructor
     public static class Level {
+        @Required
         @Setting("xp_needed")
         private int xpNeeded;
+        @Required
         @Setting("coins_given")
         private int coinsGiven;
+        @Required
         @Setting("cash_given")
         private int cashGiven;
     }

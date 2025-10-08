@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.util.*;
@@ -48,13 +49,17 @@ public class ItemType implements DataLoader {
     @ConfigSerializable
     @NoArgsConstructor
     public static class Item implements Keyed {
-        @Setting("key")
+        @Required
         @Getter(value = AccessLevel.NONE)
+        @Setting("key")
         private Key key;
+        @Required
         @Setting("material")
         private Material material;
+        @Required
         @Setting("sell_price")
         private int sellPrice;
+        @Required
         @Setting("xp_given")
         private int xpGiven;
         private transient ItemStack itemStack;

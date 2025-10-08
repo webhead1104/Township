@@ -27,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
+import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import javax.annotation.Nullable;
@@ -100,10 +101,11 @@ public class BuildingType implements DataLoader {
     @ConfigSerializable
     @NoArgsConstructor
     public static final class Building implements Keyed {
-        @NotNull
-        @Setting("key")
+        @Required
         @Getter(value = AccessLevel.NONE)
+        @Setting("key")
         private Key key;
+        @Required
         @Setting("level_needed")
         private int levelNeeded;
         @Setting("population_needed")
@@ -118,15 +120,15 @@ public class BuildingType implements DataLoader {
         @Nullable
         @Setting("construction_materials")
         private ConstructionMaterials constructionMaterials;
-        @Setting("time")
         @Nullable
+        @Setting("time")
         private Duration time;
-        @NotNull
+        @Required
         @Setting("tile")
         private Tile tile;
         @Setting("xp")
         private int xp;
-        @NotNull
+        @Required
         @Setting("size")
         private TileSize size;
         private transient int slot;

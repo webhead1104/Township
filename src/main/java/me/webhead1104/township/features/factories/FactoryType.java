@@ -14,8 +14,10 @@ import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
+import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.time.Duration;
@@ -72,15 +74,18 @@ public class FactoryType implements DataLoader {
     @ConfigSerializable
     @NoArgsConstructor
     public static class Factory implements Keyed {
-        @Setting("key")
+        @Required
         @Getter(value = AccessLevel.NONE)
+        @Setting("key")
         private Key key;
         @Setting("name")
         private String name;
+        @Required
         @Setting("recipes")
         private List<Recipe> recipes;
         @Setting("menu_title")
         private Component menuTitle;
+        @Required
         @Setting("building_key")
         private Key buildingKey;
 
@@ -109,23 +114,30 @@ public class FactoryType implements DataLoader {
     @NoArgsConstructor
     public static class Recipe {
         private final transient Map<ItemType.Item, Integer> ingredients = new HashMap<>();
+        @Required
         @Setting("key")
         private Key key;
+        @Required
         @Setting("material")
         private Material material;
+        @Nullable
         @Setting("result")
         private Key resultKey;
-        private transient ItemType.Item result;
         @Setting("result_amount")
-        private int resultAmount = 0;
+        private int resultAmount = 1;
+        @Required
         @Setting("ingredients")
         private Map<Key, Integer> ingredientKeys;
+        @Required
         @Setting("time")
         private Duration time;
+        @Required
         @Setting("level_needed")
         private int levelNeeded;
+        @Required
         @Setting("xp_given")
         private int xpGiven;
+        private transient ItemType.Item result;
 
         @PostProcess
         private void postProcess() {

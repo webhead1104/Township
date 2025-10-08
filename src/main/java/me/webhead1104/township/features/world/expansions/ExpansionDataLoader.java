@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.dataLoaders.DataLoader;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.time.Duration;
@@ -42,14 +44,19 @@ public class ExpansionDataLoader implements DataLoader {
     @NoArgsConstructor
     @ConfigSerializable
     public static class Expansion {
+        @Required
         @Setting("population_needed")
         private int populationNeeded;
+        @Required
         @Setting("coins_needed")
         private int coinsNeeded;
+        @Required
         @Setting("time")
         private Duration time;
+        @Required
         @Setting("xp")
         private int xp;
+        @Nullable
         @Setting("tools_needed")
         private ToolsNeeded toolsNeeded;
 
