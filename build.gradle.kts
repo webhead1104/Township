@@ -50,7 +50,7 @@ tasks.withType<Javadoc> {
 
 val generateClassloader = tasks.register("generateClassloader") {
 
-    val outputDir = file("$projectDir/build/generated/sources/classloader")
+    val outputDir: File = file("$projectDir/build/generated/sources/classloader")
     val packageDir = File(outputDir, "me/webhead1104/township/utils")
     val classloaderFile = File(packageDir, "GeneratedClassloader.java")
 
