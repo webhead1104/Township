@@ -131,6 +131,9 @@ public class BarnMenu extends TownshipView {
             if (canUpgrade(context.getPlayer())) {
                 User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
                 BarnUpgrade newUpgrade = BarnUpdateDataLoader.get(user.getBarn().getBarnUpgrade().getId());
+                if (newUpgrade == null) {
+                    throw new NullPointerException("barn upgrade not found");
+                }
                 user.getBarn().setBarnUpgrade(newUpgrade);
                 user.getBarn().removeAmountFromItem(hammerKey, newUpgrade.getToolsNeeded());
                 user.getBarn().removeAmountFromItem(nailKey, newUpgrade.getToolsNeeded());

@@ -9,6 +9,7 @@ import me.webhead1104.township.dataLoaders.BuildingType;
 import me.webhead1104.township.dataLoaders.LevelDataLoader;
 import me.webhead1104.township.utils.Msg;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
@@ -148,7 +149,10 @@ public class User {
                 }
                 sb.append("<gray>)");
             }
-            Bukkit.getPlayer(uuid).sendMessage(Msg.format(sb.toString()));
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) {
+                player.sendMessage(Msg.format(sb.toString()));
+            }
             return true;
         }
         return false;

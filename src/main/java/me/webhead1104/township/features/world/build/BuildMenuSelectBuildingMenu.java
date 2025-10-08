@@ -69,6 +69,9 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
                 return;
             }
             User user = userState.get(slotClickContext);
+            if (building.getPrice() == null) {
+                throw new NullPointerException("price");
+            }
             if (building.getPrice().has(slotClickContext.getPlayer()) && user.getLevel() >= building.getLevelNeeded() && user.getPopulation() >= building.getPopulationNeeded()) {
                 building.getPrice().take(slotClickContext.getPlayer());
                 user.getPurchasedBuildings().purchase(buildingType, building.getSlot());

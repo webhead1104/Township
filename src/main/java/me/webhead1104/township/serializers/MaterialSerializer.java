@@ -34,7 +34,10 @@ public class MaterialSerializer implements TypeSerializer<Material> {
         if (material == null) {
             throw new SerializationException("Cannot serialize a null material!");
         }
-
-        node.set(Registry.MATERIAL.getKey(material).asString());
+        Key key = Registry.MATERIAL.getKey(material);
+        if (key == null) {
+            throw new SerializationException("Unknown material: " + material);
+        }
+        node.set(key.asString());
     }
 }

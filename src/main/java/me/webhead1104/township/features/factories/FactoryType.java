@@ -124,7 +124,7 @@ public class FactoryType implements DataLoader {
         @Setting("result")
         private Key resultKey;
         @Setting("result_amount")
-        private int resultAmount = 1;
+        private int resultAmount;
         @Required
         @Setting("ingredients")
         private Map<Key, Integer> ingredientKeys;
@@ -143,6 +143,9 @@ public class FactoryType implements DataLoader {
         private void postProcess() {
             result = ItemType.get(key);
             ingredientKeys.forEach((k, v) -> ingredients.put(ItemType.get(k), v));
+            if (resultAmount == 0) {
+                resultAmount = 1;
+            }
         }
 
         public boolean hasRequiredItems(Barn barn) {

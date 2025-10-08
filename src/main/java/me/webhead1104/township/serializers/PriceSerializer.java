@@ -12,15 +12,16 @@ import java.lang.reflect.Type;
 
 public class PriceSerializer implements TypeSerializer<Price> {
     @Override
-    public Price deserialize(@NotNull Type type, @NotNull ConfigurationNode node)
+    public Price deserialize(@NotNull Type t, @NotNull ConfigurationNode node)
             throws SerializationException {
         if (node.node("type").virtual()) {
             throw new SerializationException("Cannot deserialize Price");
         }
-        if (node.node("type").getString() == null) {
+        String type = node.node("type").getString();
+        if (type == null) {
             throw new RuntimeException("Price not found!");
         }
-        if (node.node("type").getString().equals("coin")) {
+        if (type.equals("coin")) {
             return new CoinPrice(node.node("amount").getInt());
         }
         throw new RuntimeException("Price not found!");

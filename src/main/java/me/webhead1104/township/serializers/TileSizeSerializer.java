@@ -16,6 +16,9 @@ public class TileSizeSerializer implements TypeSerializer<TileSize> {
         if (node.virtual()) {
             throw new SerializationException("Cannot deserialize a tile size of a virtual tile");
         }
+        if (node.getString() == null) {
+            throw new SerializationException("tile size is null");
+        }
         String[] size = node.getString().split("x");
         return new TileSize(Integer.parseInt(size[0]), Integer.parseInt(size[1]));
     }

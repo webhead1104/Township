@@ -78,10 +78,11 @@ public interface DataLoader {
         try {
             List<T> results = new ArrayList<>();
             for (ConfigurationNode node : nodes) {
-                results.addAll(node.getList(clazz));
-            }
-            if (results.isEmpty()) {
-                throw new RuntimeException("No files found in `" + path + "`!");
+                List<T> result = node.getList(clazz);
+                if (result == null || result.isEmpty()) {
+                    throw new RuntimeException("List is null or empty!");
+                }
+                results.addAll(result);
             }
             Township.logger.debug(
                     "Took {} to load list from files from path `{}`",

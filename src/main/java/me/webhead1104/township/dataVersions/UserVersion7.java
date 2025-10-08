@@ -17,6 +17,9 @@ public final class UserVersion7 implements DataVersion {
                     ConfigurationNode propertiesNode = slotNode.node("properties");
                     if (slotNode.node("class").getString("unknown class").equals("StaticWorldTile")) {
                         ConfigurationNode materialNode = propertiesNode.node("material");
+                        if (materialNode.getString() == null) {
+                            throw new NullPointerException("material");
+                        }
                         try {
                             materialNode.set(Key.key(materialNode.getString().toLowerCase()));
                         } catch (SerializationException e) {
