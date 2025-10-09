@@ -17,9 +17,9 @@ public class PurchasedBuildings {
     private final Map<Key, List<PurchasedBuilding>> purchasedBuildings = new HashMap<>();
 
     public PurchasedBuildings() {
-        purchasedBuildings.put(Township.key("barn"), List.of(new PurchasedBuilding(0, 27, true, Township.key("barn"))));
-        purchasedBuildings.put(Township.key("plot"), List.of(new PurchasedBuilding(0, 27, true, Township.key("plot"))));
-        purchasedBuildings.put(Township.key("train"), List.of(new PurchasedBuilding(0, 28, true, Township.key("train"))));
+        purchasedBuildings.put(Township.key("barn"), new ArrayList<>(List.of(new PurchasedBuilding(0, 27, true, Township.key("barn")))));
+        purchasedBuildings.put(Township.key("plot"), new ArrayList<>(List.of(new PurchasedBuilding(0, 27, true, Township.key("plot")))));
+        purchasedBuildings.put(Township.key("train"), new ArrayList<>(List.of(new PurchasedBuilding(0, 28, true, Township.key("train")))));
     }
 
     public boolean isPurchased(Key buildingType, int slot) {
