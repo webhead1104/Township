@@ -13,7 +13,7 @@ public final class UserVersion10 implements DataVersion {
     public ConfigurationTransformation getTransformation() {
         return ConfigurationTransformation.chain(
                 DataVersionUtils.replaceBuilding(new PlotTile(new Plot())),
-                DataVersionUtils.setPurchasedBuilding(new PurchasedBuildings.PurchasedBuilding(0, -1, false, Township.key("plot")), Township.key("plot"), 0)
+                DataVersionUtils.setPurchasedBuilding(new PurchasedBuildings.PurchasedBuilding(0, -1, false, Township.key("plot")))
         );
     }
 

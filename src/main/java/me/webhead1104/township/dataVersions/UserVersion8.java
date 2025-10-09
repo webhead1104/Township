@@ -12,7 +12,7 @@ public final class UserVersion8 implements DataVersion {
     public ConfigurationTransformation getTransformation() {
         return ConfigurationTransformation.chain(
                 DataVersionUtils.replaceBuilding(new BarnTile()),
-                DataVersionUtils.setPurchasedBuilding(new PurchasedBuildings.PurchasedBuilding(0, -1, false, Township.key("barn")), Township.key("barn"), 0)
+                DataVersionUtils.setPurchasedBuilding(new PurchasedBuildings.PurchasedBuilding(0, -1, false, Township.key("barn")))
         );
     }
 

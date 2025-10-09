@@ -22,7 +22,6 @@ public class DataVersionUtils {
             worldMapNode.childrenMap().forEach((sectionKey, sectionNode) -> {
                 ConfigurationNode slotMapNode = sectionNode.node("slot-map");
                 slotMapNode.childrenMap().forEach((slotKey, slotNode) -> {
-
                     try {
                         if (tile.equals(slotNode.get(Tile.class))) {
                             new TileSerializer().serialize(Tile.class, StaticWorldTile.Type.GRASS.getTile(), slotNode);
@@ -35,16 +34,37 @@ public class DataVersionUtils {
         };
     }
 
-    public static ConfigurationTransformation setPurchasedBuilding(PurchasedBuildings.PurchasedBuilding purchasedBuilding, Key key, int buildingSlot) {
+    public static ConfigurationTransformation replaceBuildingMatchingClass(String clazz) {
+        return (rootNode) -> {
+            ConfigurationNode worldMapNode = rootNode.node("world", "world-map");
+            worldMapNode.childrenMap().forEach((sectionKey, sectionNode) -> {
+                ConfigurationNode slotMapNode = sectionNode.node("slot-map");
+                slotMapNode.childrenMap().forEach((slotKey, slotNode) -> {
+
+                    try {
+                        if (clazz.equals(slotNode.node("class").getString())) {
+                            new TileSerializer().serialize(Tile.class, StaticWorldTile.Type.GRASS.getTile(), slotNode);
+                        }
+                    } catch (SerializationException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            });
+        };
+    }
+
+    public static ConfigurationTransformation setPurchasedBuilding(PurchasedBuildings.PurchasedBuilding purchasedBuilding) {
         return (rootNode) -> {
             try {
+                Key buildingType = purchasedBuilding.getBuildingType();
+                int buildingSlot = purchasedBuilding.getSlot();
                 ConfigurationNode purchasedBuildingsNode = rootNode.node("purchased-buildings", "purchased-buildings");
-                List<PurchasedBuildings.PurchasedBuilding> purchasedBuildings = purchasedBuildingsNode.node(key.value()).getList(PurchasedBuildings.PurchasedBuilding.class, new ArrayList<>());
+                List<PurchasedBuildings.PurchasedBuilding> purchasedBuildings = purchasedBuildingsNode.node(buildingType.value()).getList(PurchasedBuildings.PurchasedBuilding.class, new ArrayList<>());
                 while (purchasedBuildings.size() <= buildingSlot) {
                     purchasedBuildings.add(null);
                 }
                 purchasedBuildings.set(buildingSlot, purchasedBuilding);
-                purchasedBuildingsNode.node(key.value()).setList(PurchasedBuildings.PurchasedBuilding.class, purchasedBuildings);
+                purchasedBuildingsNode.node(buildingType.value()).setList(PurchasedBuildings.PurchasedBuilding.class, purchasedBuildings);
             } catch (SerializationException e) {
                 throw new RuntimeException(e);
             }
