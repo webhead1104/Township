@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.webhead1104.township.Township;
 import me.webhead1104.township.dataLoaders.BuildingType;
 import net.kyori.adventure.key.Key;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -14,6 +15,12 @@ import java.util.*;
 @ConfigSerializable
 public class PurchasedBuildings {
     private final Map<Key, List<PurchasedBuilding>> purchasedBuildings = new HashMap<>();
+
+    public PurchasedBuildings() {
+        purchasedBuildings.put(Township.key("barn"), List.of(new PurchasedBuilding(0, 27, true, Township.key("barn"))));
+        purchasedBuildings.put(Township.key("plot"), List.of(new PurchasedBuilding(0, 27, true, Township.key("plot"))));
+        purchasedBuildings.put(Township.key("train"), List.of(new PurchasedBuilding(0, 28, true, Township.key("train"))));
+    }
 
     public boolean isPurchased(Key buildingType, int slot) {
         if (!purchasedBuildings.containsKey(buildingType)) return false;
