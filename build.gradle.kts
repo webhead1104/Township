@@ -22,7 +22,7 @@ dependencies {
     compileOnly("org.spongepowered:configurate-gson:4.2.0")
     implementation("me.devnatan:inventory-framework-platform-paper:3.5.4")
     implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.4")
-    implementation("io.github.classgraph:classgraph:4.8.181")
+    implementation("io.github.classgraph:classgraph:4.8.184")
 
     compileOnly("net.strokkur:commands-annotations:1.4.2")
     annotationProcessor("net.strokkur:commands-processor:1.4.2")
