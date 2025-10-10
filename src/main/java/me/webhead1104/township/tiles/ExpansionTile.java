@@ -45,6 +45,7 @@ public class ExpansionTile extends Tile {
 
     @Override
     public boolean onClick(SlotClickContext context) {
+        if (instant != null) return false;
         int row = context.getClickedSlot() / 9;
         int col = context.getClickedSlot() % 9;
 

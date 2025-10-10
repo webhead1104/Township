@@ -65,6 +65,10 @@ val generateClassloader = tasks.register("generateClassloader") {
             .filter { it.group != "io.papermc.paper" && it.group != "net.strokkur" }
             .map { "${it.group}:${it.name}:${it.version}" }
 
+        val depsString: String = deps.joinToString("\n                    ") {
+            "resolver.addDependency(new Dependency(new DefaultArtifact(\"$it\"), null));"
+        }
+
         classloaderFile.writeText(
             """
             package me.webhead1104.township.utils;
@@ -86,7 +90,7 @@ val generateClassloader = tasks.register("generateClassloader") {
 
                     resolver.addRepository(new RemoteRepository.Builder("central", "default", MavenLibraryResolver.MAVEN_CENTRAL_DEFAULT_MIRROR).build());
                     
-                    ${deps.joinToString("\n                    ") { "resolver.addDependency(new Dependency(new DefaultArtifact(\"$it\"), null));" }}
+                    $depsString
 
                     classpathBuilder.addLibrary(resolver);
                 }
