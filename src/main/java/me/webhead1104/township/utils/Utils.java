@@ -2,6 +2,7 @@ package me.webhead1104.township.utils;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import lombok.experimental.UtilityClass;
+import net.kyori.adventure.text.Component;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -52,5 +53,10 @@ public class Utils {
         ItemStack itemStack = ItemStack.of(material);
         itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>%s", name));
         return itemStack;
+    }
+
+    public Component addResourceLine(String resourceName, int current, int required) {
+        String color = current >= required ? "<green>" : "<red>";
+        return Msg.format("%s: %s%d/%d", resourceName, color, current, required);
     }
 }

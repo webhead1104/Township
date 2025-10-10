@@ -17,8 +17,8 @@ import me.webhead1104.township.dataLoaders.ItemType;
 import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
+import me.webhead1104.township.utils.Utils;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemRarity;
@@ -143,11 +143,6 @@ public class BarnMenu extends TownshipView {
         }
     }
 
-    private Component addResourceLine(String resourceName, int current, int required) {
-        String color = current >= required ? "<green>" : "<red>";
-        return Msg.format("<white>%s: %s%d/%d", resourceName, color, current, required);
-    }
-
     private void setInventoryItems(Context context) {
         Barn barn = barnState.get(context);
         Player player = context.getPlayer();
@@ -178,9 +173,9 @@ public class BarnMenu extends TownshipView {
             upgradeLore.addLine(Msg.format("<red>You need to get more materials to upgrade!"));
         }
         int toolsNeeded = barn.getBarnUpgrade().getToolsNeeded();
-        upgradeLore.addLine(addResourceLine("Hammers", barn.getItem(hammerKey), toolsNeeded));
-        upgradeLore.addLine(addResourceLine("Nails", barn.getItem(nailKey), toolsNeeded));
-        upgradeLore.addLine(addResourceLine("Paint buckets", barn.getItem(paintKey), toolsNeeded));
+        upgradeLore.addLine(Utils.addResourceLine("Hammers", barn.getItem(hammerKey), toolsNeeded));
+        upgradeLore.addLine(Utils.addResourceLine("Nails", barn.getItem(nailKey), toolsNeeded));
+        upgradeLore.addLine(Utils.addResourceLine("Paint buckets", barn.getItem(paintKey), toolsNeeded));
 
         upgrade.setData(DataComponentTypes.LORE, upgradeLore.build());
         upgrade.setData(DataComponentTypes.ITEM_NAME, Msg.format("<white>Barn level: %d", barn.getBarnUpgrade().getId()));
