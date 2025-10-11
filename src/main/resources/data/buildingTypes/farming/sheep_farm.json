@@ -1,0 +1,36 @@
+[
+  {
+    "key": "sheep_farm",
+    "level_needed": 10,
+    "size": "2x2",
+    "time": "4h",
+    "xp": 29,
+    "price": {
+      "type": "coin",
+      "amount": 600
+    },
+    "tile": {
+      "class": "AnimalTile",
+      "properties": {
+        "animalType": "sheep_farm_1"
+      }
+    }
+  },
+  {
+    "key": "sheep_farm",
+    "level_needed": 31,
+    "size": "2x2",
+    "time": "1d10h",
+    "xp": 335,
+    "price": {
+      "type": "coin",
+      "amount": 8000
+    },
+    "tile": {
+      "class": "AnimalTile",
+      "properties": {
+        "animalType": "sheep_farm_2"
+      }
+    }
+  }
+]

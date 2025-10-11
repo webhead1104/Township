@@ -84,6 +84,12 @@
     "xp_given": 4
   },
   {
+    "key": "wool",
+    "material": "minecraft:white_wool",
+    "sell_price": 15,
+    "xp_given": 6
+  },
+  {
     "key": "paint",
     "material": "minecraft:player_head",
     "sell_price": 100,
@@ -112,5 +118,11 @@
     "material": "minecraft:player_head",
     "sell_price": 4,
     "xp_given": 0
+  },
+  {
+    "key": "sheep_feed",
+    "material": "minecraft:player_head",
+    "sell_price": 5,
+    "xp_given": 2
   }
 ]

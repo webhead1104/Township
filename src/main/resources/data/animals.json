@@ -64,5 +64,27 @@
     "xp_claim": 4,
     "time": "1H",
     "building_key": "chicken_coop"
+  },
+  {
+    "key": "sheep_farm_1",
+    "name": "Sheep Farm",
+    "animal_name": "Sheep",
+    "material": "minecraft:sheep_spawn_egg",
+    "feed": "sheep_feed",
+    "product": "wool",
+    "xp_claim": 6,
+    "time": "4H",
+    "building_key": "sheep_farm"
+  },
+  {
+    "key": "sheep_farm_2",
+    "name": "Sheep Farm",
+    "animal_name": "Sheep",
+    "material": "minecraft:sheep_spawn_egg",
+    "feed": "sheep_feed",
+    "product": "wool",
+    "xp_claim": 6,
+    "time": "4H",
+    "building_key": "sheep_farm"
   }
 ]

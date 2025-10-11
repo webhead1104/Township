@@ -26,6 +26,18 @@
       "time": "10m",
       "level_needed": 5,
       "xp_given": 2
+    },
+    {
+      "key": "sheep_feed",
+      "material": "minecraft:player_head",
+      "result_amount": 3,
+      "ingredients": {
+        "corn": 2,
+        "carrot": 2
+      },
+      "time": "20m",
+      "level_needed": 10,
+      "xp_given": 2
     }
   ]
 }
