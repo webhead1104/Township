@@ -30,6 +30,12 @@
     "xp_given": 3
   },
   {
+    "key": "cotton",
+    "material": "minecraft:player_head",
+    "sell_price": 9,
+    "xp_given": 4
+  },
+  {
     "key": "bread",
     "material": "minecraft:bread",
     "sell_price": 5,

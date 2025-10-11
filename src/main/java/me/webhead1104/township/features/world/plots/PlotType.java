@@ -19,7 +19,8 @@ public enum PlotType {
     WHEAT(Township.key("wheat"), 0, 1, 1, Duration.ofMinutes(2)),
     CORN(Township.key("corn"), 1, 3, 1, Duration.ofMinutes(5)),
     CARROT(Township.key("carrot"), 2, 4, 2, Duration.ofMinutes(10)),
-    SUGARCANE(Township.key("sugarcane"), 3, 7, 3, Duration.ofMinutes(20));
+    SUGARCANE(Township.key("sugarcane"), 3, 7, 3, Duration.ofMinutes(20)),
+    COTTON(Township.key("cotton"), 4, 9, 4, Duration.ofMinutes(30));
     private final ItemType.Item item;
     private final ItemStack menuItem;
     private final int price;
