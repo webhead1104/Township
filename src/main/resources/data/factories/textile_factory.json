@@ -1,0 +1,26 @@
+{
+  "key": "textile_factory",
+  "building_key": "textile_factory",
+  "recipes": [
+    {
+      "key": "cotton_fabric",
+      "material": "minecraft:player_head",
+      "ingredients": {
+        "cotton": 2
+      },
+      "time": "30m",
+      "level_needed": 9,
+      "xp_given": 16
+    },
+    {
+      "key": "yarn",
+      "material": "minecraft:string",
+      "ingredients": {
+        "wool": 2
+      },
+      "time": "40m",
+      "level_needed": 10,
+      "xp_given": 26
+    }
+  ]
+}

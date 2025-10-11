@@ -72,6 +72,18 @@
     "xp_given": 6
   },
   {
+    "key": "cotton_fabric",
+    "material": "minecraft:player_head",
+    "sell_price": 37,
+    "xp_given": 16
+  },
+  {
+    "key": "yarn",
+    "material": "minecraft:string",
+    "sell_price": 61,
+    "xp_given": 26
+  },
+  {
     "key": "milk",
     "material": "minecraft:milk_bucket",
     "sell_price": 7,
