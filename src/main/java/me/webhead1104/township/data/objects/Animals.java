@@ -30,7 +30,18 @@ public class Animals {
 
     public AnimalBuilding getAnimalBuilding(@NotNull Key animalType) {
         Preconditions.checkNotNull(animalType);
-        return animalBuildings.get(animalType);
+        if (animalBuildings.containsKey(animalType)) {
+            return animalBuildings.get(animalType);
+        }
+        AnimalBuilding animalBuilding = new AnimalBuilding();
+        Map<Integer, AnimalBuilding.Animal> animalBuildings = new HashMap<>();
+        for (int i = 0; i < 6; i++) {
+            animalBuildings.put(i, new AnimalBuilding.Animal(false, false, i < 3, Instant.EPOCH));
+        }
+        animalBuilding.setAnimals(animalBuildings);
+
+        this.animalBuildings.put(animalType, animalBuilding);
+        return animalBuilding;
     }
 
     @Getter
