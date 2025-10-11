@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("com.gradleup.shadow") version "9.2.2"
-    id("xyz.jpenilla.run-paper") version "3.0.1"
+    id("xyz.jpenilla.run-paper") version "3.0.2"
     id("io.freefair.lombok") version "9.0.0"
     id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
     id("com.diffplug.spotless") version "8.0.0"
@@ -22,12 +22,12 @@ dependencies {
     compileOnly("org.spongepowered:configurate-gson:4.2.0")
     implementation("me.devnatan:inventory-framework-platform-paper:3.5.4")
     implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.4")
-    implementation("io.github.classgraph:classgraph:4.8.181")
+    implementation("io.github.classgraph:classgraph:4.8.184")
 
     compileOnly("net.strokkur:commands-annotations:1.4.2")
     annotationProcessor("net.strokkur:commands-processor:1.4.2")
 
-    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.83.0")
+    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.84.0")
     testImplementation("org.junit.jupiter:junit-jupiter:6.0.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.0")
     testImplementation("org.spongepowered:configurate-gson:4.2.0")
