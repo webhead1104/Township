@@ -24,9 +24,13 @@ public class Factories {
     }
 
     public Factory getFactory(Key factoryType) {
-        return factoryBuildings.get(factoryType);
+        if (factoryBuildings.containsKey(factoryType)) {
+            return factoryBuildings.get(factoryType);
+        }
+        Factory factory = new Factory();
+        factoryBuildings.put(factoryType, factory);
+        return factory;
     }
-
 
     @ConfigSerializable
     @Getter
