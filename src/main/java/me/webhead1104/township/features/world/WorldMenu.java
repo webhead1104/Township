@@ -65,8 +65,8 @@ public class WorldMenu extends TownshipView {
                     })
                     .onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
                         if (clickContext.isShiftRightClick()) {
-                            if (tile.isImmovable()) return;
                             if (tile instanceof BuildingTile buildingTile) {
+                                if (buildingTile.isImmovable()) return;
                                 BuildingType.Building building = BuildingType.get(buildingTile.getBuildingType()).get(buildingTile.getBuildingSlot());
                                 int clickedSlot = clickContext.getClickedSlot();
                                 WorldSection worldSection = Township.getUserManager().getUser(clickContext.getPlayer().getUniqueId()).getWorld().getSection(sectionState.get(clickContext));

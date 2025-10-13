@@ -31,8 +31,4 @@ public abstract class Tile {
     public int hashCode() {
         return getClass().hashCode();
     }
-
-    public boolean isImmovable() {
-        return false;
-    }
 }

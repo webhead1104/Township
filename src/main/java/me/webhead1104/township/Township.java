@@ -63,7 +63,6 @@ public class Township extends JavaPlugin {
     public void onLoad() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS.newHandler(event -> TownshipCommandBrigadier.register(event.registrar())));
         // todo fix shift edit plot actually working
-        // todo make a option to make a tile unmovable
     }
 
     @Override

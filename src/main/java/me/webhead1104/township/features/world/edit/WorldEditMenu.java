@@ -91,10 +91,10 @@ public class WorldEditMenu extends TownshipView {
     }
 
     private boolean handleTileClick(SlotClickContext context, Tile tile) {
-        if (tile.isImmovable()) return false;
         if (!(tile instanceof BuildingTile buildingTile)) {
             return false;
         }
+        if (buildingTile.isImmovable()) return false;
 
         Key key = buildingTile.getBuildingType();
         if (key == null) return false;
