@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.dataLoaders.BuildingType;
+import me.webhead1104.township.features.world.build.BuildingType;
 import net.kyori.adventure.key.Key;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 

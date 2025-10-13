@@ -10,8 +10,6 @@ import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.User;
-import me.webhead1104.township.dataLoaders.BuildMenuType;
-import me.webhead1104.township.dataLoaders.BuildingType;
 import me.webhead1104.township.features.world.PlaceMenu;
 import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;

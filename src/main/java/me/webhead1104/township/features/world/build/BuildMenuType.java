@@ -1,9 +1,10 @@
-package me.webhead1104.township.dataLoaders;
+package me.webhead1104.township.features.world.build;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.dataLoaders.DataLoader;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;

@@ -3,7 +3,6 @@ package me.webhead1104.township.features.world.build;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.RenderContext;
-import me.webhead1104.township.dataLoaders.BuildMenuType;
 import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import org.bukkit.Material;

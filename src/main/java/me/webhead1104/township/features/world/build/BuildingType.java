@@ -1,4 +1,4 @@
-package me.webhead1104.township.dataLoaders;
+package me.webhead1104.township.features.world.build;
 
 import com.google.common.base.Stopwatch;
 import io.papermc.paper.datacomponent.DataComponentTypes;
@@ -11,6 +11,7 @@ import me.webhead1104.township.data.TileSize;
 import me.webhead1104.township.data.objects.ConstructionMaterials;
 import me.webhead1104.township.data.objects.PurchasedBuildings;
 import me.webhead1104.township.data.objects.User;
+import me.webhead1104.township.dataLoaders.DataLoader;
 import me.webhead1104.township.price.NoopPrice;
 import me.webhead1104.township.price.Price;
 import me.webhead1104.township.tiles.BuildingTile;
