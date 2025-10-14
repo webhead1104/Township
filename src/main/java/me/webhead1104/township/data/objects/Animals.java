@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.webhead1104.township.Township;
 import me.webhead1104.township.features.animals.AnimalType;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +20,7 @@ public class Animals {
     private final Map<Key, AnimalBuilding> animalBuildings = new HashMap<>();
 
     public Animals() {
-        for (AnimalType.Animal animal : AnimalType.values()) {
+        for (AnimalType.Animal animal : Township.getDataLoader(AnimalType.class).values()) {
             Map<Integer, AnimalBuilding.Animal> animalBuildings = new HashMap<>();
             for (int i = 0; i < 6; i++) {
                 animalBuildings.put(i, new AnimalBuilding.Animal(false, false, i < 3, Instant.EPOCH));

@@ -5,6 +5,8 @@ import io.github.classgraph.ClassGraph;
 import io.github.classgraph.Resource;
 import io.github.classgraph.ScanResult;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.annotations.ExcludeFromClassGraph;
+import net.kyori.adventure.key.Key;
 import org.intellij.lang.annotations.Language;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public interface DataLoader {
@@ -101,5 +104,22 @@ public interface DataLoader {
         } catch (SerializationException e) {
             throw new RuntimeException("An error occurred whilst getting a list from files `" + path + "`!", e);
         }
+    }
+
+    @ExcludeFromClassGraph
+    interface KeyBasedDataLoader<ResultType> extends DataLoader {
+        Collection<Key> keys();
+
+        Collection<ResultType> values();
+
+        ResultType get(Key key);
+    }
+
+    @ExcludeFromClassGraph
+    interface IntegerBasedDataLoader<ResultType> extends DataLoader {
+
+        List<ResultType> list();
+
+        ResultType get(int key);
     }
 }

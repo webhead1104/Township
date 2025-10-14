@@ -39,7 +39,7 @@ public class AnimalTypeArgument implements CustomArgumentType.Converted<@NotNull
 
     @Override
     public <S> @NotNull CompletableFuture<Suggestions> listSuggestions(@NotNull CommandContext<S> context, SuggestionsBuilder builder) {
-        AnimalType.keys().forEach(animalKey -> {
+        Township.getDataLoader(AnimalType.class).keys().forEach(animalKey -> {
             String value = animalKey.value();
             if (value.startsWith(builder.getRemainingLowerCase())) {
                 builder.suggest(value);

@@ -98,7 +98,7 @@ public class WorldEditMenu extends TownshipView {
 
         Key key = buildingTile.getBuildingType();
         if (key == null) return false;
-        BuildingType.Building building = BuildingType.get(key).get(buildingTile.getBuildingSlot());
+        BuildingType.Building building = Township.getDataLoader(BuildingType.class).get(key).get(buildingTile.getBuildingSlot());
         if (building == null) return false;
 
         int clickedSlot = context.getClickedSlot();

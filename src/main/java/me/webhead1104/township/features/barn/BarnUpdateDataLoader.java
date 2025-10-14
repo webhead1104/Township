@@ -8,16 +8,22 @@ import me.webhead1104.township.dataLoaders.DataLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BarnUpdateDataLoader implements DataLoader {
+public class BarnUpdateDataLoader implements DataLoader.IntegerBasedDataLoader<BarnUpgrade> {
     @Getter
-    private static final List<BarnUpgrade> values = new ArrayList<>();
+    private final List<BarnUpgrade> values = new ArrayList<>();
 
-    public static BarnUpgrade get(int i) {
+    @Override
+    public BarnUpgrade get(int key) {
         try {
-            return values.get(i);
+            return values.get(key);
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
+    }
+
+    @Override
+    public List<BarnUpgrade> list() {
+        return values;
     }
 
     @Override

@@ -7,6 +7,7 @@ import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
+import me.webhead1104.township.Township;
 import me.webhead1104.township.data.TileSize;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.features.world.WorldMenu;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class ExpansionMenu extends TownshipView {
     private final MutableState<Integer> slotState = initialState();
-    private final State<ExpansionDataLoader.Expansion> expansionState = computedState(context -> ExpansionDataLoader.get(userState.get(context).getExpansionsPurchased() + 1));
+    private final State<ExpansionDataLoader.Expansion> expansionState = computedState(context -> Township.getDataLoader(ExpansionDataLoader.class).get(userState.get(context).getExpansionsPurchased() + 1));
 
     public ExpansionMenu() {
         super(WorldMenu.class);

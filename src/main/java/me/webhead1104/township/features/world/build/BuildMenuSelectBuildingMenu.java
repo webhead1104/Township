@@ -26,7 +26,7 @@ import java.util.Objects;
 
 public class BuildMenuSelectBuildingMenu extends TownshipView {
     private final State<Key> keyState = initialState();
-    private final State<BuildMenuType.BuildMenu> typeState = computedState(context -> BuildMenuType.get(keyState.get(context)));
+    private final State<BuildMenuType.BuildMenu> typeState = computedState(context -> Township.getDataLoader(BuildMenuType.class).get(keyState.get(context)));
     private final State<Pagination> paginationState = buildComputedPaginationState(context -> typeState.get(context).getBuildings()).elementFactory((context, builder, index, buildingType) -> {
         BuildingType.Building building = BuildingType.getNextBuilding(context.getPlayer(), buildingType);
         if (building == null) {
@@ -38,7 +38,7 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
 
         ItemStack itemStack = building.getItemStack(context.getPlayer());
         List<Component> components = new ArrayList<>(Objects.requireNonNull(itemStack.getData(DataComponentTypes.LORE)).lines());
-        components.set(1, Msg.format("<green>%s/%s purchased", userState.get(context).getPurchasedBuildings().amountPurchased(buildingType), BuildingType.get(buildingType).size()));
+        components.set(1, Msg.format("<green>%s/%s purchased", userState.get(context).getPurchasedBuildings().amountPurchased(buildingType), Township.getDataLoader(BuildingType.class).get(buildingType).size()));
         itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(components));
         builder.withItem(itemStack);
         builder.onClick(slotClickContext -> {

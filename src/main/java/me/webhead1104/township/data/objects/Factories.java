@@ -5,6 +5,7 @@ import lombok.Setter;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.dataLoaders.ItemType;
 import me.webhead1104.township.features.factories.FactoryType;
+import me.webhead1104.township.features.factories.RecipeType;
 import net.kyori.adventure.key.Key;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
@@ -18,7 +19,7 @@ public class Factories {
     private final Map<Key, Factory> factoryBuildings = new HashMap<>();
 
     public Factories() {
-        for (FactoryType.Factory value : FactoryType.factoryValues()) {
+        for (FactoryType.Factory value : Township.getDataLoader(FactoryType.class).values()) {
             factoryBuildings.put(value.key(), new Factory());
         }
     }
@@ -50,8 +51,8 @@ public class Factories {
             this.instant = Instant.EPOCH;
         }
 
-        public FactoryType.Recipe getWaiting(int slot) {
-            return FactoryType.getRecipe(waiting.get(slot));
+        public RecipeType.Recipe getWaiting(int slot) {
+            return Township.getDataLoader(RecipeType.class).get(waiting.get(slot));
         }
 
         public void setCompleted(int slot, Key item) {
@@ -59,15 +60,15 @@ public class Factories {
         }
 
         public ItemType.Item getCompleted(int slot) {
-            return ItemType.get(completed.get(slot));
+            return Township.getDataLoader(ItemType.class).get(completed.get(slot));
         }
 
-        public FactoryType.Recipe getWorkingOn() {
-            return FactoryType.getRecipe(workingOn);
+        public RecipeType.Recipe getWorkingOn() {
+            return Township.getDataLoader(RecipeType.class).get(workingOn);
         }
 
-        public FactoryType.Recipe removeFirstWaiting() {
-            FactoryType.Recipe recipe = getWaiting(0);
+        public RecipeType.Recipe removeFirstWaiting() {
+            RecipeType.Recipe recipe = getWaiting(0);
             for (int i = 1; i < 3; i++) {
                 waiting.put(i - 1, waiting.get(i));
             }

@@ -29,7 +29,7 @@ import java.util.List;
 public class FactoryMenu extends TownshipView {
     private final State<Key> keyState = initialState();
 
-    private final State<FactoryType.Factory> factoryState = computedState(context -> FactoryType.getFactory(keyState.get(context)));
+    private final State<FactoryType.Factory> factoryState = computedState(context -> Township.getDataLoader(FactoryType.class).get(keyState.get(context)));
 
     public FactoryMenu() {
         super(WorldMenu.class);
@@ -57,7 +57,7 @@ public class FactoryMenu extends TownshipView {
         Factories.Factory factory = user.getFactories().getFactory(factoryData.key());
 
         int recipeSlot = 45;
-        for (FactoryType.Recipe recipe : factoryData.getRecipes()) {
+        for (RecipeType.Recipe recipe : factoryData.getRecipes()) {
             context.slot(recipeSlot++).onRender(slotRenderContext -> {
                 ItemStack stack = recipe.getResult().getItemStack();
                 stack.setData(DataComponentTypes.LORE, calculateLore(recipe, user.getBarn()));
@@ -99,7 +99,7 @@ public class FactoryMenu extends TownshipView {
                     factory.addCompleted(factory.getWorkingOn().getResult().key());
                     factory.setWorkingOn(Township.noneKey);
                     if (factory.hasWaiting()) {
-                        FactoryType.Recipe recipe = factory.removeFirstWaiting();
+                        RecipeType.Recipe recipe = factory.removeFirstWaiting();
                         factory.setWorkingOn(recipe.getKey());
                         factory.setInstant(Instant.now().plusSeconds(recipe.getTime().getSeconds()));
                     }
@@ -148,7 +148,7 @@ public class FactoryMenu extends TownshipView {
                     factory.addCompleted(factory.getWorkingOn().getResult().key());
                     factory.setWorkingOn(Township.noneKey);
                     if (factory.hasWaiting()) {
-                        FactoryType.Recipe recipe = factory.removeFirstWaiting();
+                        RecipeType.Recipe recipe = factory.removeFirstWaiting();
                         factory.setWorkingOn(recipe.getKey());
                         factory.setInstant(Instant.now().plusSeconds(recipe.getTime().getSeconds()));
                     }
@@ -158,7 +158,7 @@ public class FactoryMenu extends TownshipView {
         }
     }
 
-    private ItemLore calculateLore(FactoryType.Recipe recipe, Barn barn) {
+    private ItemLore calculateLore(RecipeType.Recipe recipe, Barn barn) {
         List<Component> lore = new ArrayList<>();
         recipe.getIngredients().forEach((item, value) -> {
             if (barn.getItem(item) >= value) {

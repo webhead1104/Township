@@ -1,18 +1,11 @@
 package me.webhead1104.township.price;
 
-import lombok.Getter;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.utils.Msg;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
-@Getter
-public class CoinPrice implements Price {
-    private final int amount;
-
-    public CoinPrice(int amount) {
-        this.amount = amount;
-    }
+public record CoinPrice(int amount) implements Price {
 
     @Override
     public void take(Player player) {

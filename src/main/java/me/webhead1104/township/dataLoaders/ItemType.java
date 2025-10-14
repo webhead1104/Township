@@ -16,19 +16,19 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.util.*;
 
-public class ItemType implements DataLoader {
-    public static final Map<Key, Item> values = new HashMap<>();
+public class ItemType implements DataLoader.KeyBasedDataLoader<ItemType.Item> {
+    public final Map<Key, Item> values = new HashMap<>();
 
-    public static Collection<Item> values() {
-        return values.values();
+    public Item get(Key key) {
+        return values.get(key);
     }
 
-    public static Collection<Key> keys() {
+    public Collection<Key> keys() {
         return values.keySet();
     }
 
-    public static Item get(Key key) {
-        return values.get(key);
+    public Collection<Item> values() {
+        return values.values();
     }
 
     @Override
