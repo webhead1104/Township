@@ -62,7 +62,6 @@ public class Township extends JavaPlugin {
     @Override
     public void onLoad() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS.newHandler(event -> TownshipCommandBrigadier.register(event.registrar())));
-        // todo fix shift edit plot actually working
     }
 
     @Override
