@@ -35,9 +35,9 @@ public class PriceSerializer implements TypeSerializer<Price> {
             throw new SerializationException("Price is null");
         }
 
-        if (price instanceof CoinPrice coinPrice) {
+        if (price instanceof CoinPrice(int amount)) {
             node.node("type").set("coin");
-            node.node("amount").set(coinPrice.getAmount());
+            node.node("amount").set(amount);
         }
     }
 }

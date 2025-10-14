@@ -14,11 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class ExpansionDataLoader implements DataLoader {
-    @Getter
-    private static final List<Expansion> values = new ArrayList<>();
+public class ExpansionDataLoader implements DataLoader.IntegerBasedDataLoader<ExpansionDataLoader.Expansion> {
+    private final List<Expansion> values = new ArrayList<>();
 
-    public static Expansion get(int i) {
+    public Expansion get(int i) {
         try {
             if (i == 1) {
                 return values.getFirst();
@@ -27,6 +26,11 @@ public class ExpansionDataLoader implements DataLoader {
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
+    }
+
+    @Override
+    public List<Expansion> list() {
+        return values;
     }
 
     @Override

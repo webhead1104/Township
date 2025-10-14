@@ -39,7 +39,7 @@ public class FactoryTypeArgument implements CustomArgumentType.Converted<@NotNul
 
     @Override
     public <S> @NotNull CompletableFuture<Suggestions> listSuggestions(@NotNull CommandContext<S> context, SuggestionsBuilder builder) {
-        FactoryType.factoryKeys().forEach(factoryKey -> {
+        Township.getDataLoader(FactoryType.class).keys().forEach(factoryKey -> {
             String value = factoryKey.value();
             if (value.startsWith(builder.getRemainingLowerCase())) {
                 builder.suggest(value);

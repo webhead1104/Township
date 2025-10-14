@@ -71,7 +71,7 @@ public class Trains {
 
             public TrainCar() {
                 SplittableRandom random = new SplittableRandom();
-                List<Key> giveList = new ArrayList<>(ItemType.keys());
+                List<Key> giveList = new ArrayList<>(Township.getDataLoader(ItemType.class).keys());
                 giveList.remove(Township.noneKey);
                 giveList.removeAll(List.of(Township.key("nail"), Township.key("hammer"), Township.key("paint")));
 

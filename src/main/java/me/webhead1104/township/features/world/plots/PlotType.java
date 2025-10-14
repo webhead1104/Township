@@ -29,7 +29,7 @@ public enum PlotType {
     private final Duration time;
 
     PlotType(Key key, ItemStack menuItem, int price, int levelNeeded, int xpGiven, Duration time) {
-        this.item = ItemType.get(key);
+        this.item = Township.getDataLoader(ItemType.class).get(key);
         this.menuItem = menuItem;
         this.price = price;
         this.levelNeeded = levelNeeded;
@@ -38,7 +38,7 @@ public enum PlotType {
     }
 
     PlotType(Key key, int price, int levelNeeded, int xpGiven, Duration time) {
-        this.item = ItemType.get(key);
+        this.item = Township.getDataLoader(ItemType.class).get(key);
         this.menuItem = item.getItemStack();
         this.price = price;
         this.levelNeeded = levelNeeded;

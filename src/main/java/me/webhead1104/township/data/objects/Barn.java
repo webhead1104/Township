@@ -18,7 +18,7 @@ public class Barn {
     private BarnUpgrade barnUpgrade = new BarnUpgrade(1, 2, 70);
 
     public Barn() {
-        for (ItemType.Item type : ItemType.values()) {
+        for (ItemType.Item type : Township.getDataLoader(ItemType.class).values()) {
             if (type.equals(Township.noneKey)) continue;
             if (type.equals(Township.key("cow_feed"))) {
                 itemMap.put(type.key(), 12);

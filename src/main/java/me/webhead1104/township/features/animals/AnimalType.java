@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.annotations.DependsOn;
 import me.webhead1104.township.dataLoaders.DataLoader;
 import me.webhead1104.township.dataLoaders.ItemType;
 import me.webhead1104.township.utils.Msg;
@@ -21,19 +22,20 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 import java.time.Duration;
 import java.util.*;
 
-public class AnimalType implements DataLoader {
-    public static final Map<Key, Animal> values = new HashMap<>();
+@DependsOn({ItemType.class})
+public class AnimalType implements DataLoader.KeyBasedDataLoader<AnimalType.Animal> {
+    private final Map<Key, Animal> values = new HashMap<>();
 
-    public static Collection<Animal> values() {
-        return values.values();
+    public Animal get(Key key) {
+        return values.get(key);
     }
 
-    public static Collection<Key> keys() {
+    public Collection<Key> keys() {
         return values.keySet();
     }
 
-    public static Animal get(Key key) {
-        return values.get(key);
+    public Collection<Animal> values() {
+        return values.values();
     }
 
     @Override
@@ -89,8 +91,8 @@ public class AnimalType implements DataLoader {
 
         private void postProcess() {
             this.animalItemStack = Utils.getItemStack(animalName, animalMaterial);
-            this.feed = ItemType.get(feedKey);
-            this.product = ItemType.get(productKey);
+            this.feed = Township.getDataLoader(ItemType.class).get(feedKey);
+            this.product = Township.getDataLoader(ItemType.class).get(productKey);
             this.menuTitle = Msg.format("<gold>%s", name);
         }
 

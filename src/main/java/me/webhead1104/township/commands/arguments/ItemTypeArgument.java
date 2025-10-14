@@ -39,7 +39,7 @@ public class ItemTypeArgument implements CustomArgumentType.Converted<@NotNull K
 
     @Override
     public <S> @NotNull CompletableFuture<Suggestions> listSuggestions(@NotNull CommandContext<S> context, SuggestionsBuilder builder) {
-        ItemType.values().forEach(item -> {
+        Township.getDataLoader(ItemType.class).values().forEach(item -> {
             String value = item.key().value();
             if (value.startsWith(builder.getRemainingLowerCase())) {
                 builder.suggest(value);

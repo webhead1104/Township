@@ -48,7 +48,7 @@ public class PurchasedBuildings {
             }
         }
 
-        if (BuildingType.get(buildingType).size() > purchasedBuildings.get(buildingType).size()) {
+        if (Township.getDataLoader(BuildingType.class).get(buildingType).size() > purchasedBuildings.get(buildingType).size()) {
             return new Wrapper(-2, false);
         }
         return new Wrapper(-1, false);
@@ -81,7 +81,7 @@ public class PurchasedBuildings {
         private Key buildingType;
 
         public BuildingType.Building getBuilding() {
-            return BuildingType.get(buildingType).get(slot);
+            return Township.getDataLoader(BuildingType.class).get(buildingType).get(slot);
         }
     }
 }

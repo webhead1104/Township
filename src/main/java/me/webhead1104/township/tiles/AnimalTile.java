@@ -5,6 +5,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import lombok.Getter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
+import me.webhead1104.township.Township;
 import me.webhead1104.township.features.animals.AnimalMenu;
 import me.webhead1104.township.features.animals.AnimalType;
 import me.webhead1104.township.utils.Msg;
@@ -18,14 +19,14 @@ public class AnimalTile extends BuildingTile {
 
     @Keep
     public AnimalTile(Key animalType) {
-        super(AnimalType.get(animalType).getBuildingKey(), 0);
+        super(Township.getDataLoader(AnimalType.class).get(animalType).getBuildingKey(), 0);
         this.animalType = animalType;
     }
 
     @Override
     public ItemStack render(SlotRenderContext context) {
         ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
-        itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(AnimalType.get(animalType).getName()));
+        itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(Township.getDataLoader(AnimalType.class).get(animalType).getName()));
         return itemStack;
     }
 

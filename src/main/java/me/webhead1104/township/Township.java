@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewFrame;
+import me.webhead1104.township.annotations.DependsOn;
 import me.webhead1104.township.commands.TownshipCommandBrigadier;
 import me.webhead1104.township.data.Database;
 import me.webhead1104.township.data.TileSize;
 import me.webhead1104.township.dataLoaders.DataLoader;
-import me.webhead1104.township.features.world.build.BuildingType;
 import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.InventoryManager;
@@ -28,6 +28,7 @@ import org.spongepowered.configurate.gson.GsonConfigurationLoader;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.*;
 
 @NoArgsConstructor
 public class Township extends JavaPlugin {
@@ -43,6 +44,8 @@ public class Township extends JavaPlugin {
         builder.register(Tile.class, new TileSerializer());
     }));
     public static final Key noneKey = key("none");
+    @Getter
+    private static final Map<Class<? extends DataLoader>, DataLoader> dataLoaders = new HashMap<>();
     public static Logger logger;
     @Getter
     private static Database database;
@@ -57,6 +60,14 @@ public class Township extends JavaPlugin {
 
     public static Key key(@KeyPattern String string) {
         return Key.key("township", string);
+    }
+
+    public static <T extends DataLoader> T getDataLoader(Class<T> dataLoaderClass) {
+        T loader = dataLoaderClass.cast(dataLoaders.get(dataLoaderClass));
+        if (loader == null) {
+            throw new IllegalStateException("Data loader not found: " + dataLoaderClass.getName());
+        }
+        return loader;
     }
 
     @Override
@@ -100,17 +111,57 @@ public class Township extends JavaPlugin {
     }
 
     private void loadDataLoaders() {
-        for (DataLoader dataLoader : ClassGraphUtils.getImplementedClasses(DataLoader.class, "me.webhead1104.township")) {
+        List<DataLoader> dataLoaders = ClassGraphUtils.getImplementedClasses(DataLoader.class, "me.webhead1104.township");
+
+        Set<Class<? extends DataLoader>> loaded = new HashSet<>();
+        Set<Class<? extends DataLoader>> loading = new HashSet<>();
+
+        for (DataLoader dataLoader : dataLoaders) {
             try {
-                if (dataLoader instanceof BuildingType) {
-                    continue;
-                }
-                dataLoader.load();
+                loadWithDependencies(dataLoader, dataLoaders, loaded, loading);
             } catch (Exception e) {
                 logger.error("Failed to load data loader: {}", dataLoader.getClass().getName(), e);
             }
         }
-        new BuildingType().load();
+    }
+
+    private void loadWithDependencies(
+            DataLoader dataLoader,
+            List<DataLoader> allDataLoaders,
+            Set<Class<? extends DataLoader>> loaded,
+            Set<Class<? extends DataLoader>> loading) {
+
+        Class<? extends DataLoader> loaderClass = dataLoader.getClass();
+        if (loaded.contains(loaderClass)) {
+            return;
+        }
+        if (loading.contains(loaderClass)) {
+            throw new IllegalStateException("Circular dependency detected for: " + loaderClass.getName());
+        }
+
+        loading.add(loaderClass);
+
+        DependsOn dependsOn = loaderClass.getAnnotation(DependsOn.class);
+        if (dependsOn != null) {
+            for (Class<? extends DataLoader> dependencyClass : dependsOn.value()) {
+                DataLoader dependency = allDataLoaders.stream()
+                        .filter(loader -> dependencyClass.isAssignableFrom(loader.getClass()))
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalStateException(
+                                "Dependency not found: " + dependencyClass.getName() +
+                                        " required by " + loaderClass.getName()));
+
+                loadWithDependencies(dependency, allDataLoaders, loaded, loading);
+            }
+        }
+
+        logger.debug("Loading data loader: {}", loaderClass.getName());
+        dataLoader.load();
+
+        loading.remove(loaderClass);
+        loaded.add(loaderClass);
+
+        dataLoaders.put(loaderClass, dataLoader);
     }
 
     private void registerViews() {
