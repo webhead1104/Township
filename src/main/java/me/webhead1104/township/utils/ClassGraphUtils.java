@@ -4,6 +4,7 @@ import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
 import lombok.experimental.UtilityClass;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.annotations.ExcludeFromClassGraph;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class ClassGraphUtils {
         try (ScanResult result = graph.scan()) {
             result.getClassesImplementing(clazz).loadClasses().forEach(foundClass -> {
                 try {
+                    if (foundClass.isAnnotationPresent(ExcludeFromClassGraph.class)) return;
                     Constructor<?> constructor = foundClass.getDeclaredConstructor();
                     constructor.setAccessible(true);
                     //noinspection unchecked
@@ -44,6 +46,7 @@ public class ClassGraphUtils {
                     if (!foundClass.getPackage().getName().startsWith(packageName)) {
                         return;
                     }
+                    if (foundClass.isAnnotationPresent(ExcludeFromClassGraph.class)) return;
 
                     Constructor<?> constructor = foundClass.getDeclaredConstructor();
                     constructor.setAccessible(true);
