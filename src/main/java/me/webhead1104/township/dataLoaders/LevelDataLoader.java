@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LevelDataLoader implements DataLoader.IntegerBasedDataLoader<LevelDataLoader.Level> {
-    @Getter
     private final List<Level> values = new ArrayList<>();
 
     public Level get(int i) {

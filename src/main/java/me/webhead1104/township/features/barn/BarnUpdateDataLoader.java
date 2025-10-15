@@ -1,6 +1,5 @@
 package me.webhead1104.township.features.barn;
 
-import lombok.Getter;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.BarnUpgrade;
 import me.webhead1104.township.dataLoaders.DataLoader;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BarnUpdateDataLoader implements DataLoader.IntegerBasedDataLoader<BarnUpgrade> {
-    @Getter
     private final List<BarnUpgrade> values = new ArrayList<>();
 
     @Override
