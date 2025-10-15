@@ -5,6 +5,9 @@ import io.github.classgraph.ClassGraph;
 import io.github.classgraph.Resource;
 import io.github.classgraph.ScanResult;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.annotations.ExcludeFromClassGraph;
+import net.kyori.adventure.key.Key;
+import org.intellij.lang.annotations.Language;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
@@ -13,12 +16,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public interface DataLoader {
     void load();
 
-    default ConfigurationNode getNodeFromFile(String path) {
+    default ConfigurationNode getNodeFromFile(@Language("file-reference") String path) {
         try (InputStream stream = getClass().getResourceAsStream(path)) {
             if (stream == null) {
                 throw new IllegalStateException("Could not find resource file: " + path);
@@ -32,7 +36,7 @@ public interface DataLoader {
         }
     }
 
-    default List<ConfigurationNode> getNodesFromMultipleFiles(String path) {
+    default List<ConfigurationNode> getNodesFromMultipleFiles(@Language("file-reference") String path) {
         List<ConfigurationNode> list = new ArrayList<>();
 
         String searchPath = path.startsWith("/") ? path.substring(1) : path;
@@ -41,14 +45,22 @@ public interface DataLoader {
             for (Resource resource : scanResult.getResourcesWithExtension("json")) {
                 String resourcePath = "/" + resource.getPath();
                 Township.logger.debug("Loading file: {}", resourcePath);
-                list.add(getNodeFromFile(resourcePath));
+
+                try (InputStream stream = resource.open()) {
+                    ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER
+                            .source(() -> new BufferedReader(new InputStreamReader(stream)))
+                            .build()
+                            .load();
+                    list.add(node);
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to load resource: " + resourcePath, e);
+                }
             }
         }
-
         return list;
     }
 
-    default <T> List<T> getListFromFile(String path, Class<T> clazz) {
+    default <T> List<T> getListFromFile(@Language("file-reference") String path, Class<T> clazz) {
         Stopwatch stopwatch = Stopwatch.createStarted();
         ConfigurationNode node = getNodeFromFile(path);
         if (!node.isList()) {
@@ -69,7 +81,7 @@ public interface DataLoader {
         }
     }
 
-    default <T> List<T> getListFromMultipleFiles(String path, Class<T> clazz) {
+    default <T> List<T> getListFromMultipleFiles(@Language("file-reference") String path, Class<T> clazz) {
         Stopwatch stopwatch = Stopwatch.createStarted();
         List<ConfigurationNode> nodes = getNodesFromMultipleFiles(path);
         if (nodes == null || nodes.isEmpty()) {
@@ -92,5 +104,22 @@ public interface DataLoader {
         } catch (SerializationException e) {
             throw new RuntimeException("An error occurred whilst getting a list from files `" + path + "`!", e);
         }
+    }
+
+    @ExcludeFromClassGraph
+    interface KeyBasedDataLoader<ResultType> extends DataLoader {
+        Collection<Key> keys();
+
+        Collection<ResultType> values();
+
+        ResultType get(Key key);
+    }
+
+    @ExcludeFromClassGraph
+    interface IntegerBasedDataLoader<ResultType> extends DataLoader {
+
+        List<ResultType> list();
+
+        ResultType get(int key);
     }
 }

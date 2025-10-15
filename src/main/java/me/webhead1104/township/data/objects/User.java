@@ -117,7 +117,7 @@ public class User {
     }
 
     public boolean canLevelUp() {
-        LevelDataLoader.Level nextLevel = LevelDataLoader.get(level + 1);
+        LevelDataLoader.Level nextLevel = Township.getDataLoader(LevelDataLoader.class).get(level + 1);
         if (nextLevel == null) {
             return false;
         }

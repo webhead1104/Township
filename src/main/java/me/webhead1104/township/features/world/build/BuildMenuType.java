@@ -18,15 +18,20 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BuildMenuType implements DataLoader {
-    public static final Map<Key, BuildMenu> values = new LinkedHashMap<>();
+public class BuildMenuType implements DataLoader.KeyBasedDataLoader<BuildMenuType.BuildMenu> {
+    private final Map<Key, BuildMenu> values = new LinkedHashMap<>();
 
-    public static Collection<BuildMenu> values() {
-        return values.values();
+    public BuildMenu get(Key key) {
+        return values.get(key);
     }
 
-    public static BuildMenu get(Key key) {
-        return values.get(key);
+    @Override
+    public Collection<Key> keys() {
+        return values.keySet();
+    }
+
+    public Collection<BuildMenu> values() {
+        return values.values();
     }
 
     @Override

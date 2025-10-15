@@ -1,10 +1,11 @@
 package me.webhead1104.township.features.factories;
 
+import com.google.common.base.Stopwatch;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.data.objects.Barn;
+import me.webhead1104.township.annotations.DependsOn;
 import me.webhead1104.township.dataLoaders.DataLoader;
 import me.webhead1104.township.dataLoaders.ItemType;
 import me.webhead1104.township.utils.Msg;
@@ -12,62 +13,46 @@ import me.webhead1104.township.utils.Utils;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
 import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
-import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-public class FactoryType implements DataLoader {
-    private static final Map<Key, Factory> factories = new HashMap<>();
-    private static final Map<Key, Recipe> recipes = new HashMap<>();
-
-    public static Collection<Factory> factoryValues() {
-        return factories.values();
-    }
-
-    public static Collection<Key> factoryKeys() {
-        return factories.keySet();
-    }
-
-    public static Factory getFactory(Key key) {
-        return factories.get(key);
-    }
-
-    public static Recipe getRecipe(Key key) {
-        return recipes.get(key);
-    }
+@DependsOn({ItemType.class})
+public class FactoryType implements DataLoader.KeyBasedDataLoader<FactoryType.Factory> {
+    private final Map<Key, Factory> values = new HashMap<>();
 
     @Override
     public void load() {
-        long start = System.currentTimeMillis();
+        Stopwatch stopwatch = Stopwatch.createStarted();
         try {
             List<Factory> factories = new ArrayList<>(getListFromMultipleFiles("/data/factories", Factory.class));
-            List<Recipe> recipes = new ArrayList<>();
             for (Factory factory : factories) {
-                FactoryType.factories.put(factory.key(), factory);
-                recipes.addAll(factory.getRecipes());
+                values.put(factory.key(), factory);
             }
-
-            Recipe noneRecipe = new Recipe();
-            noneRecipe.key = Township.noneKey;
-            recipes.add(noneRecipe);
-
-            for (Recipe recipe : recipes) {
-                FactoryType.recipes.put(recipe.getKey(), recipe);
-            }
-
-            Township.logger.info("Loaded {} factories in {} ms!", FactoryType.factories.size(), System.currentTimeMillis() - start);
+            Township.logger.info("Loaded {} factories in {} ms!", values.size(), stopwatch.stop().elapsed().toMillis());
 
         } catch (Exception e) {
             throw new RuntimeException("An error occurred whilst loading factories! Please report the following stacktrace to Webhead1104:", e);
         }
+    }
+
+    @Override
+    public Factory get(Key key) {
+        return values.get(key);
+    }
+
+    @Override
+    public Collection<Key> keys() {
+        return values.keySet();
+    }
+
+    @Override
+    public Collection<Factory> values() {
+        return values.values();
     }
 
     @Getter
@@ -82,7 +67,7 @@ public class FactoryType implements DataLoader {
         private String name;
         @Required
         @Setting("recipes")
-        private List<Recipe> recipes;
+        private List<RecipeType.Recipe> recipes;
         @Setting("menu_title")
         private Component menuTitle;
         @Required
@@ -102,60 +87,6 @@ public class FactoryType implements DataLoader {
         @Override
         public @NotNull Key key() {
             return key;
-        }
-
-        public boolean equals(Key key) {
-            return Objects.equals(this.key, key);
-        }
-    }
-
-    @Getter
-    @ConfigSerializable
-    @NoArgsConstructor
-    public static class Recipe {
-        private final transient Map<ItemType.Item, Integer> ingredients = new HashMap<>();
-        @Required
-        @Setting("key")
-        private Key key;
-        @Required
-        @Setting("material")
-        private Material material;
-        @Nullable
-        @Setting("result")
-        private Key resultKey;
-        @Setting("result_amount")
-        private int resultAmount;
-        @Required
-        @Setting("ingredients")
-        private Map<Key, Integer> ingredientKeys;
-        @Required
-        @Setting("time")
-        private Duration time;
-        @Required
-        @Setting("level_needed")
-        private int levelNeeded;
-        @Required
-        @Setting("xp_given")
-        private int xpGiven;
-        private transient ItemType.Item result;
-
-        @PostProcess
-        private void postProcess() {
-            result = ItemType.get(key);
-            ingredientKeys.forEach((k, v) -> ingredients.put(ItemType.get(k), v));
-            if (resultAmount == 0) {
-                resultAmount = 1;
-            }
-        }
-
-        public boolean hasRequiredItems(Barn barn) {
-            AtomicBoolean hasRequiredItems = new AtomicBoolean(true);
-            ingredients.forEach((key, amount) -> {
-                if (barn.getItem(key) < amount) {
-                    hasRequiredItems.set(false);
-                }
-            });
-            return hasRequiredItems.get();
         }
 
         public boolean equals(Key key) {

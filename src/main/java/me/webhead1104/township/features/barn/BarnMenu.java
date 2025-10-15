@@ -55,8 +55,8 @@ public class BarnMenu extends TownshipView {
             if (item.equals(Township.noneKey)) continue;
             context.availableSlot().updateOnStateChange(sellAmount).hideIf(hideContext -> barnState.get(hideContext).getItem(item) <= 0)
                     .onRender(slotRenderContext -> {
-                        ItemStack stack = ItemType.get(item).getItemStack();
-                        stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("%s: <yellow>%d", ItemType.get(item).getName(), barnState.get(slotRenderContext).getItem(item)));
+                        ItemStack stack = Township.getDataLoader(ItemType.class).get(item).getItemStack();
+                        stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("%s: <yellow>%d", Township.getDataLoader(ItemType.class).get(item).getName(), barnState.get(slotRenderContext).getItem(item)));
                         stack.setData(DataComponentTypes.RARITY, ItemRarity.COMMON);
                         slotRenderContext.setItem(stack);
                     }).onClick(slotClickContext -> {
@@ -79,13 +79,13 @@ public class BarnMenu extends TownshipView {
 
         context.slot(49).hideIf(hideContext -> sellItem.get(hideContext).equals(Township.noneKey))
                 .updateOnStateChange(sellAmount).onRender(slotRenderContext -> {
-                    ItemType.Item item = ItemType.get(sellItem.get(slotRenderContext));
+                    ItemType.Item item = Township.getDataLoader(ItemType.class).get(sellItem.get(slotRenderContext));
                     int amount = sellAmount.get(slotRenderContext);
                     ItemStack itemStack = ItemStack.of(Material.LIME_CONCRETE);
                     itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<green>Click to sell <aqua>%d <green>of <yellow>%s <green>for <aqua>%d <gold>coins!", amount, item.getName(), item.getSellPrice() * amount));
                     slotRenderContext.setItem(itemStack);
                 }).onClick(slotClickContext -> {
-                    ItemType.Item item = ItemType.get(sellItem.get(slotClickContext));
+                    ItemType.Item item = Township.getDataLoader(ItemType.class).get(sellItem.get(slotClickContext));
                     int amount = sellAmount.get(slotClickContext);
                     if (barnState.get(slotClickContext).getItem(item) < amount) return;
                     barnState.get(slotClickContext).removeAmountFromItem(item, amount);
@@ -130,7 +130,7 @@ public class BarnMenu extends TownshipView {
         if (context.getSlot() == 89) {
             if (canUpgrade(context.getPlayer())) {
                 User user = Township.getUserManager().getUser(context.getPlayer().getUniqueId());
-                BarnUpgrade newUpgrade = BarnUpdateDataLoader.get(user.getBarn().getBarnUpgrade().getId());
+                BarnUpgrade newUpgrade = Township.getDataLoader(BarnUpdateDataLoader.class).get(user.getBarn().getBarnUpgrade().getId());
                 if (newUpgrade == null) {
                     throw new NullPointerException("barn upgrade not found");
                 }
@@ -157,7 +157,7 @@ public class BarnMenu extends TownshipView {
         ItemLore.Builder storageLore = ItemLore.lore();
         barn.getItemMap().forEach((key, value) -> {
             if (value != 0) {
-                storageLore.addLine(Msg.format("<white>%s: <yellow>%d", ItemType.get(key).getName(), value));
+                storageLore.addLine(Msg.format("<white>%s: <yellow>%d", Township.getDataLoader(ItemType.class).get(key).getName(), value));
             }
         });
         storage.setData(DataComponentTypes.LORE, storageLore.build());

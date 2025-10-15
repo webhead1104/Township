@@ -7,11 +7,14 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
+import me.webhead1104.township.annotations.DependsOn;
 import me.webhead1104.township.data.TileSize;
 import me.webhead1104.township.data.objects.ConstructionMaterials;
 import me.webhead1104.township.data.objects.PurchasedBuildings;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.dataLoaders.DataLoader;
+import me.webhead1104.township.features.animals.AnimalType;
+import me.webhead1104.township.features.factories.FactoryType;
 import me.webhead1104.township.price.NoopPrice;
 import me.webhead1104.township.price.Price;
 import me.webhead1104.township.tiles.BuildingTile;
@@ -35,25 +38,15 @@ import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.*;
 
-public class BuildingType implements DataLoader {
-    private static final Map<Key, List<Building>> values = new HashMap<>();
-
-    public static Collection<List<Building>> values() {
-        return values.values();
-    }
-
-    public static List<Building> get(Key key) {
-        if (!values.containsKey(key)) {
-            throw new RuntimeException("Building does not exist! key: " + key.asString());
-        }
-        return values.get(key);
-    }
+@DependsOn({AnimalType.class, FactoryType.class})
+public class BuildingType implements DataLoader.KeyBasedDataLoader<List<BuildingType.Building>> {
+    private final Map<Key, List<Building>> values = new HashMap<>();
 
     @Nullable
     public static Building getNextBuilding(Player player, Key buildingType) {
         User user = Township.getUserManager().getUser(player.getUniqueId());
         PurchasedBuildings.Wrapper amountPurchased = user.getPurchasedBuildings().getNextBuilding(buildingType);
-        List<Building> buildings = get(buildingType);
+        List<Building> buildings = Township.getDataLoader(BuildingType.class).get(buildingType);
         if (amountPurchased.slot() == -1) return null;
 
         if (amountPurchased.slot() == -2) {
@@ -69,6 +62,22 @@ public class BuildingType implements DataLoader {
             }
             return buildings.get(amountPurchased.slot() - 1);
         }
+    }
+
+    public List<Building> get(Key key) {
+        if (!values.containsKey(key)) {
+            throw new RuntimeException("Building does not exist! key: " + key.asString());
+        }
+        return values.get(key);
+    }
+
+    @Override
+    public Collection<Key> keys() {
+        return values.keySet();
+    }
+
+    public Collection<List<Building>> values() {
+        return values.values();
     }
 
     @Override

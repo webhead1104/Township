@@ -3,6 +3,7 @@ package me.webhead1104.township.features.world.build;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.RenderContext;
+import me.webhead1104.township.Township;
 import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import org.bukkit.Material;
@@ -26,7 +27,7 @@ public class BuildMenu extends TownshipView {
     @Override
     public void onFirstRender(@NotNull RenderContext context) {
         int i = 2;
-        for (BuildMenuType.BuildMenu buildMenu : BuildMenuType.values()) {
+        for (BuildMenuType.BuildMenu buildMenu : Township.getDataLoader(BuildMenuType.class).values()) {
             context.slot(i++).onRender(slotRenderContext -> {
                 ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);
                 itemStack.setData(DataComponentTypes.ITEM_NAME, buildMenu.getMenuTitle());

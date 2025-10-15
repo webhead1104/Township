@@ -67,7 +67,7 @@ public class WorldMenu extends TownshipView {
                         if (clickContext.isShiftRightClick()) {
                             if (tile instanceof BuildingTile buildingTile) {
                                 if (buildingTile.isImmovable()) return;
-                                BuildingType.Building building = BuildingType.get(buildingTile.getBuildingType()).get(buildingTile.getBuildingSlot());
+                                BuildingType.Building building = Township.getDataLoader(BuildingType.class).get(buildingTile.getBuildingType()).get(buildingTile.getBuildingSlot());
                                 int clickedSlot = clickContext.getClickedSlot();
                                 WorldSection worldSection = Township.getUserManager().getUser(clickContext.getPlayer().getUniqueId()).getWorld().getSection(sectionState.get(clickContext));
 
@@ -127,7 +127,7 @@ public class WorldMenu extends TownshipView {
 
         ItemStack levelAndPopStack = ItemStack.of(Material.BLUE_CONCRETE);
         levelAndPopStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<aqua>Level %d", user.getLevel()));
-        if (LevelDataLoader.get(user.getLevel() + 1) != null) {
+        if (Township.getDataLoader(LevelDataLoader.class).get(user.getLevel() + 1) != null) {
             levelAndPopStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                     Msg.format("<aqua>Xp %d", user.getXp()),
                     getLevelProgressBar(user),
@@ -181,7 +181,7 @@ public class WorldMenu extends TownshipView {
     }
 
     private Component getLevelProgressBar(User user) {
-        LevelDataLoader.Level nextLevel = LevelDataLoader.get(user.getLevel() + 1);
+        LevelDataLoader.Level nextLevel = Township.getDataLoader(LevelDataLoader.class).get(user.getLevel() + 1);
         if (nextLevel != null) {
             int max = nextLevel.getXpNeeded();
             float percent = max > 0 ? Math.min(1f, Math.max(0f, (float) user.getXp() / max)) : 0f;

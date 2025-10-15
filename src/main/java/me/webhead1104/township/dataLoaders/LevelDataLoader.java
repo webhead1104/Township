@@ -10,16 +10,20 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelDataLoader implements DataLoader {
-    @Getter
-    private static final List<Level> values = new ArrayList<>();
+public class LevelDataLoader implements DataLoader.IntegerBasedDataLoader<LevelDataLoader.Level> {
+    private final List<Level> values = new ArrayList<>();
 
-    public static Level get(int i) {
+    public Level get(int i) {
         try {
             return values.get(i);
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
+    }
+
+    @Override
+    public List<Level> list() {
+        return values;
     }
 
     @Override

@@ -15,9 +15,8 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
-
-      - name: Assemble Jar
-        run: gradle compileJava
+        with:
+          cache-read-only: false
 
       - name: Run tests
-        run: gradle test
+        run: gradle test --build-cache --configuration-cache --parallel
