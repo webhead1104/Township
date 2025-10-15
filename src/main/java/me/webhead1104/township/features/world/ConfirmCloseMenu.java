@@ -16,9 +16,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class ConfirmCloseMenu extends TownshipView {
-    public ConfirmCloseMenu() {
-        super(WorldMenu.class);
-    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {

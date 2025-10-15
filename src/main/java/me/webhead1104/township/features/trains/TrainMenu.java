@@ -11,7 +11,6 @@ import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Trains;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.dataLoaders.ItemType;
-import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
@@ -25,10 +24,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TrainMenu extends TownshipView {
-
-    public TrainMenu() {
-        super(WorldMenu.class);
-    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {

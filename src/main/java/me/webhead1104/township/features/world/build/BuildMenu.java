@@ -4,7 +4,6 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemRarity;
@@ -12,10 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class BuildMenu extends TownshipView {
-    public BuildMenu() {
-        super(WorldMenu.class);
-    }
-
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
         config.scheduleUpdate(20);

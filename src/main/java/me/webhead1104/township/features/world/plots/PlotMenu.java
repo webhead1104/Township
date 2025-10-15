@@ -11,7 +11,6 @@ import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Plot;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.data.objects.World;
-import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.tiles.PlotTile;
 import me.webhead1104.township.utils.Msg;
@@ -29,10 +28,6 @@ public class PlotMenu extends TownshipView {
     private final MutableState<Plot> plot = initialState();
     private final Map<Integer, PlotType> plotTypes = new HashMap<>();
     private PlotType selectedPlotType = PlotType.NONE;
-
-    public PlotMenu() {
-        super(WorldMenu.class);
-    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {

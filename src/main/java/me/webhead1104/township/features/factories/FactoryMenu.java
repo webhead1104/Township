@@ -11,7 +11,6 @@ import me.webhead1104.township.data.objects.Barn;
 import me.webhead1104.township.data.objects.Factories;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.dataLoaders.ItemType;
-import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
@@ -28,12 +27,7 @@ import java.util.List;
 
 public class FactoryMenu extends TownshipView {
     private final State<Key> keyState = initialState();
-
     private final State<FactoryType.Factory> factoryState = computedState(context -> Township.getDataLoader(FactoryType.class).get(keyState.get(context)));
-
-    public FactoryMenu() {
-        super(WorldMenu.class);
-    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {

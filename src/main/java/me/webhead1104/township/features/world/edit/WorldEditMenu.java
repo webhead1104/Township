@@ -30,10 +30,6 @@ import java.util.Map;
 public class WorldEditMenu extends TownshipView {
     private final State<Integer> sectionState = initialState();
 
-    public WorldEditMenu() {
-        super(WorldMenu.class);
-    }
-
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
         config.scheduleUpdate(20);

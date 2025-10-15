@@ -9,7 +9,6 @@ import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Animals;
 import me.webhead1104.township.data.objects.User;
-import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
@@ -23,10 +22,6 @@ import java.util.List;
 public class AnimalMenu extends TownshipView {
     private final State<Key> keyState = initialState();
     private final State<AnimalType.Animal> animalState = computedState(context -> Township.getDataLoader(AnimalType.class).get(keyState.get(context)));
-
-    public AnimalMenu() {
-        super(WorldMenu.class);
-    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {

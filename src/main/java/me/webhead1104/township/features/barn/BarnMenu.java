@@ -14,7 +14,6 @@ import me.webhead1104.township.data.objects.Barn;
 import me.webhead1104.township.data.objects.BarnUpgrade;
 import me.webhead1104.township.data.objects.User;
 import me.webhead1104.township.dataLoaders.ItemType;
-import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
@@ -34,10 +33,6 @@ public class BarnMenu extends TownshipView {
     private final MutableIntState sellAmount = mutableState(1);
     private final MutableState<Key> sellItem = mutableState(Township.noneKey);
     private final State<Barn> barnState = computedState(context -> userState.get(context).getBarn());
-
-    public BarnMenu() {
-        super(WorldMenu.class);
-    }
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
