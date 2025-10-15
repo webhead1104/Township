@@ -17,7 +17,7 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 import java.util.*;
 
 public class ItemType implements DataLoader.KeyBasedDataLoader<ItemType.Item> {
-    public final Map<Key, Item> values = new HashMap<>();
+    private final Map<Key, Item> values = new HashMap<>();
 
     public Item get(Key key) {
         return values.get(key);
