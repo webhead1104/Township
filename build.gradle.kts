@@ -49,23 +49,27 @@ tasks.withType<Javadoc> {
 }
 
 val generateClassloader = tasks.register("generateClassloader") {
-
     val outputDir: File = file("$projectDir/build/generated/sources/classloader")
     val packageDir = File(outputDir, "me/webhead1104/township/utils")
     val classloaderFile = File(packageDir, "GeneratedClassloader.java")
+
+    val deps = provider {
+        configurations.getByName("compileOnly")
+            .dependencies
+            .filterIsInstance<ModuleDependency>()
+            .filter { it.group != "io.papermc.paper" && it.group != "net.strokkur" }
+            .map { "${it.group}:${it.name}:${it.version}" }
+    }
+
+    inputs.property("dependencies", deps)
+    outputs.file(classloaderFile)
 
     doLast {
         packageDir.mkdirs()
         outputDir.mkdirs()
         classloaderFile.createNewFile()
 
-        val deps = configurations.getByName("compileOnly")
-            .dependencies
-            .filterIsInstance<ModuleDependency>()
-            .filter { it.group != "io.papermc.paper" && it.group != "net.strokkur" }
-            .map { "${it.group}:${it.name}:${it.version}" }
-
-        val depsString: String = deps.joinToString("\n                    ") {
+        val depsString: String = deps.get().joinToString("\n                    ") {
             "resolver.addDependency(new Dependency(new DefaultArtifact(\"$it\"), null));"
         }
 
