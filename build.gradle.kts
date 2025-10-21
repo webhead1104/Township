@@ -24,7 +24,7 @@ dependencies {
     implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.5")
     implementation("io.github.classgraph:classgraph:4.8.184")
 
-    compileOnly("net.strokkur:commands-annotations:1.4.2")
+    compileOnly("net.strokkur:commands-annotations:1.5.0")
     annotationProcessor("net.strokkur:commands-processor:1.4.2")
 
     testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.87.0")
