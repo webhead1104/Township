@@ -127,7 +127,6 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
         private int populationIncrease;
         @Setting("max_population_increase")
         private int maxPopulationIncrease;
-        @Nullable
         @Setting("price")
         private Price price;
         @Nullable
@@ -165,9 +164,11 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
             ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);
             itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(name));
 
+            User user = Township.getUserManager().getUser(player.getUniqueId());
+
             List<Component> lore = new ArrayList<>();
             lore.add(Component.empty());
-            lore.add(Msg.format("<green>Loading..."));
+            lore.add(Msg.format("<green>%s/%s purchased", user.getPurchasedBuildings().amountPurchased(key), Township.getDataLoader(BuildingType.class).get(key).size()));
             if (populationIncrease == 0 && maxPopulationIncrease > 0) {
                 lore.add(Component.empty());
                 lore.add(Msg.format(String.format("<red>+%s Max Population", maxPopulationIncrease)));
@@ -181,27 +182,24 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
                 lore.add(Msg.format("<white>So you can try and place it again!"));
             } else {
                 if (levelNeeded > 0) {
-                    if (Township.getUserManager().getUser(player.getUniqueId()).getLevel() >= levelNeeded) {
+                    if (user.getLevel() >= levelNeeded) {
                         lore.add(Component.empty());
-                        lore.add(Msg.format("<blue>Level needed<white>: <green>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getLevel(), levelNeeded));
+                        lore.add(Msg.format("<blue>Level needed<white>: <green>%s/%s", user.getLevel(), levelNeeded));
                     } else {
                         lore.add(Component.empty());
-                        lore.add(Msg.format("<blue>Level needed<white>: <red>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getLevel(), levelNeeded));
+                        lore.add(Msg.format("<blue>Level needed<white>: <red>%s/%s", user.getLevel(), levelNeeded));
                     }
                 }
                 if (populationNeeded > 0) {
                     lore.add(Component.empty());
-                    if (Township.getUserManager().getUser(player.getUniqueId()).getPopulation() >= populationNeeded) {
-                        lore.add(Msg.format("<red>Population needed<white>: <green>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getPopulation(), populationNeeded));
+                    if (user.getPopulation() >= populationNeeded) {
+                        lore.add(Msg.format("<red>Population needed<white>: <green>%s/%s", user.getPopulation(), populationNeeded));
                     } else {
-                        lore.add(Msg.format("<red>Population needed<white>: <red>%s/%s", Township.getUserManager().getUser(player.getUniqueId()).getPopulation(), populationNeeded));
+                        lore.add(Msg.format("<red>Population needed<white>: <red>%s/%s", user.getPopulation(), populationNeeded));
                     }
                 }
             }
             lore.add(Component.empty());
-            if (price == null) {
-                throw new NullPointerException("Price is null");
-            }
             lore.add(price.getComponent(player));
 
             itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(lore));

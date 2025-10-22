@@ -2,7 +2,6 @@ package me.webhead1104.township.features.world.build;
 
 import com.google.common.collect.ImmutableMap;
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import io.papermc.paper.datacomponent.item.ItemLore;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.component.Pagination;
 import me.devnatan.inventoryframework.context.RenderContext;
@@ -15,14 +14,9 @@ import me.webhead1104.township.features.world.WorldMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class BuildMenuSelectBuildingMenu extends TownshipView {
     private final State<Key> keyState = initialState();
@@ -37,9 +31,6 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
         }
 
         ItemStack itemStack = building.getItemStack(context.getPlayer());
-        List<Component> components = new ArrayList<>(Objects.requireNonNull(itemStack.getData(DataComponentTypes.LORE)).lines());
-        components.set(1, Msg.format("<green>%s/%s purchased", userState.get(context).getPurchasedBuildings().amountPurchased(buildingType), Township.getDataLoader(BuildingType.class).get(buildingType).size()));
-        itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(components));
         builder.withItem(itemStack);
         builder.onClick(slotClickContext -> {
             if (building.isNeedToBePlaced()) {
