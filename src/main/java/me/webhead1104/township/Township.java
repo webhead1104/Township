@@ -58,8 +58,8 @@ public class Township extends JavaPlugin {
     @Getter
     private static Township instance;
 
-    public static Key key(@KeyPattern String string) {
-        return Key.key("township", string);
+    public static Key key(@KeyPattern.Value String value) {
+        return Key.key("township", value);
     }
 
     public static <T extends DataLoader> T getDataLoader(Class<T> dataLoaderClass) {
