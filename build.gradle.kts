@@ -27,7 +27,7 @@ dependencies {
     compileOnly("net.strokkur:commands-annotations:1.5.0")
     annotationProcessor("net.strokkur:commands-processor:1.5.0")
 
-    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.87.0")
+    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.88.0")
     testImplementation("org.junit.jupiter:junit-jupiter:6.0.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.0")
     testImplementation("org.spongepowered:configurate-gson:4.2.0")
