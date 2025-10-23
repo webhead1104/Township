@@ -55,7 +55,8 @@ public class Utils {
         return itemStack;
     }
 
-    public Component addResourceLine(String resourceName, int current, int required) {
+    public Component addResourceLine(String resourceName, int current, int required, Object... args) {
+        resourceName = resourceName.formatted(args);
         String color = current >= required ? "<green>" : "<red>";
         return Msg.format("%s<white>: %s%d/%d", resourceName, color, current, required);
     }
