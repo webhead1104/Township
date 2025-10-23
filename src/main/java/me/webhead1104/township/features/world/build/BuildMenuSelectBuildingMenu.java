@@ -97,7 +97,6 @@ public class BuildMenuSelectBuildingMenu extends TownshipView {
         config.layout(
                 "<BBBBBBB>",
                 "b********");
-        initialData = null;
     }
 
     @Override

@@ -42,7 +42,6 @@ public class WorldMenu extends TownshipView {
         config.cancelInteractions();
         config.size(6);
         config.title(Msg.format("World Menu"));
-        initialData = null;
     }
 
     @Override

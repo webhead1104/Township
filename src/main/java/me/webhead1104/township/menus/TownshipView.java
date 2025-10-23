@@ -20,6 +20,9 @@ public class TownshipView extends View {
 
     public TownshipView(Class<? extends View> closeClass) {
         this.closeClass = mutableState(closeClass);
+        if (!closeClass.equals(WorldMenu.class)) {
+            initialData = null;
+        }
     }
 
     @Override
