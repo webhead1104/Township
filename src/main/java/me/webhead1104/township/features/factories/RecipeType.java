@@ -103,8 +103,8 @@ public class RecipeType implements DataLoader.KeyBasedDataLoader<RecipeType.Reci
 
         public boolean hasRequiredItems(Barn barn) {
             AtomicBoolean hasRequiredItems = new AtomicBoolean(true);
-            ingredients.forEach((key, amount) -> {
-                if (barn.getItem(key) < amount) {
+            ingredients.forEach((item, amount) -> {
+                if (barn.getItem(item.key()) < amount) {
                     hasRequiredItems.set(false);
                 }
             });

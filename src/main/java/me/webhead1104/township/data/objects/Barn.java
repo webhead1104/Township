@@ -42,17 +42,9 @@ public class Barn {
         }
     }
 
-    public int getItem(ItemType.Item item) {
-        return getItem(item.key());
-    }
-
     public int getItem(Key key) {
         remove0Item(key);
         return itemMap.getOrDefault(key, 0);
-    }
-
-    public void setItem(ItemType.Item item, int amount) {
-        setItem(item.key(), amount);
     }
 
     public void setItem(Key key, int value) {
@@ -60,17 +52,9 @@ public class Barn {
         remove0Item(key);
     }
 
-    public void addAmountToItem(ItemType.Item item, int amount) {
-        addAmountToItem(item.key(), amount);
-    }
-
     public void addAmountToItem(Key key, int amount) {
         itemMap.put(key, getItem(key) + amount);
         remove0Item(key);
-    }
-
-    public void removeAmountFromItem(ItemType.Item item, int amount) {
-        removeAmountFromItem(item.key(), amount);
     }
 
     public void removeAmountFromItem(Key key, int amount) {

@@ -62,7 +62,7 @@ public class AnimalMenu extends TownshipView {
 
             context.slot(slot + 9).withItem(animalType.getProduct().getItemStack())
                     .displayIf(animal::isProduct).updateOnClick().onClick(slotClickContext -> {
-                        user.getBarn().addAmountToItem(animalType.getProduct(), 1);
+                        user.getBarn().addAmountToItem(animalType.getProduct().key(), 1);
                         user.addXp(animalType.getClaimXp());
                         animal.setProduct(false);
                     });

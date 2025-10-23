@@ -58,7 +58,7 @@ public class FactoryMenu extends TownshipView {
                 slotRenderContext.setItem(stack);
             }).updateOnClick().onClick(slotClickContext -> {
                 if (!factory.canAddWaitingOrWorkingOn() || !recipe.hasRequiredItems(user.getBarn())) return;
-                recipe.getIngredients().forEach((item, value) -> user.getBarn().removeAmountFromItem(item, value));
+                recipe.getIngredients().forEach((item, value) -> user.getBarn().removeAmountFromItem(item.key(), value));
                 if (factory.canSetWorkingOn()) {
                     factory.setWorkingOn(recipe.getKey());
                     factory.setInstant(Instant.now().plusSeconds(recipe.getTime().getSeconds()));
@@ -135,7 +135,7 @@ public class FactoryMenu extends TownshipView {
                 slotRenderContext.setItem(stack);
             }).onClick(slotClickContext -> {
                 if (factory.getCompleted(finalI).equals(Township.noneKey)) return;
-                user.getBarn().addAmountToItem(factory.getCompleted(finalI), 1);
+                user.getBarn().addAmountToItem(factory.getCompleted(finalI).key(), 1);
                 user.addXp(factory.getCompleted(finalI).getXpGiven());
                 factory.setCompleted(finalI, Township.noneKey);
                 if (factory.getInstant().equals(Instant.EPOCH) && !factory.getWorkingOn().equals(Township.noneKey)) {

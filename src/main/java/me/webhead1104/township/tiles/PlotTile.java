@@ -58,7 +58,7 @@ public class PlotTile extends BuildingTile {
             return true;
         } else if (plot.isClaimable()) {
             plot.setClaimable(false);
-            Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getBarn().addAmountToItem(plot.getPlotType().getItem(), 1);
+            Township.getUserManager().getUser(context.getPlayer().getUniqueId()).getBarn().addAmountToItem(plot.getPlotType().getItem().key(), 1);
             plot.setPlotType(PlotType.NONE);
         }
         return false;

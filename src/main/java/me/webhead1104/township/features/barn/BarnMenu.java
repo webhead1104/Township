@@ -82,8 +82,8 @@ public class BarnMenu extends TownshipView {
                 }).onClick(slotClickContext -> {
                     ItemType.Item item = Township.getDataLoader(ItemType.class).get(sellItem.get(slotClickContext));
                     int amount = sellAmount.get(slotClickContext);
-                    if (barnState.get(slotClickContext).getItem(item) < amount) return;
-                    barnState.get(slotClickContext).removeAmountFromItem(item, amount);
+                    if (barnState.get(slotClickContext).getItem(item.key()) < amount) return;
+                    barnState.get(slotClickContext).removeAmountFromItem(item.key(), amount);
                     User user = userState.get(slotClickContext);
                     user.setCoins(user.getCoins() + item.getSellPrice() * amount);
                     sellItem.set(Township.noneKey, slotClickContext);
