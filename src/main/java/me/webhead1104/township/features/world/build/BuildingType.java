@@ -175,6 +175,9 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
             } else if (populationIncrease > 0 && maxPopulationIncrease == 0) {
                 lore.add(Component.empty());
                 lore.add(Msg.format(String.format("<red>+%s Population", populationIncrease)));
+                if (user.getPopulation() + populationIncrease > user.getMaxPopulation()) {
+                    lore.add(Msg.format("<red>Need <red>Max Population<white>: %d", (user.getPopulation() + populationIncrease) - user.getMaxPopulation()));
+                }
             }
             if (needToBePlaced) {
                 lore.add(Component.empty());

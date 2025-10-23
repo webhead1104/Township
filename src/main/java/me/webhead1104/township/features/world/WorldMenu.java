@@ -130,12 +130,12 @@ public class WorldMenu extends TownshipView {
             levelAndPopStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                     Msg.format("<aqua>Xp %d", user.getXp()),
                     getLevelProgressBar(user),
-                    Msg.format("<red>Population %d", user.getPopulation())
+                    Msg.format("<red>Population %d/%d", user.getPopulation(), user.getMaxPopulation())
             )));
         } else {
             levelAndPopStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(
                     Msg.format("<dark_red>You have reached the max level!"),
-                    Msg.format("<red>Population " + user.getPopulation())
+                    Msg.format("<red>Population %d/%d", user.getPopulation(), user.getMaxPopulation())
             )));
         }
         player.getInventory().setItem(9, levelAndPopStack);
