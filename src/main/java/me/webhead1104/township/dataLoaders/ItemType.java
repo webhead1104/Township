@@ -59,9 +59,6 @@ public class ItemType implements DataLoader.KeyBasedDataLoader<ItemType.Item> {
         @Required
         @Setting("sell_price")
         private int sellPrice;
-        @Required
-        @Setting("xp_given")
-        private int xpGiven;
         private transient ItemStack itemStack;
         private transient String name;
 

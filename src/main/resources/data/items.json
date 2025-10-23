@@ -2,139 +2,116 @@
   {
     "key": "none",
     "material": "minecraft:barrier",
-    "sell_price": -1,
-    "xp_given": -1
+    "sell_price": -1
   },
   {
     "key": "wheat",
     "material": "minecraft:wheat",
-    "sell_price": 1,
-    "xp_given": 1
+    "sell_price": 1
   },
   {
     "key": "corn",
     "material": "minecraft:player_head",
-    "sell_price": 3,
-    "xp_given": 1
+    "sell_price": 3
   },
   {
     "key": "carrot",
     "material": "minecraft:carrot",
-    "sell_price": 5,
-    "xp_given": 2
+    "sell_price": 5
   },
   {
     "key": "sugarcane",
     "material": "minecraft:sugar_cane",
-    "sell_price": 7,
-    "xp_given": 3
+    "sell_price": 7
   },
   {
     "key": "cotton",
     "material": "minecraft:player_head",
-    "sell_price": 9,
-    "xp_given": 4
+    "sell_price": 9
   },
   {
     "key": "bread",
     "material": "minecraft:bread",
-    "sell_price": 5,
-    "xp_given": 2
+    "sell_price": 5
   },
   {
     "key": "cookie",
     "material": "minecraft:cookie",
-    "sell_price": 44,
-    "xp_given": 19
+    "sell_price": 44
   },
   {
     "key": "bagel",
     "material": "minecraft:player_head",
-    "sell_price": 55,
-    "xp_given": 24
+    "sell_price": 55
   },
   {
     "key": "cream",
     "material": "minecraft:player_head",
-    "sell_price": 12,
-    "xp_given": 5
+    "sell_price": 12
   },
   {
     "key": "cheese",
     "material": "minecraft:player_head",
-    "sell_price": 25,
-    "xp_given": 11
+    "sell_price": 25
   },
   {
     "key": "sugar",
     "material": "minecraft:sugar",
-    "sell_price": 14,
-    "xp_given": 6
+    "sell_price": 14
   },
   {
     "key": "cotton_fabric",
     "material": "minecraft:player_head",
-    "sell_price": 37,
-    "xp_given": 16
+    "sell_price": 37
   },
   {
     "key": "yarn",
     "material": "minecraft:string",
-    "sell_price": 61,
-    "xp_given": 26
+    "sell_price": 61
   },
   {
     "key": "milk",
     "material": "minecraft:milk_bucket",
-    "sell_price": 7,
-    "xp_given": 3
+    "sell_price": 7
   },
   {
     "key": "egg",
     "material": "minecraft:egg",
-    "sell_price": 10,
-    "xp_given": 4
+    "sell_price": 10
   },
   {
     "key": "wool",
     "material": "minecraft:white_wool",
-    "sell_price": 15,
-    "xp_given": 6
+    "sell_price": 15
   },
   {
     "key": "paint",
     "material": "minecraft:player_head",
-    "sell_price": 100,
-    "xp_given": 0
+    "sell_price": 100
   },
   {
     "key": "hammer",
     "material": "minecraft:player_head",
-    "sell_price": 100,
-    "xp_given": 0
+    "sell_price": 100
   },
   {
     "key": "nail",
     "material": "minecraft:player_head",
-    "sell_price": 100,
-    "xp_given": 0
+    "sell_price": 100
   },
   {
     "key": "cow_feed",
     "material": "minecraft:player_head",
-    "sell_price": 1,
-    "xp_given": 0
+    "sell_price": 1
   },
   {
     "key": "chicken_feed",
     "material": "minecraft:player_head",
-    "sell_price": 4,
-    "xp_given": 0
+    "sell_price": 4
   },
   {
     "key": "sheep_feed",
     "material": "minecraft:player_head",
-    "sell_price": 5,
-    "xp_given": 2
+    "sell_price": 5
   }
 ]
