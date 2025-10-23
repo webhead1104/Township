@@ -154,13 +154,7 @@ public class FactoryMenu extends TownshipView {
 
     private ItemLore calculateLore(RecipeType.Recipe recipe, Barn barn) {
         List<Component> lore = new ArrayList<>();
-        recipe.getIngredients().forEach((item, value) -> {
-            if (barn.getItem(item) >= value) {
-                lore.add(Msg.format("<white>%s: <green>%d/%d", item.getName(), barn.getItem(item), value));
-            } else {
-                lore.add(Msg.format("<white>%s: <red>%d/%d", item.getName(), barn.getItem(item), value));
-            }
-        });
+        recipe.getIngredients().forEach((item, amount) -> lore.add(Utils.addResourceLine("<white>%s", barn.getItem(item.key()), amount, item.getName())));
         return ItemLore.lore(lore);
     }
 }
