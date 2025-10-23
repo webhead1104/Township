@@ -10,7 +10,6 @@ import me.devnatan.inventoryframework.context.RenderContext;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Trains;
 import me.webhead1104.township.data.objects.User;
-import me.webhead1104.township.dataLoaders.ItemType;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
@@ -135,7 +134,7 @@ public class TrainMenu extends TownshipView {
                         int amount = trainCar.getGiveItemAmount();
                         if (user.getBarn().getItem(itemType) >= amount) {
                             user.getBarn().removeAmountFromItem(itemType, amount);
-                            user.addXp(Township.getDataLoader(ItemType.class).get(itemType).getXpGiven());
+                            user.addXp(4);
                             trainCar.setGiveItemAmount(0);
                             trainCar.setGiveItemType(Township.noneKey);
                             AtomicBoolean good = new AtomicBoolean(true);
