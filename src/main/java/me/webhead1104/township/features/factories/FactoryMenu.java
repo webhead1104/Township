@@ -10,7 +10,6 @@ import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.Barn;
 import me.webhead1104.township.data.objects.Factories;
 import me.webhead1104.township.data.objects.User;
-import me.webhead1104.township.dataLoaders.ItemType;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.utils.Msg;
 import me.webhead1104.township.utils.Utils;
@@ -122,15 +121,15 @@ public class FactoryMenu extends TownshipView {
         for (int i = 0; i < 3; ++i) {
             int finalI = i;
             context.slot(completedSlot++).onRender(slotRenderContext -> {
-                ItemType.Item itemType = factory.getCompleted(finalI);
-                if (itemType.equals(Township.noneKey)) {
+                RecipeType.Recipe recipe = factory.getCompleted(finalI);
+                if (recipe.equals(Township.noneKey)) {
                     ItemStack stack = ItemStack.of(Material.CHEST);
                     stack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<red>Nothing is being made right now"));
                     stack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<grey>Maybe you should make something!"))));
                     slotRenderContext.setItem(stack);
                     return;
                 }
-                ItemStack stack = itemType.getItemStack();
+                ItemStack stack = recipe.getResult().getItemStack();
                 stack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<green>Click to claim!"))));
                 slotRenderContext.setItem(stack);
             }).onClick(slotClickContext -> {

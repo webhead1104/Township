@@ -3,7 +3,6 @@ package me.webhead1104.township.data.objects;
 import lombok.Getter;
 import lombok.Setter;
 import me.webhead1104.township.Township;
-import me.webhead1104.township.dataLoaders.ItemType;
 import me.webhead1104.township.features.factories.FactoryType;
 import me.webhead1104.township.features.factories.RecipeType;
 import net.kyori.adventure.key.Key;
@@ -59,8 +58,8 @@ public class Factories {
             completed.put(slot, item);
         }
 
-        public ItemType.Item getCompleted(int slot) {
-            return Township.getDataLoader(ItemType.class).get(completed.get(slot));
+        public RecipeType.Recipe getCompleted(int slot) {
+            return Township.getDataLoader(RecipeType.class).get(completed.get(slot));
         }
 
         public RecipeType.Recipe getWorkingOn() {
