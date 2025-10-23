@@ -20,14 +20,14 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.9-R0.1-SNAPSHOT")
     compileOnly("org.spongepowered:configurate-gson:4.2.0")
-    implementation("me.devnatan:inventory-framework-platform-paper:3.5.4")
-    implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.4")
+    implementation("me.devnatan:inventory-framework-platform-paper:3.5.5")
+    implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.5")
     implementation("io.github.classgraph:classgraph:4.8.184")
 
-    compileOnly("net.strokkur:commands-annotations:1.4.2")
-    annotationProcessor("net.strokkur:commands-processor:1.4.2")
+    compileOnly("net.strokkur:commands-annotations:1.5.0")
+    annotationProcessor("net.strokkur:commands-processor:1.5.0")
 
-    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.85.0")
+    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.87.0")
     testImplementation("org.junit.jupiter:junit-jupiter:6.0.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.0")
     testImplementation("org.spongepowered:configurate-gson:4.2.0")
