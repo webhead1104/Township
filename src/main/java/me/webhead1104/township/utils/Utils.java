@@ -57,6 +57,6 @@ public class Utils {
 
     public Component addResourceLine(String resourceName, int current, int required) {
         String color = current >= required ? "<green>" : "<red>";
-        return Msg.format("%s: %s%d/%d", resourceName, color, current, required);
+        return Msg.format("%s<white>: %s%d/%d", resourceName, color, current, required);
     }
 }
