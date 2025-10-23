@@ -1,6 +1,7 @@
 package me.webhead1104.township.features.factories;
 
 import com.google.common.base.Stopwatch;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.township.Township;
@@ -9,7 +10,9 @@ import me.webhead1104.township.data.objects.Barn;
 import me.webhead1104.township.dataLoaders.DataLoader;
 import me.webhead1104.township.dataLoaders.ItemType;
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.Keyed;
 import org.bukkit.Material;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
@@ -47,13 +50,13 @@ public class RecipeType implements DataLoader.KeyBasedDataLoader<RecipeType.Reci
         try {
             for (FactoryType.Factory factory : Township.getDataLoader(FactoryType.class).values()) {
                 for (Recipe recipe : factory.getRecipes()) {
-                    values.put(recipe.getKey(), recipe);
+                    values.put(recipe.key(), recipe);
                 }
             }
 
             Recipe noneRecipe = new Recipe();
             noneRecipe.key = Township.noneKey;
-            values.put(noneRecipe.getKey(), noneRecipe);
+            values.put(noneRecipe.key(), noneRecipe);
 
             Township.logger.info("Loaded {} recipes in {}ms!", values.size(), stopwatch.stop().elapsed().toMillis());
 
@@ -65,9 +68,10 @@ public class RecipeType implements DataLoader.KeyBasedDataLoader<RecipeType.Reci
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
-    public static class Recipe {
+    public static class Recipe implements Keyed {
         private final transient Map<ItemType.Item, Integer> ingredients = new HashMap<>();
         @Required
+        @Getter(value = AccessLevel.NONE)
         @Setting("key")
         private Key key;
         @Required
@@ -113,6 +117,11 @@ public class RecipeType implements DataLoader.KeyBasedDataLoader<RecipeType.Reci
 
         public boolean equals(Key key) {
             return Objects.equals(this.key, key);
+        }
+
+        @Override
+        public @NotNull Key key() {
+            return key;
         }
     }
 }

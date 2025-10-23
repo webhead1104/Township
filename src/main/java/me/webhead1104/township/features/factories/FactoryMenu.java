@@ -60,10 +60,10 @@ public class FactoryMenu extends TownshipView {
                 if (!factory.canAddWaitingOrWorkingOn() || !recipe.hasRequiredItems(user.getBarn())) return;
                 recipe.getIngredients().forEach((item, value) -> user.getBarn().removeAmountFromItem(item.key(), value));
                 if (factory.canSetWorkingOn()) {
-                    factory.setWorkingOn(recipe.getKey());
+                    factory.setWorkingOn(recipe.key());
                     factory.setInstant(Instant.now().plusSeconds(recipe.getTime().getSeconds()));
                 } else if (factory.canAddWaiting()) {
-                    factory.addWaiting(recipe.getKey());
+                    factory.addWaiting(recipe.key());
                 }
                 context.update();
             });
@@ -94,7 +94,7 @@ public class FactoryMenu extends TownshipView {
                     factory.setWorkingOn(Township.noneKey);
                     if (factory.hasWaiting()) {
                         RecipeType.Recipe recipe = factory.removeFirstWaiting();
-                        factory.setWorkingOn(recipe.getKey());
+                        factory.setWorkingOn(recipe.key());
                         factory.setInstant(Instant.now().plusSeconds(recipe.getTime().getSeconds()));
                     }
                 }
@@ -143,7 +143,7 @@ public class FactoryMenu extends TownshipView {
                     factory.setWorkingOn(Township.noneKey);
                     if (factory.hasWaiting()) {
                         RecipeType.Recipe recipe = factory.removeFirstWaiting();
-                        factory.setWorkingOn(recipe.getKey());
+                        factory.setWorkingOn(recipe.key());
                         factory.setInstant(Instant.now().plusSeconds(recipe.getTime().getSeconds()));
                     }
                 }
