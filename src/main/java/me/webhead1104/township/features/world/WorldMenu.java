@@ -11,7 +11,6 @@ import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.township.Township;
 import me.webhead1104.township.data.objects.User;
-import me.webhead1104.township.data.objects.World;
 import me.webhead1104.township.data.objects.WorldSection;
 import me.webhead1104.township.dataLoaders.LevelDataLoader;
 import me.webhead1104.township.features.world.build.BuildMenu;
@@ -20,6 +19,7 @@ import me.webhead1104.township.features.world.edit.WorldEditMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.tiles.BuildingTile;
 import me.webhead1104.township.tiles.StaticWorldTile;
+import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -54,11 +54,13 @@ public class WorldMenu extends TownshipView {
     public void onFirstRender(@NotNull RenderContext context) {
         Player player = context.getPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());
-        World world = user.getWorld();
-        world.getSection(sectionState.get(context)).getSlotMap().forEach((key, tile) -> {
-            tile.onLoad(world.getSection(sectionState.get(context)), key);
-            context.slot(key).updateOnClick().onUpdate(slotContext -> {
-                        if (tile.onUpdate(slotContext, world.getSection(sectionState.get(slotContext)), key)) {
+        WorldSection worldSection = user.getWorld().getSection(sectionState.get(context));
+        for (int i = 0; i < 54; i++) {
+            int slot = i;
+            Tile tile = worldSection.getSlot(slot);
+            tile.onLoad(worldSection, slot);
+            context.slot(slot).updateOnClick().onUpdate(slotContext -> {
+                        if (tile.onUpdate(slotContext, worldSection, slot)) {
                             openBackMenu.set(false, slotContext);
                         }
                     })
@@ -68,8 +70,6 @@ public class WorldMenu extends TownshipView {
                                 if (buildingTile.isImmovable()) return;
                                 BuildingType.Building building = Township.getDataLoader(BuildingType.class).get(buildingTile.getBuildingType()).get(buildingTile.getBuildingSlot());
                                 int clickedSlot = clickContext.getClickedSlot();
-                                WorldSection worldSection = Township.getUserManager().getUser(clickContext.getPlayer().getUniqueId()).getWorld().getSection(sectionState.get(clickContext));
-
                                 int anchor = WorldUtils.findAnchor(clickedSlot, building.getSize(), worldSection, buildingTile);
 
                                 if (anchor >= 0) {
@@ -116,7 +116,7 @@ public class WorldMenu extends TownshipView {
                             openBackMenu.set(false, clickContext);
                         }
                     });
-        });
+        }
 
         WorldUtils.applyArrows(player, sectionState.get(context));
 

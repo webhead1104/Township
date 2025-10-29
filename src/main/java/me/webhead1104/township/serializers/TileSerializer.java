@@ -1,5 +1,6 @@
 package me.webhead1104.township.serializers;
 
+import me.webhead1104.township.tiles.ExpansionTile;
 import me.webhead1104.township.tiles.Tile;
 import org.apache.commons.lang3.ClassUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -43,6 +44,10 @@ public class TileSerializer implements TypeSerializer<Tile> {
 
     @Override
     public Tile deserialize(@NotNull Type type, @NotNull ConfigurationNode node) throws SerializationException {
+        if (node.virtual() || node.empty()) {
+            return new ExpansionTile();
+        }
+
         if (node.node(CLASS_KEY).getString() == null) {
             throw new SerializationException("Cannot deserialize a Tile without a class name!");
         }
@@ -197,6 +202,10 @@ public class TileSerializer implements TypeSerializer<Tile> {
     public void serialize(@NotNull Type type, @Nullable Tile obj, @NotNull ConfigurationNode node) throws SerializationException {
         if (obj == null) {
             throw new SerializationException("Cannot serialize a null Tile!");
+        }
+
+        if (obj instanceof ExpansionTile) {
+            return;
         }
 
         Class<?> tileClass = obj.getClass();

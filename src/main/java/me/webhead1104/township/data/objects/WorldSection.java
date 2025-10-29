@@ -50,6 +50,9 @@ public class WorldSection {
     }
 
     public Tile getSlot(int slot) {
-        return slotMap.get(slot);
+        if (slotMap.containsKey(slot)) {
+            return slotMap.get(slot);
+        }
+        return new ExpansionTile();
     }
 }
