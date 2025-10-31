@@ -28,8 +28,8 @@ dependencies {
     annotationProcessor("net.strokkur:commands-processor:1.5.0")
 
     testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.91.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:6.0.0")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")
     testImplementation("org.spongepowered:configurate-gson:4.2.0")
     testImplementation("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
 }
