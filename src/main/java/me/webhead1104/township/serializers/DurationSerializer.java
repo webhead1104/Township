@@ -1,17 +1,18 @@
 package me.webhead1104.township.serializers;
 
+import com.google.errorprone.annotations.Keep;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
-import org.spongepowered.configurate.serialize.TypeSerializer;
 
 import java.lang.reflect.Type;
 import java.time.Duration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DurationSerializer implements TypeSerializer<Duration> {
+@Keep
+public class DurationSerializer extends TownshipSerializer<Duration> {
 
     private static final Pattern DURATION_PATTERN = Pattern.compile(
             "(?:(\\d+)\\s*d)?\\s*" +

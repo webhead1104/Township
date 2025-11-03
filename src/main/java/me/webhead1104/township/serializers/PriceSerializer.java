@@ -1,16 +1,17 @@
 package me.webhead1104.township.serializers;
 
+import com.google.errorprone.annotations.Keep;
 import me.webhead1104.township.price.CoinPrice;
 import me.webhead1104.township.price.Price;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
-import org.spongepowered.configurate.serialize.TypeSerializer;
 
 import java.lang.reflect.Type;
 
-public class PriceSerializer implements TypeSerializer<Price> {
+@Keep
+public class PriceSerializer extends TownshipSerializer<Price> {
     @Override
     public Price deserialize(@NotNull Type t, @NotNull ConfigurationNode node)
             throws SerializationException {

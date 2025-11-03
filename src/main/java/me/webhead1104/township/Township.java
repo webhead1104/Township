@@ -8,45 +8,38 @@ import me.devnatan.inventoryframework.ViewFrame;
 import me.webhead1104.township.annotations.DependsOn;
 import me.webhead1104.township.commands.TownshipCommandBrigadier;
 import me.webhead1104.township.data.Database;
-import me.webhead1104.township.data.TileSize;
 import me.webhead1104.township.dataLoaders.DataLoader;
 import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.InventoryManager;
 import me.webhead1104.township.managers.UserManager;
-import me.webhead1104.township.price.Price;
-import me.webhead1104.township.serializers.*;
-import me.webhead1104.township.tiles.Tile;
+import me.webhead1104.township.serializers.TownshipSerializer;
 import me.webhead1104.township.utils.ClassGraphUtils;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
 
-import java.time.Duration;
-import java.time.Instant;
+import java.io.File;
 import java.util.*;
 
 @NoArgsConstructor
 public class Township extends JavaPlugin {
-
-    public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder().defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
-        builder.register(Instant.class, new InstantSerializer());
-        builder.register(Duration.class, new DurationSerializer());
-        builder.register(Key.class, new KeySerializer());
-        builder.register(Material.class, new MaterialSerializer());
-        builder.register(Component.class, new ComponentSerializer());
-        builder.register(Price.class, new PriceSerializer());
-        builder.register(TileSize.class, new TileSizeSerializer());
-        builder.register(Tile.class, new TileSerializer());
-    }));
     public static final Key noneKey = key("none");
+    private static final File PLUGIN_DIR = new File("plugins", "Township");
+    private static final File CONFIG_FILE = new File(PLUGIN_DIR, "config.conf");
     @Getter
     private static final Map<Class<? extends DataLoader>, DataLoader> dataLoaders = new HashMap<>();
+    private static final File OLD_CONFIG_FILE = new File(PLUGIN_DIR, "config.yml");
     public static Logger logger;
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder().defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
+        for (TownshipSerializer<?> townshipSerializer : ClassGraphUtils.getExtendedClasses(TownshipSerializer.class, "me.webhead1104.township.serializers")) {
+            Class targetClass = townshipSerializer.getTargetClass();
+            builder.register(targetClass, townshipSerializer);
+        }
+    }));
     @Getter
     private static Database database;
     @Getter
