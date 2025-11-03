@@ -1,5 +1,6 @@
 package me.webhead1104.township.serializers;
 
+import com.google.errorprone.annotations.Keep;
 import net.kyori.adventure.key.Key;
 import org.bukkit.Material;
 import org.bukkit.Registry;
@@ -7,11 +8,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
-import org.spongepowered.configurate.serialize.TypeSerializer;
 
 import java.lang.reflect.Type;
 
-public class MaterialSerializer implements TypeSerializer<Material> {
+@Keep
+public class MaterialSerializer extends TownshipSerializer<Material> {
     @Override
     public Material deserialize(@NotNull Type type, @NotNull ConfigurationNode node) throws SerializationException {
         String raw = node.getString();

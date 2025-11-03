@@ -1,5 +1,6 @@
 package me.webhead1104.township.serializers;
 
+import com.google.errorprone.annotations.Keep;
 import me.webhead1104.township.tiles.ExpansionTile;
 import me.webhead1104.township.tiles.Tile;
 import org.apache.commons.lang3.ClassUtils;
@@ -7,12 +8,12 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
-import org.spongepowered.configurate.serialize.TypeSerializer;
 
 import java.lang.reflect.*;
 import java.util.*;
 
-public class TileSerializer implements TypeSerializer<Tile> {
+@Keep
+public class TileSerializer extends TownshipSerializer<Tile> {
 
     private static final String CLASS_KEY = "class";
     private static final String PROPERTIES_KEY = "properties";
@@ -204,7 +205,7 @@ public class TileSerializer implements TypeSerializer<Tile> {
             throw new SerializationException("Cannot serialize a null Tile!");
         }
 
-        if (obj instanceof ExpansionTile) {
+        if (obj instanceof ExpansionTile expansionTile && expansionTile.getInstant() == null) {
             return;
         }
 

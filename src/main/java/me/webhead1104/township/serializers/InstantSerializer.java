@@ -1,15 +1,16 @@
 package me.webhead1104.township.serializers;
 
+import com.google.errorprone.annotations.Keep;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
-import org.spongepowered.configurate.serialize.TypeSerializer;
 
 import java.lang.reflect.Type;
 import java.time.Instant;
 
-public class InstantSerializer implements TypeSerializer<Instant> {
+@Keep
+public class InstantSerializer extends TownshipSerializer<Instant> {
 
     @Override
     public Instant deserialize(@NotNull Type type, @NotNull ConfigurationNode node) throws SerializationException {

@@ -44,9 +44,19 @@ public class Township extends JavaPlugin {
         builder.register(Tile.class, new TileSerializer());
     }));
     public static final Key noneKey = key("none");
+    private static final File PLUGIN_DIR = new File("plugins", "Township");
+    private static final File CONFIG_FILE = new File(PLUGIN_DIR, "config.conf");
     @Getter
     private static final Map<Class<? extends DataLoader>, DataLoader> dataLoaders = new HashMap<>();
+    private static final File OLD_CONFIG_FILE = new File(PLUGIN_DIR, "config.yml");
     public static Logger logger;
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder().defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
+        for (TownshipSerializer<?> townshipSerializer : ClassGraphUtils.getExtendedClasses(TownshipSerializer.class, "me.webhead1104.township.serializers")) {
+            Class targetClass = townshipSerializer.getTargetClass();
+            builder.register(targetClass, townshipSerializer);
+        }
+    }));
     @Getter
     private static Database database;
     @Getter

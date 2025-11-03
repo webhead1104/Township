@@ -1,15 +1,16 @@
 package me.webhead1104.township.serializers;
 
+import com.google.errorprone.annotations.Keep;
 import net.kyori.adventure.key.Key;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
-import org.spongepowered.configurate.serialize.TypeSerializer;
 
 import java.lang.reflect.Type;
 
-public class KeySerializer implements TypeSerializer<Key> {
+@Keep
+public class KeySerializer extends TownshipSerializer<Key> {
 
     @Override
     public Key deserialize(@NotNull Type type, @NotNull ConfigurationNode node) throws SerializationException {
