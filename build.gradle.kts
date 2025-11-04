@@ -15,14 +15,18 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://eldonexus.de/repository/maven-public/")
     maven("https://repo.tcoded.com/releases")
+    maven("https://repo.opencollab.dev/maven-snapshots")
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.9-R0.1-SNAPSHOT")
-    compileOnly("org.spongepowered:configurate-gson:4.2.0")
+    implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
+    implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
     implementation("me.devnatan:inventory-framework-platform-paper:3.5.5")
     implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.5")
     implementation("io.github.classgraph:classgraph:4.8.184")
+    compileOnly("org.mongodb:mongodb-driver-sync:5.7.0-alpha0")
+    compileOnly("com.zaxxer:HikariCP:6.2.1")
 
     compileOnly("net.strokkur:commands-annotations:1.5.0")
     annotationProcessor("net.strokkur:commands-processor:1.5.0")
@@ -139,6 +143,12 @@ tasks {
         archiveFileName.set("Township-${project.version}.jar")
         archiveClassifier.set("")
         mergeServiceFiles()
+
+        relocate("org.spongepowered.configurate", "me.webhead1104.township.libs.configurate")
+        relocate("org.yaml.snakeyaml", "me.webhead1104.township.libs.snakeyaml")
+        relocate("io.leangen.geantyref", "me.webhead1104.township.libs.geantyref")
+        relocate("com.google.gson", "me.webhead1104.township.libs.gson")
+
         relocate("me.devnatan.inventoryframework", "me.webhead1104.township.libs.inventoryframework")
         relocate("com.tcoded.folialib", "me.webhead1104.township.libs.folialib")
         relocate("io.github.classgraph", "me.webhead1104.township.libs.classgraph")

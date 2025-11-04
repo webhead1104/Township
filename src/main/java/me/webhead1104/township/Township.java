@@ -1,5 +1,6 @@
 package me.webhead1104.township;
 
+import com.google.common.base.Stopwatch;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,48 +8,35 @@ import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewFrame;
 import me.webhead1104.township.annotations.DependsOn;
 import me.webhead1104.township.commands.TownshipCommandBrigadier;
-import me.webhead1104.township.data.Database;
-import me.webhead1104.township.data.TileSize;
 import me.webhead1104.township.dataLoaders.DataLoader;
+import me.webhead1104.township.database.LoaderManager;
 import me.webhead1104.township.listeners.JoinListener;
 import me.webhead1104.township.listeners.LeaveListener;
 import me.webhead1104.township.managers.InventoryManager;
 import me.webhead1104.township.managers.UserManager;
-import me.webhead1104.township.price.Price;
-import me.webhead1104.township.serializers.*;
-import me.webhead1104.township.tiles.Tile;
+import me.webhead1104.township.serializers.TownshipSerializer;
 import me.webhead1104.township.utils.ClassGraphUtils;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
+import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
+import org.spongepowered.configurate.loader.HeaderMode;
+import org.spongepowered.configurate.yaml.NodeStyle;
+import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
-import java.time.Duration;
-import java.time.Instant;
+import java.io.File;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @NoArgsConstructor
 public class Township extends JavaPlugin {
-
-    public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder().defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
-        builder.register(Instant.class, new InstantSerializer());
-        builder.register(Duration.class, new DurationSerializer());
-        builder.register(Key.class, new KeySerializer());
-        builder.register(Material.class, new MaterialSerializer());
-        builder.register(Component.class, new ComponentSerializer());
-        builder.register(Price.class, new PriceSerializer());
-        builder.register(TileSize.class, new TileSizeSerializer());
-        builder.register(Tile.class, new TileSerializer());
-    }));
     public static final Key noneKey = key("none");
     private static final File PLUGIN_DIR = new File("plugins", "Township");
-    private static final File CONFIG_FILE = new File(PLUGIN_DIR, "config.conf");
+    private static final File CONFIG_FILE = new File(PLUGIN_DIR, "config.yml");
     @Getter
     private static final Map<Class<? extends DataLoader>, DataLoader> dataLoaders = new HashMap<>();
-    private static final File OLD_CONFIG_FILE = new File(PLUGIN_DIR, "config.yml");
     public static Logger logger;
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder().defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
@@ -58,13 +46,15 @@ public class Township extends JavaPlugin {
         }
     }));
     @Getter
-    private static Database database;
+    private static LoaderManager loaderManager;
     @Getter
     private static InventoryManager inventoryManager;
     @Getter
     private static UserManager userManager;
     @Getter
     private static ViewFrame viewFrame;
+    @Getter
+    private static Config townshipConfig;
     @Getter
     private static Township instance;
 
@@ -80,6 +70,64 @@ public class Township extends JavaPlugin {
         return loader;
     }
 
+    public static void loadConfig() {
+        try {
+            Stopwatch stopwatch = Stopwatch.createStarted();
+            YamlConfigurationLoader configLoader = YamlConfigurationLoader.builder()
+                    .file(CONFIG_FILE)
+                    .commentsEnabled(true)
+                    .nodeStyle(NodeStyle.BLOCK)
+                    .headerMode(HeaderMode.PRESERVE)
+                    .build();
+
+            if (!CONFIG_FILE.exists()) {
+                townshipConfig = new Config();
+                saveTownshipConfig();
+                logger.info("Created new config file");
+            }
+
+            ConfigurationNode node = configLoader.load();
+
+            if (node.node("version").getInt() == 0) {
+                logger.info("Migrating your old config file!");
+                ConfigurationNode oldConfigMysql = node.node("mysql");
+
+                Config.MysqlConfig mysqlConfig = new Config.MysqlConfig();
+                mysqlConfig.setHost(oldConfigMysql.node("host").getString());
+                mysqlConfig.setPort(oldConfigMysql.node("port").getInt());
+                mysqlConfig.setDatabase(oldConfigMysql.node("database").getString());
+                mysqlConfig.setUsername(oldConfigMysql.node("username").getString());
+                mysqlConfig.setPassword(oldConfigMysql.node("password").getString());
+                mysqlConfig.setUseSsl(oldConfigMysql.node("use_ssl").getBoolean());
+                townshipConfig = node.get(Config.class);
+
+                if (townshipConfig != null) {
+                    townshipConfig.getDatabase().setMysqlConfig(mysqlConfig);
+                }
+
+                saveTownshipConfig();
+                logger.info("Config migration complete");
+            } else {
+                townshipConfig = node.get(Config.class);
+            }
+
+            loaderManager = new LoaderManager();
+            logger.info("Loaded config in {} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        } catch (Exception e) {
+            logger.error("Could not load config!", e);
+        }
+    }
+
+    public static void saveTownshipConfig() {
+        try {
+            YamlConfigurationLoader configLoader = YamlConfigurationLoader.builder().file(CONFIG_FILE)
+                    .nodeStyle(NodeStyle.BLOCK).headerMode(HeaderMode.PRESERVE).build();
+            configLoader.save(configLoader.createNode().set(townshipConfig));
+        } catch (Exception e) {
+            logger.error("An error occurred whilest saving the config!", e);
+        }
+    }
+
     @Override
     public void onLoad() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS.newHandler(event -> TownshipCommandBrigadier.register(event.registrar())));
@@ -89,12 +137,9 @@ public class Township extends JavaPlugin {
     public void onEnable() {
         long start = System.currentTimeMillis();
         instance = this;
-        registerListeners();
-        saveDefaultConfig();
         logger = getSLF4JLogger();
-        database = new Database(this);
-        database.connect();
-        database.createTownshipTable();
+        registerListeners();
+        loadConfig();
         viewFrame = ViewFrame.create(this);
         inventoryManager = new InventoryManager();
         userManager = new UserManager();
@@ -108,10 +153,9 @@ public class Township extends JavaPlugin {
     public void onDisable() {
         logger.info("Township shutting down saving users");
         userManager.getUsers().forEach((key, user) -> {
-            database.setData(user);
+            user.save();
             logger.info("saved {}", user.getUuid());
         });
-        database.disconnect();
         logger.info("Township has shut down!");
     }
 
