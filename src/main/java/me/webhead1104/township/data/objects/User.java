@@ -14,6 +14,7 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Objects;
 import java.util.UUID;
@@ -68,13 +69,17 @@ public class User {
     public static User fromJson(String json) {
         try {
             ConfigurationNode node = Township.GSON_CONFIGURATION_LOADER.buildAndLoadString(json);
+            int version = node.node("version").getInt();
             Township.getUserManager().getVersionedBuilder().build().apply(node);
             User user = node.get(User.class);
             if (user == null) {
                 throw new IllegalStateException("An error occurred whilst deserializing a user! Please report this to Webhead1104!\n USER IS NULL!!!");
             }
             user.recalculatePopulation();
-            Township.getDatabase().setData(user);
+            user.save();
+            if (version != user.getVersion()) {
+                Township.logger.info("Updated user from {} to {}", version, user.getVersion());
+            }
             return user;
         } catch (Exception e) {
             Township.logger.error("An error occurred whilst updating a user! Please report the following stacktrace to Webhead1104:", e);
@@ -156,5 +161,13 @@ public class User {
             return true;
         }
         return false;
+    }
+
+    public void save() {
+        try {
+            Township.getLoaderManager().getUserLoader().saveUser(uuid, toString());
+        } catch (IOException e) {
+            Township.logger.error("An error occurred whilst saving a user!", e);
+        }
     }
 }

@@ -15,7 +15,7 @@ public class LeaveListener implements Listener {
     public void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());
-        Township.getDatabase().setData(user);
+        user.save();
         Township.getUserManager().removeUser(player.getUniqueId());
         Township.logger.info("player {} has left. data has been saved!", player.getName());
     }

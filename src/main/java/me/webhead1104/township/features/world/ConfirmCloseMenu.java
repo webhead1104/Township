@@ -34,7 +34,7 @@ public class ConfirmCloseMenu extends TownshipView {
                     Msg.format("<green>Or if don't want to close township hit the Esc key or click the back button!"))));
             slotRenderContext.setItem(itemStack);
         }).onClick(slotClickContext -> {
-            Township.getDatabase().setData(userState.get(slotClickContext));
+            userState.get(slotClickContext).save();
             context.closeForEveryone();
             openBackMenu.set(false, slotClickContext);
             Player player = slotClickContext.getPlayer();
