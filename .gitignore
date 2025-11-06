@@ -5,8 +5,7 @@ build
 !**/src/test/**/build/
 run
 .idea
-/scripts/node_modules
-/scripts/package-lock.json
+tools/wiki-scraper/output
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

@@ -795,7 +795,7 @@
     "population_needed": 2610,
     "coins_needed": 2850,
     "time": "6h 20min",
-    "xp": 0,
+    "xp": 155,
     "tools_needed": {
       "axe": 3,
       "shovel": 4,
@@ -806,7 +806,7 @@
     "population_needed": 2670,
     "coins_needed": 3000,
     "time": "6h 25min",
-    "xp": 0,
+    "xp": 157,
     "tools_needed": {
       "axe": 3,
       "shovel": 4,
@@ -817,7 +817,7 @@
     "population_needed": 2730,
     "coins_needed": 3150,
     "time": "6h 30min",
-    "xp": 0,
+    "xp": 159,
     "tools_needed": {
       "axe": 3,
       "shovel": 4,
@@ -828,7 +828,7 @@
     "population_needed": 2790,
     "coins_needed": 3300,
     "time": "6h 35min",
-    "xp": 0,
+    "xp": 161,
     "tools_needed": {
       "axe": 3,
       "shovel": 4,
@@ -839,7 +839,7 @@
     "population_needed": 2850,
     "coins_needed": 3450,
     "time": "6h 40min",
-    "xp": 0,
+    "xp": 163,
     "tools_needed": {
       "axe": 3,
       "shovel": 4,
@@ -850,7 +850,7 @@
     "population_needed": 2910,
     "coins_needed": 3600,
     "time": "6h 50min",
-    "xp": 0,
+    "xp": 165,
     "tools_needed": {
       "axe": 3,
       "shovel": 4,
@@ -861,7 +861,7 @@
     "population_needed": 2970,
     "coins_needed": 3750,
     "time": "7h",
-    "xp": 0,
+    "xp": 167,
     "tools_needed": {
       "axe": 3,
       "shovel": 4,
@@ -872,7 +872,7 @@
     "population_needed": 3030,
     "coins_needed": 3900,
     "time": "7h 10min",
-    "xp": 0,
+    "xp": 169,
     "tools_needed": {
       "axe": 3,
       "shovel": 4,
@@ -883,7 +883,7 @@
     "population_needed": 3090,
     "coins_needed": 4050,
     "time": "7h 20min",
-    "xp": 0,
+    "xp": 171,
     "tools_needed": {
       "axe": 3,
       "shovel": 4,
@@ -894,7 +894,7 @@
     "population_needed": 3150,
     "coins_needed": 4200,
     "time": "7h 30min",
-    "xp": 0,
+    "xp": 173,
     "tools_needed": {
       "axe": 3,
       "shovel": 4,
@@ -905,7 +905,7 @@
     "population_needed": 3210,
     "coins_needed": 4350,
     "time": "7h 40min",
-    "xp": 0,
+    "xp": 175,
     "tools_needed": {
       "axe": 3,
       "shovel": 4,
@@ -916,7 +916,7 @@
     "population_needed": 3270,
     "coins_needed": 4500,
     "time": "7h 50min",
-    "xp": 0,
+    "xp": 177,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -927,7 +927,7 @@
     "population_needed": 3330,
     "coins_needed": 4650,
     "time": "8h",
-    "xp": 0,
+    "xp": 179,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -938,7 +938,7 @@
     "population_needed": 3390,
     "coins_needed": 4800,
     "time": "8h 10min",
-    "xp": 0,
+    "xp": 181,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -949,7 +949,7 @@
     "population_needed": 3450,
     "coins_needed": 4950,
     "time": "8h 20min",
-    "xp": 0,
+    "xp": 183,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -960,7 +960,7 @@
     "population_needed": 3510,
     "coins_needed": 5100,
     "time": "8h 30min",
-    "xp": 0,
+    "xp": 185,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -971,7 +971,7 @@
     "population_needed": 3570,
     "coins_needed": 5250,
     "time": "8h 40min",
-    "xp": 0,
+    "xp": 187,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -982,7 +982,7 @@
     "population_needed": 3630,
     "coins_needed": 5400,
     "time": "8h 50min",
-    "xp": 0,
+    "xp": 189,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -993,7 +993,7 @@
     "population_needed": 3690,
     "coins_needed": 5550,
     "time": "9h",
-    "xp": 0,
+    "xp": 191,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -1004,7 +1004,7 @@
     "population_needed": 3750,
     "coins_needed": 5700,
     "time": "9h 10min",
-    "xp": 0,
+    "xp": 193,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -1015,7 +1015,7 @@
     "population_needed": 3810,
     "coins_needed": 5850,
     "time": "9h 20min",
-    "xp": 0,
+    "xp": 195,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -1026,7 +1026,7 @@
     "population_needed": 3870,
     "coins_needed": 6000,
     "time": "9h 30min",
-    "xp": 0,
+    "xp": 197,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -1037,7 +1037,7 @@
     "population_needed": 3930,
     "coins_needed": 6150,
     "time": "9h 40min",
-    "xp": 0,
+    "xp": 199,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -1048,7 +1048,7 @@
     "population_needed": 4000,
     "coins_needed": 6300,
     "time": "9h 50min",
-    "xp": 0,
+    "xp": 201,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -1059,7 +1059,7 @@
     "population_needed": 4070,
     "coins_needed": 6450,
     "time": "10h",
-    "xp": 0,
+    "xp": 203,
     "tools_needed": {
       "axe": 4,
       "shovel": 5,
@@ -1840,7 +1840,7 @@
     "population_needed": 9340,
     "coins_needed": 23500,
     "time": "1d 9h",
-    "xp": 0,
+    "xp": 352,
     "tools_needed": {
       "axe": 8,
       "shovel": 9,
@@ -1851,7 +1851,7 @@
     "population_needed": 9420,
     "coins_needed": 23850,
     "time": "1d 9h",
-    "xp": 0,
+    "xp": 354,
     "tools_needed": {
       "axe": 8,
       "shovel": 10,
@@ -1862,7 +1862,7 @@
     "population_needed": 9500,
     "coins_needed": 24200,
     "time": "1d 9h 30min",
-    "xp": 0,
+    "xp": 356,
     "tools_needed": {
       "axe": 8,
       "shovel": 10,
@@ -1873,7 +1873,7 @@
     "population_needed": 9580,
     "coins_needed": 24550,
     "time": "1d 9h 30min",
-    "xp": 0,
+    "xp": 358,
     "tools_needed": {
       "axe": 8,
       "shovel": 10,
@@ -1884,7 +1884,7 @@
     "population_needed": 9660,
     "coins_needed": 24900,
     "time": "1d 10h",
-    "xp": 0,
+    "xp": 360,
     "tools_needed": {
       "axe": 8,
       "shovel": 10,
@@ -1895,7 +1895,7 @@
     "population_needed": 9740,
     "coins_needed": 25250,
     "time": "1d 10h",
-    "xp": 0,
+    "xp": 362,
     "tools_needed": {
       "axe": 8,
       "shovel": 10,
@@ -1906,7 +1906,7 @@
     "population_needed": 9820,
     "coins_needed": 25600,
     "time": "1d 10h 30min",
-    "xp": 0,
+    "xp": 364,
     "tools_needed": {
       "axe": 9,
       "shovel": 10,
@@ -1917,7 +1917,7 @@
     "population_needed": 9900,
     "coins_needed": 25950,
     "time": "1d 10h 30min",
-    "xp": 0,
+    "xp": 366,
     "tools_needed": {
       "axe": 9,
       "shovel": 10,
@@ -1928,7 +1928,7 @@
     "population_needed": 9980,
     "coins_needed": 26300,
     "time": "1d 11h",
-    "xp": 0,
+    "xp": 368,
     "tools_needed": {
       "axe": 9,
       "shovel": 10,
@@ -1939,7 +1939,7 @@
     "population_needed": 10060,
     "coins_needed": 26650,
     "time": "1d 11h",
-    "xp": 0,
+    "xp": 370,
     "tools_needed": {
       "axe": 9,
       "shovel": 10,
@@ -1950,7 +1950,7 @@
     "population_needed": 10140,
     "coins_needed": 27000,
     "time": "1d 11h 30min",
-    "xp": 0,
+    "xp": 372,
     "tools_needed": {
       "axe": 9,
       "shovel": 10,
@@ -1961,7 +1961,7 @@
     "population_needed": 10220,
     "coins_needed": 27350,
     "time": "1d 11h 30min",
-    "xp": 0,
+    "xp": 374,
     "tools_needed": {
       "axe": 9,
       "shovel": 10,
@@ -1972,7 +1972,7 @@
     "population_needed": 10300,
     "coins_needed": 27700,
     "time": "1d 12h",
-    "xp": 0,
+    "xp": 376,
     "tools_needed": {
       "axe": 9,
       "shovel": 10,
@@ -1983,7 +1983,7 @@
     "population_needed": 10380,
     "coins_needed": 28050,
     "time": "1d 12h",
-    "xp": 0,
+    "xp": 378,
     "tools_needed": {
       "axe": 9,
       "shovel": 10,
@@ -1994,7 +1994,7 @@
     "population_needed": 10460,
     "coins_needed": 28400,
     "time": "1d 12h 30min",
-    "xp": 0,
+    "xp": 380,
     "tools_needed": {
       "axe": 9,
       "shovel": 10,
@@ -2005,7 +2005,7 @@
     "population_needed": 10540,
     "coins_needed": 28750,
     "time": "1d 12h 30min",
-    "xp": 0,
+    "xp": 382,
     "tools_needed": {
       "axe": 9,
       "shovel": 10,
@@ -2016,7 +2016,7 @@
     "population_needed": 10620,
     "coins_needed": 29100,
     "time": "1d 13h",
-    "xp": 0,
+    "xp": 384,
     "tools_needed": {
       "axe": 9,
       "shovel": 11,
@@ -2027,7 +2027,7 @@
     "population_needed": 10700,
     "coins_needed": 29450,
     "time": "1d 13h",
-    "xp": 0,
+    "xp": 386,
     "tools_needed": {
       "axe": 9,
       "shovel": 11,
@@ -2038,7 +2038,7 @@
     "population_needed": 10780,
     "coins_needed": 29800,
     "time": "1d 13h 30min",
-    "xp": 0,
+    "xp": 388,
     "tools_needed": {
       "axe": 9,
       "shovel": 11,
@@ -2049,7 +2049,7 @@
     "population_needed": 10860,
     "coins_needed": 30200,
     "time": "1d 13h 30min",
-    "xp": 0,
+    "xp": 390,
     "tools_needed": {
       "axe": 9,
       "shovel": 11,
@@ -2060,7 +2060,7 @@
     "population_needed": 10940,
     "coins_needed": 30600,
     "time": "1d 14h",
-    "xp": 0,
+    "xp": 392,
     "tools_needed": {
       "axe": 9,
       "shovel": 11,
@@ -2071,7 +2071,7 @@
     "population_needed": 11020,
     "coins_needed": 31000,
     "time": "1d 14h",
-    "xp": 0,
+    "xp": 394,
     "tools_needed": {
       "axe": 10,
       "shovel": 11,
@@ -2082,7 +2082,7 @@
     "population_needed": 11100,
     "coins_needed": 31400,
     "time": "1d 14h 30min",
-    "xp": 0,
+    "xp": 396,
     "tools_needed": {
       "axe": 10,
       "shovel": 11,
@@ -2093,7 +2093,7 @@
     "population_needed": 11180,
     "coins_needed": 31800,
     "time": "1d 14h 30min",
-    "xp": 0,
+    "xp": 398,
     "tools_needed": {
       "axe": 10,
       "shovel": 11,
@@ -2104,7 +2104,7 @@
     "population_needed": 11260,
     "coins_needed": 32200,
     "time": "1d 15h",
-    "xp": 0,
+    "xp": 400,
     "tools_needed": {
       "axe": 10,
       "shovel": 11,
@@ -2115,7 +2115,7 @@
     "population_needed": 11340,
     "coins_needed": 32600,
     "time": "1d 15h",
-    "xp": 0,
+    "xp": 402,
     "tools_needed": {
       "axe": 10,
       "shovel": 11,
@@ -2126,7 +2126,7 @@
     "population_needed": 11420,
     "coins_needed": 33000,
     "time": "1d 15h 30min",
-    "xp": 0,
+    "xp": 404,
     "tools_needed": {
       "axe": 10,
       "shovel": 11,
@@ -2137,7 +2137,7 @@
     "population_needed": 11500,
     "coins_needed": 33400,
     "time": "1d 15h 30min",
-    "xp": 0,
+    "xp": 406,
     "tools_needed": {
       "axe": 10,
       "shovel": 11,
@@ -2148,7 +2148,7 @@
     "population_needed": 11580,
     "coins_needed": 33800,
     "time": "1d 16h",
-    "xp": 0,
+    "xp": 408,
     "tools_needed": {
       "axe": 10,
       "shovel": 11,
@@ -2159,7 +2159,7 @@
     "population_needed": 11660,
     "coins_needed": 34200,
     "time": "1d 16h",
-    "xp": 0,
+    "xp": 410,
     "tools_needed": {
       "axe": 10,
       "shovel": 11,
@@ -2170,7 +2170,7 @@
     "population_needed": 11740,
     "coins_needed": 34600,
     "time": "1d 16h 30min",
-    "xp": 0,
+    "xp": 412,
     "tools_needed": {
       "axe": 10,
       "shovel": 11,
@@ -2181,7 +2181,7 @@
     "population_needed": 11820,
     "coins_needed": 35000,
     "time": "1d 16h 30min",
-    "xp": 0,
+    "xp": 414,
     "tools_needed": {
       "axe": 10,
       "shovel": 12,
@@ -2445,7 +2445,7 @@
     "population_needed": 13740,
     "coins_needed": 45450,
     "time": "1d 22h 30min",
-    "xp": 0,
+    "xp": 470,
     "tools_needed": {
       "axe": 12,
       "shovel": 13,
@@ -2456,7 +2456,7 @@
     "population_needed": 13820,
     "coins_needed": 45900,
     "time": "1d 23h 30min",
-    "xp": 0,
+    "xp": 472,
     "tools_needed": {
       "axe": 12,
       "shovel": 13,
@@ -3924,270 +3924,6 @@
       "axe": 23,
       "shovel": 26,
       "saw": 22
-    }
-  },
-  {
-    "population_needed": 0,
-    "coins_needed": 126600,
-    "time": "",
-    "xp": 742,
-    "tools_needed": {
-      "axe": 0,
-      "shovel": 0,
-      "saw": 0
-    }
-  },
-  {
-    "population_needed": 0,
-    "coins_needed": 127250,
-    "time": "",
-    "xp": 744,
-    "tools_needed": {
-      "axe": 0,
-      "shovel": 0,
-      "saw": 0
-    }
-  },
-  {
-    "population_needed": 0,
-    "coins_needed": 127900,
-    "time": "",
-    "xp": 746,
-    "tools_needed": {
-      "axe": 0,
-      "shovel": 0,
-      "saw": 0
-    }
-  },
-  {
-    "population_needed": 0,
-    "coins_needed": 128550,
-    "time": "",
-    "xp": 748,
-    "tools_needed": {
-      "axe": 0,
-      "shovel": 0,
-      "saw": 0
-    }
-  },
-  {
-    "population_needed": 0,
-    "coins_needed": 129200,
-    "time": "",
-    "xp": 750,
-    "tools_needed": {
-      "axe": 0,
-      "shovel": 0,
-      "saw": 0
-    }
-  },
-  {
-    "population_needed": 0,
-    "coins_needed": 129650,
-    "time": "",
-    "xp": 752,
-    "tools_needed": {
-      "axe": 0,
-      "shovel": 0,
-      "saw": 0
-    }
-  },
-  {
-    "population_needed": 24750,
-    "coins_needed": 130500,
-    "time": "4d 20h",
-    "xp": 754,
-    "tools_needed": {
-      "axe": 21,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 24830,
-    "coins_needed": 131150,
-    "time": "",
-    "xp": 756,
-    "tools_needed": {
-      "axe": 21,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 24390,
-    "coins_needed": 131800,
-    "time": "",
-    "xp": 758,
-    "tools_needed": {
-      "axe": 21,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 24990,
-    "coins_needed": 132450,
-    "time": "",
-    "xp": 760,
-    "tools_needed": {
-      "axe": 21,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 25070,
-    "coins_needed": 133100,
-    "time": "4d22h",
-    "xp": 762,
-    "tools_needed": {
-      "axe": 21,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 25150,
-    "coins_needed": 133750,
-    "time": "4d23h",
-    "xp": 764,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 25230,
-    "coins_needed": 134400,
-    "time": "4d23h30m",
-    "xp": 766,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 25310,
-    "coins_needed": 135050,
-    "time": "5d",
-    "xp": 768,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 25390,
-    "coins_needed": 135700,
-    "time": "5d",
-    "xp": 770,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 25470,
-    "coins_needed": 136350,
-    "time": "5d",
-    "xp": 772,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 25550,
-    "coins_needed": 137000,
-    "time": "5d",
-    "xp": 774,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 25630,
-    "coins_needed": 137650,
-    "time": "5d",
-    "xp": 776,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 25710,
-    "coins_needed": 138300,
-    "time": "5d",
-    "xp": 778,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 25790,
-    "coins_needed": 138950,
-    "time": "5d",
-    "xp": 780,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 25870,
-    "coins_needed": 139600,
-    "time": "5d",
-    "xp": 782,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 25950,
-    "coins_needed": 140250,
-    "time": "5d",
-    "xp": 0,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 26030,
-    "coins_needed": 140900,
-    "time": "5d",
-    "xp": 0,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
-    }
-  },
-  {
-    "population_needed": 26110,
-    "coins_needed": 141550,
-    "time": "5d",
-    "xp": 0,
-    "tools_needed": {
-      "axe": 22,
-      "shovel": 23,
-      "saw": 20
     }
   }
 ]
