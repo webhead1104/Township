@@ -45,6 +45,14 @@ public class WorldSection {
         this.section = section;
     }
 
+    public final Map<Integer, Tile> getSlotMap() {
+        Map<Integer, Tile> map = new HashMap<>();
+        for (int i = 0; i < 54; i++) {
+            map.put(i, getSlot(i));
+        }
+        return map;
+    }
+
     public void setSlot(int slot, Tile tile) {
         slotMap.put(slot, tile);
     }

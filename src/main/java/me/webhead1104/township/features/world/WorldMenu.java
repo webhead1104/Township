@@ -19,7 +19,6 @@ import me.webhead1104.township.features.world.edit.WorldEditMenu;
 import me.webhead1104.township.menus.TownshipView;
 import me.webhead1104.township.tiles.BuildingTile;
 import me.webhead1104.township.tiles.StaticWorldTile;
-import me.webhead1104.township.tiles.Tile;
 import me.webhead1104.township.utils.Msg;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -55,9 +54,7 @@ public class WorldMenu extends TownshipView {
         Player player = context.getPlayer();
         User user = Township.getUserManager().getUser(player.getUniqueId());
         WorldSection worldSection = user.getWorld().getSection(sectionState.get(context));
-        for (int i = 0; i < 54; i++) {
-            int slot = i;
-            Tile tile = worldSection.getSlot(slot);
+        worldSection.getSlotMap().forEach((slot, tile) -> {
             tile.onLoad(worldSection, slot);
             context.slot(slot).updateOnClick().onUpdate(slotContext -> {
                         if (tile.onUpdate(slotContext, worldSection, slot)) {
@@ -116,7 +113,7 @@ public class WorldMenu extends TownshipView {
                             openBackMenu.set(false, clickContext);
                         }
                     });
-        }
+        });
 
         WorldUtils.applyArrows(player, sectionState.get(context));
 
