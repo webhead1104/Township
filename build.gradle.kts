@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
-    implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
+    implementation("org.spongepowered:configurate-yaml:4.2.0")
     implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
     implementation("me.devnatan:inventory-framework-platform-paper:3.5.5")
     implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.5")
