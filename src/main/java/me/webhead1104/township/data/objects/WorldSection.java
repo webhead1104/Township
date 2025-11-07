@@ -7,6 +7,7 @@ import me.webhead1104.township.data.TileSize;
 import me.webhead1104.township.features.world.plots.PlotType;
 import me.webhead1104.township.tiles.*;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.PostProcess;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class WorldSection {
     private final Map<Integer, Tile> slotMap = new HashMap<>();
+    private transient Map<Integer, Tile> actualTileMap = new HashMap<>();
     private int section;
 
     public WorldSection(int section) {
@@ -43,18 +45,23 @@ public class WorldSection {
             }
         }
         this.section = section;
+        postProcess();
+    }
+
+    @PostProcess
+    private void postProcess() {
+        for (int i = 0; i < 54; i++) {
+            actualTileMap.put(i, getSlot(i));
+        }
     }
 
     public final Map<Integer, Tile> getSlotMap() {
-        Map<Integer, Tile> map = new HashMap<>();
-        for (int i = 0; i < 54; i++) {
-            map.put(i, getSlot(i));
-        }
-        return map;
+        return actualTileMap;
     }
 
     public void setSlot(int slot, Tile tile) {
         slotMap.put(slot, tile);
+        actualTileMap.put(slot, tile);
     }
 
     public Tile getSlot(int slot) {
