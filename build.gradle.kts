@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.9-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
     implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
     implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
     implementation("me.devnatan:inventory-framework-platform-paper:3.5.5")
@@ -31,11 +31,11 @@ dependencies {
     compileOnly("net.strokkur:commands-annotations:1.5.0")
     annotationProcessor("net.strokkur:commands-processor:1.5.0")
 
-    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.91.0")
+    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.98.0")
     testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")
     testImplementation("org.spongepowered:configurate-gson:4.2.0")
-    testImplementation("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+    testImplementation("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
 }
 
 tasks.test {
@@ -155,7 +155,7 @@ tasks {
         relocate("nonapi.io.github.classgraph", "me.webhead1104.township.libs.classgraph")
     }
     runServer {
-        minecraftVersion("1.21.9")
+        minecraftVersion("1.21.10")
 
         jvmArgs("-Dlog4j2.configurationFile=log4j2.xml")
     }
