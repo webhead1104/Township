@@ -11,9 +11,9 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 @Setter
 public class Config {
     @Setting("version")
-    private int version = 1;
+    private final int version = 1;
     @Setting("database")
-    private DatabaseConfig database = new DatabaseConfig();
+    private final DatabaseConfig database = new DatabaseConfig();
 
     public enum DatabaseType {
         FILE,
@@ -28,21 +28,21 @@ public class Config {
         @Comment("""
                 Database storage type Options: FILE, MYSQL, MONGODB
                 """)
-        private DatabaseType databaseType = DatabaseType.FILE;
+        private final DatabaseType databaseType = DatabaseType.FILE;
         @Setting("file")
-        private FileConfig fileConfig = new FileConfig();
+        private final FileConfig fileConfig = new FileConfig();
+        @Setting("mongodb")
+        private final MongoDBConfig mongodbConfig = new MongoDBConfig();
         @Setter
         @Setting("mysql")
         private MysqlConfig mysqlConfig = new MysqlConfig();
-        @Setting("mongodb")
-        private MongoDBConfig mongodbConfig = new MongoDBConfig();
     }
 
     @Getter
     @ConfigSerializable
     public static class FileConfig {
         @Setting("path")
-        private String path = "user_data";
+        private final String path = "user_data";
     }
 
     @Getter
@@ -69,20 +69,20 @@ public class Config {
     @ConfigSerializable
     public static class MongoDBConfig {
         @Setting("host")
-        private String host = "localhost";
+        private final String host = "localhost";
         @Setting("port")
-        private int port = 27017;
+        private final int port = 27017;
         @Setting("auth")
-        private String authSource = "admin";
+        private final String authSource = "admin";
         @Setting("username")
-        private String username = "township";
+        private final String username = "township";
         @Setting("password")
-        private String password = "";
+        private final String password = "";
         @Setting("database")
-        private String database = "township";
+        private final String database = "township";
         @Setting("collection")
-        private String collection = "township";
+        private final String collection = "township";
         @Setting("uri")
-        private String uri = "";
+        private final String uri = "";
     }
 }
