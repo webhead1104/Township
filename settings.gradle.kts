@@ -1,3 +1,3 @@
-rootProject.name = "Township"
+rootProject.name = "Towncraft"
 
 include(":tools:wiki-scraper")

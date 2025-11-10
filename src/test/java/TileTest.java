@@ -1,9 +1,9 @@
 import lombok.extern.log4j.Log4j2;
-import me.webhead1104.township.serializers.MaterialSerializer;
-import me.webhead1104.township.serializers.TileSerializer;
-import me.webhead1104.township.tiles.ExpansionTile;
-import me.webhead1104.township.tiles.StaticWorldTile;
-import me.webhead1104.township.tiles.Tile;
+import me.webhead1104.towncraft.serializers.MaterialSerializer;
+import me.webhead1104.towncraft.serializers.TileSerializer;
+import me.webhead1104.towncraft.tiles.ExpansionTile;
+import me.webhead1104.towncraft.tiles.StaticWorldTile;
+import me.webhead1104.towncraft.tiles.Tile;
 import org.bukkit.Material;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

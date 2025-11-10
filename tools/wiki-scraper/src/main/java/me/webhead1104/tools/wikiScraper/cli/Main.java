@@ -21,7 +21,7 @@ import java.util.concurrent.Callable;
 
 @Slf4j
 @Command(name = "wiki-scraper", mixinStandardHelpOptions = true, version = "wiki-scraper 1.0.0",
-        description = "Scrapes the official township wiki for data.")
+        description = "Scrapes the official towncraft wiki for data.")
 public class Main implements Callable<Integer> {
     private static final Map<String, Scraper<?>> SCRAPERS = new LinkedHashMap<>();
 

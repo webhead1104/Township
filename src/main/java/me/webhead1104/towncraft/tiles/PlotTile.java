@@ -1,0 +1,66 @@
+package me.webhead1104.towncraft.tiles;
+
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import lombok.Getter;
+import lombok.Setter;
+import me.devnatan.inventoryframework.context.SlotClickContext;
+import me.devnatan.inventoryframework.context.SlotRenderContext;
+import me.webhead1104.towncraft.Towncraft;
+import me.webhead1104.towncraft.data.objects.Plot;
+import me.webhead1104.towncraft.data.objects.WorldSection;
+import me.webhead1104.towncraft.features.world.plots.PlotMenu;
+import me.webhead1104.towncraft.features.world.plots.PlotType;
+import me.webhead1104.towncraft.utils.Msg;
+import me.webhead1104.towncraft.utils.Utils;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
+
+import java.time.Instant;
+import java.util.List;
+
+@Getter
+@Setter
+public class PlotTile extends BuildingTile {
+    private Plot plot;
+
+    public PlotTile(@Nullable Plot plot) {
+        super(Towncraft.key("plot"), 0);
+        this.plot = plot;
+    }
+
+    @Override
+    public void onLoad(WorldSection worldSection, int slot) {
+        if (plot != null) return;
+        plot = new Plot(worldSection.getSection(), slot, PlotType.NONE);
+    }
+
+    @Override
+    public ItemStack render(SlotRenderContext context) {
+        if (!plot.getInstant().equals(Instant.EPOCH) && Instant.now().isAfter(plot.getInstant().minusSeconds(1))) {
+            plot.setClaimable(true);
+            plot.setInstant(Instant.EPOCH);
+        }
+
+        if (plot.getPlotType().equals(PlotType.NONE) || plot.getInstant().equals(Instant.EPOCH)) {
+            return plot.getPlotType().getMenuItem();
+        }
+
+        ItemStack itemStack = plot.getPlotType().getMenuItem();
+        itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<gold>Time: %s", Utils.format(Instant.now(), plot.getInstant())))));
+        return itemStack;
+    }
+
+    @Override
+    public boolean onClick(SlotClickContext context) {
+        if (plot.getPlotType().equals(PlotType.NONE)) {
+            context.openForPlayer(PlotMenu.class, plot);
+            return true;
+        } else if (plot.isClaimable()) {
+            plot.setClaimable(false);
+            Towncraft.getUserManager().getUser(context.getPlayer().getUniqueId()).getBarn().addAmountToItem(plot.getPlotType().getItem().key(), 1);
+            plot.setPlotType(PlotType.NONE);
+        }
+        return false;
+    }
+}

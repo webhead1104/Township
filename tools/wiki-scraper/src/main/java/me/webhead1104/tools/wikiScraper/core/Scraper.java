@@ -13,7 +13,7 @@ import java.util.List;
  * @param <T> the return type
  */
 public interface Scraper<T> {
-    String UA = "TownshipWikiScraper/1.0.0 (https://github.com/webhead1104/township; webhead1104@hotmail.com)";
+    String UA = "TowncraftWikiScraper/1.0.0 (https://github.com/webhead1104/towncraft; webhead1104@hotmail.com)";
 
     /**
      * The scraper ID

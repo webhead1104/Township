@@ -55,7 +55,7 @@ tasks.withType<Javadoc> {
 
 val generateClassloader = tasks.register("generateClassloader") {
     val outputDir: File = file("$projectDir/build/generated/sources/classloader")
-    val packageDir = File(outputDir, "me/webhead1104/township/utils")
+    val packageDir = File(outputDir, "me/webhead1104/towncraft/utils")
     val classloaderFile = File(packageDir, "GeneratedClassloader.java")
 
     val deps = provider {
@@ -80,7 +80,7 @@ val generateClassloader = tasks.register("generateClassloader") {
 
         classloaderFile.writeText(
             """
-            package me.webhead1104.township.utils;
+            package me.webhead1104.towncraft.utils;
             
             import io.papermc.paper.plugin.loader.PluginClasspathBuilder;
             import io.papermc.paper.plugin.loader.PluginLoader;
@@ -140,19 +140,19 @@ tasks {
         }
     }
     shadowJar {
-        archiveFileName.set("Township-${project.version}.jar")
+        archiveFileName.set("Towncraft-${project.version}.jar")
         archiveClassifier.set("")
         mergeServiceFiles()
 
-        relocate("org.spongepowered.configurate", "me.webhead1104.township.libs.configurate")
-        relocate("org.yaml.snakeyaml", "me.webhead1104.township.libs.snakeyaml")
-        relocate("io.leangen.geantyref", "me.webhead1104.township.libs.geantyref")
-        relocate("com.google.gson", "me.webhead1104.township.libs.gson")
+        relocate("org.spongepowered.configurate", "me.webhead1104.towncraft.libs.configurate")
+        relocate("org.yaml.snakeyaml", "me.webhead1104.towncraft.libs.snakeyaml")
+        relocate("io.leangen.geantyref", "me.webhead1104.towncraft.libs.geantyref")
+        relocate("com.google.gson", "me.webhead1104.towncraft.libs.gson")
 
-        relocate("me.devnatan.inventoryframework", "me.webhead1104.township.libs.inventoryframework")
-        relocate("com.tcoded.folialib", "me.webhead1104.township.libs.folialib")
-        relocate("io.github.classgraph", "me.webhead1104.township.libs.classgraph")
-        relocate("nonapi.io.github.classgraph", "me.webhead1104.township.libs.classgraph")
+        relocate("me.devnatan.inventoryframework", "me.webhead1104.towncraft.libs.inventoryframework")
+        relocate("com.tcoded.folialib", "me.webhead1104.towncraft.libs.folialib")
+        relocate("io.github.classgraph", "me.webhead1104.towncraft.libs.classgraph")
+        relocate("nonapi.io.github.classgraph", "me.webhead1104.towncraft.libs.classgraph")
     }
     runServer {
         minecraftVersion("1.21.10")
@@ -160,12 +160,12 @@ tasks {
         jvmArgs("-Dlog4j2.configurationFile=log4j2.xml")
     }
     paperPluginYaml {
-        main.set("me.webhead1104.township.Township")
+        main.set("me.webhead1104.towncraft.Towncraft")
         apiVersion.set("1.21")
         author.set("Webhead1104")
         description.set("A remake of the game Township by Playrix in Minecraft")
-        loader.set("me.webhead1104.township.utils.GeneratedClassloader")
-        website.set("https://github.com/Webhead1104/Township")
+        loader.set("me.webhead1104.towncraft.utils.GeneratedClassloader")
+        website.set("https://github.com/Webhead1104/Towncraft")
     }
 
     spotless {

@@ -52,7 +52,7 @@ public class ExpansionsScraper implements Scraper<Expansion> {
                     continue;
                 }
                 if (tableExpansions.size() + expansions.size() == 357) {
-                    log.error("On the township wiki expansions 357 and above do not have data!");
+                    log.error("On the towncraft wiki expansions 357 and above do not have data!");
                     break;
                 }
                 Expansion expansion = new Expansion(cells, previousXp);
