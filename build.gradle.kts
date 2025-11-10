@@ -2,7 +2,7 @@ plugins {
     id("java")
     id("com.gradleup.shadow") version "9.2.2"
     id("xyz.jpenilla.run-paper") version "3.0.2"
-    id("io.freefair.lombok") version "9.0.0"
+    id("io.freefair.lombok") version "9.1.0"
     id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
     id("com.diffplug.spotless") version "8.0.0"
 }
@@ -25,7 +25,7 @@ dependencies {
     implementation("me.devnatan:inventory-framework-platform-paper:3.5.5")
     implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.5")
     implementation("io.github.classgraph:classgraph:4.8.184")
-    compileOnly("org.mongodb:mongodb-driver-sync:5.7.0-alpha0")
+    compileOnly("org.mongodb:mongodb-driver-sync:5.7.0-SNAPSHOT")
     compileOnly("com.zaxxer:HikariCP:6.3.3")
 
     compileOnly("net.strokkur:commands-annotations:1.5.0")
