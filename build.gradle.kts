@@ -26,7 +26,7 @@ dependencies {
     implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.5")
     implementation("io.github.classgraph:classgraph:4.8.184")
     compileOnly("org.mongodb:mongodb-driver-sync:5.7.0-SNAPSHOT")
-    compileOnly("com.zaxxer:HikariCP:6.3.3")
+    compileOnly("com.zaxxer:HikariCP:7.0.2")
 
     compileOnly("net.strokkur:commands-annotations:1.5.0")
     annotationProcessor("net.strokkur:commands-processor:1.5.0")
