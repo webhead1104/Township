@@ -171,7 +171,7 @@ tasks {
     spotless {
         ratchetFrom = "origin/master"
         java {
-            idea().withDefaults(true)
+            eclipse().configFile(".editorconfig")
             formatAnnotations()
         }
     }
