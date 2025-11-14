@@ -41,4 +41,9 @@ public class MaterialSerializer extends TowncraftSerializer<Material> {
         }
         node.set(key.asString());
     }
+
+    @Override
+    public Class<Material> getType() {
+        return Material.class;
+    }
 }

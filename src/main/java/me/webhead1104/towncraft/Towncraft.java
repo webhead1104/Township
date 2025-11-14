@@ -39,11 +39,11 @@ public class Towncraft extends JavaPlugin {
     private static final File PLUGIN_DIR = new File("plugins", "Towncraft");
     private static final File CONFIG_FILE = new File(PLUGIN_DIR, "config.yml");
     public static Logger logger;
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("unchecked")
     public static final GsonConfigurationLoader.Builder GSON_CONFIGURATION_LOADER = GsonConfigurationLoader.builder().defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
         for (TowncraftSerializer<?> towncraftSerializer : ClassGraphUtils.getExtendedClasses(TowncraftSerializer.class, "me.webhead1104.towncraft.serializers")) {
-            Class targetClass = towncraftSerializer.getTargetClass();
-            builder.register(targetClass, towncraftSerializer);
+            TowncraftSerializer<Object> serializer = (TowncraftSerializer<Object>) towncraftSerializer;
+            builder.register(serializer.getType(), serializer);
         }
     }));
     @Getter

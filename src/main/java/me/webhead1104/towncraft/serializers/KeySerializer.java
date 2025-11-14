@@ -32,4 +32,9 @@ public class KeySerializer extends TowncraftSerializer<Key> {
             node.set(obj.asString());
         }
     }
+
+    @Override
+    public Class<Key> getType() {
+        return Key.class;
+    }
 }

@@ -25,4 +25,9 @@ public class InstantSerializer extends TowncraftSerializer<Instant> {
         if (obj == null) throw new SerializationException("Cannot serialize a null instant!");
         node.set(obj.toString());
     }
+
+    @Override
+    public Class<Instant> getType() {
+        return Instant.class;
+    }
 }

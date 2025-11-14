@@ -33,4 +33,9 @@ public class TileSizeSerializer extends TowncraftSerializer<TileSize> {
         }
         node.set(String.format("%dx%d", tileSize.height(), tileSize.width()));
     }
+
+    @Override
+    public Class<TileSize> getType() {
+        return TileSize.class;
+    }
 }

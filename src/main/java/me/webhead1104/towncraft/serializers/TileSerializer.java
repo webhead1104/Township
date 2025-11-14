@@ -237,4 +237,9 @@ public class TileSerializer extends TowncraftSerializer<Tile> {
             throw new SerializationException("Error serializing Tile: " + e.getMessage());
         }
     }
+
+    @Override
+    public Class<Tile> getType() {
+        return Tile.class;
+    }
 }

@@ -41,4 +41,9 @@ public class PriceSerializer extends TowncraftSerializer<Price> {
             node.node("amount").set(amount);
         }
     }
+
+    @Override
+    public Class<Price> getType() {
+        return Price.class;
+    }
 }

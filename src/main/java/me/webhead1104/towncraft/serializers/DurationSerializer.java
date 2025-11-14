@@ -47,4 +47,9 @@ public class DurationSerializer extends TowncraftSerializer<Duration> {
         if (obj == null) throw new SerializationException("Cannot serialize a null instant!");
         throw new UnsupportedOperationException("Not Implemented");
     }
+
+    @Override
+    public Class<Duration> getType() {
+        return Duration.class;
+    }
 }

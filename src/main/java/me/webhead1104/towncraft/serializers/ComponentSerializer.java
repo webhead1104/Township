@@ -25,4 +25,9 @@ public class ComponentSerializer extends TowncraftSerializer<Component> {
         if (obj == null) throw new SerializationException("Cannot serialize a null component!");
         node.set(MiniMessage.miniMessage().serialize(obj));
     }
+
+    @Override
+    public Class<Component> getType() {
+        return Component.class;
+    }
 }
