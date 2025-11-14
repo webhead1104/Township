@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LevelDataLoader implements DataLoader.IntegerBasedDataLoader<LevelDataLoader.Level> {
+    public static final int MAX_LEVELS_ADDED = 10;
     private final List<Level> values = new ArrayList<>();
 
     public Level get(int i) {
