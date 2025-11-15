@@ -38,6 +38,10 @@ dependencies {
     testImplementation("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
 }
 
+allprojects {
+    apply(plugin = "io.freefair.lombok")
+}
+
 tasks.test {
     useJUnitPlatform()
     maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)

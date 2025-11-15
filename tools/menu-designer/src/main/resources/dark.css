@@ -1,0 +1,84 @@
+.root {
+    -fx-base: #1e1f22;
+    -fx-background: #1e1f22;
+    -fx-control-inner-background: #2b2d31;
+    -fx-accent: #4e8cff;
+    -fx-focus-color: #4e8cff;
+    -fx-faint-focus-color: rgba(78, 140, 255, 0.2);
+}
+
+.right-pane {
+    -fx-background-color: #1e1f22;
+}
+
+.label {
+    -fx-text-fill: #e6e6e6;
+}
+
+.text-field, .text-area {
+    -fx-background-color: #2b2d31, #2b2d31, #2b2d31;
+    -fx-text-fill: #e6e6e6;
+    -fx-prompt-text-fill: #9aa0a6;
+    -fx-highlight-fill: #4e8cff;
+    -fx-highlight-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-border-color: #3a3d43;
+    -fx-border-radius: 6;
+}
+
+.text-area .content {
+    -fx-background-color: #2b2d31;
+}
+
+.list-view {
+    -fx-background-color: #2b2d31;
+    -fx-control-inner-background: #2b2d31;
+    -fx-text-fill: #e6e6e6;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-background-color: #2b2d31;
+    -fx-text-fill: #e6e6e6;
+}
+
+.list-cell:filled:selected, .list-cell:filled:selected:hover {
+    -fx-background-color: #3a3d43;
+    -fx-text-fill: white;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #33363c;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+    -fx-background-color: #2a2c30;
+}
+
+.separator *.line {
+    -fx-border-color: #2a2c30;
+}
+
+.toggle-button {
+    -fx-background-color: #2b2d31;
+    -fx-text-fill: #e6e6e6;
+    -fx-border-color: #3a3d43;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #3a3d43;
+    -fx-text-fill: white;
+    -fx-border-color: #4e8cff;
+}
+
+.scroll-pane {
+    -fx-background: #1e1f22;
+    -fx-background-color: #1e1f22;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
