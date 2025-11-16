@@ -7,7 +7,6 @@ import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.webhead1104.towncraft.Towncraft;
-import me.webhead1104.towncraft.data.objects.Plot;
 import me.webhead1104.towncraft.data.objects.User;
 import me.webhead1104.towncraft.data.objects.World;
 import me.webhead1104.towncraft.menus.TowncraftView;

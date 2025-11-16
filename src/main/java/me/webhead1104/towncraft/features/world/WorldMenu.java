@@ -19,6 +19,7 @@ import me.webhead1104.towncraft.features.world.edit.WorldEditMenu;
 import me.webhead1104.towncraft.menus.TowncraftView;
 import me.webhead1104.towncraft.tiles.BuildingTile;
 import me.webhead1104.towncraft.tiles.StaticWorldTile;
+import me.webhead1104.towncraft.tiles.Tile;
 import me.webhead1104.towncraft.utils.Msg;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -30,6 +31,10 @@ import java.util.List;
 
 public class WorldMenu extends TowncraftView {
     private final State<Integer> sectionState = initialState();
+    private final State<WorldSection> worldSectionState = computedState(context -> {
+        User user = Towncraft.getUserManager().getUser(context.getPlayer().getUniqueId());
+        return user.getWorld().getSection(sectionState.get(context));
+    });
 
     public WorldMenu() {
         super(ConfirmCloseMenu.class);
@@ -54,14 +59,20 @@ public class WorldMenu extends TowncraftView {
         Player player = context.getPlayer();
         User user = Towncraft.getUserManager().getUser(player.getUniqueId());
         WorldSection worldSection = user.getWorld().getSection(sectionState.get(context));
-        worldSection.getSlotMap().forEach((slot, tile) -> {
-            tile.onLoad(worldSection, slot);
+        worldSection.getSlotMap().forEach((slot, mapTile) -> {
+            mapTile.onLoad(context, worldSection, slot);
             context.slot(slot).updateOnClick().onUpdate(slotContext -> {
-                        if (tile.onUpdate(slotContext, worldSection, slot)) {
-                            openBackMenu.set(false, slotContext);
-                        }
+                        WorldSection section = worldSectionState.get(slotContext);
+                        Tile tile = section.getSlot(slot);
+                        tile.onUpdate(slotContext, section, slot);
                     })
-                    .onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
+                    .onRender(slotRenderContext -> {
+                        WorldSection section = worldSectionState.get(slotRenderContext);
+                        Tile tile = section.getSlot(slot);
+                        slotRenderContext.setItem(tile.render(slotRenderContext));
+                    }).onClick(clickContext -> {
+                        WorldSection section = worldSectionState.get(clickContext);
+                        Tile tile = section.getSlot(slot);
                         if (clickContext.isShiftRightClick()) {
                             if (tile instanceof BuildingTile buildingTile) {
                                 if (buildingTile.isImmovable()) return;

@@ -4,10 +4,11 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import lombok.Getter;
 import lombok.Setter;
+import me.devnatan.inventoryframework.context.Context;
+import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.towncraft.Towncraft;
-import me.webhead1104.towncraft.data.objects.Plot;
 import me.webhead1104.towncraft.data.objects.WorldSection;
 import me.webhead1104.towncraft.features.world.plots.PlotMenu;
 import me.webhead1104.towncraft.features.world.plots.PlotType;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class PlotTile extends BuildingTile {
+public class PlotTile extends BuildingTile implements TimeFinishable {
     private Plot plot;
 
     public PlotTile(@Nullable Plot plot) {
@@ -30,7 +31,7 @@ public class PlotTile extends BuildingTile {
     }
 
     @Override
-    public void onLoad(WorldSection worldSection, int slot) {
+    public void onLoad(RenderContext renderContext, WorldSection worldSection, int slot) {
         if (plot != null) return;
         plot = new Plot(worldSection.getSection(), slot, PlotType.NONE);
     }
@@ -62,5 +63,20 @@ public class PlotTile extends BuildingTile {
             plot.setPlotType(PlotType.NONE);
         }
         return false;
+    }
+
+    @Override
+    public @Nullable Instant getInstant() {
+        return plot.getInstant();
+    }
+
+    @Override
+    public void setInstant(@Nullable Instant instant) {
+        plot.setInstant(instant);
+    }
+
+    @Override
+    public void onFinish(Context context, WorldSection worldSection, int slot) {
+
     }
 }
