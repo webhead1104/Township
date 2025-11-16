@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class BarnTile extends BuildingTile {
     public BarnTile() {
-        super(Towncraft.key("barn"), 0);
+        super(Towncraft.key("barn"));
     }
 
     @Override

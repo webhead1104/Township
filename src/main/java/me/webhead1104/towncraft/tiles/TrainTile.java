@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class TrainTile extends BuildingTile {
     public TrainTile() {
-        super(Towncraft.key("train"), 0);
+        super(Towncraft.key("train"));
     }
 
     @Override

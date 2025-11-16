@@ -12,9 +12,8 @@ public abstract class BuildingTile extends Tile {
     private Key buildingType;
     private int buildingSlot;
 
-    protected BuildingTile(Key buildingType, int buildingSlot) {
+    protected BuildingTile(Key buildingType) {
         this.buildingType = buildingType;
-        this.buildingSlot = buildingSlot;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class FactoryTile extends BuildingTile {
 
     @Keep
     public FactoryTile(Key factoryType) {
-        super(Towncraft.getDataLoader(FactoryType.class).get(factoryType).getBuildingKey(), 0);
+        super(Towncraft.getDataLoader(FactoryType.class).get(factoryType).getBuildingKey());
         this.factoryType = factoryType;
     }
 

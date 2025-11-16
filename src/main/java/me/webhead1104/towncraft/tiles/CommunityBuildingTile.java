@@ -18,7 +18,7 @@ public class CommunityBuildingTile extends BuildingTile {
 
     @Keep
     public CommunityBuildingTile(CommunityBuildingType communityBuildingType) {
-        super(communityBuildingType.getBuildingType(), 0);
+        super(communityBuildingType.getBuildingType());
         this.communityBuildingType = communityBuildingType;
     }
 

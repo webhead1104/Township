@@ -19,7 +19,7 @@ public class AnimalTile extends BuildingTile {
 
     @Keep
     public AnimalTile(Key animalType) {
-        super(Towncraft.getDataLoader(AnimalType.class).get(animalType).getBuildingKey(), 0);
+        super(Towncraft.getDataLoader(AnimalType.class).get(animalType).getBuildingKey());
         this.animalType = animalType;
     }
 

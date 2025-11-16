@@ -16,7 +16,7 @@ public class HouseTile extends BuildingTile {
 
     @Keep
     protected HouseTile(HouseType houseType) {
-        super(houseType.getBuildingType(), 0);
+        super(houseType.getBuildingType());
         this.houseType = houseType;
     }
 
