@@ -41,7 +41,7 @@ public class ExpansionMenu extends TowncraftView {
 
         user.getWorld().getSection(user.getSection()).getSlotMap().forEach((key, tile) -> {
             if (!TileSize.SIZE_3X3.toList(slotState.get(context)).contains(key)) {
-                context.slot(key).onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext)));
+                context.slot(key).onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext, user.getWorld().getSection(user.getSection()), key)));
             }
         });
         for (Integer slot : TileSize.SIZE_3X3.toList(slotState.get(context))) {

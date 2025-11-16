@@ -9,9 +9,9 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 
 public abstract class Tile {
-    public abstract ItemStack render(SlotRenderContext context);
+    public abstract ItemStack render(SlotRenderContext context, WorldSection worldSection, int slot);
 
-    public abstract boolean onClick(SlotClickContext context);
+    public abstract boolean onClick(SlotClickContext context, WorldSection worldSection, int slot);
 
     @ApiStatus.OverrideOnly
     public void onUpdate(SlotContext slotContext, WorldSection worldSection, int slot) {

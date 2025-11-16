@@ -29,7 +29,7 @@ public class ExpansionTile extends Tile implements TimeFinishable {
     private Instant instant;
 
     @Override
-    public ItemStack render(SlotRenderContext context) {
+    public ItemStack render(SlotRenderContext context, WorldSection worldSection, int slot) {
         if (instant == null) {
             ItemStack itemStack = ItemStack.of(Material.PODZOL);
             itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("Expansion"));
@@ -43,7 +43,7 @@ public class ExpansionTile extends Tile implements TimeFinishable {
     }
 
     @Override
-    public boolean onClick(SlotClickContext context) {
+    public boolean onClick(SlotClickContext context, WorldSection worldSection, int slot) {
         if (instant != null) return false;
         int row = context.getClickedSlot() / 9;
         int col = context.getClickedSlot() % 9;

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
+import me.webhead1104.towncraft.data.objects.WorldSection;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -19,7 +20,7 @@ public class StaticWorldTile extends Tile {
     }
 
     @Override
-    public ItemStack render(SlotRenderContext context) {
+    public ItemStack render(SlotRenderContext context, WorldSection worldSection, int slot) {
         ItemStack itemStack = new ItemStack(material);
         itemStack.setData(DataComponentTypes.ITEM_NAME, Component.empty());
         itemStack.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay().hideTooltip(true));
@@ -27,7 +28,7 @@ public class StaticWorldTile extends Tile {
     }
 
     @Override
-    public boolean onClick(SlotClickContext context) {
+    public boolean onClick(SlotClickContext context, WorldSection worldSection, int slot) {
         return false;
     }
 

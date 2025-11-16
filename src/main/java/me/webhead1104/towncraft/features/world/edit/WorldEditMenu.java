@@ -51,7 +51,7 @@ public class WorldEditMenu extends TowncraftView {
         World world = user.getWorld();
         WorldSection section = world.getSection(sectionState.get(context));
 
-        section.getSlotMap().forEach((key, tile) -> context.slot(key).updateOnClick().onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
+        section.getSlotMap().forEach((key, tile) -> context.slot(key).updateOnClick().onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext, section, key))).onClick(clickContext -> {
             if (handleTileClick(clickContext, tile)) {
                 openBackMenu.set(false, clickContext);
             }

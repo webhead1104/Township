@@ -6,6 +6,7 @@ import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.towncraft.Towncraft;
+import me.webhead1104.towncraft.data.objects.WorldSection;
 import me.webhead1104.towncraft.features.trains.TrainMenu;
 import me.webhead1104.towncraft.utils.Msg;
 import org.bukkit.Material;
@@ -18,7 +19,7 @@ public class TrainTile extends BuildingTile {
     }
 
     @Override
-    public ItemStack render(SlotRenderContext context) {
+    public ItemStack render(SlotRenderContext context, WorldSection worldSection, int slot) {
         ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);
         itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("Trains"));
         String textures = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmQ1YjBlM2FhNjExNjJhM2M2NTM4OTg1YzVjMTFjZWI5NmQ1NjA1YjNjZTkyMzRjODhmNGZiZDcyMzQ3NWQifX19";
@@ -29,7 +30,7 @@ public class TrainTile extends BuildingTile {
     }
 
     @Override
-    public boolean onClick(SlotClickContext context) {
+    public boolean onClick(SlotClickContext context, WorldSection worldSection, int slot) {
         if (Towncraft.getUserManager().getUser(context.getPlayer().getUniqueId()).getTrains().isUnlocked()) {
             context.openForPlayer(TrainMenu.class);
             return true;
