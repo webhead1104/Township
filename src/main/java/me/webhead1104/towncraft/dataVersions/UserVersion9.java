@@ -7,11 +7,11 @@ import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 public final class UserVersion9 implements DataVersion {
     @Override
     public ConfigurationTransformation getTransformation() {
-        return (rootNode) -> rootNode.node("barn", "item-map").childrenMap().forEach((key, value) -> {
-            if (value.getInt(0) == 0) {
-                value.raw(null);
+        return rootNode -> runInChildren(rootNode, node -> {
+            if (node.getInt() == 0) {
+                node.raw(null);
             }
-        });
+        }, "barn", "item-map");
     }
 
     @Override

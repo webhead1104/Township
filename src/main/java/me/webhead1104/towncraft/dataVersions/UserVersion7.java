@@ -3,30 +3,19 @@ package me.webhead1104.towncraft.dataVersions;
 import com.google.errorprone.annotations.Keep;
 import net.kyori.adventure.key.Key;
 import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
-
-import static org.spongepowered.configurate.NodePath.path;
 
 @Keep
 public final class UserVersion7 implements DataVersion {
     @Override
     public ConfigurationTransformation getTransformation() {
-        return node -> node.node(path("world", "world-map")).childrenMap().forEach((sectionKey, sectionNode) ->
-                sectionNode.node("slot-map").childrenMap().forEach((slotKey, slotNode) -> {
-                    ConfigurationNode propertiesNode = slotNode.node("properties");
-                    if (slotNode.node("class").getString("unknown class").equals("StaticWorldTile")) {
-                        ConfigurationNode materialNode = propertiesNode.node("material");
-                        if (materialNode.getString() == null) {
-                            throw new NullPointerException("material");
-                        }
-                        try {
-                            materialNode.set(Key.key(materialNode.getString().toLowerCase()));
-                        } catch (SerializationException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }));
+        return rootNode -> runInAllWorldTiles(rootNode, node -> {
+            ConfigurationNode propertiesNode = node.node("properties");
+            if ("StaticWorldTile".equals(node.node("class").getString(""))) {
+                ConfigurationNode materialNode = propertiesNode.node("material");
+                materialNode.raw(Key.key(materialNode.getString("").toLowerCase()).asString());
+            }
+        });
     }
 
     @Override
