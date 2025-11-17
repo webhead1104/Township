@@ -1,7 +1,6 @@
 package me.webhead1104.towncraft.features.factories;
 
 import com.google.common.base.Stopwatch;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.towncraft.Towncraft;
@@ -9,10 +8,9 @@ import me.webhead1104.towncraft.annotations.DependsOn;
 import me.webhead1104.towncraft.data.objects.Barn;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
 import me.webhead1104.towncraft.dataLoaders.ItemType;
+import me.webhead1104.towncraft.dataLoaders.Keyed;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.key.Keyed;
 import org.bukkit.Material;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
@@ -23,7 +21,6 @@ import java.time.Duration;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @DependsOn({ItemType.class, FactoryType.class})
@@ -68,10 +65,9 @@ public class RecipeType implements DataLoader.KeyBasedDataLoader<RecipeType.Reci
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
-    public static class Recipe implements Keyed {
+    public static class Recipe extends Keyed {
         private final transient Map<ItemType.Item, Integer> ingredients = new HashMap<>();
         @Required
-        @Getter(value = AccessLevel.NONE)
         @Setting("key")
         private Key key;
         @Required
@@ -113,15 +109,6 @@ public class RecipeType implements DataLoader.KeyBasedDataLoader<RecipeType.Reci
                 }
             });
             return hasRequiredItems.get();
-        }
-
-        public boolean equals(Key key) {
-            return Objects.equals(this.key, key);
-        }
-
-        @Override
-        public @NotNull Key key() {
-            return key;
         }
     }
 }

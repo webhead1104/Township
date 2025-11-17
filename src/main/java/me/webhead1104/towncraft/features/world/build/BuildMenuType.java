@@ -1,14 +1,12 @@
 package me.webhead1104.towncraft.features.world.build;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
+import me.webhead1104.towncraft.dataLoaders.Keyed;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
@@ -52,9 +50,8 @@ public class BuildMenuType implements DataLoader.KeyBasedDataLoader<BuildMenuTyp
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
-    public static final class BuildMenu implements Keyed {
+    public static final class BuildMenu extends Keyed {
         @Required
-        @Getter(value = AccessLevel.NONE)
         @Setting("key")
         private Key key;
         @Required
@@ -63,10 +60,5 @@ public class BuildMenuType implements DataLoader.KeyBasedDataLoader<BuildMenuTyp
         @Required
         @Setting("menu_title")
         private Component menuTitle;
-
-        @Override
-        public @NotNull Key key() {
-            return key;
-        }
     }
 }
