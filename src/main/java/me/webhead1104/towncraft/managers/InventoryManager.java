@@ -1,28 +1,21 @@
 package me.webhead1104.towncraft.managers;
 
-import lombok.NoArgsConstructor;
 import me.webhead1104.towncraft.utils.Msg;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
-
-@NoArgsConstructor
 public class InventoryManager {
-
-    private final Map<UUID, Map<Integer, ItemStack>> playerInventories = new HashMap<>();
+    private final Map<UUID, @Nullable ItemStack @NotNull []> playerInventories = new HashMap<>();
 
     public void addPlayerInventory(Player player) {
-        Map<Integer, ItemStack> map = new HashMap<>();
-        int i = 0;
-        for (ItemStack itemStack : player.getInventory().getContents()) {
-            map.put(i, Objects.requireNonNullElseGet(itemStack, () -> new ItemStack(Material.AIR)));
-            i++;
-        }
-        playerInventories.put(player.getUniqueId(), map);
+        playerInventories.put(player.getUniqueId(), player.getInventory().getContents());
     }
 
     public void returnItemsToPlayer(Player player) {
@@ -30,16 +23,12 @@ public class InventoryManager {
             player.sendMessage(Msg.format("<red>No items found!"));
             throw new NullPointerException("Player " + player.getUniqueId() + " does not have a inventory stored!");
         } else {
-            int i = 0;
-            for (ItemStack itemStack : getPlayerInventory(player.getUniqueId()).get().values()) {
-                player.getInventory().setItem(i, itemStack);
-                i++;
-            }
+            player.getInventory().setContents(getPlayerInventory(player.getUniqueId()).get());
             removePlayerInventory(player.getUniqueId());
         }
     }
 
-    public @NotNull Optional<Map<Integer, ItemStack>> getPlayerInventory(UUID playerUUID) {
+    public @NotNull Optional<@Nullable ItemStack @NotNull []> getPlayerInventory(UUID playerUUID) {
         return Optional.ofNullable(playerInventories.get(playerUUID));
     }
 

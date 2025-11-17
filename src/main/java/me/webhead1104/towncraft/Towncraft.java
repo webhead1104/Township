@@ -18,6 +18,7 @@ import me.webhead1104.towncraft.serializers.TowncraftSerializer;
 import me.webhead1104.towncraft.utils.ClassGraphUtils;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -159,6 +160,7 @@ public class Towncraft extends JavaPlugin {
     @Override
     public void onDisable() {
         logger.info("Towncraft shutting down saving users");
+        Bukkit.getOnlinePlayers().forEach(inventoryManager::returnItemsToPlayer);
         userManager.getUsers().forEach((key, user) -> {
             user.save();
             logger.info("saved {}", user.getUuid());

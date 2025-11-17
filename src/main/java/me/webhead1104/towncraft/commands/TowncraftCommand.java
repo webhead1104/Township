@@ -35,7 +35,7 @@ public final class TowncraftCommand {
 
     @Executes
     void execute(CommandSender $, @Executor Player player) {
-        if (!player.getInventory().isEmpty()) Towncraft.getInventoryManager().addPlayerInventory(player);
+        Towncraft.getInventoryManager().addPlayerInventory(player);
         player.getInventory().clear();
         WorldUtils.openWorldMenu(player);
     }
