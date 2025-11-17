@@ -1,11 +1,12 @@
 package me.webhead1104.towncraft.tiles;
 
+import com.google.errorprone.annotations.Keep;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import me.devnatan.inventoryframework.context.Context;
-import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.towncraft.Towncraft;
@@ -18,65 +19,61 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
 public class PlotTile extends BuildingTile implements TimeFinishable {
-    private Plot plot;
+    private PlotType plotType = PlotType.NONE;
+    @Nullable
+    private Instant instant;
+    private boolean claimable = false;
 
-    public PlotTile(@Nullable Plot plot) {
-        super(Towncraft.key("plot"), 0);
-        this.plot = plot;
+    @Keep
+    public PlotTile(@NonNull PlotType plotType, @Nullable Instant instant, boolean claimable) {
+        super(Towncraft.key("plot"));
+        this.plotType = plotType;
+        this.instant = instant;
+        this.claimable = claimable;
+    }
+
+    @Keep
+    public PlotTile() {
+        super(Towncraft.key("plot"));
     }
 
     @Override
-    public void onLoad(RenderContext renderContext, WorldSection worldSection, int slot) {
-        if (plot != null) return;
-        plot = new Plot(worldSection.getSection(), slot, PlotType.NONE);
-    }
-
-    @Override
-    public ItemStack render(SlotRenderContext context) {
-        if (!plot.getInstant().equals(Instant.EPOCH) && Instant.now().isAfter(plot.getInstant().minusSeconds(1))) {
-            plot.setClaimable(true);
-            plot.setInstant(Instant.EPOCH);
+    public ItemStack render(SlotRenderContext context, WorldSection worldSection, int slot) {
+        if (plotType.equals(PlotType.NONE) || instant == null) {
+            return plotType.getMenuItem();
         }
 
-        if (plot.getPlotType().equals(PlotType.NONE) || plot.getInstant().equals(Instant.EPOCH)) {
-            return plot.getPlotType().getMenuItem();
-        }
-
-        ItemStack itemStack = plot.getPlotType().getMenuItem();
-        itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<gold>Time: %s", Utils.format(Instant.now(), plot.getInstant())))));
+        ItemStack itemStack = plotType.getMenuItem();
+        itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(List.of(Msg.format("<gold>Time: %s", Utils.format(Instant.now(), instant)))));
         return itemStack;
     }
 
     @Override
-    public boolean onClick(SlotClickContext context) {
-        if (plot.getPlotType().equals(PlotType.NONE)) {
-            context.openForPlayer(PlotMenu.class, plot);
+    public boolean onClick(SlotClickContext context, WorldSection worldSection, int slot) {
+        if (plotType.equals(PlotType.NONE)) {
+            Map<String, Object> map = new HashMap<>(Map.of(
+                    "slot", slot,
+                    "section", worldSection.getSection()
+            ));
+            context.openForPlayer(PlotMenu.class, map);
             return true;
-        } else if (plot.isClaimable()) {
-            plot.setClaimable(false);
-            Towncraft.getUserManager().getUser(context.getPlayer().getUniqueId()).getBarn().addAmountToItem(plot.getPlotType().getItem().key(), 1);
-            plot.setPlotType(PlotType.NONE);
+        } else if (claimable) {
+            this.claimable = false;
+            Towncraft.getUserManager().getUser(context.getPlayer().getUniqueId()).getBarn().addAmountToItem(plotType.getItem().key(), 1);
+            this.plotType = PlotType.NONE;
         }
         return false;
     }
 
     @Override
-    public @Nullable Instant getInstant() {
-        return plot.getInstant();
-    }
-
-    @Override
-    public void setInstant(@Nullable Instant instant) {
-        plot.setInstant(instant);
-    }
-
-    @Override
     public void onFinish(Context context, WorldSection worldSection, int slot) {
-
+        this.claimable = true;
     }
 }

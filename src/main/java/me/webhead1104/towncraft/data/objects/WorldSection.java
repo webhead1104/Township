@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.towncraft.data.TileSize;
-import me.webhead1104.towncraft.features.world.plots.PlotType;
 import me.webhead1104.towncraft.tiles.*;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
@@ -31,7 +30,7 @@ public class WorldSection {
                 }
             }
             if (section == 27) {
-                PlotTile plotTile = new PlotTile(new Plot(section, 34, PlotType.NONE));
+                PlotTile plotTile = new PlotTile();
                 slotMap.put(34, plotTile);
                 for (int a : TileSize.SIZE_3X3.toList(0)) {
                     slotMap.put(a, new BarnTile());

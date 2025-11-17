@@ -6,11 +6,14 @@ import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
+import me.devnatan.inventoryframework.state.State;
 import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.data.objects.User;
 import me.webhead1104.towncraft.data.objects.World;
+import me.webhead1104.towncraft.data.objects.WorldSection;
 import me.webhead1104.towncraft.menus.TowncraftView;
 import me.webhead1104.towncraft.tiles.PlotTile;
+import me.webhead1104.towncraft.tiles.Tile;
 import me.webhead1104.towncraft.utils.Msg;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,9 +26,14 @@ import java.util.List;
 import java.util.Map;
 
 public class PlotMenu extends TowncraftView {
-    private final MutableState<Plot> plot = initialState();
+    private final State<Integer> slotState = initialState("slot");
+    private final State<Integer> sectionState = initialState("section");
     private final MutableState<Map<Integer, PlotType>> plotTypes = mutableState(new HashMap<>());
     private final MutableState<PlotType> selectedPlotTypeState = mutableState(PlotType.NONE);
+    private final State<WorldSection> worldSectionState = computedState(context -> {
+        User user = Towncraft.getUserManager().getUser(context.getPlayer().getUniqueId());
+        return user.getWorld().getSection(sectionState.get(context));
+    });
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
@@ -40,18 +48,21 @@ public class PlotMenu extends TowncraftView {
         Player player = context.getPlayer();
         User user = Towncraft.getUserManager().getUser(player.getUniqueId());
         World world = user.getWorld();
-        Plot plot = this.plot.get(context);
 
-        world.getSection(user.getSection()).getSlotMap().forEach((key, tile) -> {
-            if (key != plot.getSlot()) {
-                context.slot(key).onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext))).onClick(clickContext -> {
-                    if (tile.onClick(clickContext)) {
-                        openBackMenu.set(false, clickContext);
-                    }
+        world.getSection(user.getSection()).getSlotMap().forEach((slot, mapTile) -> {
+            if (!slot.equals(slotState.get(context))) {
+                context.slot(slot).updateOnClick().onUpdate(slotContext -> {
+                    WorldSection section = worldSectionState.get(slotContext);
+                    Tile tile = section.getSlot(slot);
+                    tile.onUpdate(slotContext, section, slot);
+                }).onRender(slotRenderContext -> {
+                    WorldSection section = worldSectionState.get(slotRenderContext);
+                    Tile tile = section.getSlot(slot);
+                    slotRenderContext.setItem(tile.render(slotRenderContext, section, slot));
                 });
             }
         });
-        context.slot(plot.getSlot()).onRender(slotRenderContext -> {
+        context.slot(slotState.get(context)).onRender(slotRenderContext -> {
             ItemStack itemStack = ItemStack.of(Material.GREEN_CONCRETE);
             itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("<green>Click me with a ingredient to plant it!"));
             slotRenderContext.setItem(itemStack);
@@ -63,10 +74,10 @@ public class PlotMenu extends TowncraftView {
             player.setItemOnCursor(ItemStack.empty());
             if (selectedPlotType.getPrice().has(player)) {
                 selectedPlotType.getPrice().take(player);
-                plot.setPlotType(selectedPlotType);
-                plot.setInstant(Instant.now().plusSeconds(selectedPlotType.getTime().getSeconds()));
-                plot.setClaimable(false);
-                ((PlotTile) user.getWorld().getSection(plot.getSection()).getSlot(plot.getSlot())).setPlot(plot);
+                PlotTile plotTile = (PlotTile) worldSectionState.get(slotClickContext).getSlot(slotState.get(slotClickContext));
+                System.out.println(selectedPlotType);
+                plotTile.setPlotType(selectedPlotType);
+                plotTile.setInstant(Instant.now().plus(selectedPlotType.getTime()));
                 slotClickContext.closeForPlayer();
             }
         });
