@@ -96,7 +96,7 @@ public class AnimalType implements DataLoader.KeyBasedDataLoader<AnimalType.Anim
             this.menuTitle = Msg.format("<gold>%s", name);
         }
 
-        public ItemStack getItemStack() {
+        public ItemStack getAnimalItemStack() {
             return animalItemStack.clone();
         }
     }
