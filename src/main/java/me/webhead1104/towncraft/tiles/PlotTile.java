@@ -27,8 +27,7 @@ import java.util.Map;
 @Setter
 public class PlotTile extends BuildingTile implements TimeFinishable {
     private PlotType plotType = PlotType.NONE;
-    @Nullable
-    private Instant instant;
+    private @Nullable Instant instant;
     private boolean claimable = false;
 
     @Keep

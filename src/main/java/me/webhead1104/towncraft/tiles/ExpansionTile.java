@@ -25,8 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExpansionTile extends Tile implements TimeFinishable {
-    @Nullable
-    private Instant instant;
+    private @Nullable Instant instant;
 
     @Override
     public ItemStack render(SlotRenderContext context, WorldSection worldSection, int slot) {
