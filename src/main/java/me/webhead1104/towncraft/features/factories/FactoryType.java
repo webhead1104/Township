@@ -1,19 +1,17 @@
 package me.webhead1104.towncraft.features.factories;
 
 import com.google.common.base.Stopwatch;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.annotations.DependsOn;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
 import me.webhead1104.towncraft.dataLoaders.ItemType;
+import me.webhead1104.towncraft.dataLoaders.Keyed;
 import me.webhead1104.towncraft.utils.Msg;
 import me.webhead1104.towncraft.utils.Utils;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;
-import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
 import org.spongepowered.configurate.objectmapping.meta.Required;
@@ -58,9 +56,8 @@ public class FactoryType implements DataLoader.KeyBasedDataLoader<FactoryType.Fa
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
-    public static class Factory implements Keyed {
+    public static class Factory extends Keyed {
         @Required
-        @Getter(value = AccessLevel.NONE)
         @Setting("key")
         private Key key;
         @Setting("name")
@@ -82,15 +79,6 @@ public class FactoryType implements DataLoader.KeyBasedDataLoader<FactoryType.Fa
             if (menuTitle == null) {
                 menuTitle = Msg.format("<gold>%s", name);
             }
-        }
-
-        @Override
-        public @NotNull Key key() {
-            return key;
-        }
-
-        public boolean equals(Key key) {
-            return Objects.equals(this.key, key);
         }
     }
 }

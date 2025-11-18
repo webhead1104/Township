@@ -3,30 +3,20 @@ package me.webhead1104.towncraft.dataVersions;
 import com.google.errorprone.annotations.Keep;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 
+import static org.spongepowered.configurate.transformation.ConfigurationTransformation.WILDCARD_OBJECT;
+
 @Keep
 public final class UserVersion2 implements DataVersion {
 
     @Override
     public ConfigurationTransformation getTransformation() {
-        return ConfigurationTransformation.chain(
-                node -> node.node("trains", "trains").childrenMap().forEach((key, trainNode) -> {
-                    trainNode.node("coins-needed-to-unlock").raw(null);
-                    trainNode.node("level-needed-to-unlock").raw(null);
-                }),
-                node -> node.node("trains", "trains").childrenMap().forEach((key, trainNode) ->
-                        trainNode.node("train-cars").childrenMap().forEach((carKey, carNode) -> {
-                            int giveAmount = carNode.node("give-item", "amount").getInt();
-                            String giveType = carNode.node("give-item", "item-type").getString();
-                            carNode.node("give-item").raw(null);
-                            carNode.node("give-item-amount").raw(giveAmount);
-                            carNode.node("give-item-type").raw(giveType);
+        return rootNode -> runInChildren(rootNode, node -> {
+            node.node("give-item-amount").raw(node.node("give-item", "amount").getInt());
+            node.node("give-item-type").raw(node.node("give-item", "type").getInt());
 
-                            int claimAmount = node.node("claim-item", "amount").getInt();
-                            String claimType = node.node("claim-item", "item-type").getString();
-                            node.node("claim-item").raw(null);
-                            node.node("claim-item-amount").raw(claimAmount);
-                            node.node("claim-item-type").raw(claimType);
-                        })));
+            node.node("claim-item-amount").raw(node.node("claim-item", "amount").getInt());
+            node.node("claim-item-type").raw(node.node("claim-item", "type").getInt());
+        }, "trains", "trains", WILDCARD_OBJECT, "train-cars", WILDCARD_OBJECT);
     }
 
     @Override

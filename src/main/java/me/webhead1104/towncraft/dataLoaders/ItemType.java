@@ -1,20 +1,20 @@
 package me.webhead1104.towncraft.dataLoaders;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.utils.Utils;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.key.Keyed;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ItemType implements DataLoader.KeyBasedDataLoader<ItemType.Item> {
     private final Map<Key, Item> values = new HashMap<>();
@@ -48,9 +48,8 @@ public class ItemType implements DataLoader.KeyBasedDataLoader<ItemType.Item> {
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
-    public static class Item implements Keyed {
+    public static class Item extends Keyed {
         @Required
-        @Getter(value = AccessLevel.NONE)
         @Setting("key")
         private Key key;
         @Required
@@ -69,15 +68,6 @@ public class ItemType implements DataLoader.KeyBasedDataLoader<ItemType.Item> {
 
         public ItemStack getItemStack() {
             return itemStack.clone();
-        }
-
-        public boolean equals(Key key) {
-            return Objects.equals(this.key, key);
-        }
-
-        @Override
-        public @NotNull Key key() {
-            return key;
         }
     }
 }

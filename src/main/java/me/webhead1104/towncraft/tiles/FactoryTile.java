@@ -6,6 +6,7 @@ import lombok.Getter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.towncraft.Towncraft;
+import me.webhead1104.towncraft.data.objects.WorldSection;
 import me.webhead1104.towncraft.features.factories.FactoryMenu;
 import me.webhead1104.towncraft.features.factories.FactoryType;
 import me.webhead1104.towncraft.utils.Msg;
@@ -19,19 +20,19 @@ public class FactoryTile extends BuildingTile {
 
     @Keep
     public FactoryTile(Key factoryType) {
-        super(Towncraft.getDataLoader(FactoryType.class).get(factoryType).getBuildingKey(), 0);
+        super(Towncraft.getDataLoader(FactoryType.class).get(factoryType).getBuildingKey());
         this.factoryType = factoryType;
     }
 
     @Override
-    public ItemStack render(SlotRenderContext context) {
+    public ItemStack render(SlotRenderContext context, WorldSection worldSection, int slot) {
         ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
         itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(Towncraft.getDataLoader(FactoryType.class).get(factoryType).getName()));
         return itemStack;
     }
 
     @Override
-    public boolean onClick(SlotClickContext context) {
+    public boolean onClick(SlotClickContext context, WorldSection worldSection, int slot) {
         context.openForPlayer(FactoryMenu.class, factoryType);
         return true;
     }

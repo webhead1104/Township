@@ -128,7 +128,7 @@ public class PlaceMenu extends View {
                     }
                     return;
                 }
-                slotRenderContext.setItem(ws.getSlot(idx).render(slotRenderContext));
+                slotRenderContext.setItem(ws.getSlot(idx).render(slotRenderContext, user.getWorld().getSection(sectionState.get(context)), idx));
             }).onClick(click -> {
                 TileSize size = tileSizeState.get(click);
                 int newSlot = WorldUtils.adjustPlacement(click.getClickedSlot(), size);

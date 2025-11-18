@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.towncraft.data.TileSize;
-import me.webhead1104.towncraft.features.world.plots.PlotType;
 import me.webhead1104.towncraft.tiles.*;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
@@ -18,7 +17,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class WorldSection {
     private final Map<Integer, Tile> slotMap = new HashMap<>();
-    private transient Map<Integer, Tile> actualTileMap = new HashMap<>();
     private int section;
 
     public WorldSection(int section) {
@@ -32,7 +30,7 @@ public class WorldSection {
                 }
             }
             if (section == 27) {
-                PlotTile plotTile = new PlotTile(new Plot(section, 34, PlotType.NONE));
+                PlotTile plotTile = new PlotTile();
                 slotMap.put(34, plotTile);
                 for (int a : TileSize.SIZE_3X3.toList(0)) {
                     slotMap.put(a, new BarnTile());
@@ -51,23 +49,18 @@ public class WorldSection {
     @PostProcess
     private void postProcess() {
         for (int i = 0; i < 54; i++) {
-            actualTileMap.put(i, getSlot(i));
+            slotMap.putIfAbsent(i, new ExpansionTile(null));
         }
-    }
-
-    public final Map<Integer, Tile> getSlotMap() {
-        return actualTileMap;
     }
 
     public void setSlot(int slot, Tile tile) {
         slotMap.put(slot, tile);
-        actualTileMap.put(slot, tile);
     }
 
     public Tile getSlot(int slot) {
-        if (slotMap.containsKey(slot)) {
-            return slotMap.get(slot);
+        if (!slotMap.containsKey(slot)) {
+            slotMap.put(slot, new ExpansionTile(null));
         }
-        return new ExpansionTile();
+        return slotMap.get(slot);
     }
 }

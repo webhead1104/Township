@@ -41,7 +41,7 @@ public class ExpansionMenu extends TowncraftView {
 
         user.getWorld().getSection(user.getSection()).getSlotMap().forEach((key, tile) -> {
             if (!TileSize.SIZE_3X3.toList(slotState.get(context)).contains(key)) {
-                context.slot(key).onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext)));
+                context.slot(key).onRender(slotRenderContext -> slotRenderContext.setItem(tile.render(slotRenderContext, user.getWorld().getSection(user.getSection()), key)));
             }
         });
         for (Integer slot : TileSize.SIZE_3X3.toList(slotState.get(context))) {
@@ -84,9 +84,10 @@ public class ExpansionMenu extends TowncraftView {
                 user.setCoins(user.getCoins() - expansion.getCoinsNeeded());
                 user.addXp(expansion.getXp());
                 user.setExpansionsPurchased(user.getExpansionsPurchased() + 1);
+                Instant instant = Instant.now().plus(expansion.getTime());
                 TileSize.SIZE_3X3.toList(slotState.get(context)).forEach(slot -> {
                     ExpansionTile expansionTile = (ExpansionTile) user.getWorld().getSection(user.getSection()).getSlot(slot);
-                    expansionTile.setInstant(Instant.now().plus(expansion.getTime()));
+                    expansionTile.setInstant(instant);
                 });
                 context.closeForPlayer();
             }

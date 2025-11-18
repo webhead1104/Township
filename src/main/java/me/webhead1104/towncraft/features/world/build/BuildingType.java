@@ -3,7 +3,6 @@ package me.webhead1104.towncraft.features.world.build;
 import com.google.common.base.Stopwatch;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.towncraft.Towncraft;
@@ -13,6 +12,7 @@ import me.webhead1104.towncraft.data.objects.ConstructionMaterials;
 import me.webhead1104.towncraft.data.objects.PurchasedBuildings;
 import me.webhead1104.towncraft.data.objects.User;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
+import me.webhead1104.towncraft.dataLoaders.Keyed;
 import me.webhead1104.towncraft.features.animals.AnimalType;
 import me.webhead1104.towncraft.features.factories.FactoryType;
 import me.webhead1104.towncraft.price.NoopPrice;
@@ -22,12 +22,10 @@ import me.webhead1104.towncraft.tiles.Tile;
 import me.webhead1104.towncraft.utils.Msg;
 import me.webhead1104.towncraft.utils.Utils;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
@@ -113,9 +111,8 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
-    public static final class Building implements Keyed {
+    public static final class Building extends Keyed {
         @Required
-        @Getter(value = AccessLevel.NONE)
         @Setting("key")
         private Key key;
         @Required
@@ -153,11 +150,6 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
             if (price == null) {
                 price = NoopPrice.INSTANCE;
             }
-        }
-
-        @Override
-        public @NotNull Key key() {
-            return key;
         }
 
         public ItemStack getItemStack(Player player) {

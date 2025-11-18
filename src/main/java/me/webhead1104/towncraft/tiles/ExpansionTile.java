@@ -6,11 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.SlotClickContext;
-import me.devnatan.inventoryframework.context.SlotContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.webhead1104.towncraft.data.objects.WorldSection;
-import me.webhead1104.towncraft.features.world.WorldMenu;
 import me.webhead1104.towncraft.features.world.expansions.ExpansionMenu;
 import me.webhead1104.towncraft.utils.Msg;
 import me.webhead1104.towncraft.utils.Utils;
@@ -25,12 +24,11 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExpansionTile extends Tile {
-    @Nullable
-    private Instant instant;
+public class ExpansionTile extends Tile implements TimeFinishable {
+    private @Nullable Instant instant;
 
     @Override
-    public ItemStack render(SlotRenderContext context) {
+    public ItemStack render(SlotRenderContext context, WorldSection worldSection, int slot) {
         if (instant == null) {
             ItemStack itemStack = ItemStack.of(Material.PODZOL);
             itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format("Expansion"));
@@ -44,7 +42,7 @@ public class ExpansionTile extends Tile {
     }
 
     @Override
-    public boolean onClick(SlotClickContext context) {
+    public boolean onClick(SlotClickContext context, WorldSection worldSection, int slot) {
         if (instant != null) return false;
         int row = context.getClickedSlot() / 9;
         int col = context.getClickedSlot() % 9;
@@ -57,15 +55,7 @@ public class ExpansionTile extends Tile {
     }
 
     @Override
-    public boolean onUpdate(SlotContext slotContext, WorldSection worldSection, int slot) {
-        if (instant == null) return false;
-
-        if (Instant.now().isAfter(instant.minusSeconds(1))) {
-            instant = null;
-            worldSection.setSlot(slot, StaticWorldTile.Type.GRASS.getTile());
-            slotContext.openForPlayer(WorldMenu.class, worldSection.getSection());
-            return true;
-        }
-        return false;
+    public void onFinish(Context context, WorldSection worldSection, int slot) {
+        worldSection.setSlot(slot, StaticWorldTile.Type.GRASS.getTile());
     }
 }

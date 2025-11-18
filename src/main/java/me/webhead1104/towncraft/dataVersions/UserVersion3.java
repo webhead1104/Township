@@ -9,8 +9,8 @@ public final class UserVersion3 implements DataVersion {
     @Override
     public ConfigurationTransformation getTransformation() {
         return node -> {
-            node.node("xp").set(node.node("level", "xp").getInt());
-            node.node("level").set(node.node("level", "level").getInt());
+            node.node("xp").raw(node.node("level", "xp").getInt());
+            node.node("level").raw(node.node("level", "level").getInt());
         };
     }
 

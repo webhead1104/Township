@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.TextFlow?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" xmlns="http://javafx.com/javafx/17.0.12"
+            fx:controller="me.webhead1104.menuDesigner.ui.MenuDesignerController">
+    <center>
+        <SplitPane dividerPositions="0.5">
+            <AnchorPane fx:id="inventoryPane"/>
+            <VBox spacing="8.0" styleClass="right-pane" maxWidth="400.0">
+                <padding>
+                    <Insets topRightBottomLeft="10"/>
+                </padding>
+                <HBox spacing="8.0">
+                    <Label text="Appearance"/>
+                    <Pane HBox.hgrow="ALWAYS"/>
+                    <ToggleButton fx:id="darkToggle" text="Dark Mode"/>
+                </HBox>
+                <Separator/>
+                <Label text="Material"/>
+                <TextField fx:id="materialFilter" promptText="Filter materials..."/>
+                <ListView fx:id="materialList" VBox.vgrow="ALWAYS"/>
+                <Separator/>
+                <Label text="Display Name (MiniMessage)"/>
+                <TextField fx:id="nameField" promptText="&lt;yellow&gt;My Item"/>
+                <Label text="Preview:"/>
+                <ScrollPane fitToWidth="true" prefHeight="80.0">
+                    <VBox alignment="CENTER">
+                        <padding>
+                            <Insets topRightBottomLeft="10.0"/>
+                        </padding>
+                        <TextFlow fx:id="namePreview"/>
+                    </VBox>
+                </ScrollPane>
+                <Separator/>
+                <Label text="Lore (MiniMessage)"/>
+                <TextArea fx:id="loreField" promptText="&lt;gray&gt;Line 1&#10;&lt;dark_gray&gt;Line 2" prefRowCount="3"
+                          wrapText="true"/>
+                <Label text="Lore Preview:"/>
+                <ScrollPane fitToWidth="true" prefHeight="120.0">
+                    <VBox alignment="CENTER">
+                        <padding>
+                            <Insets topRightBottomLeft="10.0"/>
+                        </padding>
+                        <VBox fx:id="lorePreview" spacing="2.0" alignment="CENTER"/>
+                    </VBox>
+                </ScrollPane>
+            </VBox>
+        </SplitPane>
+    </center>
+</BorderPane>

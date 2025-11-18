@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.context.SlotRenderContext;
+import me.webhead1104.towncraft.data.objects.WorldSection;
 import me.webhead1104.towncraft.features.world.build.CommunityBuildingType;
 import me.webhead1104.towncraft.utils.Msg;
 import org.bukkit.Material;
@@ -18,19 +19,19 @@ public class CommunityBuildingTile extends BuildingTile {
 
     @Keep
     public CommunityBuildingTile(CommunityBuildingType communityBuildingType) {
-        super(communityBuildingType.getBuildingType(), 0);
+        super(communityBuildingType.getBuildingType());
         this.communityBuildingType = communityBuildingType;
     }
 
     @Override
-    public ItemStack render(SlotRenderContext context) {
+    public ItemStack render(SlotRenderContext context, WorldSection worldSection, int slot) {
         ItemStack itemStack = ItemStack.of(Material.PLAYER_HEAD);
         itemStack.setData(DataComponentTypes.ITEM_NAME, Msg.format(communityBuildingType.getName()));
         return itemStack;
     }
 
     @Override
-    public boolean onClick(SlotClickContext context) {
+    public boolean onClick(SlotClickContext context, WorldSection worldSection, int slot) {
         return false;
     }
 }
