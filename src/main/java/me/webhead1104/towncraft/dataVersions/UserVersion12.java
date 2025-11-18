@@ -13,12 +13,7 @@ public final class UserVersion12 implements DataVersion {
             if (!"PlotTile".equals(plotNode.node("class").getString())) {
                 return;
             }
-
             ConfigurationNode node = plotNode.node("properties");
-            System.out.println(node.node("plot", "plotType").getString());
-            System.out.println(node.node("plot", "instant").getString());
-            System.out.println(node.node("plot", "claimable").getString());
-
             node.node("plotType").raw(node.node("plot", "plotType").getString());
             node.node("instant").raw(node.node("plot", "instant").getString());
             node.node("claimable").raw(node.node("plot", "claimable").getString());
