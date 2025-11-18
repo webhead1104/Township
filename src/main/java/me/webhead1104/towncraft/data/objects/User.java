@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-    public static final int LATEST_VERSION = 11;
+    public static final int LATEST_VERSION = 13;
     private int version = LATEST_VERSION;
     private UUID uuid;
     private String townName;
