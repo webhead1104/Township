@@ -4,7 +4,7 @@ plugins {
     id("xyz.jpenilla.run-paper") version "3.0.2"
     id("io.freefair.lombok") version "9.1.0"
     id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
-    id("com.diffplug.spotless") version "8.0.0"
+    id("com.diffplug.spotless") version "8.1.0"
 }
 
 group = "me.webhead1104"
