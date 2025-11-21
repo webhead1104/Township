@@ -2,6 +2,7 @@ package me.webhead1104.tools.wikiScraper.scrapers;
 
 import com.google.errorprone.annotations.Keep;
 import lombok.extern.slf4j.Slf4j;
+import me.webhead1104.tools.wikiScraper.cli.Main;
 import me.webhead1104.tools.wikiScraper.core.Scraper;
 import me.webhead1104.tools.wikiScraper.model.Level;
 import org.jsoup.nodes.Document;
@@ -15,7 +16,6 @@ import java.util.List;
 @Keep
 @Slf4j
 public class LevelScraper implements Scraper<Level> {
-    public static final int MAX_LEVELS = 10;
     private static final String BASE_URL = "https://township.fandom.com/wiki/Level_up";
 
     @Override
@@ -45,13 +45,13 @@ public class LevelScraper implements Scraper<Level> {
             }
             log.debug("Row {}", i);
             levels.add(new Level(cells, i));
-            if (i == MAX_LEVELS) {
+            if (i == Main.MAX_LEVEL) {
                 break;
             }
         }
 
-        if (levels.size() != MAX_LEVELS) {
-            log.error("Expected exactly {} levels, but got {}", MAX_LEVELS, levels.size());
+        if (levels.size() != Main.MAX_LEVEL) {
+            log.error("Expected exactly {} levels, but got {}", Main.MAX_LEVEL, levels.size());
         } else {
             log.debug("Got exactly {} levels as expected from the wiki.", levels.size());
         }

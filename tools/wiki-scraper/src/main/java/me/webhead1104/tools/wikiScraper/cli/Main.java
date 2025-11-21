@@ -23,6 +23,7 @@ import java.util.concurrent.Callable;
 @Command(name = "wiki-scraper", mixinStandardHelpOptions = true, version = "wiki-scraper 1.0.0",
         description = "Scrapes the official towncraft wiki for data.")
 public class Main implements Callable<Integer> {
+    public static final int MAX_LEVEL = 10;
     private static final Map<String, Scraper<?>> SCRAPERS = new LinkedHashMap<>();
 
     static {
