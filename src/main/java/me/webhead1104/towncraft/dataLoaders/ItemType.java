@@ -20,6 +20,9 @@ public class ItemType implements DataLoader.KeyBasedDataLoader<ItemType.Item> {
     private final Map<Key, Item> values = new HashMap<>();
 
     public Item get(Key key) {
+        if (!values.containsKey(key)) {
+            throw new IllegalStateException("Item type does not exist! key:" + key.asString());
+        }
         return values.get(key);
     }
 

@@ -28,6 +28,9 @@ public class AnimalType implements DataLoader.KeyBasedDataLoader<AnimalType.Anim
     private final Map<Key, Animal> values = new HashMap<>();
 
     public Animal get(Key key) {
+        if (!values.containsKey(key)) {
+            throw new IllegalStateException("Animal type does not exist! key:" + key.asString());
+        }
         return values.get(key);
     }
 

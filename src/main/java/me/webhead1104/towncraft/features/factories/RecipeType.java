@@ -25,9 +25,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @DependsOn({ItemType.class, FactoryType.class})
 public class RecipeType implements DataLoader.KeyBasedDataLoader<RecipeType.Recipe> {
+    //todo remove material from recipe type and use result item type material
     private final Map<Key, Recipe> values = new HashMap<>();
 
     public Recipe get(Key key) {
+        if (!values.containsKey(key)) {
+            throw new IllegalStateException("Recipe type does not exist! key:" + key.asString());
+        }
         return values.get(key);
     }
 

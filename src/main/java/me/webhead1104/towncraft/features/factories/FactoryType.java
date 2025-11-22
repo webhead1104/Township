@@ -40,6 +40,9 @@ public class FactoryType implements DataLoader.KeyBasedDataLoader<FactoryType.Fa
 
     @Override
     public Factory get(Key key) {
+        if (!values.containsKey(key)) {
+            throw new IllegalStateException("Factory type does not exist! key:" + key.asString());
+        }
         return values.get(key);
     }
 

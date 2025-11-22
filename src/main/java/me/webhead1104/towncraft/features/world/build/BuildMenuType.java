@@ -20,6 +20,9 @@ public class BuildMenuType implements DataLoader.KeyBasedDataLoader<BuildMenuTyp
     private final Map<Key, BuildMenu> values = new LinkedHashMap<>();
 
     public BuildMenu get(Key key) {
+        if (!values.containsKey(key)) {
+            throw new IllegalStateException("Build menu type does not exist! key:" + key.asString());
+        }
         return values.get(key);
     }
 

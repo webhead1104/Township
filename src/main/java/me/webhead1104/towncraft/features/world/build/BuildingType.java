@@ -64,7 +64,7 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
 
     public List<Building> get(Key key) {
         if (!values.containsKey(key)) {
-            throw new RuntimeException("Building does not exist! key: " + key.asString());
+            throw new IllegalStateException("Building type does not exist! key:" + key.asString());
         }
         return values.get(key);
     }
