@@ -19,7 +19,7 @@
                     <ToggleButton fx:id="darkToggle" text="Dark Mode"/>
                 </HBox>
                 <Separator/>
-                <Label text="Material"/>
+                <Label text="TowncraftMaterial"/>
                 <TextField fx:id="materialFilter" promptText="Filter materials..."/>
                 <ListView fx:id="materialList" VBox.vgrow="ALWAYS"/>
                 <Separator/>

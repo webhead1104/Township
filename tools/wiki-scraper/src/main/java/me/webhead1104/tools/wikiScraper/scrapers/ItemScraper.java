@@ -144,7 +144,7 @@ public class ItemScraper implements Scraper<Item> {
                 for (Element row : rows) {
                     Elements cells = row.select("td");
                     if (cells.size() != 7) {
-                        if (cells.text().equals("Material Sell Price  Material Sell Price")) {
+                        if (cells.text().equals("TowncraftMaterial Sell Price  TowncraftMaterial Sell Price")) {
                             items.addAll(secondCol);
                             secondCol.clear();
                         }
