@@ -23,7 +23,7 @@ dependencies {
     implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
     implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
     implementation("me.devnatan:inventory-framework-platform-paper:3.5.5")
-    implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.5")
+    implementation("me.devnatan:inventory-framework-platform-bukkit:3.6.0")
     implementation("io.github.classgraph:classgraph:4.8.184")
     compileOnly("org.mongodb:mongodb-driver-sync:5.7.0-alpha0")
     compileOnly("com.zaxxer:HikariCP:7.0.2")
