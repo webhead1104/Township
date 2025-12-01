@@ -22,7 +22,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
     implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
     implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
-    implementation("me.devnatan:inventory-framework-platform-paper:3.6.0")
+    implementation("me.devnatan:inventory-framework-platform-paper:3.7.1")
     implementation("me.devnatan:inventory-framework-platform-bukkit:3.7.1")
     implementation("io.github.classgraph:classgraph:4.8.184")
     compileOnly("org.mongodb:mongodb-driver-sync:5.7.0-alpha0")
