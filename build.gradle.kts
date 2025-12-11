@@ -9,9 +9,13 @@ allprojects {
     repositories {
         mavenCentral()
         maven("https://repo.opencollab.dev/maven-snapshots")
-        maven("https://repo.panda-lang.org/releases")
+        maven("https://jitpack.io/")
     }
 
+    tasks.withType<JavaCompile> {
+        // Preserve parameter names in the bytecode
+        options.compilerArgs.add("-parameters")
+    }
     group = "me.webhead1104"
     version = "1.0-SNAPSHOT"
 }

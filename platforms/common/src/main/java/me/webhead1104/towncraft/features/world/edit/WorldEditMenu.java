@@ -59,7 +59,7 @@ public class WorldEditMenu extends TowncraftView {
         WorldUtils.applyArrows(player, sectionState.get(context));
 
         TowncraftItemStack exitEdit = TowncraftItemStack.of(TowncraftMaterial.BARRIER);
-        exitEdit.setName(Msg.format("<red>Exit Edit"));
+        exitEdit.setName(Msg.format("<red>Exit edit"));
         player.getInventory().setItem(8, exitEdit);
     }
 

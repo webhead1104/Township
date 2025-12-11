@@ -5,23 +5,31 @@ plugins {
     id("com.gradleup.shadow") version "9.2.2"
 }
 
-group = "me.webhead1104"
-version = "1.0-SNAPSHOT"
-
 repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
 }
 
 dependencies {
+    compileOnly(project(":platforms:common"))
     implementation(project(":platforms:common")) {
+        isTransitive = false
         exclude("com.google")
         exclude("org.apache")
         exclude("org.intellij")
         exclude("org.jetbrains")
+        exclude("org.slf4j")
         exclude("org.jspecify")
+        exclude("net.kyori")
     }
-    implementation("studio.mevera:imperat-bukkit:2.2.0")
+
+    compileOnly("io.github.revxrsal:lamp.bukkit:4.0.0-rc.14")
     compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
+
+    //shadow these in since paper class loading is weird
+    implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
+    implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
+    implementation("me.devnatan:inventory-framework-api:3.5.5")
+    implementation("me.devnatan:inventory-framework-platform:3.5.5")
 }
 
 val generateClassloader = tasks.register("generateClassloader") {
@@ -30,11 +38,18 @@ val generateClassloader = tasks.register("generateClassloader") {
     val classloaderFile = File(packageDir, "GeneratedClassloader.java")
 
     val deps = provider {
-        configurations.getByName("compileOnly")
+        val commonDeps = project(":platforms:common")
+            .configurations.getByName("api")
             .dependencies
             .filterIsInstance<ModuleDependency>()
-            .filter { it.group != "io.papermc.paper" && it.group != "net.strokkur" }
-            .map { "${it.group}:${it.name}:${it.version}" }
+            .filter { it.group != "org.spongepowered" }
+
+        val platformDeps = configurations.getByName("compileOnly")
+            .dependencies
+            .filterIsInstance<ModuleDependency>()
+            .filter { it.group != "io.papermc.paper" && it.group != "me.webhead1104" }
+
+        (commonDeps + platformDeps).map { "${it.group}:${it.name}:${it.version}" }
     }
 
     inputs.property("dependencies", deps)
@@ -67,7 +82,7 @@ val generateClassloader = tasks.register("generateClassloader") {
                 public void classloader(@NotNull PluginClasspathBuilder classpathBuilder) {
                     System.setProperty("bstats.relocatecheck", "false");
                     MavenLibraryResolver resolver = new MavenLibraryResolver();
-
+                    resolver.addRepository(new RemoteRepository.Builder("geyser", "default", "https://repo.opencollab.dev/maven-snapshots").build());
                     resolver.addRepository(new RemoteRepository.Builder("central", "default", MavenLibraryResolver.MAVEN_CENTRAL_DEFAULT_MIRROR).build());
                     
                     $depsString
@@ -111,17 +126,22 @@ tasks {
         archiveClassifier.set("")
         mergeServiceFiles()
 
-        from(project(":platforms:common").sourceSets["main"].output)
+        // Exclude all api dependencies except configurate and IF
+        val commonApiDeps = project(":platforms:common")
+            .configurations.getByName("api")
+            .dependencies
+            .filterIsInstance<ModuleDependency>()
+
+        dependencies {
+            commonApiDeps
+                .filter { it.group != "org.spongepowered" && it.group != "me.devnatan" }
+                .forEach { dep ->
+                    exclude(dependency("${dep.group}:${dep.name}:.*"))
+                }
+        }
 
         relocate("org.spongepowered.configurate", "me.webhead1104.towncraft.libs.configurate")
-        relocate("io.leangen.geantyref", "me.webhead1104.towncraft.libs.geantyref")
-        relocate("io.github.classgraph", "me.webhead1104.towncraft.libs.classgraph")
-        relocate("nonapi.io.github.classgraph", "me.webhead1104.towncraft.libs.classgraph")
-        relocate("me.devnatan.inventoryframework", "me.webhead1104.towncraft.libs.inventoryframework")
-
-//
-//        relocate("org.yaml.snakeyaml", "me.webhead1104.towncraft.libs.snakeyaml")
-//        relocate("com.google", "me.webhead1104.towncraft.libs.google")
-//        relocate("com.tcoded.folialib", "me.webhead1104.towncraft.libs.folialib")
+        relocate("io.leangen.geantyref", "me.webhead1104.towncraft.libs.configurate")
+        relocate("com.google.gson", "me.webhead1104.towncraft.libs.configurate")
     }
 }

@@ -19,13 +19,13 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 import java.time.Duration;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 @DependsOn({ItemType.class})
 public class AnimalType implements DataLoader.KeyBasedDataLoader<AnimalType.Animal> {
-    private final Map<Key, Animal> values = new HashMap<>();
+    private final Map<Key, Animal> values = new LinkedHashMap<>();
 
     public Animal get(Key key) {
         if (!values.containsKey(key)) {

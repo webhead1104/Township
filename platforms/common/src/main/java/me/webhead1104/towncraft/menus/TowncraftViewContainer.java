@@ -193,6 +193,6 @@ public final class TowncraftViewContainer implements ViewContainer {
 
     @Override
     public String toString() {
-        return "BukkitViewContainer{" + "inventory=" + inventory + ", shared=" + shared + ", type=" + type + '}';
+        return "TowncraftViewContainer{" + "inventory=" + inventory + ", shared=" + shared + ", type=" + type + '}';
     }
 }

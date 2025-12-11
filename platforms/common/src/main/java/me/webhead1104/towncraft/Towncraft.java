@@ -42,10 +42,6 @@ public interface Towncraft {
         return PLATFORM.getPlayer(uuid);
     }
 
-    static void runTaskNextTick(Runnable runnable) {
-        PLATFORM.runTaskNextTick(runnable);
-    }
-
     static Logger getLogger() {
         return PLATFORM.getLogger();
     }

@@ -6,11 +6,6 @@ import java.io.File;
 import java.util.UUID;
 
 public interface TowncraftPlatform extends Scheduler {
-    void init();
-
-    default void shutdown() {
-    }
-
     TowncraftPlayer getPlayer(UUID uuid);
 
     Logger getLogger();

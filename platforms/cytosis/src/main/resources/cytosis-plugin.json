@@ -1,0 +1,11 @@
+{
+  "id": "towncraft",
+  "name": "Towncraft",
+  "version": "1.0-SNAPSHOT",
+  "description": "A remake of the game Township by Playrix in Minecraft",
+  "authors": [
+    "Webhead1104"
+  ],
+  "dependencies": [],
+  "main": "me.webhead1104.towncraft.Main"
+}

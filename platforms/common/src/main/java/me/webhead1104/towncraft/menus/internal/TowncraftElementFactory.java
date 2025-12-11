@@ -8,6 +8,7 @@ import me.devnatan.inventoryframework.internal.ElementFactory;
 import me.devnatan.inventoryframework.internal.Job;
 import me.devnatan.inventoryframework.logging.Logger;
 import me.devnatan.inventoryframework.logging.NoopLogger;
+import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.TowncraftPlatformManager;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.events.TowncraftInventoryClickEvent;
@@ -46,6 +47,7 @@ public class TowncraftElementFactory extends ElementFactory {
         final ViewType finalType = config.getType() == null ? defaultType : config.getType();
 
         final int size = finalType.normalize(config.getSize());
+        Towncraft.getLogger().info("size = {}", size);
         if (size != 0 && !finalType.isExtendable() && context.getConfig().getLayout() == null)
             throw new IllegalArgumentException(String.format(
                     "Only \"%s\" type can have a custom size,"

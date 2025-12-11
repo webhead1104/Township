@@ -7,12 +7,12 @@ import me.devnatan.inventoryframework.context.IFContext;
 import me.devnatan.inventoryframework.context.IFRenderContext;
 import me.devnatan.inventoryframework.context.IFSlotClickContext;
 import me.devnatan.inventoryframework.pipeline.StandardPipelinePhases;
+import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.events.TowncraftInventoryClickEvent;
 import me.webhead1104.towncraft.events.TowncraftInventoryCloseEvent;
 import me.webhead1104.towncraft.impl.TowncraftPlayerImpl;
 import me.webhead1104.towncraft.impl.items.TowncraftInventoryViewImpl;
 import me.webhead1104.towncraft.menus.ClickType;
-import me.webhead1104.towncraft.menus.TowncraftSlotType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -21,6 +21,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -30,6 +31,7 @@ public record IFListener(ViewFrame viewFrame) implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onInventoryClick(final InventoryClickEvent bukkitEvent) {
+        Towncraft.getLogger().info("Slot = {} raw slot = {}", bukkitEvent.getSlot(), bukkitEvent.getRawSlot());
         if (!(bukkitEvent.getWhoClicked() instanceof Player player)) return;
 
         final Viewer viewer = viewFrame.getViewer(new TowncraftPlayerImpl(player));
@@ -47,9 +49,10 @@ public record IFListener(ViewFrame viewFrame) implements Listener {
         final RootView root = context.getRoot();
         TowncraftInventoryClickEvent event = new TowncraftInventoryClickEvent(
                 new TowncraftInventoryViewImpl(bukkitEvent.getView()),
-                TowncraftSlotType.valueOf(bukkitEvent.getSlotType().name()),
+                bukkitEvent.getSlotType().equals(InventoryType.SlotType.OUTSIDE),
                 bukkitEvent.getRawSlot(),
-                ClickType.valueOf(bukkitEvent.getClick().name())
+                ClickType.valueOf(bukkitEvent.getClick().name()),
+                bukkitEvent.getHotbarButton()
         );
         final IFSlotClickContext clickContext = root.getElementFactory()
                 .createSlotClickContext(bukkitEvent.getRawSlot(), viewer, clickedContainer, clickedComponent, event, false);

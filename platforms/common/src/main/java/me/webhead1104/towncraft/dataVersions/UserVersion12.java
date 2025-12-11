@@ -14,7 +14,7 @@ public final class UserVersion12 implements DataVersion {
                 return;
             }
             ConfigurationNode node = plotNode.node("properties");
-            node.node("plotType").raw(node.node("plot", "plotType").getString());
+            node.node("plotType").raw(node.node("plot", "plot-type").getString());
             node.node("instant").raw(node.node("plot", "instant").getString());
             node.node("claimable").raw(node.node("plot", "claimable").getString());
         });

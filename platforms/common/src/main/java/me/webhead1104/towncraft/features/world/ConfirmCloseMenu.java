@@ -2,6 +2,7 @@ package me.webhead1104.towncraft.features.world;
 
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.RenderContext;
+import me.webhead1104.towncraft.TowncraftPlatformManager;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.items.TowncraftMaterial;
@@ -34,10 +35,9 @@ public class ConfirmCloseMenu extends TowncraftView {
             context.closeForEveryone();
             openBackMenu.set(false, slotClickContext);
             TowncraftPlayer player = slotClickContext.getPlayer();
-            //todo
-//            if (Towncraft.getInventoryManager().getPlayerInventory(player.getUniqueId()).isPresent()) {
-//                Towncraft.getInventoryManager().returnItemsToPlayer(player);
-//            }
+            if (TowncraftPlatformManager.getInventoryManager().getPlayerInventory(player.getUUID()).isPresent()) {
+                TowncraftPlatformManager.getInventoryManager().returnItemsToPlayer(player);
+            }
         });
 
         context.slot(8).onRender(slotRenderContext -> {

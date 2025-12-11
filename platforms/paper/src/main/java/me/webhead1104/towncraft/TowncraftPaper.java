@@ -2,12 +2,13 @@ package me.webhead1104.towncraft;
 
 import lombok.Getter;
 import me.webhead1104.towncraft.commands.TowncraftCommand;
-import me.webhead1104.towncraft.commands.TowncraftPlayerSourceResolver;
 import me.webhead1104.towncraft.listeners.IFListener;
 import me.webhead1104.towncraft.listeners.JoinListener;
 import me.webhead1104.towncraft.listeners.LeaveListener;
 import org.bukkit.plugin.java.JavaPlugin;
-import studio.mevera.imperat.BukkitImperat;
+import revxrsal.commands.Lamp;
+import revxrsal.commands.bukkit.BukkitLamp;
+import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 
 public class TowncraftPaper extends JavaPlugin {
     @Getter
@@ -17,14 +18,19 @@ public class TowncraftPaper extends JavaPlugin {
     public void onEnable() {
         instance = this;
         TowncraftPlatformManager.init();
-        saveDefaultConfig();
-        BukkitImperat imperat = BukkitImperat.builder(this)
-                .applyBrigadier(true)
-                .sourceResolver(TowncraftPlayer.class, new TowncraftPlayerSourceResolver<>())
-                .build();
+        TowncraftPlatformManager.getInventoryManager().enable();
 
-        imperat.registerCommand(new TowncraftCommand());
+        Lamp<BukkitCommandActor> lamp = BukkitLamp.builder(this)
+                .parameterTypes(TowncraftPlatformManager::registerParameterTypes).build();
+        lamp.register(new TowncraftCommand());
+        TowncraftPlatformManager.initCommands(lamp);
+
         registerListeners();
+    }
+
+    @Override
+    public void onDisable() {
+        TowncraftPlatformManager.shutdown();
     }
 
     private void registerListeners() {

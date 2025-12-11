@@ -21,7 +21,7 @@ import java.util.*;
 
 @DependsOn({ItemType.class})
 public class FactoryType implements DataLoader.KeyBasedDataLoader<FactoryType.Factory> {
-    private final Map<Key, Factory> values = new HashMap<>();
+    private final Map<Key, Factory> values = new LinkedHashMap<>();
 
     @Override
     public void load() {

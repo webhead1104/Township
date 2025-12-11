@@ -9,7 +9,10 @@ import me.webhead1104.towncraft.menus.TowncraftInventoryType;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,6 +58,26 @@ public class TowncraftInventoryImpl implements TowncraftInventory {
     @Override
     public TowncraftItemStack getItem(int slot) {
         return new TowncraftItemStackImpl(inventory.getItem(slot));
+    }
+
+    @Override
+    public @Nullable TowncraftItemStack @NotNull [] getContents() {
+        return Arrays.stream(inventory.getContents())
+                .map(TowncraftItemStackImpl::new).toArray(TowncraftItemStackImpl[]::new);
+    }
+
+    @Override
+    public void setContents(@Nullable TowncraftItemStack @NotNull [] items) {
+        ItemStack[] itemStacks = new ItemStack[items.length];
+        int i = 0;
+        for (TowncraftItemStack item : items) {
+            if (item == null) {
+                itemStacks[i++] = null;
+                continue;
+            }
+            itemStacks[i++] = (ItemStack) item.toPlatform();
+        }
+        inventory.setContents(itemStacks);
     }
 
     @Override

@@ -130,7 +130,7 @@ public final class TowncraftViewer implements Viewer {
 
     @Override
     public String toString() {
-        return "BukkitViewer{"
+        return "TowncraftViewer{"
                 + "player=" + player
                 + ", selfContainer=" + selfContainer
                 + ", lastInteractionInMillis=" + lastInteractionInMillis

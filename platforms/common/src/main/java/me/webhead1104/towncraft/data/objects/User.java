@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.webhead1104.towncraft.Towncraft;
+import me.webhead1104.towncraft.TowncraftPlatformManager;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.dataLoaders.LevelDataLoader;
 import me.webhead1104.towncraft.features.world.build.BuildingType;
@@ -13,6 +14,7 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Objects;
 import java.util.UUID;
@@ -68,8 +70,7 @@ public class User {
         try {
             ConfigurationNode node = Towncraft.GSON_CONFIGURATION_LOADER.buildAndLoadString(json);
             int version = node.node("version").getInt();
-            //todo
-//            Towncraft.getUserManager().getVersionedBuilder().build().apply(node);
+            TowncraftPlatformManager.getVersionedBuilder().build().apply(node);
             User user = node.get(User.class);
             if (user == null) {
                 throw new IllegalStateException("An error occurred whilst deserializing a user! Please report this to Webhead1104!\n USER IS NULL!!!");
@@ -163,11 +164,10 @@ public class User {
     }
 
     public void save() {
-        //todo
-//        try {
-//            Towncraft.getLoaderManager().getUserLoader().saveUser(uuid, toString());
-//        } catch (IOException e) {
-//            Towncraft.logger.error("An error occurred whilst saving a user!", e);
-//        }
+        try {
+            Towncraft.getUserLoader().saveUser(uuid, toString());
+        } catch (IOException e) {
+            Towncraft.getLogger().error("An error occurred whilst saving a user!", e);
+        }
     }
 }

@@ -50,7 +50,6 @@ public final class RenderContext extends PlatformRenderContext<TowncraftItemComp
         return (View) root;
     }
 
-    // TODO documentation
     public @NotNull TowncraftPlayer getPlayer() {
         tryThrowDoNotWorkWithSharedContext("getAllPlayers");
         return player;

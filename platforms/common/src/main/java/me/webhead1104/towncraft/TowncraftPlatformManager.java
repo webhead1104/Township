@@ -5,16 +5,33 @@ import lombok.Getter;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewFrame;
 import me.webhead1104.towncraft.annotations.DependsOn;
+import me.webhead1104.towncraft.commands.arguments.AnimalTypeArgument;
+import me.webhead1104.towncraft.commands.arguments.FactoryTypeArgument;
+import me.webhead1104.towncraft.commands.arguments.ItemTypeArgument;
+import me.webhead1104.towncraft.commands.arguments.TowncraftPlayerArgument;
+import me.webhead1104.towncraft.commands.subCommands.TowncraftSubCommand;
+import me.webhead1104.towncraft.data.objects.User;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
+import me.webhead1104.towncraft.dataLoaders.ItemType;
+import me.webhead1104.towncraft.dataVersions.DataVersion;
 import me.webhead1104.towncraft.database.LoaderManager;
+import me.webhead1104.towncraft.database.UserLoader;
+import me.webhead1104.towncraft.features.animals.AnimalType;
+import me.webhead1104.towncraft.features.factories.FactoryType;
 import me.webhead1104.towncraft.utils.ClassGraphUtils;
 import net.kyori.adventure.util.Services;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.loader.HeaderMode;
+import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
+import revxrsal.commands.Lamp;
+import revxrsal.commands.command.CommandActor;
+import revxrsal.commands.orphan.Orphans;
+import revxrsal.commands.parameter.ParameterTypes;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -25,6 +42,8 @@ public class TowncraftPlatformManager {
     private static final File OLD_PLUGIN_DIR = new File("plugins", "Township");
     private static final File CONFIG_FILE = new File(platform.getDataFolder(), "config.yml");
     @Getter
+    private static final ConfigurationTransformation.VersionedBuilder versionedBuilder = ConfigurationTransformation.versionedBuilder();
+    @Getter
     private static final Map<Class<? extends DataLoader>, DataLoader> dataLoaders = new HashMap<>();
     @Getter
     private static ViewFrame viewFrame;
@@ -32,6 +51,8 @@ public class TowncraftPlatformManager {
     private static UserManager userManager;
     @Getter
     private static LoaderManager loaderManager;
+    @Getter
+    private static InventoryManager inventoryManager;
     @Getter
     private static Config config;
 
@@ -48,17 +69,58 @@ public class TowncraftPlatformManager {
 //        System.setProperty("me.devnatan.inventoryframework.debug", "true");
         loadConfig();
         loadDataLoaders();
-
+        loadDataVersions();
         viewFrame = new ViewFrame();
         registerViews();
 
         userManager = new UserManager();
-        platform.init();
+        inventoryManager = new InventoryManager();
+    }
+
+
+    public static <A extends CommandActor> void registerParameterTypes(ParameterTypes.Builder<A> builder) {
+        builder.addParameterType(AnimalType.Animal.class, new AnimalTypeArgument<>());
+        builder.addParameterType(FactoryType.Factory.class, new FactoryTypeArgument<>());
+        builder.addParameterType(ItemType.Item.class, new ItemTypeArgument<>());
+        builder.addContextParameter(TowncraftPlayer.class, new TowncraftPlayerArgument<>());
+    }
+
+    public static <A extends CommandActor> void initCommands(Lamp<A> lamp) {
+        for (TowncraftSubCommand implementedClass : ClassGraphUtils.getImplementedClasses(TowncraftSubCommand.class, "me.webhead1104.towncraft.commands.subCommands")) {
+            lamp.register(Orphans.path("towncraft").handler(implementedClass));
+        }
+    }
+
+    public static void onJoin(TowncraftPlayer player) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        UserLoader userLoader = Towncraft.getUserLoader();
+        TowncraftPlatformManager.getPlatform().runTaskAsync(() -> {
+            try {
+                if (userLoader.userExists(player.getUUID())) {
+                    User user = User.fromJson(userLoader.readUser(player.getUUID()));
+                    TowncraftPlatformManager.getUserManager().setUser(player.getUUID(), user);
+                    Towncraft.getLogger().info("Data has been loaded for {}", player.getName());
+                    return;
+                }
+                Towncraft.getLogger().info("Created new user for {}", player.getName());
+                User user = new User(player.getUUID());
+                userLoader.saveUser(player.getUUID(), user.toString());
+                TowncraftPlatformManager.getUserManager().setUser(player.getUUID(), user);
+            } catch (IOException e) {
+                Towncraft.getLogger().error("An error occurred whilst loading player data!", e);
+            }
+            Towncraft.getLogger().info("Join event done in {}ms", stopwatch.elapsed().toMillis());
+        });
+    }
+
+    public static void onLeave(TowncraftPlayer player) {
+        player.getUser().save();
+        userManager.removeUser(player.getUUID());
+        Towncraft.getLogger().info("Data has been saved for {}", player.getName());
     }
 
     public static void shutdown() {
         viewFrame.unregister();
-        platform.shutdown();
     }
 
     public static void saveTowncraftConfig() {
@@ -185,5 +247,12 @@ public class TowncraftPlatformManager {
         }
 
         viewFrame.register();
+    }
+
+    private static void loadDataVersions() {
+        versionedBuilder.versionKey("version");
+        for (DataVersion dataVersion : new ArrayList<>(ClassGraphUtils.getImplementedClasses(DataVersion.class, "me.webhead1104.towncraft.dataVersions"))) {
+            versionedBuilder.addVersion(dataVersion.getVersion(), dataVersion.getTransformation());
+        }
     }
 }

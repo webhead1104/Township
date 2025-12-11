@@ -24,12 +24,10 @@ import java.util.Map;
 import java.util.UUID;
 
 public class CloseContext extends PlatformConfinedContext implements IFCloseContext, Context {
-
     private final Viewer subject;
     private final TowncraftPlayer player;
     private final IFRenderContext parent;
     private final TowncraftInventoryCloseEvent closeOrigin;
-
     private boolean cancelled;
 
     @ApiStatus.Internal
@@ -46,7 +44,6 @@ public class CloseContext extends PlatformConfinedContext implements IFCloseCont
         return closeOrigin;
     }
 
-    // TODO Needs documentation
     public final @NotNull TowncraftPlayer getPlayer() {
         return player;
     }

@@ -4,7 +4,7 @@ import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.pipeline.Pipeline;
 import me.devnatan.inventoryframework.pipeline.StandardPipelinePhases;
-import me.webhead1104.towncraft.Towncraft;
+import me.webhead1104.towncraft.TowncraftPlatformManager;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.menus.component.TowncraftItemComponentBuilder;
 import me.webhead1104.towncraft.menus.context.CloseContext;
@@ -17,7 +17,7 @@ import me.webhead1104.towncraft.menus.pipeline.ItemCloseOnClickInterceptor;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Bukkit platform {@link PlatformView} implementation.
+ * Towncraft platform {@link PlatformView} implementation.
  */
 @ApiStatus.OverrideOnly
 public class View
@@ -42,6 +42,6 @@ public class View
 
     @Override
     public final void nextTick(Runnable task) {
-        Towncraft.runTaskNextTick(task);
+        TowncraftPlatformManager.getPlatform().runTaskNextTick(task);
     }
 }
