@@ -5,7 +5,9 @@ import me.webhead1104.towncraft.TowncraftPlatform;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.TowncraftTask;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -14,7 +16,12 @@ import java.util.UUID;
 public class TowncraftPaperPlatform implements TowncraftPlatform {
 
     @Override
+    @Nullable
     public TowncraftPlayer getPlayer(UUID uuid) {
+        Player player = Bukkit.getPlayer(uuid);
+        if (player == null) {
+            return null;
+        }
         return new TowncraftPlayerImpl(Bukkit.getPlayer(uuid));
     }
 

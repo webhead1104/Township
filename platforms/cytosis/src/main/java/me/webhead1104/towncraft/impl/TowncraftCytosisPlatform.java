@@ -4,9 +4,11 @@ import me.webhead1104.towncraft.TowncraftPlatform;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.TowncraftTask;
 import net.cytonic.cytosis.Cytosis;
+import net.cytonic.cytosis.player.CytosisPlayer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +19,13 @@ public class TowncraftCytosisPlatform implements TowncraftPlatform {
     private static final Logger LOGGER = LoggerFactory.getLogger("Towncraft");
 
     @Override
+    @Nullable
     public TowncraftPlayer getPlayer(UUID uuid) {
-        return new TowncraftPlayerImpl(Cytosis.getPlayer(uuid).orElseThrow());
+        CytosisPlayer player = Cytosis.getPlayer(uuid).orElse(null);
+        if (player == null) {
+            return null;
+        }
+        return new TowncraftPlayerImpl(player);
     }
 
     @Override

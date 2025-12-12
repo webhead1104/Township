@@ -8,6 +8,7 @@ import me.webhead1104.towncraft.utils.ClassGraphUtils;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
 import net.kyori.adventure.util.Services;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
 
@@ -38,6 +39,7 @@ public interface Towncraft {
         return TowncraftPlatformManager.getViewFrame();
     }
 
+    @Nullable
     static TowncraftPlayer getPlayer(UUID uuid) {
         return PLATFORM.getPlayer(uuid);
     }
