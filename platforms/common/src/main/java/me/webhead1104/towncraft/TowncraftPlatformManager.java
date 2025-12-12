@@ -90,7 +90,7 @@ public class TowncraftPlatformManager {
         TowncraftPlatformManager.getPlatform().runTaskAsync(() -> {
             try {
                 if (userLoader.userExists(player.getUUID())) {
-                    User user = User.fromJson(userLoader.readUser(player.getUUID()));
+                    User user = User.fromJson(userLoader.readUser(player.getUUID()), player);
                     TowncraftPlatformManager.getUserManager().setUser(player.getUUID(), user);
                     Towncraft.getLogger().info("Data has been loaded for {}", player.getName());
                     return;

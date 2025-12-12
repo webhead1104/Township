@@ -66,10 +66,17 @@ public class User {
         Towncraft.getLogger().info("Finished creating a user in {} mills!", System.currentTimeMillis() - start);
     }
 
-    public static User fromJson(String json) {
+    public static User fromJson(String json, TowncraftPlayer player) {
         try {
             ConfigurationNode node = Towncraft.GSON_CONFIGURATION_LOADER.buildAndLoadString(json);
             int version = node.node("version").getInt();
+            if (version > LATEST_VERSION) {
+                player.sendMessage(Msg.format("Your user version (%d) is above the highest supported version (%d)! UUID = '%s'",
+                        version, LATEST_VERSION, node.node("uuid").getString("unknown")));
+
+                throw new IllegalStateException("The user version (%d) is above the highest supported version (%d)! UUID = '%s'"
+                        .formatted(version, LATEST_VERSION, node.node("uuid").getString("unknown")));
+            }
             TowncraftPlatformManager.getVersionedBuilder().build().apply(node);
             User user = node.get(User.class);
             if (user == null) {
