@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("java-library")
+    jacoco
 }
 
 group = "me.webhead1104"
@@ -28,6 +29,15 @@ dependencies {
 }
 
 tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
     useJUnitPlatform()
     maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true) // Codecov needs XML format
+        html.required.set(true)
+    }
 }

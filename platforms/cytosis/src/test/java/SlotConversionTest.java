@@ -52,7 +52,7 @@ public class SlotConversionTest {
 
     @Test
     public void testPlayerMainInventory() {
-        int numInTop = 55;
+        int numInTop = 54;
 
         // Test player main inventory (top 3 rows)
         assertEquals(54, convertSlot(false, 9, numInTop),

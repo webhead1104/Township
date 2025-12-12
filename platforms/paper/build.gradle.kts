@@ -3,6 +3,7 @@ plugins {
     id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
     id("xyz.jpenilla.run-paper") version "3.0.2"
     id("com.gradleup.shadow") version "9.2.2"
+    jacoco
 }
 
 repositories {
@@ -30,6 +31,20 @@ dependencies {
     implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
     implementation("me.devnatan:inventory-framework-api:3.7.1")
     implementation("me.devnatan:inventory-framework-platform:3.7.1")
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+    useJUnitPlatform()
+    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true) // Codecov needs XML format
+        html.required.set(true)
+    }
 }
 
 val generateClassloader = tasks.register("generateClassloader") {
