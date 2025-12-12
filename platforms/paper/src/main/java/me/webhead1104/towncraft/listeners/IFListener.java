@@ -18,12 +18,12 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -87,6 +87,7 @@ public record IFListener(ViewFrame viewFrame) implements Listener {
         root.getPipeline().execute(StandardPipelinePhases.CLOSE, closeContext);
     }
 
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onQuit(final PlayerQuitEvent bukkitEvent) {
         final Viewer viewer = viewFrame().getViewer(new TowncraftPlayerImpl(bukkitEvent.getPlayer()));
         if (viewer == null) return;
@@ -98,10 +99,10 @@ public record IFListener(ViewFrame viewFrame) implements Listener {
         root.getPipeline().execute(StandardPipelinePhases.CLOSE, closeContext);
     }
 
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void onItemPickup(PlayerPickupItemEvent event) {
-        final Viewer viewer = viewFrame.getViewer(new TowncraftPlayerImpl(event.getPlayer()));
+    public void onItemPickup(EntityPickupItemEvent event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+        final Viewer viewer = viewFrame.getViewer(new TowncraftPlayerImpl(player));
         if (viewer == null) return;
 
         final IFContext context = viewer.getActiveContext();
