@@ -71,7 +71,11 @@ public class SlotClickContext extends SlotContext implements IFSlotClickContext 
      */
     @Override
     public final TowncraftItemStack getItem() {
-        return clickOrigin.getCurrentItem();
+        return clickOrigin.getClickedItem();
+    }
+
+    public final boolean itemExists() {
+        return !clickOrigin.getClickedItem().isEmpty();
     }
 
     @Override
@@ -102,13 +106,12 @@ public class SlotClickContext extends SlotContext implements IFSlotClickContext 
 
     @Override
     public final int getClickedSlot() {
-        Towncraft.getLogger().info("Returning clicked slot {}, getSlot = {}", clickOrigin.getSlot(), getSlot());
-        return clickOrigin.getRawSlot();
+        return clickOrigin.getSlot();
     }
 
     @Override
     public final boolean isLeftClick() {
-        return clickOrigin.isLeftClick();
+        return clickOrigin.getClickType().isLeftClick();
     }
 
     @Override
@@ -133,7 +136,7 @@ public class SlotClickContext extends SlotContext implements IFSlotClickContext 
 
     @Override
     public final boolean isOutsideClick() {
-        return getClickOrigin().isOutside();
+        return clickOrigin.getSlot() < 0;
     }
 
     @Override

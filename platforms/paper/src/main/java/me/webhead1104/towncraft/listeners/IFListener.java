@@ -8,10 +8,16 @@ import me.devnatan.inventoryframework.context.IFRenderContext;
 import me.devnatan.inventoryframework.context.IFSlotClickContext;
 import me.devnatan.inventoryframework.pipeline.StandardPipelinePhases;
 import me.webhead1104.towncraft.Towncraft;
+import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.events.TowncraftInventoryClickEvent;
 import me.webhead1104.towncraft.events.TowncraftInventoryCloseEvent;
 import me.webhead1104.towncraft.impl.TowncraftPlayerImpl;
+import me.webhead1104.towncraft.impl.items.TowncraftInventoryImpl;
 import me.webhead1104.towncraft.impl.items.TowncraftInventoryViewImpl;
+import me.webhead1104.towncraft.impl.items.TowncraftItemStackImpl;
+import me.webhead1104.towncraft.impl.items.TowncraftPlayerInventoryImpl;
+import me.webhead1104.towncraft.items.TowncraftInventory;
+import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.menus.ClickType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -22,20 +28,18 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 public record IFListener(ViewFrame viewFrame) implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onInventoryClick(final InventoryClickEvent bukkitEvent) {
-        Towncraft.getLogger().info("Slot = {} raw slot = {}", bukkitEvent.getSlot(), bukkitEvent.getRawSlot());
-        if (!(bukkitEvent.getWhoClicked() instanceof Player player)) return;
+        if (!(bukkitEvent.getWhoClicked() instanceof Player p)) return;
+        TowncraftPlayer player = new TowncraftPlayerImpl(p);
 
-        final Viewer viewer = viewFrame.getViewer(new TowncraftPlayerImpl(player));
+        final Viewer viewer = viewFrame.getViewer(player);
         if (viewer == null) return;
 
         final IFRenderContext context = viewer.getActiveContext();
@@ -48,13 +52,23 @@ public record IFListener(ViewFrame viewFrame) implements Listener {
                 : context.getContainer();
 
         final RootView root = context.getRoot();
+        TowncraftInventory clickedInventory;
+        if (bukkitEvent.getClickedInventory() instanceof PlayerInventory playerInventory) {
+            clickedInventory = new TowncraftPlayerInventoryImpl(playerInventory);
+        } else {
+            clickedInventory = new TowncraftInventoryImpl(bukkitEvent.getClickedInventory());
+        }
+        TowncraftItemStack clickedItemStack = bukkitEvent.getCurrentItem() == null ? TowncraftItemStack.empty() :
+                new TowncraftItemStackImpl(bukkitEvent.getCurrentItem());
         TowncraftInventoryClickEvent event = new TowncraftInventoryClickEvent(
                 new TowncraftInventoryViewImpl(bukkitEvent.getView()),
-                bukkitEvent.getSlotType().equals(InventoryType.SlotType.OUTSIDE),
                 bukkitEvent.getRawSlot(),
                 ClickType.valueOf(bukkitEvent.getClick().name()),
-                bukkitEvent.getHotbarButton()
+                bukkitEvent.getHotbarButton(),
+                clickedItemStack,
+                clickedInventory
         );
+        Towncraft.getLogger().info("Item on cursor = {}", clickedItemStack.getMaterial().getKey().asString());
         final IFSlotClickContext clickContext = root.getElementFactory()
                 .createSlotClickContext(bukkitEvent.getRawSlot(), viewer, clickedContainer, clickedComponent, event, false);
 
@@ -62,11 +76,6 @@ public record IFListener(ViewFrame viewFrame) implements Listener {
 
         bukkitEvent.setCancelled(event.isCancelled());
         bukkitEvent.setResult(Event.Result.valueOf(event.getResult().name()));
-        if (event.getCurrentItem() == null) {
-            bukkitEvent.setCurrentItem(null);
-            return;
-        }
-        bukkitEvent.setCurrentItem((ItemStack) event.getCurrentItem().toPlatform());
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
@@ -134,8 +143,8 @@ public record IFListener(ViewFrame viewFrame) implements Listener {
 
         final boolean configValue = context.getConfig().getOptionValue(ViewConfig.CANCEL_ON_DRAG);
         final int size = event.getInventory().getSize();
-        for (final int rawSlot : event.getRawSlots()) {
-            if (!(rawSlot < size)) continue;
+        for (final int slot : event.getInventorySlots()) {
+            if (!(slot < size)) continue;
 
             event.setCancelled(configValue);
             break;

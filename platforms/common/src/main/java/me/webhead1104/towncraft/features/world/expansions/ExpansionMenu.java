@@ -75,7 +75,7 @@ public class ExpansionMenu extends TowncraftView {
     @Override
     public void onClick(@NotNull SlotClickContext context) {
         if (!context.isOnEntityContainer()) return;
-        if (context.getSlot() == 85 && context.getItem() != null && context.getItem().getMaterial() == TowncraftMaterial.LIME_CONCRETE) {
+        if (context.getSlot() == 85 && context.itemExists() && context.getItem().getMaterial() == TowncraftMaterial.LIME_CONCRETE) {
             User user = userState.get(context);
             ExpansionDataLoader.Expansion expansion = expansionState.get(context);
             if (user.getCoins() >= expansion.getCoinsNeeded() && user.getPopulation() >= expansion.getPopulationNeeded()) {

@@ -9,10 +9,15 @@ import me.devnatan.inventoryframework.context.IFSlotClickContext;
 import me.devnatan.inventoryframework.pipeline.StandardPipelinePhases;
 import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.TowncraftPlatformManager;
+import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.events.TowncraftInventoryClickEvent;
 import me.webhead1104.towncraft.events.TowncraftInventoryCloseEvent;
 import me.webhead1104.towncraft.impl.TowncraftPlayerImpl;
+import me.webhead1104.towncraft.impl.items.TowncraftInventoryImpl;
 import me.webhead1104.towncraft.impl.items.TowncraftInventoryViewImpl;
+import me.webhead1104.towncraft.impl.items.TowncraftItemStackImpl;
+import me.webhead1104.towncraft.impl.items.TowncraftPlayerInventoryImpl;
+import me.webhead1104.towncraft.items.TowncraftInventory;
 import me.webhead1104.towncraft.items.TowncraftInventoryView;
 import me.webhead1104.towncraft.menus.ClickType;
 import net.cytonic.cytosis.events.api.Listener;
@@ -30,73 +35,92 @@ public class IFListener {
 
     @Listener
     public void onInventoryClick(InventoryPreClickEvent minestomEvent) {
-        Towncraft.getLogger().info("Slot = {}", minestomEvent.getSlot());
-        final Viewer viewer = viewFrame.getViewer(new TowncraftPlayerImpl((CytosisPlayer) minestomEvent.getPlayer()));
+        boolean isPlayerInventory = minestomEvent.getInventory() instanceof PlayerInventory;
+        int size = 0;
+        if (minestomEvent.getPlayer().getOpenInventory() != null) {
+            size = minestomEvent.getPlayer().getOpenInventory().getSize();
+        }
+
+        int slot = getSlot(minestomEvent.getSlot(), size, !isPlayerInventory);
+        Towncraft.getLogger().info("Clicked slot = {} new slot = {}", minestomEvent.getSlot(), slot);
+        TowncraftPlayer player = new TowncraftPlayerImpl((CytosisPlayer) minestomEvent.getPlayer());
+        Viewer viewer = viewFrame.getViewer(player);
         if (viewer == null) return;
 
-        final IFRenderContext context = viewer.getActiveContext();
-        final Component clickedComponent = context.getComponentsAt(minestomEvent.getSlot()).stream()
-                .filter(Component::isVisible)
-                .findFirst()
-                .orElse(null);
-        final ViewContainer clickedContainer = minestomEvent.getInventory() instanceof PlayerInventory
-                ? viewer.getSelfContainer()
-                : context.getContainer();
+        if (minestomEvent.getClick() instanceof Click.DropSlot) {
+            IFContext context = viewer.getActiveContext();
+            if (!context.getConfig().isOptionSet(ViewConfig.CANCEL_ON_DROP)) return;
+            minestomEvent.setCancelled(context.getConfig().getOptionValue(ViewConfig.CANCEL_ON_DROP));
+            return;
+        }
+        if (minestomEvent.getClick() instanceof Click.LeftDrag || minestomEvent.getClick() instanceof Click.RightDrag) {
+            IFContext context = viewer.getActiveContext();
+            if (!context.getConfig().isOptionSet(ViewConfig.CANCEL_ON_DRAG)) return;
+            minestomEvent.setCancelled(context.getConfig().getOptionValue(ViewConfig.CANCEL_ON_DRAG));
+            return;
+        }
 
-        final RootView root = context.getRoot();
+        IFRenderContext context = viewer.getActiveContext();
+        Component clickedComponent =
+                context
+                        .getComponentsAt(slot)
+                        .stream()
+                        .filter(Component::isVisible)
+                        .findFirst()
+                        .orElse(null);
+        ViewContainer clickedContainer;
+        if (minestomEvent.getInventory() instanceof PlayerInventory) {
+            clickedContainer = viewer.getSelfContainer();
+        } else {
+            clickedContainer = context.getContainer();
+        }
+
+        RootView root = context.getRoot();
         TowncraftInventoryView view = new TowncraftInventoryViewImpl(
                 (CytosisPlayer) minestomEvent.getPlayer(),
                 minestomEvent.getPlayer().getOpenInventory(),
                 minestomEvent.getPlayer().getInventory()
         );
-        int hotbarSlot = -1;
-        if (minestomEvent.getClick() instanceof Click.HotbarSwap(int slot, int ignored)) {
-            hotbarSlot = slot;
+
+        TowncraftInventory clickedInventory;
+        if (minestomEvent.getInventory() instanceof PlayerInventory playerInventory) {
+            clickedInventory = new TowncraftPlayerInventoryImpl(playerInventory);
+        } else {
+            clickedInventory = new TowncraftInventoryImpl(minestomEvent.getInventory());
         }
-        int slot = getSlot(minestomEvent.getSlot(), view, !(minestomEvent.getInventory() instanceof PlayerInventory));
-        TowncraftInventoryClickEvent event = new TowncraftInventoryClickEvent(
+        TowncraftInventoryClickEvent towncraftEvent = new TowncraftInventoryClickEvent(
                 view,
-                minestomEvent.getSlot() == -999,
                 slot,
-                minestomEvent.getSlot(),
                 getClickType(minestomEvent.getClick()),
-                hotbarSlot
+                (minestomEvent.getClick() instanceof Click.HotbarSwap swap) ? swap.hotbarSlot() : -999,
+                new TowncraftItemStackImpl(minestomEvent.getClickedItem()),
+                clickedInventory
         );
-        final IFSlotClickContext clickContext = root.getElementFactory()
-                .createSlotClickContext(slot, viewer, clickedContainer, clickedComponent, event, false);
+        Towncraft.getLogger().info("Item on cursor = {}", minestomEvent.getClickedItem().material().key().asString());
+        IFSlotClickContext clickContext =
+                root.getElementFactory().createSlotClickContext(
+                        slot,
+                        viewer,
+                        clickedContainer,
+                        clickedComponent,
+                        towncraftEvent,
+                        false
+                );
 
         root.getPipeline().execute(StandardPipelinePhases.CLICK, clickContext);
 
-        minestomEvent.setCancelled(event.isCancelled());
+        minestomEvent.setCancelled(towncraftEvent.isCancelled());
     }
 
-    private int getSlot(int rawSlot, TowncraftInventoryView view, boolean isTopInventory) {
-        int numInTop = view.getTopInventory().getSize();
-
+    private int getSlot(int rawSlot, int sizeInTop, boolean isTopInventory) {
         if (isTopInventory) {
-            return rawSlot; // 0 to 53 for chest
+            return rawSlot;
         }
-
-// Clicking in player inventory
-// rawSlot is 0-35 from Minestom
-
-// Window layout:
-// 54-80: Main inventory (3 rows, 27 slots)
-// 81-89: Hotbar (1 row, 9 slots)
-
-// Minestom player inventory:
-// 0-8: Hotbar
-// 9-35: Main inventory
-
-        if (rawSlot >= 0 && rawSlot < 9) {
-            // Hotbar (0-8) -> window slots 81-89
-            return numInTop + 27 + rawSlot;
-        } else if (rawSlot >= 9 && rawSlot < 36) {
-            // Main inventory (9-35) -> window slots 54-80
-            return numInTop + (rawSlot - 9);
+        if (rawSlot <= 8) {
+            return rawSlot + sizeInTop + 27;
         }
-
-        return rawSlot;
+        rawSlot -= 9;
+        return rawSlot + sizeInTop;
     }
 
     private ClickType getClickType(Click click) {

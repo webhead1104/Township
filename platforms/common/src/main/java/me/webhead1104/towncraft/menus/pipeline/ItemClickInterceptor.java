@@ -5,7 +5,6 @@ import me.devnatan.inventoryframework.component.Component;
 import me.devnatan.inventoryframework.component.ItemComponent;
 import me.devnatan.inventoryframework.pipeline.PipelineContext;
 import me.devnatan.inventoryframework.pipeline.PipelineInterceptor;
-import me.webhead1104.towncraft.events.TowncraftInventoryClickEvent;
 import me.webhead1104.towncraft.menus.context.SlotClickContext;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,8 +16,7 @@ public final class ItemClickInterceptor implements PipelineInterceptor<VirtualVi
     @Override
     public void intercept(@NotNull PipelineContext<VirtualView> pipeline, @NotNull VirtualView subject) {
         if (!(subject instanceof SlotClickContext context)) return;
-        final TowncraftInventoryClickEvent event = context.getClickOrigin();
-        if (event.isOutside()) return;
+        if (context.isOutsideClick()) return;
 
         final Component component = context.getComponent();
         if (component == null) return;

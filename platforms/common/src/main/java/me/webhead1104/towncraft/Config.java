@@ -1,19 +1,95 @@
 package me.webhead1104.towncraft;
 
+import com.google.common.base.Stopwatch;
 import lombok.Getter;
 import lombok.Setter;
+import me.webhead1104.towncraft.database.LoaderManager;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.loader.HeaderMode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
+import org.spongepowered.configurate.yaml.NodeStyle;
+import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
+
+import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 @ConfigSerializable
 @Getter
 @Setter
 public class Config {
+    private static final TowncraftPlatform platform = TowncraftPlatformManager.getPlatform();
+    private static final File OLD_PLUGIN_DIR = new File("plugins", "Township");
+    private static final File CONFIG_FILE = new File(platform.getDataFolder(), "config.yml");
     @Setting("version")
     private final int version = 1;
     @Setting("database")
     private final DatabaseConfig database = new DatabaseConfig();
+
+    public static void saveConfig() {
+        try {
+            YamlConfigurationLoader loader = YamlConfigurationLoader.builder().file(CONFIG_FILE)
+                    .nodeStyle(NodeStyle.BLOCK).headerMode(HeaderMode.PRESERVE).build();
+            loader.save(loader.createNode().set(TowncraftPlatformManager.getConfig()));
+        } catch (Exception e) {
+            platform.getLogger().error("An error occurred whilest saving the config!", e);
+        }
+    }
+
+    public static void loadConfig() {
+        try {
+            Stopwatch stopwatch = Stopwatch.createStarted();
+            if (OLD_PLUGIN_DIR.exists()) {
+                if (!OLD_PLUGIN_DIR.renameTo(platform.getDataFolder())) {
+                    platform.getLogger().error("Could not rename config file!");
+                }
+            }
+
+            YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                    .file(CONFIG_FILE)
+                    .commentsEnabled(true)
+                    .nodeStyle(NodeStyle.BLOCK)
+                    .headerMode(HeaderMode.PRESERVE)
+                    .build();
+
+            if (!CONFIG_FILE.exists()) {
+                TowncraftPlatformManager.setConfig(new Config());
+                saveConfig();
+                platform.getLogger().info("Created new config file");
+            }
+
+            ConfigurationNode node = loader.load();
+
+            if (node.node("version").getInt() == 0) {
+                platform.getLogger().info("Migrating your old config file!");
+                ConfigurationNode oldConfigMysql = node.node("mysql");
+
+                Config.MysqlConfig mysqlConfig = new Config.MysqlConfig();
+                mysqlConfig.setHost(oldConfigMysql.node("host").getString());
+                mysqlConfig.setPort(oldConfigMysql.node("port").getInt());
+                mysqlConfig.setDatabase(oldConfigMysql.node("database").getString());
+                mysqlConfig.setUsername(oldConfigMysql.node("username").getString());
+                mysqlConfig.setPassword(oldConfigMysql.node("password").getString());
+                mysqlConfig.setUseSsl(oldConfigMysql.node("use_ssl").getBoolean());
+                TowncraftPlatformManager.setConfig(node.get(Config.class));
+
+                if (TowncraftPlatformManager.getConfig() != null) {
+                    TowncraftPlatformManager.getConfig().getDatabase().setMysqlConfig(mysqlConfig);
+                }
+
+                saveConfig();
+                platform.getLogger().info("Config migration complete");
+            } else {
+                TowncraftPlatformManager.setConfig(node.get(Config.class));
+            }
+
+            TowncraftPlatformManager.setLoaderManager(new LoaderManager());
+            platform.getLogger().info("Loaded config in {} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        } catch (Exception e) {
+            platform.getLogger().error("Could not load config!", e);
+        }
+    }
 
     public enum DatabaseType {
         FILE,

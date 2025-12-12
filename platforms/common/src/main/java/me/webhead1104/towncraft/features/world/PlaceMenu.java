@@ -145,23 +145,23 @@ public class PlaceMenu extends View {
     public void onClick(@NotNull SlotClickContext context) {
         if (!context.isOnEntityContainer()) return;
         int section = sectionState.get(context);
-        if (context.getClickedSlot() == 68 && context.getItem() != null) {
+        if (context.getClickedSlot() == 68 && context.itemExists()) {
             sectionState.set(section + 1, context);
             canPlaceState.set(true, context);
             context.update();
-        } else if (context.getClickedSlot() == 76 && context.getItem() != null) {
+        } else if (context.getClickedSlot() == 76 && context.itemExists()) {
             sectionState.set(section + 8, context);
             canPlaceState.set(true, context);
             context.update();
-        } else if (context.getClickedSlot() == 66 && context.getItem() != null) {
+        } else if (context.getClickedSlot() == 66 && context.itemExists()) {
             sectionState.set(section - 1, context);
             canPlaceState.set(true, context);
             context.update();
-        } else if (context.getClickedSlot() == 58 && context.getItem() != null) {
+        } else if (context.getClickedSlot() == 58 && context.itemExists()) {
             sectionState.set(section - 8, context);
             canPlaceState.set(true, context);
             context.update();
-        } else if (context.getClickedSlot() == 67 && context.getItem() != null && Boolean.TRUE.equals(canPlaceState.get(context))) {
+        } else if (context.getClickedSlot() == 67 && context.itemExists() && Boolean.TRUE.equals(canPlaceState.get(context))) {
             PlaceAction place = onPlaceState.get(context);
             if (place != null) {
                 placedState.set(true, context);

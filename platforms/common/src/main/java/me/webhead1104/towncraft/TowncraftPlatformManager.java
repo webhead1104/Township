@@ -2,6 +2,7 @@ package me.webhead1104.towncraft;
 
 import com.google.common.base.Stopwatch;
 import lombok.Getter;
+import lombok.Setter;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewFrame;
 import me.webhead1104.towncraft.annotations.DependsOn;
@@ -20,27 +21,19 @@ import me.webhead1104.towncraft.features.animals.AnimalType;
 import me.webhead1104.towncraft.features.factories.FactoryType;
 import me.webhead1104.towncraft.utils.ClassGraphUtils;
 import net.kyori.adventure.util.Services;
-import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.loader.HeaderMode;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
-import org.spongepowered.configurate.yaml.NodeStyle;
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 import revxrsal.commands.Lamp;
 import revxrsal.commands.command.CommandActor;
 import revxrsal.commands.orphan.Orphans;
 import revxrsal.commands.parameter.ParameterTypes;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class TowncraftPlatformManager {
     @Getter
     private final static TowncraftPlatform platform = Services.service(TowncraftPlatform.class)
             .orElseThrow(() -> new IllegalStateException("No Towncraft found!"));
-    private static final File OLD_PLUGIN_DIR = new File("plugins", "Township");
-    private static final File CONFIG_FILE = new File(platform.getDataFolder(), "config.yml");
     @Getter
     private static final ConfigurationTransformation.VersionedBuilder versionedBuilder = ConfigurationTransformation.versionedBuilder();
     @Getter
@@ -50,10 +43,12 @@ public class TowncraftPlatformManager {
     @Getter
     private static UserManager userManager;
     @Getter
+    @Setter
     private static LoaderManager loaderManager;
     @Getter
     private static InventoryManager inventoryManager;
     @Getter
+    @Setter
     private static Config config;
 
     public static <T extends DataLoader> T getDataLoader(Class<T> dataLoaderClass) {
@@ -65,9 +60,7 @@ public class TowncraftPlatformManager {
     }
 
     public static void init() {
-//        ImperatDebugger.setEnabled(true);
-//        System.setProperty("me.devnatan.inventoryframework.debug", "true");
-        loadConfig();
+        Config.loadConfig();
         loadDataLoaders();
         loadDataVersions();
         viewFrame = new ViewFrame();
@@ -121,70 +114,6 @@ public class TowncraftPlatformManager {
 
     public static void shutdown() {
         viewFrame.unregister();
-    }
-
-    public static void saveTowncraftConfig() {
-        try {
-            YamlConfigurationLoader loader = YamlConfigurationLoader.builder().file(CONFIG_FILE)
-                    .nodeStyle(NodeStyle.BLOCK).headerMode(HeaderMode.PRESERVE).build();
-            loader.save(loader.createNode().set(config));
-        } catch (Exception e) {
-            platform.getLogger().error("An error occurred whilest saving the config!", e);
-        }
-    }
-
-    public static void loadConfig() {
-        try {
-            Stopwatch stopwatch = Stopwatch.createStarted();
-            if (OLD_PLUGIN_DIR.exists()) {
-                if (!OLD_PLUGIN_DIR.renameTo(platform.getDataFolder())) {
-                    platform.getLogger().error("Could not rename config file!");
-                }
-            }
-
-            YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                    .file(CONFIG_FILE)
-                    .commentsEnabled(true)
-                    .nodeStyle(NodeStyle.BLOCK)
-                    .headerMode(HeaderMode.PRESERVE)
-                    .build();
-
-            if (!CONFIG_FILE.exists()) {
-                config = new Config();
-                saveTowncraftConfig();
-                platform.getLogger().info("Created new config file");
-            }
-
-            ConfigurationNode node = loader.load();
-
-            if (node.node("version").getInt() == 0) {
-                platform.getLogger().info("Migrating your old config file!");
-                ConfigurationNode oldConfigMysql = node.node("mysql");
-
-                Config.MysqlConfig mysqlConfig = new Config.MysqlConfig();
-                mysqlConfig.setHost(oldConfigMysql.node("host").getString());
-                mysqlConfig.setPort(oldConfigMysql.node("port").getInt());
-                mysqlConfig.setDatabase(oldConfigMysql.node("database").getString());
-                mysqlConfig.setUsername(oldConfigMysql.node("username").getString());
-                mysqlConfig.setPassword(oldConfigMysql.node("password").getString());
-                mysqlConfig.setUseSsl(oldConfigMysql.node("use_ssl").getBoolean());
-                config = node.get(Config.class);
-
-                if (config != null) {
-                    config.getDatabase().setMysqlConfig(mysqlConfig);
-                }
-
-                saveTowncraftConfig();
-                platform.getLogger().info("Config migration complete");
-            } else {
-                config = node.get(Config.class);
-            }
-
-            loaderManager = new LoaderManager();
-            platform.getLogger().info("Loaded config in {} ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
-        } catch (Exception e) {
-            platform.getLogger().error("Could not load config!", e);
-        }
     }
 
     private static void loadDataLoaders() {

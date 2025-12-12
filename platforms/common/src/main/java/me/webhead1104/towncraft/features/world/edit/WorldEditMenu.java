@@ -66,19 +66,19 @@ public class WorldEditMenu extends TowncraftView {
     @Override
     public void onClick(@NotNull SlotClickContext context) {
         if (context.isOnEntityContainer()) {
-            if (context.getClickedSlot() == 68 && context.getItem() != null) {
+            if (context.getClickedSlot() == 68 && context.itemExists()) {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context) + 1);
                 openBackMenu.set(false, context);
-            } else if (context.getClickedSlot() == 76 && context.getItem() != null) {
+            } else if (context.getClickedSlot() == 76 && context.itemExists()) {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context) + 8);
                 openBackMenu.set(false, context);
-            } else if (context.getClickedSlot() == 66 && context.getItem() != null) {
+            } else if (context.getClickedSlot() == 66 && context.itemExists()) {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context) - 1);
                 openBackMenu.set(false, context);
-            } else if (context.getClickedSlot() == 58 && context.getItem() != null) {
+            } else if (context.getClickedSlot() == 58 && context.itemExists()) {
                 context.openForPlayer(WorldEditMenu.class, sectionState.get(context) - 8);
                 openBackMenu.set(false, context);
-            } else if (context.getClickedSlot() == 89 && context.getItem() != null) {
+            } else if (context.getClickedSlot() == 89 && context.itemExists()) {
                 context.openForPlayer(WorldMenu.class, sectionState.get(context));
                 openBackMenu.set(false, context);
             }
