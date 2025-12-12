@@ -1,5 +1,6 @@
 package me.webhead1104.towncraft;
 
+import com.google.errorprone.annotations.Keep;
 import me.webhead1104.towncraft.commands.TowncraftCommand;
 import revxrsal.commands.Lamp;
 import revxrsal.commands.minestom.MinestomLamp;
@@ -7,6 +8,7 @@ import revxrsal.commands.minestom.actor.MinestomCommandActor;
 
 public class TowncraftCytosis {
 
+    @Keep
     public static void initialize() {
         TowncraftPlatformManager.init();
 
@@ -16,7 +18,8 @@ public class TowncraftCytosis {
         TowncraftPlatformManager.initCommands(lamp);
     }
 
+    @Keep
     public static void shutdown() {
-        System.out.println("STOP");
+        TowncraftPlatformManager.shutdown();
     }
 }

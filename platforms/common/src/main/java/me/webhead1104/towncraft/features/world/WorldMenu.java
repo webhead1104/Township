@@ -159,7 +159,6 @@ public class WorldMenu extends TowncraftView {
     @Override
     public void onClick(@NotNull SlotClickContext context) {
         if (context.isOnEntityContainer()) {
-            Towncraft.getLogger().info("Click slot = {} idk why", context.getClickedSlot());
             if (context.getClickedSlot() == 68 && context.itemExists()) {
                 context.openForPlayer(WorldMenu.class, sectionState.get(context) + 1);
                 openBackMenu.set(false, context);

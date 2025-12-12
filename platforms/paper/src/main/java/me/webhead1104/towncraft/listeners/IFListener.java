@@ -7,7 +7,6 @@ import me.devnatan.inventoryframework.context.IFContext;
 import me.devnatan.inventoryframework.context.IFRenderContext;
 import me.devnatan.inventoryframework.context.IFSlotClickContext;
 import me.devnatan.inventoryframework.pipeline.StandardPipelinePhases;
-import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.events.TowncraftInventoryClickEvent;
 import me.webhead1104.towncraft.events.TowncraftInventoryCloseEvent;
@@ -68,7 +67,6 @@ public record IFListener(ViewFrame viewFrame) implements Listener {
                 clickedItemStack,
                 clickedInventory
         );
-        Towncraft.getLogger().info("Item on cursor = {}", clickedItemStack.getMaterial().getKey().asString());
         final IFSlotClickContext clickContext = root.getElementFactory()
                 .createSlotClickContext(bukkitEvent.getRawSlot(), viewer, clickedContainer, clickedComponent, event, false);
 

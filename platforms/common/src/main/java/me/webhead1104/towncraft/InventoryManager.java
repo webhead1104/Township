@@ -20,7 +20,6 @@ public class InventoryManager {
 
     public void addPlayerInventory(TowncraftPlayer player) {
         if (!enabled) return;
-        System.out.println("ADDING");
         playerInventories.put(player.getUUID(), player.getInventory().getContents());
     }
 

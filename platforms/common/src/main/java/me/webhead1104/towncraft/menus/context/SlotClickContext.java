@@ -7,7 +7,6 @@ import me.devnatan.inventoryframework.component.Component;
 import me.devnatan.inventoryframework.context.IFRenderContext;
 import me.devnatan.inventoryframework.context.IFSlotClickContext;
 import me.devnatan.inventoryframework.context.SlotContext;
-import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.data.objects.User;
 import me.webhead1104.towncraft.events.TowncraftInventoryClickEvent;
@@ -36,7 +35,6 @@ public class SlotClickContext extends SlotContext implements IFSlotClickContext 
             @NotNull TowncraftInventoryClickEvent clickOrigin,
             boolean combined) {
         super(slot, parent);
-        Towncraft.getLogger().info("Created SlotClickContext for slot {}.", slot);
         this.whoClicked = whoClicked;
         this.clickedContainer = clickedContainer;
         this.clickedComponent = clickedComponent;
@@ -146,7 +144,6 @@ public class SlotClickContext extends SlotContext implements IFSlotClickContext 
 
     @Override
     public final boolean isOnEntityContainer() {
-        Towncraft.getLogger().info("Clicked inventory class = {}, platform clicked inventory class = {}", clickOrigin.getClickedInventory().getClass(), clickOrigin.getClickedInventory().getPlatform().getClass());
         return clickOrigin.getClickedInventory() instanceof TowncraftPlayerInventory;
     }
 

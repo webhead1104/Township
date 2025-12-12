@@ -7,7 +7,6 @@ import me.devnatan.inventoryframework.context.IFContext;
 import me.devnatan.inventoryframework.context.IFRenderContext;
 import me.devnatan.inventoryframework.context.IFSlotClickContext;
 import me.devnatan.inventoryframework.pipeline.StandardPipelinePhases;
-import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.TowncraftPlatformManager;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.events.TowncraftInventoryClickEvent;
@@ -42,7 +41,6 @@ public class IFListener {
         }
 
         int slot = getSlot(minestomEvent.getSlot(), size, !isPlayerInventory);
-        Towncraft.getLogger().info("Clicked slot = {} new slot = {}", minestomEvent.getSlot(), slot);
         TowncraftPlayer player = new TowncraftPlayerImpl((CytosisPlayer) minestomEvent.getPlayer());
         Viewer viewer = viewFrame.getViewer(player);
         if (viewer == null) return;
@@ -96,7 +94,6 @@ public class IFListener {
                 new TowncraftItemStackImpl(minestomEvent.getClickedItem()),
                 clickedInventory
         );
-        Towncraft.getLogger().info("Item on cursor = {}", minestomEvent.getClickedItem().material().key().asString());
         IFSlotClickContext clickContext =
                 root.getElementFactory().createSlotClickContext(
                         slot,

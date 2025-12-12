@@ -171,14 +171,9 @@ tasks {
             .filterIsInstance<ModuleDependency>()
 
         dependencies {
-
-            commonApiDeps.forEach { IO.println("HEY!!!!!!!! $it") }
             commonApiDeps
                 .filter { it.group != "net.cytonic" && it.group != "org.spongepowered" && it.group != "me.devnatan" }
-                .forEach { dep ->
-                    IO.println("excluding $dep")
-                    exclude(dependency("${dep.group}:${dep.name}:.*"))
-                }
+                .forEach { dep -> exclude(dependency("${dep.group}:${dep.name}:.*")) }
         }
 
         relocate("revxrsal.zapper", "me.webhead1104.towncraft.libs.zapper")
