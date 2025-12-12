@@ -110,6 +110,7 @@ public class ViewFrame extends IFViewFrame<ViewFrame, View> {
      * @param player      Who the context will be open to.
      * @param initialData Initial data to pass to {@link PlatformView#onViewerAdded(IFContext, Object, Object)}.
      */
+    @SuppressWarnings("OverrideOnly")
     @ApiStatus.Experimental
     public final void openActive(
             @NotNull Class<? extends View> viewClass,
@@ -144,7 +145,7 @@ public class ViewFrame extends IFViewFrame<ViewFrame, View> {
      * @param player             Who the context will be open to.
      * @param initialData        Initial data to pass to {@link PlatformView#onViewerAdded(IFContext, Object, Object)}.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "OverrideOnly"})
     @ApiStatus.Experimental
     public final void openEndless(
             @NotNull EndlessContextInfo endlessContextInfo, @NotNull TowncraftPlayer player, Object initialData) {
@@ -234,7 +235,6 @@ public class ViewFrame extends IFViewFrame<ViewFrame, View> {
      */
     @NotNull
     public final ViewFrame install(@NotNull Feature<?, ?, ViewFrame> feature) {
-        install(feature, UnaryOperator.identity());
-        return this;
+        return install(feature, UnaryOperator.identity());
     }
 }
