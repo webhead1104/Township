@@ -1,10 +1,10 @@
 plugins {
     id("java")
-    id("com.gradleup.shadow") version "9.2.2"
+    id("com.gradleup.shadow") version "9.3.0"
     id("xyz.jpenilla.run-paper") version "3.0.2"
     id("io.freefair.lombok") version "9.1.0"
     id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
-    id("com.diffplug.spotless") version "8.0.0"
+    id("com.diffplug.spotless") version "8.1.0"
 }
 
 group = "me.webhead1104"
@@ -22,8 +22,8 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
     implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
     implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
-    implementation("me.devnatan:inventory-framework-platform-paper:3.5.5")
-    implementation("me.devnatan:inventory-framework-platform-bukkit:3.5.5")
+    implementation("me.devnatan:inventory-framework-platform-paper:3.7.1")
+    implementation("me.devnatan:inventory-framework-platform-bukkit:3.7.1")
     implementation("io.github.classgraph:classgraph:4.8.184")
     compileOnly("org.mongodb:mongodb-driver-sync:5.7.0-alpha0")
     compileOnly("com.zaxxer:HikariCP:7.0.2")

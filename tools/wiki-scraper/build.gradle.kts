@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("io.freefair.lombok") version "9.1.0"
-    id("com.gradleup.shadow") version "9.2.2"
+    id("com.gradleup.shadow") version "9.3.0"
     application
 }
 
@@ -17,7 +17,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.13.2")
     implementation("io.github.classgraph:classgraph:4.8.184")
     implementation("org.slf4j:slf4j-api:2.1.0-alpha1")
-    implementation("ch.qos.logback:logback-classic:1.5.21")
+    implementation("ch.qos.logback:logback-classic:1.5.22")
     implementation("info.picocli:picocli:4.7.7")
     annotationProcessor("info.picocli:picocli-codegen:4.7.7")
 }

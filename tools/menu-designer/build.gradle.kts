@@ -2,7 +2,7 @@ plugins {
     java
     application
     id("org.openjfx.javafxplugin") version "0.1.0"
-    id("org.beryx.jlink") version "3.1.4-rc"
+    id("org.beryx.jlink") version "3.1.5"
 }
 
 group = "me.webhead1104"
@@ -25,5 +25,5 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.25.0")
     implementation("com.google.code.gson:gson:2.13.2")
     implementation("org.slf4j:slf4j-api:2.1.0-alpha1")
-    implementation("ch.qos.logback:logback-classic:1.5.21")
+    implementation("ch.qos.logback:logback-classic:1.5.22")
 }
