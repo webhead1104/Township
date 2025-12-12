@@ -1,0 +1,49 @@
+package me.webhead1104.towncraft.commands.subCommands;
+
+import com.google.errorprone.annotations.Keep;
+import me.webhead1104.towncraft.TowncraftPlayer;
+import me.webhead1104.towncraft.commands.CommandUtils;
+import me.webhead1104.towncraft.data.objects.User;
+import me.webhead1104.towncraft.dataLoaders.ItemType;
+import me.webhead1104.towncraft.utils.Msg;
+import revxrsal.commands.annotation.Range;
+import revxrsal.commands.annotation.Subcommand;
+
+@Keep
+@Subcommand("item")
+public final class ItemCommand implements TowncraftSubCommand {
+    @Subcommand("get")
+    public void get(TowncraftPlayer player, ItemType.Item key) {
+        player.sendMessage(Msg.format("<green>You have %d of %s!", player.getUser().getBarn().getItem(key.key()), key.key().value()));
+    }
+
+    @Subcommand("set")
+    public void set(TowncraftPlayer player, ItemType.Item key, @Range(min = 0) int amount) {
+        User user = player.getUser();
+        if (CommandUtils.validate(user.getBarn().getItem(key.key()) + amount, player)) {
+            return;
+        }
+        user.getBarn().setItem(key.key(), amount);
+        player.sendMessage(Msg.format("<green>Set %s to %d!", key.key().value(), amount));
+    }
+
+    @Subcommand("add")
+    public void add(TowncraftPlayer player, ItemType.Item key, @Range(min = 0) int amount) {
+        User user = player.getUser();
+        if (CommandUtils.validate(user.getBarn().getItem(key.key()) + amount, player)) {
+            return;
+        }
+        user.getBarn().addAmountToItem(key.key(), amount);
+        player.sendMessage(Msg.format("<green>Added %d to %s!", amount, key.key().value()));
+    }
+
+    @Subcommand("remove")
+    public void remove(TowncraftPlayer player, ItemType.Item key, @Range(min = 0) int amount) {
+        User user = player.getUser();
+        if (CommandUtils.validate(user.getBarn().getItem(key.key()) - amount, player)) {
+            return;
+        }
+        user.getBarn().removeAmountFromItem(key.key(), amount);
+        player.sendMessage(Msg.format("<green>Removed %s amount!", amount));
+    }
+}

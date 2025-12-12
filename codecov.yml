@@ -1,0 +1,73 @@
+codecov:
+  require_ci_to_pass: yes
+  notify:
+    wait_for_ci: yes
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"  # Green at 70%+, red below
+
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 1%  # Allow 1% drop
+        if_ci_failed: error
+
+    patch:
+      default:
+        target: 80%  # New code should have 80%+ coverage
+        threshold: 5%
+        if_ci_failed: error
+
+# Ignore files/directories that shouldn't count toward coverage
+ignore:
+  - "**/*Test.java"
+  - "**/*Test.kt"
+  - "**/test/**"
+  - "**/tests/**"
+  - "**/*.gradle"
+  - "**/*.gradle.kts"
+  - "**/build/**"
+  - "**/generated/**"
+  - "**/BuildConfig.java"
+  - "**/BuildConfig.kt"
+  - "**/Main.java"  # Generated classloader
+  - "**/GeneratedClassloader.java"  # Generated classloader
+
+comment:
+  layout: "header, diff, flags, components"
+  behavior: default
+  require_changes: false
+  require_base: no
+  require_head: yes
+
+github_checks:
+  annotations: true
+
+flags:
+  unittests:
+    paths:
+      - platforms/
+    carryforward: true
+
+component_management:
+  default_rules:
+    statuses:
+      - type: project
+        target: auto
+        threshold: 1%
+  individual_components:
+    - component_id: cytosis
+      name: Cytosis Platform
+      paths:
+        - platforms/cytosis/src/main/java/**
+    - component_id: paper
+      name: Paper Platform
+      paths:
+        - platforms/paper/src/main/java/**
+    - component_id: common
+      name: Common Code
+      paths:
+        - platforms/common/src/main/java/**

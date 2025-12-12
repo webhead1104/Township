@@ -219,7 +219,6 @@ public class MenuDesignerController {
 
     private void applyDarkMode(boolean enable) {
         if (root == null) {
-            System.out.println("ROOT NULL");
             return;
         }
         String url = Objects.requireNonNull(getClass().getResource("/dark.css")).toExternalForm();
