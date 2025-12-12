@@ -55,7 +55,6 @@ public class WorldUtils {
     }
 
     public static void applyArrows(TowncraftPlayer player, int section) {
-        //todo fix arrows not disappearing
         if (canMoveRight(section)) {
             TowncraftItemStack itemStack = TowncraftItemStack.of(TowncraftMaterial.ARROW);
             itemStack.setName(Msg.format("<dark_green>Click to scroll right!"));

@@ -23,7 +23,6 @@ public class TowncraftCommand {
         WorldUtils.openWorldMenu(player);
     }
 
-    //    //todo
     @Subcommand("animal")
     public void animals(TowncraftPlayer player, AnimalType.Animal animalType) {
         Towncraft.getViewFrame().open(AnimalMenu.class, player, animalType.key());
