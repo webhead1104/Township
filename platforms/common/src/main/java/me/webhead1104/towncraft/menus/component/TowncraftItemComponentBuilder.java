@@ -19,6 +19,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -34,6 +35,7 @@ public final class TowncraftItemComponentBuilder extends DefaultComponentBuilder
 
     public TowncraftItemComponentBuilder(VirtualView root) {
         this(
+                null,
                 root,
                 -1,
                 null,
@@ -51,6 +53,7 @@ public final class TowncraftItemComponentBuilder extends DefaultComponentBuilder
     }
 
     private TowncraftItemComponentBuilder(
+            Function<? extends IFContext, String> keyFactory,
             VirtualView root,
             int slot,
             TowncraftItemStack item,
@@ -66,6 +69,7 @@ public final class TowncraftItemComponentBuilder extends DefaultComponentBuilder
             boolean isManagedExternally,
             Predicate<Context> displayCondition) {
         super(
+                keyFactory,
                 reference,
                 data,
                 cancelOnClick,
@@ -193,7 +197,10 @@ public final class TowncraftItemComponentBuilder extends DefaultComponentBuilder
 
     @Override
     public @NotNull Component create() {
+        final Function<? extends IFContext, String> componentKeyProvider =
+                keyFactory == null ? RANDOM_KEY_FACTORY : keyFactory;
         return new ItemComponent(
+                componentKeyProvider,
                 root,
                 slot,
                 item,
@@ -213,6 +220,7 @@ public final class TowncraftItemComponentBuilder extends DefaultComponentBuilder
     @Override
     public TowncraftItemComponentBuilder copy() {
         return new TowncraftItemComponentBuilder(
+                keyFactory,
                 root,
                 slot,
                 item,

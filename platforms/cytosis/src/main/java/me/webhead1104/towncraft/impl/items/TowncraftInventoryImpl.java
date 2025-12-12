@@ -41,12 +41,21 @@ public class TowncraftInventoryImpl implements TowncraftInventory {
     }
 
     @Override
-    public String getTitle() {
+    public Component getTitle() {
         if (inventory instanceof PlayerInventory) {
             throw new UnsupportedOperationException("This operation is not supported.");
         }
 
-        return PlainTextComponentSerializer.plainText().serialize(((Inventory) inventory).getTitle());
+        return ((Inventory) inventory).getTitle();
+    }
+
+    @Override
+    public void setTitle(Component title) {
+        if (inventory instanceof PlayerInventory) {
+            throw new UnsupportedOperationException("This operation is not supported.");
+        }
+
+        ((Inventory) inventory).setTitle(title);
     }
 
     @Override
@@ -56,6 +65,15 @@ public class TowncraftInventoryImpl implements TowncraftInventory {
         }
 
         ((Inventory) inventory).setTitle(Component.text(title));
+    }
+
+    @Override
+    public String getTitleString() {
+        if (inventory instanceof PlayerInventory) {
+            throw new UnsupportedOperationException("This operation is not supported.");
+        }
+
+        return PlainTextComponentSerializer.plainText().serialize(((Inventory) inventory).getTitle());
     }
 
     @Override

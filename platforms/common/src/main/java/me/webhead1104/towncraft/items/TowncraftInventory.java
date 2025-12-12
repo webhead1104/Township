@@ -2,6 +2,7 @@ package me.webhead1104.towncraft.items;
 
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.menus.TowncraftInventoryType;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,9 +13,13 @@ public interface TowncraftInventory {
 
     int getSize();
 
-    String getTitle();
+    Component getTitle();
+
+    void setTitle(Component title);
 
     void setTitle(String title);
+
+    String getTitleString();
 
     TowncraftInventoryType getType();
 

@@ -72,13 +72,12 @@ public record TowncraftInventoryViewImpl(CytosisPlayer player,
         }
         Preconditions.checkArgument(rawSlot >= 0, "Negative, non outside slot %s", rawSlot);
         Preconditions.checkArgument(rawSlot < this.countSlots(), "Slot %s greater than inventory slot count", rawSlot);
-        if ()
 
-            if (rawSlot > this.getTopInventory().getSize()) {
-                return this.getTopInventory();
-            } else {
-                return getBottomInventory();
-            }
+        if (rawSlot > this.getTopInventory().getSize()) {
+            return this.getTopInventory();
+        } else {
+            return getBottomInventory();
+        }
     }
 
     private int countSlots() {

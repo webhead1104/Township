@@ -26,8 +26,8 @@ dependencies {
 
     implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
     implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
-    implementation("me.devnatan:inventory-framework-api:3.5.5")
-    implementation("me.devnatan:inventory-framework-platform:3.5.5")
+    implementation("me.devnatan:inventory-framework-api:3.7.1")
+    implementation("me.devnatan:inventory-framework-platform:3.7.1")
 
     testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")

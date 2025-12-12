@@ -7,8 +7,8 @@ group = "me.webhead1104"
 version = "1.0-SNAPSHOT"
 
 dependencies {
-    api("me.devnatan:inventory-framework-api:3.5.5")
-    api("me.devnatan:inventory-framework-platform:3.5.5")
+    api("me.devnatan:inventory-framework-api:3.7.1")
+    api("me.devnatan:inventory-framework-platform:3.7.1")
     api("com.google.guava:guava:33.5.0-jre")
     api("org.jetbrains:annotations:26.0.2-1")
     api("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")

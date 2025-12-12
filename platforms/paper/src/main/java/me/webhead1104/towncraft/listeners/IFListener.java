@@ -24,6 +24,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -82,6 +83,17 @@ public record IFListener(ViewFrame viewFrame) implements Listener {
                 TowncraftInventoryCloseEvent.Reason.valueOf(bukkitEvent.getReason().toString())
         );
         final IFCloseContext closeContext = root.getElementFactory().createCloseContext(viewer, context, event);
+
+        root.getPipeline().execute(StandardPipelinePhases.CLOSE, closeContext);
+    }
+
+    public void onQuit(final PlayerQuitEvent bukkitEvent) {
+        final Viewer viewer = viewFrame().getViewer(new TowncraftPlayerImpl(bukkitEvent.getPlayer()));
+        if (viewer == null) return;
+
+        final IFRenderContext context = viewer.getCurrentContext();
+        final RootView root = context.getRoot();
+        final IFCloseContext closeContext = root.getElementFactory().createCloseContext(viewer, context, bukkitEvent);
 
         root.getPipeline().execute(StandardPipelinePhases.CLOSE, closeContext);
     }

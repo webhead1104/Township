@@ -28,8 +28,8 @@ dependencies {
     //shadow these in since paper class loading is weird
     implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
     implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
-    implementation("me.devnatan:inventory-framework-api:3.5.5")
-    implementation("me.devnatan:inventory-framework-platform:3.5.5")
+    implementation("me.devnatan:inventory-framework-api:3.7.1")
+    implementation("me.devnatan:inventory-framework-platform:3.7.1")
 }
 
 val generateClassloader = tasks.register("generateClassloader") {

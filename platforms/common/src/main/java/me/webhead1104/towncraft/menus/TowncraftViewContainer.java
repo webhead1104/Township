@@ -9,6 +9,7 @@ import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.items.TowncraftInventory;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.items.TowncraftPlayerInventory;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,12 +49,12 @@ public final class TowncraftViewContainer implements ViewContainer {
 
         if (diffTitle && shared) throw new IllegalStateException("Cannot get unique title of shared inventory");
 
-        return inventory.getViewers().getFirst().getOpenInventory().getTitle();
+        return inventory.getViewers().getFirst().getOpenInventory().getTitleString();
     }
 
     @Override
     public String getTitle(@NotNull Viewer viewer) {
-        return ((TowncraftViewer) viewer).getPlayer().getOpenInventory().getTitle();
+        return ((TowncraftViewer) viewer).getPlayer().getOpenInventory().getTitleString();
     }
 
     @Override
@@ -146,14 +147,18 @@ public final class TowncraftViewContainer implements ViewContainer {
     }
 
     @Override
-    public void changeTitle(@Nullable String title, @NotNull Viewer target) {
+    public void changeTitle(@Nullable Object title, @NotNull Viewer target) {
         changeTitle(title, ((TowncraftViewer) target).getPlayer());
     }
 
-    public void changeTitle(@Nullable String title, @NotNull TowncraftPlayer player) {
+    public void changeTitle(@Nullable Object title, @NotNull TowncraftPlayer player) {
         TowncraftInventory inventory = player.getOpenInventory();
         if (UNOPENABLES.contains(inventory.getType().name())) return;
-        inventory.setTitle(title);
+        if (title instanceof Component) {
+            inventory.setTitle((Component) title);
+            return;
+        }
+        inventory.setTitle((String) title);
     }
 
     @Override

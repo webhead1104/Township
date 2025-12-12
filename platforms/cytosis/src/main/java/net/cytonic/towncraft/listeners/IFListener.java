@@ -21,10 +21,9 @@ import net.minestom.server.event.inventory.InventoryCloseEvent;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.item.PickupItemEvent;
+import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.inventory.click.Click;
-
-import java.util.prefs.Preferences;
 
 public class IFListener {
     private final ViewFrame viewFrame = TowncraftPlatformManager.getViewFrame();
@@ -75,7 +74,6 @@ public class IFListener {
         int numInTop = view.getTopInventory().getSize();
 
         if (isTopInventory) {
-            Preferences.userRoot()
             return rawSlot; // 0 to 53 for chest
         }
 
@@ -124,6 +122,18 @@ public class IFListener {
         final RootView root = context.getRoot();
         TowncraftInventoryCloseEvent event = getTowncraftInventoryCloseEvent(minestomEvent);
         final IFCloseContext closeContext = root.getElementFactory().createCloseContext(viewer, context, event);
+
+        root.getPipeline().execute(StandardPipelinePhases.CLOSE, closeContext);
+    }
+
+    @Listener
+    public void onQuit(final PlayerDisconnectEvent minestomEvent) {
+        final Viewer viewer = viewFrame.getViewer(new TowncraftPlayerImpl((CytosisPlayer) minestomEvent.getPlayer()));
+        if (viewer == null) return;
+
+        final IFRenderContext context = viewer.getCurrentContext();
+        final RootView root = context.getRoot();
+        final IFCloseContext closeContext = root.getElementFactory().createCloseContext(viewer, context, minestomEvent);
 
         root.getPipeline().execute(StandardPipelinePhases.CLOSE, closeContext);
     }

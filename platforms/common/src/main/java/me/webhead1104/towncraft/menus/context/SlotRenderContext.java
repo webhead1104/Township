@@ -2,6 +2,7 @@ package me.webhead1104.towncraft.menus.context;
 
 import me.devnatan.inventoryframework.RootView;
 import me.devnatan.inventoryframework.Viewer;
+import me.devnatan.inventoryframework.component.Component;
 import me.devnatan.inventoryframework.context.IFRenderContext;
 import me.devnatan.inventoryframework.context.IFSlotRenderContext;
 import me.devnatan.inventoryframework.context.SlotContext;
@@ -18,16 +19,18 @@ public class SlotRenderContext extends SlotContext implements IFSlotRenderContex
 
     private final TowncraftPlayer player;
     private final Viewer viewer;
+    private final Component component;
     private TowncraftItemStack item;
     private boolean cancelled;
     private boolean changed;
     private boolean forceUpdate;
 
     @ApiStatus.Internal
-    public SlotRenderContext(int slot, @NotNull IFRenderContext parent, @Nullable Viewer viewer) {
+    public SlotRenderContext(int slot, @NotNull IFRenderContext parent, @Nullable Viewer viewer, Component component) {
         super(slot, parent);
         this.viewer = viewer;
         this.player = viewer == null ? null : ((TowncraftViewer) viewer).getPlayer();
+        this.component = component;
     }
 
     @Override
@@ -121,7 +124,17 @@ public class SlotRenderContext extends SlotContext implements IFSlotRenderContex
     }
 
     @Override
+    public final void updateTitleForPlayer(@NotNull Object title) {
+        getParent().updateTitleForPlayer(title);
+    }
+
+    @Override
     public final void resetTitleForPlayer() {
         getParent().resetTitleForPlayer();
+    }
+
+    @Override
+    public Component getComponent() {
+        return component;
     }
 }
