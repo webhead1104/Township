@@ -6,6 +6,11 @@ plugins {
 
 allprojects {
     apply(plugin = "io.freefair.lombok")
+    apply(plugin = "jacoco")
+
+    group = "me.webhead1104"
+    version = "1.0-SNAPSHOT"
+
     repositories {
         mavenCentral()
         maven("https://repo.opencollab.dev/maven-snapshots")
@@ -16,20 +21,43 @@ allprojects {
         // Preserve parameter names in the bytecode
         options.compilerArgs.add("-parameters")
     }
-    group = "me.webhead1104"
-    version = "1.0-SNAPSHOT"
+
+    plugins.withType<JavaPlugin> {
+        tasks.withType<Test> {
+            finalizedBy(tasks.named("jacocoTestReport"))
+
+            useJUnitPlatform()
+            maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+            reports {
+                junitXml.required.set(true)
+                html.required.set(true)
+            }
+        }
+
+        tasks.named<JacocoReport>("jacocoTestReport") {
+            dependsOn(tasks.named("test"))
+
+            reports {
+                xml.required.set(true)
+                html.required.set(true)
+                csv.required.set(false)
+            }
+
+            // Ensure the report is generated even if there are no tests yet
+            classDirectories.setFrom(
+                files(classDirectories.files.map {
+                    fileTree(it) {
+                        exclude(
+                            // Exclude generated code, data classes, etc.
+                            "**/BuildConfig.*",
+                            "**/*$*.*",  // Inner classes
+                        )
+                    }
+                })
+            )
+        }
+    }
 }
-
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
-}
-
-tasks.withType<Javadoc> {
-    val javadocOptions = options as CoreJavadocOptions
-
-    javadocOptions.addStringOption("source", "21")
-}
-
 
 tasks {
     spotless {

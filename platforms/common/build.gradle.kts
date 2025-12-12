@@ -1,7 +1,6 @@
 plugins {
     id("java")
     id("java-library")
-    jacoco
 }
 
 group = "me.webhead1104"
@@ -20,24 +19,9 @@ dependencies {
     api("org.slf4j:slf4j-api:2.1.0-alpha1")
     api("org.mongodb:mongodb-driver-sync:5.7.0-alpha0")
     api("com.zaxxer:HikariCP:7.0.2")
-//    api("studio.mevera:imperat-core:2.2.0")
     api("io.github.revxrsal:lamp.common:4.0.0-rc.14")
 
     testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")
     testImplementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
-}
-
-tasks.test {
-    finalizedBy(tasks.jacocoTestReport)
-    useJUnitPlatform()
-    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
-}
-
-tasks.jacocoTestReport {
-    dependsOn(tasks.test)
-    reports {
-        xml.required.set(true) // Codecov needs XML format
-        html.required.set(true)
-    }
 }
