@@ -108,11 +108,11 @@ public interface DataLoader {
 
     @ExcludeFromClassGraph
     interface KeyBasedDataLoader<ResultType> extends DataLoader {
+        ResultType get(Key key);
+
         Collection<Key> keys();
 
         Collection<ResultType> values();
-
-        ResultType get(Key key);
     }
 
     @ExcludeFromClassGraph

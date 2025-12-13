@@ -70,13 +70,10 @@ public class AnimalType implements DataLoader.KeyBasedDataLoader<AnimalType.Anim
     @AllArgsConstructor
     public static class Animal extends Keyed {
         @Required
-        @Setting("key")
         private Key key;
         @Required
-        @Setting
         private int amount;
         @Required
-        @Setting("name")
         private String name;
         @Required
         @Setting("animal_name")
@@ -94,7 +91,6 @@ public class AnimalType implements DataLoader.KeyBasedDataLoader<AnimalType.Anim
         @Setting("xp_claim")
         private int claimXp;
         @Required
-        @Setting("time")
         private Duration time;
         @Required
         @Setting("building_key")

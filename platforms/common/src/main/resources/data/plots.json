@@ -1,0 +1,62 @@
+[
+  {
+    "key": "none",
+    "price": {
+      "type": "coin",
+      "amount": 0
+    },
+    "level_needed": 0,
+    "xp_given": 0,
+    "time": "0s"
+  },
+  {
+    "key": "wheat",
+    "price": {
+      "type": "coin",
+      "amount": 0
+    },
+    "level_needed": 1,
+    "xp_given": 1,
+    "time": "2m"
+  },
+  {
+    "key": "corn",
+    "price": {
+      "type": "coin",
+      "amount": 1
+    },
+    "level_needed": 3,
+    "xp_given": 1,
+    "time": "5m"
+  },
+  {
+    "key": "carrot",
+    "price": {
+      "type": "coin",
+      "amount": 2
+    },
+    "level_needed": 4,
+    "xp_given": 2,
+    "time": "10m"
+  },
+  {
+    "key": "sugarcane",
+    "price": {
+      "type": "coin",
+      "amount": 3
+    },
+    "level_needed": 7,
+    "xp_given": 3,
+    "time": "20m"
+  },
+  {
+    "key": "cotton",
+    "price": {
+      "type": "coin",
+      "amount": 4
+    },
+    "level_needed": 9,
+    "xp_given": 4,
+    "time": "30m"
+  }
+]

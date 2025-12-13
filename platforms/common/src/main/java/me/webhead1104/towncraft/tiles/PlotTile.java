@@ -14,6 +14,7 @@ import me.webhead1104.towncraft.menus.context.SlotClickContext;
 import me.webhead1104.towncraft.menus.context.SlotRenderContext;
 import me.webhead1104.towncraft.utils.Msg;
 import me.webhead1104.towncraft.utils.Utils;
+import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Instant;
@@ -23,12 +24,12 @@ import java.util.Map;
 @Getter
 @Setter
 public class PlotTile extends BuildingTile implements TimeFinishable {
-    private PlotType plotType = PlotType.NONE;
+    private Key plotType = Towncraft.NONE_KEY;
     private @Nullable Instant instant;
     private boolean claimable = false;
 
     @Keep
-    public PlotTile(@NonNull PlotType plotType, @Nullable Instant instant, boolean claimable) {
+    public PlotTile(@NonNull Key plotType, @Nullable Instant instant, boolean claimable) {
         super(Towncraft.key("plot"));
         this.plotType = plotType;
         this.instant = instant;
@@ -42,18 +43,18 @@ public class PlotTile extends BuildingTile implements TimeFinishable {
 
     @Override
     public TowncraftItemStack render(SlotRenderContext context, WorldSection worldSection, int slot) {
-        if (plotType.equals(PlotType.NONE) || instant == null) {
-            return plotType.getMenuItem();
+        TowncraftItemStack itemStack = Towncraft.getDataLoader(PlotType.class).get(plotType).getMenuItem();
+        if (plotType.equals(Towncraft.NONE_KEY) || instant == null) {
+            return itemStack;
         }
 
-        TowncraftItemStack itemStack = plotType.getMenuItem();
         itemStack.setLore(Msg.format("<gold>Time: %s", Utils.format(Instant.now(), instant)));
         return itemStack;
     }
 
     @Override
     public boolean onClick(SlotClickContext context, WorldSection worldSection, int slot) {
-        if (plotType.equals(PlotType.NONE)) {
+        if (plotType.equals(Towncraft.NONE_KEY)) {
             Map<String, Object> map = new HashMap<>(Map.of(
                     "slot", slot,
                     "section", worldSection.getSection()
@@ -62,8 +63,8 @@ public class PlotTile extends BuildingTile implements TimeFinishable {
             return true;
         } else if (claimable) {
             this.claimable = false;
-            context.getUser().getBarn().addAmountToItem(plotType.getItem().key(), 1);
-            this.plotType = PlotType.NONE;
+            context.getUser().getBarn().addAmountToItem(Towncraft.getDataLoader(PlotType.class).get(plotType).getItem().key(), 1);
+            this.plotType = Towncraft.NONE_KEY;
         }
         return false;
     }

@@ -15,5 +15,6 @@ public class Page {
     public Page(Document document, String cssSelector) {
         this.document = document;
         tables = document.select(cssSelector).stream().map(Table::new).toList();
+        log.debug("Found {} tables", tables.size());
     }
 }
