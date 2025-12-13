@@ -1,27 +1,26 @@
 package me.webhead1104.tools.wikiScraper.model;
 
-import com.google.gson.annotations.SerializedName;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import me.webhead1104.tools.wikiScraper.scrapers.ItemScraper;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 @Slf4j
 @Getter
 @Setter
-@AllArgsConstructor
+@ConfigSerializable
 public class Item {
     private String key;
     private String material;
-    @SerializedName("level_needed")
+    @Setting("level_needed")
     private int levelNeeded;
-    @SerializedName("sell_price")
+    @Setting("sell_price")
     private int sellPrice;
 
-    public Item(String key, int levelNeeded, int sellPrice) {
-        this.key = key.replaceAll(" ", "_").replaceAll("_x3", "").replaceAll("'", "").toLowerCase();
-        this.material = ItemScraper.ITEM_NAMES.getOrDefault(this.key, "minecraft:player_head");
+    public Item(String key, String material, int levelNeeded, int sellPrice) {
+        this.key = key;
+        this.material = material;
         this.levelNeeded = levelNeeded;
         this.sellPrice = sellPrice;
     }

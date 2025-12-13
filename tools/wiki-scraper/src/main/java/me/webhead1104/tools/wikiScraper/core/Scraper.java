@@ -36,4 +36,12 @@ public interface Scraper<T> {
     default Document fetchPage(String url) throws IOException {
         return Jsoup.connect(url).userAgent(UA).get();
     }
+
+    /**
+     * Retrieve the results of another scraper that has already been executed
+     * (either as a declared dependency or because it was run earlier).
+     */
+    default <E> List<E> getFrom(Class<? extends Scraper<?>> scraperClass, Class<E> elementType) {
+        return ScraperRegistry.get(scraperClass, elementType);
+    }
 }

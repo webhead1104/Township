@@ -1,20 +1,22 @@
 package me.webhead1104.tools.wikiScraper.model;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.jsoup.select.Elements;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 @Setter
 @Getter
+@ConfigSerializable
 @AllArgsConstructor
 public class Level {
-    @SerializedName("xp_needed")
+    @Setting("xp_needed")
     private int xpNeeded;
-    @SerializedName("coins_given")
+    @Setting("coins_given")
     private int coinsGiven;
-    @SerializedName("cash_given")
+    @Setting("cash_given")
     private int cashGiven;
 
     public Level(Elements elements, int row) {

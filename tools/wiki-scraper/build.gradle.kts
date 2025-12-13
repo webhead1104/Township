@@ -14,11 +14,11 @@ repositories {
 
 dependencies {
     implementation("org.jsoup:jsoup:1.21.2")
-    implementation("com.google.code.gson:gson:2.13.2")
     implementation("io.github.classgraph:classgraph:4.8.184")
     implementation("org.slf4j:slf4j-api:2.1.0-alpha1")
     implementation("ch.qos.logback:logback-classic:1.5.22")
     implementation("info.picocli:picocli:4.7.7")
+    implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
     annotationProcessor("info.picocli:picocli-codegen:4.7.7")
 }
 

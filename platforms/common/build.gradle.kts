@@ -20,6 +20,7 @@ dependencies {
     api("org.mongodb:mongodb-driver-sync:5.6.2")
     api("com.zaxxer:HikariCP:7.0.2")
     api("io.github.revxrsal:lamp.common:4.0.0-rc.14")
+    api("org.jgrapht:jgrapht-core:1.5.2")
 
     testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")

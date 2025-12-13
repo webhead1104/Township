@@ -1,23 +1,25 @@
 package me.webhead1104.tools.wikiScraper.model;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 @Setter
 @Getter
+@ConfigSerializable
 @AllArgsConstructor
 public class Expansion {
-    @SerializedName("population_needed")
+    @Setting("population_needed")
     private int populationNeeded;
-    @SerializedName("coins_needed")
+    @Setting("coins_needed")
     private int coinsNeeded;
     private String time;
     private int xp;
-    @SerializedName("tools_needed")
+    @Setting("tools_needed")
     private Tools toolsNeeded;
 
     public Expansion(Elements row, int previousXp) {
@@ -35,6 +37,7 @@ public class Expansion {
 
     @Setter
     @Getter
+    @ConfigSerializable
     @AllArgsConstructor
     public static class Tools {
         private int axe;

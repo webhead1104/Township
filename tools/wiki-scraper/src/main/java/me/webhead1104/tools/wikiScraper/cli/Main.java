@@ -5,18 +5,17 @@ import ch.qos.logback.classic.Logger;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
 import lombok.extern.slf4j.Slf4j;
-import me.webhead1104.tools.wikiScraper.core.Outputs;
+import me.webhead1104.tools.wikiScraper.annotations.DependsOn;
 import me.webhead1104.tools.wikiScraper.core.Scraper;
+import me.webhead1104.tools.wikiScraper.core.ScraperRegistry;
+import me.webhead1104.tools.wikiScraper.core.Utils;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 @Slf4j
@@ -24,7 +23,8 @@ import java.util.concurrent.Callable;
         description = "Scrapes the official towncraft wiki for data.")
 public class Main implements Callable<Integer> {
     public static final int MAX_LEVEL = 10;
-    private static final Map<String, Scraper<?>> SCRAPERS = new LinkedHashMap<>();
+    private static final Map<String, Scraper<?>> SCRAPERS_BY_ID = new LinkedHashMap<>();
+    private static final Map<Class<? extends Scraper<?>>, Scraper<?>> SCRAPERS_BY_CLASS = new LinkedHashMap<>();
 
     static {
         List<Scraper<?>> scrapers = new ArrayList<>();
@@ -44,7 +44,10 @@ public class Main implements Callable<Integer> {
         }
         for (Scraper<?> scraper : scrapers) {
             String key = scraper.id();
-            SCRAPERS.put(key, scraper);
+            SCRAPERS_BY_ID.put(key, scraper);
+            @SuppressWarnings("unchecked")
+            Class<? extends Scraper<?>> clazz = (Class<? extends Scraper<?>>) scraper.getClass();
+            SCRAPERS_BY_CLASS.put(clazz, scraper);
         }
     }
 
@@ -63,20 +66,59 @@ public class Main implements Callable<Integer> {
         System.exit(new CommandLine(new Main()).execute(args));
     }
 
-    private static <T> void runScraper(Scraper<T> scraper, File outDir) {
+    private static <T> List<T> executeScraper(Scraper<T> scraper, File outDir) {
         try {
             long start = System.currentTimeMillis();
             log.info("Starting scraper: {}", scraper.id());
 
             List<T> data = scraper.scrape();
 
-            File jsonFile = Outputs.saveJson(data, outDir, scraper.outputPath().getPath());
+            File jsonFile = Utils.saveJson(data, outDir, scraper.outputPath().getPath());
             log.info("Saved to: {}", jsonFile.getAbsolutePath());
             log.info("Scraper '{}' completed successfully in {}ms", scraper.id(), System.currentTimeMillis() - start);
+            return data;
         } catch (Exception e) {
             log.error("Scraping failed for '{}': {}", scraper.id(), e.getMessage(), e);
             System.exit(1);
+            return List.of();
         }
+    }
+
+    private static void runWithDependencies(Scraper<?> scraper, File outDir,
+                                            Set<Class<? extends Scraper<?>>> loaded,
+                                            Set<Class<? extends Scraper<?>>> loading) {
+        @SuppressWarnings("unchecked")
+        Class<? extends Scraper<?>> clazz = (Class<? extends Scraper<?>>) scraper.getClass();
+        if (loaded.contains(clazz)) return;
+        if (loading.contains(clazz)) {
+            throw new IllegalStateException("Circular dependency detected for: " + clazz.getName());
+        }
+
+        loading.add(clazz);
+
+        DependsOn dependsOn = clazz.getAnnotation(DependsOn.class);
+        if (dependsOn != null) {
+            for (Class<? extends Scraper<?>> depClass : dependsOn.value()) {
+                Scraper<?> dependency = SCRAPERS_BY_CLASS.get(depClass);
+                if (dependency == null) {
+                    // try to find assignable
+                    dependency = SCRAPERS_BY_CLASS.entrySet().stream()
+                            .filter(e -> depClass.isAssignableFrom(e.getKey()))
+                            .map(Map.Entry::getValue)
+                            .findFirst()
+                            .orElseThrow(() -> new IllegalStateException(
+                                    "Dependency not found: " + depClass.getName() +
+                                            " required by " + clazz.getName()));
+                }
+                runWithDependencies(dependency, outDir, loaded, loading);
+            }
+        }
+
+        List<?> result = executeScraper(scraper, outDir);
+        ScraperRegistry.register(clazz, result);
+
+        loading.remove(clazz);
+        loaded.add(clazz);
     }
 
     @Override
@@ -88,15 +130,18 @@ public class Main implements Callable<Integer> {
         }
 
         if (list) {
-            log.info("Discovered scrapers ({}):", SCRAPERS.size());
-            SCRAPERS.forEach((id, scraper) -> log.info("- {} ({})", id, scraper.getClass().getSimpleName()));
+            log.info("Discovered scrapers ({}):", SCRAPERS_BY_ID.size());
+            SCRAPERS_BY_ID.forEach((id, scraper) -> log.info("- {} ({})", id, scraper.getClass().getSimpleName()));
             return 0;
         }
 
         if (runAll) {
             log.info("Running all scrapers...");
-            for (Scraper<?> scraper : SCRAPERS.values()) {
-                runScraper(scraper, outDir);
+            ScraperRegistry.clear();
+            Set<Class<? extends Scraper<?>>> loaded = new HashSet<>();
+            Set<Class<? extends Scraper<?>>> loading = new HashSet<>();
+            for (Scraper<?> scraper : SCRAPERS_BY_ID.values()) {
+                runWithDependencies(scraper, outDir, loaded, loading);
             }
             log.info("Finished running all scrapers.");
             return 0;
@@ -107,14 +152,15 @@ public class Main implements Callable<Integer> {
             return 1;
         }
 
-        Scraper<?> scraper = SCRAPERS.get(scraperId);
+        Scraper<?> scraper = SCRAPERS_BY_ID.get(scraperId);
         if (scraper == null) {
             log.error("Unknown scraper id: '{}'", scraperId);
             log.info("Use -l to list available scrapers.");
             return 1;
         }
 
-        runScraper(scraper, outDir);
+        ScraperRegistry.clear();
+        runWithDependencies(scraper, outDir, new HashSet<>(), new HashSet<>());
         return 0;
     }
 }
