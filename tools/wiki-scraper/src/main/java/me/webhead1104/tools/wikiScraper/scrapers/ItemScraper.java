@@ -72,11 +72,11 @@ public class ItemScraper implements Scraper<Item> {
     @Getter
     enum Type {
         UNKNOWN("", -1, -1, -1, -1, -1, i -> true),
-        FARM("Click on link to go down to Feed Mill", 4, 0, 3, 4, 9, i -> false, items -> {
+        FARM("Click on link to go down to Feed Mill", 4, 0, 3, 4, 9, i -> i > 10 && i < 15, items -> {
             feedMillItems.addAll(items.subList(11, items.size()));
             return items.subList(0, 11);
         }),
-        CROPS("Crops", 1, 0, 2, 5, 9, i -> i > 24),
+        CROPS("Crops", 2, 0, 2, 5, 9, i -> i > 24),
         FACTORY("Asian ~ .*", 3, 0, 3, 4, 9, i -> i > 373, items -> {
             items.addAll(0, feedMillItems);
             return items;
@@ -216,7 +216,7 @@ public class ItemScraper implements Scraper<Item> {
                 log.debug("Text = {} for type {} i = {}", row.getText(), name(), i);
                 if (noRun.test(i)) {
                     log.debug("NoRun = {}", i);
-                    return runAfterAll.apply(items);
+                    continue;
                 }
 
                 if (row.getValues().size() != neededSize) {

@@ -1,90 +1,38 @@
 [
   {
-    "key": "cowshed_1",
+    "key": "cowshed",
+    "amount": 3,
     "name": "Cowshed",
     "animal_name": "Cow",
     "material": "minecraft:cow_spawn_egg",
     "feed": "cow_feed",
     "product": "milk",
     "xp_claim": 3,
-    "time": "20S",
+    "time": "20m",
     "building_key": "cowshed"
   },
   {
-    "key": "cowshed_2",
-    "name": "Cowshed",
-    "animal_name": "Cow",
-    "material": "minecraft:cow_spawn_egg",
-    "feed": "cow_feed",
-    "product": "milk",
-    "xp_claim": 3,
-    "time": "20M",
-    "building_key": "cowshed"
-  },
-  {
-    "key": "cowshed_3",
-    "name": "Cowshed",
-    "animal_name": "Cow",
-    "material": "minecraft:cow_spawn_egg",
-    "feed": "cow_feed",
-    "product": "milk",
-    "xp_claim": 3,
-    "time": "20M",
-    "building_key": "cowshed"
-  },
-  {
-    "key": "chicken_coop_1",
+    "key": "chicken_coop",
+    "amount": 3,
     "name": "Chicken Coop",
     "animal_name": "Chicken",
     "material": "minecraft:chicken_spawn_egg",
     "feed": "chicken_feed",
     "product": "egg",
     "xp_claim": 4,
-    "time": "1H",
+    "time": "1h",
     "building_key": "chicken_coop"
   },
   {
-    "key": "chicken_coop_2",
-    "name": "Chicken Coop",
-    "animal_name": "Chicken",
-    "material": "minecraft:chicken_spawn_egg",
-    "feed": "chicken_feed",
-    "product": "egg",
-    "xp_claim": 4,
-    "time": "1H",
-    "building_key": "chicken_coop"
-  },
-  {
-    "key": "chicken_coop_3",
-    "name": "Chicken Coop",
-    "animal_name": "Chicken",
-    "material": "minecraft:chicken_spawn_egg",
-    "feed": "chicken_feed",
-    "product": "egg",
-    "xp_claim": 4,
-    "time": "1H",
-    "building_key": "chicken_coop"
-  },
-  {
-    "key": "sheep_farm_1",
+    "key": "sheep_farm",
+    "amount": 2,
     "name": "Sheep Farm",
     "animal_name": "Sheep",
     "material": "minecraft:sheep_spawn_egg",
     "feed": "sheep_feed",
     "product": "wool",
     "xp_claim": 6,
-    "time": "4H",
-    "building_key": "sheep_farm"
-  },
-  {
-    "key": "sheep_farm_2",
-    "name": "Sheep Farm",
-    "animal_name": "Sheep",
-    "material": "minecraft:sheep_spawn_egg",
-    "feed": "sheep_feed",
-    "product": "wool",
-    "xp_claim": 6,
-    "time": "4H",
+    "time": "4h",
     "building_key": "sheep_farm"
   }
 ]

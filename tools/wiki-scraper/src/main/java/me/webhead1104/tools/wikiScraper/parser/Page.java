@@ -3,7 +3,6 @@ package me.webhead1104.tools.wikiScraper.parser;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import java.util.List;
 
@@ -11,9 +10,10 @@ import java.util.List;
 @Getter
 public class Page {
     private final List<Table> tables;
+    private final Document document;
 
     public Page(Document document, String cssSelector) {
-        Elements elements = document.select(cssSelector);
-        tables = elements.stream().map(Table::new).toList();
+        this.document = document;
+        tables = document.select(cssSelector).stream().map(Table::new).toList();
     }
 }

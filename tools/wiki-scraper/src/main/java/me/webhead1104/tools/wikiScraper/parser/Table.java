@@ -11,8 +11,10 @@ import java.util.List;
 @Getter
 public class Table {
     private final List<Row> rows;
+    private final Element table;
 
     public Table(Element table) {
+        this.table = table;
         Elements rows = table.select("tr");
         log.debug("Found {} rows", rows.size());
         this.rows = rows.stream().map(Row::new).toList();
@@ -20,6 +22,10 @@ public class Table {
 
     public Row getFirstRow() {
         return rows.getFirst();
+    }
+
+    public Row getRow(int row) {
+        return rows.get(row);
     }
 
     public List<Row> getRowsBetween(int start, int end) {

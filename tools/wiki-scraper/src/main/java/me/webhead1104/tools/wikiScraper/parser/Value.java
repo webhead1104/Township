@@ -20,4 +20,8 @@ public record Value(String text) {
     public int getAsLevel() throws NumberFormatException {
         return Integer.parseInt(text.replaceAll("\\D+", ""));
     }
+
+    public int getAsXp() throws NumberFormatException {
+        return Integer.parseInt(text.replaceAll("\\D+", ""));
+    }
 }

@@ -1,7 +1,9 @@
 package me.webhead1104.towncraft.features.animals;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.With;
 import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.annotations.DependsOn;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
@@ -48,7 +50,12 @@ public class AnimalType implements DataLoader.KeyBasedDataLoader<AnimalType.Anim
             List<Animal> list = getListFromFile("/data/animals.json", Animal.class);
             for (Animal animal : list) {
                 animal.postProcess();
-                values.put(animal.key(), animal);
+                Key baseKey = animal.key();
+                for (int i = 1; i <= animal.getAmount(); i++) {
+                    Key key = Key.key(baseKey.asString() + "_" + i);
+                    Animal instance = animal.withKey(key);
+                    values.put(key, instance);
+                }
             }
             Towncraft.getLogger().info("Loaded {} animals!", values.size());
         } catch (Exception e) {
@@ -56,13 +63,18 @@ public class AnimalType implements DataLoader.KeyBasedDataLoader<AnimalType.Anim
         }
     }
 
+    @With
     @Getter
-    @ConfigSerializable
     @NoArgsConstructor
+    @ConfigSerializable
+    @AllArgsConstructor
     public static class Animal extends Keyed {
         @Required
         @Setting("key")
         private Key key;
+        @Required
+        @Setting
+        private int amount;
         @Required
         @Setting("name")
         private String name;
@@ -93,10 +105,10 @@ public class AnimalType implements DataLoader.KeyBasedDataLoader<AnimalType.Anim
         private transient ItemType.Item product;
 
         private void postProcess() {
+            this.menuTitle = Msg.format("<gold>%s", name);
             this.animalItemStack = Utils.getItemStack(animalName, animalMaterial);
             this.feed = Towncraft.getDataLoader(ItemType.class).get(feedKey);
             this.product = Towncraft.getDataLoader(ItemType.class).get(productKey);
-            this.menuTitle = Msg.format("<gold>%s", name);
         }
     }
 }
