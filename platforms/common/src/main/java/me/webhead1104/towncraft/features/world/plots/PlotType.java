@@ -84,14 +84,12 @@ public class PlotType implements DataLoader.KeyBasedDataLoader<PlotType.Plot> {
         private void postProcess() {
             this.item = Towncraft.getDataLoader(ItemType.class).get(this.key);
             if (key.equals(Towncraft.NONE_KEY)) {
-                Towncraft.getLogger().info("IS NONE {}", this.key);
                 TowncraftItemStack itemStack = TowncraftItemStackFactory.of(TowncraftMaterial.FARMLAND);
                 itemStack.setName(Msg.format("Empty Plot"));
                 itemStack.setLore(Msg.format("<green>You should plant something!"));
                 menuItem = itemStack;
                 return;
             }
-            Towncraft.getLogger().info("IS NOT NONE {}", this.key);
             this.menuItem = this.item.getItemStack();
         }
     }
