@@ -16,8 +16,7 @@ public class Row {
 
     public Row(Element element) {
         this.text = element.text();
-        this.values = new ArrayList<>(element.select("th").stream().map(Element::text).map(Value::new).toList());
-        this.values.addAll(element.select("td").stream().map(Element::text).map(Value::new).toList());
+        this.values = new ArrayList<>(element.select("th, td").stream().map(Element::text).map(Value::new).toList());
         this.element = element;
     }
 

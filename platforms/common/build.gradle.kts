@@ -15,7 +15,7 @@ dependencies {
     api("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
     api("io.github.classgraph:classgraph:4.8.184")
     api("net.kyori:adventure-text-minimessage:4.25.0")
-    api("org.apache.commons:commons-lang3:3.20.0")
+    api("org.apache.commons:commons-text:1.15.0")
     api("org.slf4j:slf4j-api:2.1.0-alpha1")
     api("org.mongodb:mongodb-driver-sync:5.6.2")
     api("com.zaxxer:HikariCP:7.0.2")

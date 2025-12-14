@@ -5,9 +5,12 @@ import lombok.NoArgsConstructor;
 import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
 import me.webhead1104.towncraft.dataLoaders.Keyed;
+import me.webhead1104.towncraft.utils.Msg;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
+import org.apache.commons.text.WordUtils;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
+import org.spongepowered.configurate.objectmapping.meta.PostProcess;
 import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
@@ -38,7 +41,7 @@ public class BuildMenuType implements DataLoader.KeyBasedDataLoader<BuildMenuTyp
     @Override
     public void load() {
         try {
-            List<BuildMenu> list = getListFromFile("/data/buildMenuTypes.json", BuildMenu.class);
+            List<BuildMenu> list = getListFromFile("/data/buildMenus.json", BuildMenu.class);
             for (BuildMenu buildMenu : list) {
                 values.put(buildMenu.key(), buildMenu);
             }
@@ -60,8 +63,11 @@ public class BuildMenuType implements DataLoader.KeyBasedDataLoader<BuildMenuTyp
         @Required
         @Setting("buildings")
         private List<Key> buildings;
-        @Required
-        @Setting("menu_title")
-        private Component menuTitle;
+        private transient Component menuTitle;
+
+        @PostProcess
+        private void postProcess() {
+            menuTitle = Msg.format(WordUtils.capitalizeFully(key.value().replaceAll("_", " ")));
+        }
     }
 }

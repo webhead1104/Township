@@ -1,7 +1,6 @@
 [
   {
     "key": "housing",
-    "menu_title": "Housing",
     "buildings": [
       "cottage",
       "cape_cod_cottage",
@@ -12,7 +11,6 @@
   },
   {
     "key": "community_buildings",
-    "menu_title": "Community Buildings",
     "buildings": [
       "grocery_store",
       "school",
@@ -24,7 +22,6 @@
   },
   {
     "key": "factories",
-    "menu_title": "Factories",
     "buildings": [
       "bakery",
       "feed_mill",
@@ -35,7 +32,6 @@
   },
   {
     "key": "farming",
-    "menu_title": "Farming",
     "buildings": [
       "plot",
       "cowshed",
@@ -45,7 +41,6 @@
   },
   {
     "key": "special",
-    "menu_title": "Special",
     "buildings": [
       "barn",
       "helicopter",
