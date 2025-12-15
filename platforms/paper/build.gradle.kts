@@ -148,3 +148,7 @@ tasks {
         relocate("com.google.gson", "me.webhead1104.towncraft.libs.configurate")
     }
 }
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+}

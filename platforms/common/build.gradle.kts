@@ -25,3 +25,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")
     testImplementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
 }
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+}

@@ -28,6 +28,7 @@ dependencies {
     implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
     implementation("me.devnatan:inventory-framework-api:3.7.1")
     implementation("me.devnatan:inventory-framework-platform:3.7.1")
+    implementation("org.apache.commons:commons-text:1.15.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")
@@ -65,7 +66,7 @@ val generateClassloader = tasks.register("generateClassloader") {
         outputDir.mkdirs()
         classloaderFile.createNewFile()
 
-        val depsString: String = deps.get().joinToString("\n                    ") {
+        val depsString: String = deps.get().joinToString("\n") {
             """
                 dependencyManager.dependency("${it.replace(".", "$")}".replace("$", "."));
             """
@@ -167,5 +168,6 @@ tasks {
         relocate("io.leangen.geantyref", "me.webhead1104.towncraft.libs.configurate")
         relocate("com.google.gson", "me.webhead1104.towncraft.libs.configurate")
         relocate("me.devnatan.inventoryframework", "me.webhead1104.towncraft.libs.inventoryframework")
+        relocate("org.apache.commons.commons-text", "me.webhead1104.towncraft.libs.apache")
     }
 }
