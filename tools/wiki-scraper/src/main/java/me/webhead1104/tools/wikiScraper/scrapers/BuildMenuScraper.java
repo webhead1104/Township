@@ -23,7 +23,7 @@ public class BuildMenuScraper implements Scraper<BuildMenu> {
 
     @Override
     public List<BuildMenu> scrape() throws IOException {
-        Map<String, BuildMenu> buildMenus = new HashMap<>();
+        Map<String, BuildMenu> buildMenus = new LinkedHashMap<>();
 
         for (BuildMenuTypes buildMenuType : BuildMenuTypes.values()) {
             log.debug("SCRAPING {} page = {}", buildMenuType, buildMenuType.getPage());
@@ -40,7 +40,7 @@ public class BuildMenuScraper implements Scraper<BuildMenu> {
             }
             buildings.removeIf(Objects::isNull);
             buildings.removeIf(building -> building.level() > Main.MAX_LEVEL);
-            buildMenus.put(buildMenuType.name().toLowerCase(), new BuildMenu(buildMenuType.name().toLowerCase(), buildings.stream().map(Wrapper::key).toList()));
+            buildMenus.put(buildMenuType.name().toLowerCase(), new BuildMenu(buildMenuType.name().toLowerCase(), new ArrayList<>(buildings.stream().map(Wrapper::key).toList())));
         }
         buildMenus.get("farming").getBuildings().addFirst("plot");
         return new ArrayList<>(buildMenus.values());
@@ -59,7 +59,6 @@ public class BuildMenuScraper implements Scraper<BuildMenu> {
         FARMING("Farming", ".wikitable", 1, 16, row ->
                 new Wrapper(row.getValue(0).getAsKey(), row.getValue(2).getAsLevel())),
         SPECIAL("Special_Buildings", "table.article-table:nth-child(1)", 2, -1, row -> {
-            log.debug(row.getText());
             if (row.getValues().size() != 7) {
                 return null;
             }
