@@ -44,6 +44,7 @@ public class User {
     private Trains trains;
     private PurchasedBuildings purchasedBuildings;
     private int expansionsPurchased;
+    private Helicopter helicopter;
 
     public User(UUID uuid) {
         long start = System.currentTimeMillis();
@@ -63,6 +64,7 @@ public class User {
         this.trains = new Trains();
         this.purchasedBuildings = new PurchasedBuildings();
         this.expansionsPurchased = 0;
+        this.helicopter = new Helicopter();
         Towncraft.getLogger().info("Finished creating a user in {} mills!", System.currentTimeMillis() - start);
     }
 

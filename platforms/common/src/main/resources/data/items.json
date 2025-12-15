@@ -3,192 +3,224 @@
     "key": "none",
     "material": "minecraft:barrier",
     "level_needed": -1,
-    "sell_price": -1
+    "sell_price": -1,
+    "base_weight": -1
   },
   {
     "key": "milk",
     "material": "minecraft:milk_bucket",
     "level_needed": 1,
-    "sell_price": 7
+    "sell_price": 7,
+    "base_weight": 55
   },
   {
     "key": "egg",
     "material": "minecraft:egg",
     "level_needed": 5,
-    "sell_price": 10
+    "sell_price": 10,
+    "base_weight": 40
   },
   {
     "key": "wool",
     "material": "minecraft:white_wool",
     "level_needed": 10,
-    "sell_price": 15
+    "sell_price": 15,
+    "base_weight": 40
   },
   {
     "key": "wheat",
     "material": "minecraft:wheat",
     "level_needed": 1,
-    "sell_price": 1
+    "sell_price": 1,
+    "base_weight": 55
   },
   {
     "key": "corn",
     "material": "minecraft:player_head",
     "level_needed": 3,
-    "sell_price": 3
+    "sell_price": 3,
+    "base_weight": 55
   },
   {
     "key": "carrot",
     "material": "minecraft:carrot",
     "level_needed": 4,
-    "sell_price": 5
+    "sell_price": 5,
+    "base_weight": 45
   },
   {
     "key": "sugarcane",
     "material": "minecraft:sugar_cane",
     "level_needed": 7,
-    "sell_price": 7
+    "sell_price": 7,
+    "base_weight": 45
   },
   {
     "key": "cotton",
     "material": "minecraft:player_head",
     "level_needed": 9,
-    "sell_price": 9
+    "sell_price": 9,
+    "base_weight": 45
   },
   {
     "key": "cow_feed",
     "material": "minecraft:player_head",
     "level_needed": 3,
-    "sell_price": 3
+    "sell_price": 3,
+    "base_weight": 55
   },
   {
     "key": "chicken_feed",
     "material": "minecraft:player_head",
     "level_needed": 5,
-    "sell_price": 4
+    "sell_price": 4,
+    "base_weight": 45
   },
   {
     "key": "sheep_feed",
     "material": "minecraft:player_head",
     "level_needed": 10,
-    "sell_price": 5
+    "sell_price": 5,
+    "base_weight": 45
   },
   {
     "key": "bread",
     "material": "minecraft:bread",
     "level_needed": 2,
-    "sell_price": 5
+    "sell_price": 5,
+    "base_weight": 55
   },
   {
     "key": "cookies",
     "material": "minecraft:cookie",
     "level_needed": 5,
-    "sell_price": 44
+    "sell_price": 44,
+    "base_weight": 40
   },
   {
     "key": "bagel",
     "material": "minecraft:player_head",
     "level_needed": 8,
-    "sell_price": 55
+    "sell_price": 55,
+    "base_weight": 35
   },
   {
     "key": "cream",
     "material": "minecraft:player_head",
     "level_needed": 4,
-    "sell_price": 12
+    "sell_price": 12,
+    "base_weight": 40
   },
   {
     "key": "cheese",
     "material": "minecraft:player_head",
     "level_needed": 6,
-    "sell_price": 25
+    "sell_price": 25,
+    "base_weight": 40
   },
   {
     "key": "sugar",
     "material": "minecraft:sugar",
     "level_needed": 7,
-    "sell_price": 14
+    "sell_price": 14,
+    "base_weight": 40
   },
   {
     "key": "cotton_fabric",
     "material": "minecraft:player_head",
     "level_needed": 9,
-    "sell_price": 37
+    "sell_price": 37,
+    "base_weight": 40
   },
   {
     "key": "yarn",
     "material": "minecraft:string",
     "level_needed": 10,
-    "sell_price": 61
+    "sell_price": 61,
+    "base_weight": 35
   },
   {
     "key": "brick",
     "material": "minecraft:brick",
     "level_needed": 0,
-    "sell_price": 40
+    "sell_price": 40,
+    "base_weight": 8
   },
   {
     "key": "glass",
     "material": "minecraft:glass",
     "level_needed": 0,
-    "sell_price": 40
+    "sell_price": 40,
+    "base_weight": 8
   },
   {
     "key": "slab",
     "material": "minecraft:stone_slab",
     "level_needed": 0,
-    "sell_price": 40
+    "sell_price": 40,
+    "base_weight": 8
   },
   {
     "key": "nail",
     "material": "minecraft:player_head",
     "level_needed": 0,
-    "sell_price": 100
+    "sell_price": 100,
+    "base_weight": 8
   },
   {
     "key": "hammer",
     "material": "minecraft:player_head",
     "level_needed": 0,
-    "sell_price": 100
+    "sell_price": 100,
+    "base_weight": 8
   },
   {
     "key": "paint",
     "material": "minecraft:player_head",
     "level_needed": 0,
-    "sell_price": 100
+    "sell_price": 100,
+    "base_weight": 8
   },
   {
     "key": "shovel",
     "material": "minecraft:stone_shovel",
     "level_needed": 0,
-    "sell_price": 150
+    "sell_price": 150,
+    "base_weight": 8
   },
   {
     "key": "axe",
     "material": "minecraft:stone_axe",
     "level_needed": 0,
-    "sell_price": 200
+    "sell_price": 200,
+    "base_weight": 8
   },
   {
     "key": "saw",
     "material": "minecraft:player_head",
     "level_needed": 0,
-    "sell_price": 300
+    "sell_price": 300,
+    "base_weight": 8
   },
   {
     "key": "electric_saw",
     "material": "minecraft:player_head",
     "level_needed": 0,
-    "sell_price": 200
+    "sell_price": 200,
+    "base_weight": 8
   },
   {
     "key": "drill",
     "material": "minecraft:player_head",
     "level_needed": 0,
-    "sell_price": 200
+    "sell_price": 200,
+    "base_weight": 8
   },
   {
     "key": "jackhammer",
     "material": "minecraft:player_head",
     "level_needed": 0,
-    "sell_price": 200
+    "sell_price": 200,
+    "base_weight": 8
   }
 ]

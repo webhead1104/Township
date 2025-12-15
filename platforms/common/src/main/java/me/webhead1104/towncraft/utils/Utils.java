@@ -1,6 +1,7 @@
 package me.webhead1104.towncraft.utils;
 
 import lombok.experimental.UtilityClass;
+import me.webhead1104.towncraft.dataLoaders.ItemType;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.items.TowncraftMaterial;
 import net.kyori.adventure.text.Component;
@@ -8,9 +9,14 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @UtilityClass
 public class Utils {
+    private static final Random RANDOM = new Random();
 
     public static String thing2(String string) {
         return StringUtils.capitalize(string.replaceAll("_", " ").toLowerCase());
@@ -58,5 +64,60 @@ public class Utils {
         resourceName = resourceName.formatted(args);
         String color = current >= required ? "<green>" : "<red>";
         return Msg.format("%s<white>: %s%d/%d", resourceName, color, current, required);
+    }
+
+    public ItemType.Item selectWeightedItem(
+            List<ItemType.Item> availableItems,
+            List<ItemType.Item> alreadySelected,
+            int playerLevel) {
+
+        List<ItemType.Item> pool = availableItems.stream()
+                .filter(item -> !alreadySelected.contains(item))
+                .toList();
+
+        if (pool.isEmpty()) return null;
+
+        Map<ItemType.Item, Integer> adjustedWeights = new HashMap<>();
+        int totalWeight = 0;
+
+        for (ItemType.Item item : pool) {
+            int adjustedWeight = calculateAdjustedWeight(
+                    item.getBaseWeight(),
+                    item.getLevelNeeded(),
+                    playerLevel
+            );
+            adjustedWeights.put(item, adjustedWeight);
+            totalWeight += adjustedWeight;
+        }
+
+        if (totalWeight <= 0) return pool.getFirst();
+
+        int randomValue = RANDOM.nextInt(totalWeight);
+        int cumulative = 0;
+
+        for (ItemType.Item item : pool) {
+            cumulative += adjustedWeights.get(item);
+            if (randomValue < cumulative) {
+                return item;
+            }
+        }
+
+        return pool.getFirst();
+    }
+
+    public int calculateAdjustedWeight(int baseWeight, int itemUnlockLevel, int playerLevel) {
+        int levelDiff = playerLevel - itemUnlockLevel;
+
+        if (levelDiff >= 0 && levelDiff <= 5) {
+            return (int) (baseWeight * 1.5);  // Recently unlocked: 50% MORE common
+        } else if (levelDiff > 5 && levelDiff <= 10) {
+            return baseWeight;  // Normal
+        } else if (levelDiff > 10 && levelDiff <= 20) {
+            return (int) (baseWeight * 0.75);  // 25% less common
+        } else if (levelDiff > 20) {
+            return (int) (baseWeight * 0.5);  // 50% less common
+        } else {
+            return 0;  // Not unlocked yet
+        }
     }
 }

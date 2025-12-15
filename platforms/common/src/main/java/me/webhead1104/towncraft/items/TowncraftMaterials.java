@@ -31,4 +31,7 @@ interface TowncraftMaterials {
     TowncraftMaterial OAK_PLANKS = TowncraftMaterial.of(key("oak_planks"));
     TowncraftMaterial PODZOL = TowncraftMaterial.of(key("podzol"));
     TowncraftMaterial DIRT = TowncraftMaterial.of(key("dirt"));
+    TowncraftMaterial GREEN_STAINED_GLASS_PANE = TowncraftMaterial.of(key("green_stained_glass_pane"));
+    TowncraftMaterial RED_STAINED_GLASS_PANE = TowncraftMaterial.of(key("red_stained_glass_pane"));
+    TowncraftMaterial GRAY_STAINED_GLASS_PANE = TowncraftMaterial.of(key("gray_stained_glass_pane"));
 }

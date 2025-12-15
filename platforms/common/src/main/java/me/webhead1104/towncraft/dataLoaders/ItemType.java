@@ -1,5 +1,6 @@
 package me.webhead1104.towncraft.dataLoaders;
 
+import com.google.common.collect.ImmutableList;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.towncraft.Towncraft;
@@ -16,7 +17,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static me.webhead1104.towncraft.Towncraft.key;
+
 public class ItemType implements DataLoader.KeyBasedDataLoader<ItemType.Item> {
+    public static final List<Key> CONSTRUCTION_MATERIALS = ImmutableList.of(
+            key("brick"), key("glass"), key("slab"),
+            key("nail"), key("hammer"), key("paint"),
+            key("shovel"), key("axe"), key("saw"),
+            key("electric_saw"), key("drill"), key("jackhammer")
+    );
     private final Map<Key, Item> values = new HashMap<>();
 
     public Item get(Key key) {
@@ -64,6 +73,9 @@ public class ItemType implements DataLoader.KeyBasedDataLoader<ItemType.Item> {
         @Required
         @Setting("level_needed")
         private int levelNeeded;
+        @Required
+        @Setting("base_weight")
+        private int baseWeight;
         private transient TowncraftItemStack itemStack;
         private transient String name;
 

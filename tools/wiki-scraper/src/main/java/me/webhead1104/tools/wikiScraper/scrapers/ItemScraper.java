@@ -159,14 +159,16 @@ public class ItemScraper implements Scraper<Item> {
                             row.getValue(0).getAsKey(),
                             ItemScraper.ITEM_NAMES.getOrDefault(row.getValue(0).getAsKey(), "minecraft:player_head"),
                             0,
-                            row.getValue(2).getAsCoins()
+                            row.getValue(2).getAsCoins(),
+                            8    // Very rare (special construction items)
                     ));
 
                     otherItems.add(new Item(
                             row.getValue(4).getAsKey(),
                             ItemScraper.ITEM_NAMES.getOrDefault(row.getValue(4).getAsKey(), "minecraft:player_head"),
                             0,
-                            row.getValue(6).getAsCoins()
+                            row.getValue(6).getAsCoins(),
+                            8    // Very rare (special construction items)
                     ));
                 }
                 return items;
