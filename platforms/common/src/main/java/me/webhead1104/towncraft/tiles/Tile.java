@@ -11,7 +11,9 @@ import org.jetbrains.annotations.ApiStatus;
 public abstract class Tile {
     public abstract TowncraftItemStack render(SlotRenderContext context, WorldSection worldSection, int slot);
 
-    public abstract boolean onClick(SlotClickContext context, WorldSection worldSection, int slot);
+    public boolean onClick(SlotClickContext context, WorldSection worldSection, int slot) {
+        return false;
+    }
 
     @ApiStatus.OverrideOnly
     public void onUpdate(SlotContext slotContext, WorldSection worldSection, int slot) {

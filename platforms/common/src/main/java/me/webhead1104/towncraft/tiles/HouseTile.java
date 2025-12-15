@@ -6,7 +6,6 @@ import me.webhead1104.towncraft.data.objects.WorldSection;
 import me.webhead1104.towncraft.features.world.build.HouseType;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.items.TowncraftMaterial;
-import me.webhead1104.towncraft.menus.context.SlotClickContext;
 import me.webhead1104.towncraft.menus.context.SlotRenderContext;
 import me.webhead1104.towncraft.utils.Msg;
 
@@ -27,8 +26,4 @@ public class HouseTile extends BuildingTile {
         return itemStack;
     }
 
-    @Override
-    public boolean onClick(SlotClickContext context, WorldSection worldSection, int slot) {
-        return false;
-    }
 }

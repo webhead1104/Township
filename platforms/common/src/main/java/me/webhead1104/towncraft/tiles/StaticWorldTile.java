@@ -5,7 +5,6 @@ import lombok.Getter;
 import me.webhead1104.towncraft.data.objects.WorldSection;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.items.TowncraftMaterial;
-import me.webhead1104.towncraft.menus.context.SlotClickContext;
 import me.webhead1104.towncraft.menus.context.SlotRenderContext;
 import net.kyori.adventure.text.Component;
 
@@ -23,11 +22,6 @@ public class StaticWorldTile extends Tile {
         itemStack.setName(Component.empty());
         itemStack.hideTooltip(true);
         return itemStack;
-    }
-
-    @Override
-    public boolean onClick(SlotClickContext context, WorldSection worldSection, int slot) {
-        return false;
     }
 
     @Getter
