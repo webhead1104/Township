@@ -78,14 +78,14 @@ public class HelicopterView extends TowncraftView {
 
                     if (order.canFulFIll(barn)) {
                         itemStack = TowncraftItemStack.of(TowncraftMaterial.GREEN_STAINED_GLASS_PANE);
-                        itemStack.setName(Msg.format("Order Ready"));
+                        itemStack.setName(Msg.format("<green>Order Ready"));
                     } else {
                         itemStack = TowncraftItemStack.of(TowncraftMaterial.RED_STAINED_GLASS_PANE);
-                        itemStack.setName(Msg.format("Can't Fulfill Order"));
+                        itemStack.setName(Msg.format("<red>Can't Fulfill Order"));
                     }
 
                     for (ItemAndAmount item : order.getItems()) {
-                        lore.add(Utils.addResourceLine(item.getItem().getName(), barn.getItem(item.getItemKey()), item.getAmount()));
+                        lore.add(Utils.addResourceLine("<white>" + item.getItem().getName(), barn.getItem(item.getItemKey()), item.getAmount()));
                     }
 
                     lore.add(Component.empty());
