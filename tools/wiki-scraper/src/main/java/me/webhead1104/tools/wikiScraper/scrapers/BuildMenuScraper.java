@@ -43,6 +43,7 @@ public class BuildMenuScraper implements Scraper<BuildMenu> {
             buildMenus.put(buildMenuType.name().toLowerCase(), new BuildMenu(buildMenuType.name().toLowerCase(), new ArrayList<>(buildings.stream().map(Wrapper::key).toList())));
         }
         buildMenus.get("farming").getBuildings().addFirst("plot");
+        buildMenus.get("special").getBuildings().remove("event_center"); //todo Towncraft#108
         return new ArrayList<>(buildMenus.values());
     }
 

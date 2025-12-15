@@ -12,7 +12,8 @@ public enum HouseType {
     CAPE_COD_COTTAGE("Cape Cod Cottage", Towncraft.key("cape_cod_cottage")),
     CHALET_BUNGALOW("Chalet Bungalow", Towncraft.key("chalet_bungalow")),
     CONCH_HOUSE("Conch House", Towncraft.key("conch_house")),
-    BUNGALOW("Bungalow", Towncraft.key("bungalow"));
+    BUNGALOW("Bungalow", Towncraft.key("bungalow")),
+    FARMHOUSE("Farmhouse", Towncraft.key("farmhouse"));
     private final String name;
     private final Key buildingType;
 }

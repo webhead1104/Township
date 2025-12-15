@@ -1,0 +1,14 @@
+[
+  {
+    "key": "farmhouse",
+    "level_needed": 10,
+    "population_increase": 30,
+    "size": "1x1",
+    "tile": {
+      "class": "HouseTile",
+      "properties": {
+        "houseType": "FARMHOUSE"
+      }
+    }
+  }
+]
