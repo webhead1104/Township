@@ -13,7 +13,8 @@ public enum CommunityBuildingType {
     HOSPITAL("Hospital", Towncraft.key("hospital")),
     POLICE_STATION("Police Station", Towncraft.key("police_station")),
     FIRE_STATION("Fire Station", Towncraft.key("fire_station")),
-    POST_OFFICE("Post Office", Towncraft.key("post_office"));
+    POST_OFFICE("Post Office", Towncraft.key("post_office")),
+    LAUNDROMAT("Laundromat", Towncraft.key("laundromat"));
     private final String name;
     private final Key buildingType;
 }
