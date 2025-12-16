@@ -1,15 +1,16 @@
 package me.webhead1104.towncraft.features.factories;
 
 import com.google.common.base.Stopwatch;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.With;
 import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.annotations.DependsOn;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
 import me.webhead1104.towncraft.dataLoaders.ItemType;
 import me.webhead1104.towncraft.dataLoaders.Keyed;
 import me.webhead1104.towncraft.utils.Msg;
-import me.webhead1104.towncraft.utils.Utils;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -27,9 +28,18 @@ public class FactoryType implements DataLoader.KeyBasedDataLoader<FactoryType.Fa
     public void load() {
         Stopwatch stopwatch = Stopwatch.createStarted();
         try {
-            List<Factory> factories = new ArrayList<>(getListFromMultipleFiles("/data/factories", Factory.class));
+            List<Factory> factories = new ArrayList<>(getListFromFile("/data/factories.json", Factory.class));
             for (Factory factory : factories) {
-                values.put(factory.key(), factory);
+                if (factory.getAmount() == -1) {
+                    values.put(factory.getKey(), factory);
+                    continue;
+                }
+                Key baseKey = factory.key();
+                for (int i = 1; i <= factory.getAmount(); i++) {
+                    Key key = Key.key(baseKey.asString() + "_" + i);
+                    Factory instance = factory.withKey(key);
+                    values.put(key, instance);
+                }
             }
             Towncraft.getLogger().info("Loaded {} factories in {} ms!", values.size(), stopwatch.stop().elapsed().toMillis());
 
@@ -56,32 +66,28 @@ public class FactoryType implements DataLoader.KeyBasedDataLoader<FactoryType.Fa
         return values.values();
     }
 
+    @With
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
+    @AllArgsConstructor
     public static class Factory extends Keyed {
         @Required
-        @Setting("key")
         private Key key;
-        @Setting("name")
+        @Required
+        private int amount = -1;
+        @Required
         private String name;
         @Required
-        @Setting("recipes")
         private List<RecipeType.Recipe> recipes;
-        @Setting("menu_title")
-        private Component menuTitle;
         @Required
         @Setting("building_key")
         private Key buildingKey;
+        private transient Component menuTitle;
 
         @PostProcess
         private void postProcess() {
-            if (name == null) {
-                name = Utils.thing2(key.value());
-            }
-            if (menuTitle == null) {
-                menuTitle = Msg.format("<gold>%s", name);
-            }
+            menuTitle = Msg.format("<gold>%s", name);
         }
     }
 }

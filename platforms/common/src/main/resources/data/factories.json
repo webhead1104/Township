@@ -1,0 +1,158 @@
+[
+  {
+    "key": "bakery",
+    "amount": -1,
+    "name": "Bakery",
+    "building_key": "bakery",
+    "recipes": [
+      {
+        "key": "bread",
+        "result_amount": 1,
+        "ingredients": {
+          "wheat": 2
+        },
+        "time": "5m",
+        "level_needed": 2,
+        "xp_given": 2
+      },
+      {
+        "key": "cookies",
+        "result_amount": 1,
+        "ingredients": {
+          "wheat": 2,
+          "egg": 2
+        },
+        "time": "15m",
+        "level_needed": 5,
+        "xp_given": 19
+      },
+      {
+        "key": "bagel",
+        "result_amount": 1,
+        "ingredients": {
+          "wheat": 2,
+          "sugar": 1,
+          "egg": 3
+        },
+        "time": "30m",
+        "level_needed": 8,
+        "xp_given": 24
+      }
+    ]
+  },
+  {
+    "key": "feed_mill",
+    "amount": 3,
+    "name": "Feed Mill",
+    "building_key": "feed_mill",
+    "recipes": [
+      {
+        "key": "cow_feed",
+        "result_amount": 3,
+        "ingredients": {
+          "wheat": 2,
+          "corn": 1
+        },
+        "time": "5m",
+        "level_needed": 3,
+        "xp_given": 1
+      },
+      {
+        "key": "chicken_feed",
+        "result_amount": 3,
+        "ingredients": {
+          "wheat": 2,
+          "carrot": 1
+        },
+        "time": "10m",
+        "level_needed": 5,
+        "xp_given": 2
+      },
+      {
+        "key": "sheep_feed",
+        "result_amount": 3,
+        "ingredients": {
+          "corn": 2,
+          "carrot": 2
+        },
+        "time": "20m",
+        "level_needed": 10,
+        "xp_given": 2
+      }
+    ]
+  },
+  {
+    "key": "dairy_factory",
+    "amount": -1,
+    "name": "Dairy Factory",
+    "building_key": "dairy_factory",
+    "recipes": [
+      {
+        "key": "cream",
+        "result_amount": 1,
+        "ingredients": {
+          "milk": 1
+        },
+        "time": "15m",
+        "level_needed": 4,
+        "xp_given": 5
+      },
+      {
+        "key": "cheese",
+        "result_amount": 1,
+        "ingredients": {
+          "milk": 2
+        },
+        "time": "30m",
+        "level_needed": 6,
+        "xp_given": 11
+      }
+    ]
+  },
+  {
+    "key": "sugar_factory",
+    "amount": -1,
+    "name": "Sugar Factory",
+    "building_key": "sugar_factory",
+    "recipes": [
+      {
+        "key": "sugar",
+        "result_amount": 1,
+        "ingredients": {
+          "sugarcane": 1
+        },
+        "time": "20m",
+        "level_needed": 7,
+        "xp_given": 6
+      }
+    ]
+  },
+  {
+    "key": "textile_factory",
+    "amount": -1,
+    "name": "Textile Factory",
+    "building_key": "textile_factory",
+    "recipes": [
+      {
+        "key": "cotton_fabric",
+        "result_amount": 1,
+        "ingredients": {
+          "cotton": 2
+        },
+        "time": "30m",
+        "level_needed": 9,
+        "xp_given": 16
+      },
+      {
+        "key": "yarn",
+        "result_amount": 1,
+        "ingredients": {
+          "wool": 2
+        },
+        "time": "40m",
+        "level_needed": 10,
+        "xp_given": 26
+      }
+    ]
+  }
+]

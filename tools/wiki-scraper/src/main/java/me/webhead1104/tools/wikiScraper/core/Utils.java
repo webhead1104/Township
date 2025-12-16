@@ -6,6 +6,7 @@ import org.spongepowered.configurate.BasicConfigurationNode;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
 
 import java.io.*;
+import java.text.Normalizer;
 import java.util.List;
 
 @UtilityClass
@@ -39,5 +40,46 @@ public final class Utils {
         T data = LOADER.build().load().get(elementType);
         stream.close();
         return data;
+    }
+
+    public static String normalizeForKey(String itemName) {
+        String normalized = itemName.toLowerCase();
+
+        // Remove accents/diacritics (é -> e, ê -> e, etc.)
+        normalized = Normalizer.normalize(normalized, Normalizer.Form.NFD);
+        normalized = normalized.replaceAll("\\p{M}", ""); // Remove diacritical marks
+
+        normalized = normalized.replaceAll(" ", "_");
+        normalized = normalized.replaceAll("-", "_");
+        normalized = normalized.replaceAll("'", "");
+        normalized = normalized.replaceAll("_x3", "");
+
+        normalized = fix(normalized);
+        return normalized;
+    }
+
+    private String fix(String string) {
+        return switch (string) {
+            case "carrots" -> "carrot";
+            case "cookie" -> "cookies";
+            case "strawberries" -> "strawberry";
+            case "honeycomb", "honey" -> "honeycombs";
+            case "grape" -> "grapes";
+            case "olive" -> "olives";
+            case "eggs" -> "egg";
+            case "coconuts" -> "coconut";
+            case "colorful_feathers" -> "colorful_feather";
+            case "roses" -> "rose";
+            case "mushrooms" -> "mushroom";
+            case "peanut_plants" -> "peanut_plant";
+            case "corn_chip" -> "corn_chips";
+            case "tea_plants" -> "tea_plant";
+            case "tea_bag" -> "tea_bags";
+            case "bronze_ores", "bronze_ore" -> "copper_ore";
+            case "silver_ores" -> "silver_ore";
+            case "gold_ores" -> "gold_ore";
+            case "platinum_ores" -> "platinum_ore";
+            default -> string;
+        };
     }
 }

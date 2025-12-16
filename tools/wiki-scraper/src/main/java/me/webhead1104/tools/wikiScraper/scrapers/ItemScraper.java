@@ -11,13 +11,11 @@ import me.webhead1104.tools.wikiScraper.model.Item;
 import me.webhead1104.tools.wikiScraper.parser.Page;
 import me.webhead1104.tools.wikiScraper.parser.Row;
 import me.webhead1104.tools.wikiScraper.parser.Table;
+import org.jsoup.nodes.Element;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
@@ -29,7 +27,7 @@ public class ItemScraper implements Scraper<Item> {
     private static final TypeToken<Map<String, String>> TOKEN = new TypeToken<>() {
     };
     private static final String BASE_URL = "https://township.fandom.com/wiki/Goods";
-    private static final List<Item> feedMillItems = new ArrayList<>();
+    private static final List<Item> FEED_MILL_ITEMS = new ArrayList<>();
 
     static {
         try {
@@ -72,15 +70,105 @@ public class ItemScraper implements Scraper<Item> {
     @Getter
     enum Type {
         UNKNOWN("", -1, -1, -1, -1, -1, i -> true),
-        FARM("Click on link to go down to Feed Mill", 4, 0, 3, 4, 9, i -> i > 10 && i < 15, items -> {
-            feedMillItems.addAll(items.subList(11, items.size()));
-            return items.subList(0, 11);
-        }),
+        FARM("Click on link to go down to Feed Mill", 4, 0, 3, 4, 9, i -> i > 10 && i < 15) {
+            private String name;
+
+            public List<Item> parse(List<Row> rows) {
+                rows = rows.subList(4, rows.size());
+                List<Item> items = new ArrayList<>();
+                for (int i = 0; i < rows.size(); i++) {
+                    Row row = rows.get(i);
+                    if (i == 12) {
+                        name = row.getText();
+                        continue;
+                    }
+                    if (i > 10 && i < 15) {
+                        continue;
+                    }
+
+                    if (row.getValues().size() != 9) {
+                        continue;
+                    }
+
+                    String key = row.getValue(0).getAsKey();
+                    String material = ItemScraper.ITEM_NAMES.getOrDefault(key, "minecraft:player_head");
+                    int level = row.getValue(3).getAsLevel();
+                    int coins = row.getValue(4).getAsCoins();
+                    if (i > 14) {
+                        int xpGiven = row.getValue(5).getAsXp();
+                        FEED_MILL_ITEMS.add(new Item(
+                                key,
+                                material,
+                                level,
+                                coins,
+                                new Item.FactoryData(
+                                        name,
+                                        row.getValue(0).text(),
+                                        parseIngredients(row),
+                                        xpGiven,
+                                        row.getValue(6).text()
+                                )
+                        ));
+                        continue;
+                    }
+                    items.add(new Item(
+                            key,
+                            material,
+                            level,
+                            coins
+                    ));
+                }
+                return items.subList(0, 11);
+            }
+        },
         CROPS("Crops", 2, 0, 2, 5, 9, i -> i > 24),
         FACTORY("Asian ~ .*", 3, 0, 3, 4, 9, i -> i > 373, items -> {
-            items.addAll(0, feedMillItems);
+            items.addAll(0, FEED_MILL_ITEMS);
             return items;
-        }),
+        }) {
+            private String lastName;
+
+            public List<Item> parse(List<Row> rows) {
+                rows = rows.subList(1, rows.size());
+                List<Item> items = new ArrayList<>(FEED_MILL_ITEMS);
+                for (int i = 0; i < rows.size(); i++) {
+                    Row row = rows.get(i);
+                    if (i > 373) {
+                        continue;
+                    }
+
+                    if (row.getValues().size() == 1) {
+                        lastName = row.getText();
+                        continue;
+                    }
+
+                    if (row.getValues().size() != 9) {
+                        continue;
+                    }
+
+                    String key = row.getValue(0).getAsKey();
+                    String material = ItemScraper.ITEM_NAMES.getOrDefault(key, "minecraft:player_head");
+                    int level = row.getValue(3).getAsLevel();
+                    int coins = row.getValue(4).getAsCoins();
+                    int xpGiven = row.getValue(5).getAsXp();
+                    items.add(new Item(
+                            key,
+                            material,
+                            level,
+                            coins,
+                            new Item.FactoryData(
+                                    lastName,
+                                    row.getValue(0).text(),
+                                    parseIngredients(row),
+                                    xpGiven,
+                                    row.getValue(6).text()
+                            )
+                    ));
+                }
+
+                return items;
+            }
+        },
         ISLAND("Islands and Ships", -1, -1, -1, -1, -1, i -> false) {
             private int lastLevel = 0;
 
@@ -208,6 +296,26 @@ public class ItemScraper implements Scraper<Item> {
             }
 
             return UNKNOWN;
+        }
+
+        public final Map<String, Integer> parseIngredients(Row row) {
+            Map<String, Integer> ingredients = new LinkedHashMap<>();
+            String html = row.getElement().select("th, td").stream().map(Element::wholeText).toList().get(2);
+            for (String ingredient : html.split("\n")) {
+                ingredient = ingredient.trim();
+                if (ingredient.isEmpty()) continue; // Skip empty lines
+
+                String[] values = ingredient.split(" ", 2); // Split into at most 2 parts
+
+                if (values.length == 2) {
+                    String quantityStr = values[0];
+                    String name = values[1];
+                    ingredients.put(Utils.normalizeForKey(name), Integer.valueOf(quantityStr));
+                } else {
+                    log.warn("Could not parse ingredient: {}", ingredient);
+                }
+            }
+            return ingredients;
         }
 
         public List<Item> parse(List<Row> rows) {

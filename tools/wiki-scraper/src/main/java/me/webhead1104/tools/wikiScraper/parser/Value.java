@@ -1,9 +1,11 @@
 package me.webhead1104.tools.wikiScraper.parser;
 
+import me.webhead1104.tools.wikiScraper.core.Utils;
+
 public record Value(String text) {
 
     public String getAsKey() {
-        return text.replaceAll(" ", "_").replaceAll("_x3", "").replaceAll("'", "").replaceAll("-", "_").toLowerCase();
+        return Utils.normalizeForKey(text);
     }
 
     public int getAsInt() throws NumberFormatException {

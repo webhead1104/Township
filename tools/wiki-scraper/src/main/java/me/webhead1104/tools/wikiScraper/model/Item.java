@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
+import java.util.Map;
+
 @Slf4j
 @Getter
 @Setter
@@ -21,6 +23,18 @@ public class Item {
     private int sellPrice;
     @Setting("base_weight")
     private int baseWeight;
+    private transient FactoryData factoryData;
+
+    public Item(String key, String material, int levelNeeded, int sellPrice,
+                FactoryData factoryData) {
+        this(key, material, levelNeeded, sellPrice);
+        this.factoryData = factoryData;
+    }
+
+    public Item(String key, String material, int levelNeeded, int sellPrice, int baseWeight) {
+        this(key, material, levelNeeded, sellPrice);
+        this.baseWeight = baseWeight;
+    }
 
     public Item(String key, String material, int levelNeeded, int sellPrice) {
         this.key = key;
@@ -61,5 +75,9 @@ public class Item {
         }
 
         return Math.max(5, baseWeight + priceModifier);
+    }
+
+    public record FactoryData(String factoryName, String itemName, Map<String, Integer> ingredients, int xpGiven,
+                              String time) {
     }
 }

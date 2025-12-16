@@ -9,9 +9,7 @@ import me.webhead1104.towncraft.data.objects.Barn;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
 import me.webhead1104.towncraft.dataLoaders.ItemType;
 import me.webhead1104.towncraft.dataLoaders.Keyed;
-import me.webhead1104.towncraft.items.TowncraftMaterial;
 import net.kyori.adventure.key.Key;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
 import org.spongepowered.configurate.objectmapping.meta.Required;
@@ -25,7 +23,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @DependsOn({ItemType.class, FactoryType.class})
 public class RecipeType implements DataLoader.KeyBasedDataLoader<RecipeType.Recipe> {
-    //todo remove material from recipe type and use result item type material
     private final Map<Key, Recipe> values = new HashMap<>();
 
     public Recipe get(Key key) {
@@ -75,11 +72,6 @@ public class RecipeType implements DataLoader.KeyBasedDataLoader<RecipeType.Reci
         @Setting("key")
         private Key key;
         @Required
-        @Setting("material")
-        private TowncraftMaterial material;
-        @Nullable
-        @Setting("result")
-        private Key resultKey;
         @Setting("result_amount")
         private int resultAmount;
         @Required
