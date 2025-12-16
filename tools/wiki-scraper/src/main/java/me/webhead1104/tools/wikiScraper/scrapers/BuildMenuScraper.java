@@ -55,10 +55,18 @@ public class BuildMenuScraper implements Scraper<BuildMenu> {
         }),
         COMMUNITY_BUILDINGS("Community_Buildings", ".sortable", 1, -1, row ->
                 new Wrapper(row.getValue(0).getAsKey(), row.getValue(1).getAsLevel())),
-        FACTORIES("Factories", "table.article-table:nth-of-type(2)", 1, -1, row ->
-                new Wrapper(row.getValue(1).getAsKey(), row.getValue(2).getAsLevel())),
-        FARMING("Farming", ".wikitable", 1, 16, row ->
-                new Wrapper(row.getValue(0).getAsKey(), row.getValue(2).getAsLevel())),
+        FACTORIES("Factories", "table.article-table:nth-of-type(2)", 1, -1, row -> {
+            if (row.getValues().size() != 8) {
+                return null;
+            }
+            return new Wrapper(row.getValue(1).getAsKey(), row.getValue(2).getAsLevel());
+        }),
+        FARMING("Farming", ".wikitable", 1, 16, row -> {
+            if (row.getValues().size() != 9) {
+                return null;
+            }
+            return new Wrapper(row.getValue(0).getAsKey().replaceAll("_💧", ""), row.getValue(2).getAsLevel());
+        }),
         SPECIAL("Special_Buildings", "table.article-table:nth-child(1)", 2, -1, row -> {
             if (row.getValues().size() != 7) {
                 return null;
