@@ -65,7 +65,7 @@ public class AnimalScraper implements Scraper<Animal> {
                     buildingTable.getRows().stream().filter(row -> row.getText().startsWith(name)).toList().size(),
                     name,
                     table.getRow(1).getValues().getFirst().text().split(" Feed x3")[0],
-                    ANIMAL_MATERIALS.get(key.replaceAll("_\\d+$", "")),
+                    ANIMAL_MATERIALS.getOrDefault(key.replaceAll("_\\d+$", ""), "minecraft:player_head"),
                     table.getRow(1).getValues().getFirst().getAsKey(),
                     table.getRow(2).getValues().getFirst().getAsKey(),
                     table.getRow(2).getValues().get(4 + adjustment).getAsXp(),
