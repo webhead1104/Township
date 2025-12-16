@@ -35,6 +35,14 @@ tasks.withType<Javadoc> {
     javadocOptions.addStringOption("source", "21")
 }
 
+tasks.getByName<JavaExec>("run") {
+    args = listOf(
+        "-o",
+        rootProject.projectDir.resolve("platforms/common/src/main/resources").absolutePath,
+        "-a"
+    )
+}
+
 tasks {
     jar {
         enabled = false
