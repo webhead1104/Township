@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class TowncraftItemStackFactoryImpl implements TowncraftItemStackFactory {
     @Override
-    public @NotNull TowncraftItemStack of0(TowncraftMaterial material) {
+    public @NotNull TowncraftItemStack get0(TowncraftMaterial material) {
         return new TowncraftItemStackImpl(ItemStack.of((Material) material.getPlatform()));
     }
 }

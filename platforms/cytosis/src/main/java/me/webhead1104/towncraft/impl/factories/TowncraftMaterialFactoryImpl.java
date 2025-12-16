@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class TowncraftMaterialFactoryImpl implements TowncraftMaterialFactory {
     @Override
-    public @NotNull TowncraftMaterial of0(@NotNull Key key) {
+    public @NotNull TowncraftMaterial get0(@NotNull Key key) {
         return new TowncraftMaterialImpl(key);
     }
 }

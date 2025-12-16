@@ -10,7 +10,7 @@ import java.util.List;
 public interface TowncraftItemStack {
     @NotNull
     static TowncraftItemStack of(TowncraftMaterial material) {
-        TowncraftItemStack itemStack = TowncraftItemStackFactory.of(material);
+        TowncraftItemStack itemStack = TowncraftItemStackFactory.get(material);
         if (material == TowncraftMaterial.PLAYER_HEAD) {
             itemStack.overrideNameColor();
         }

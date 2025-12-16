@@ -8,7 +8,6 @@ import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
 import me.webhead1104.towncraft.dataLoaders.ItemType;
 import me.webhead1104.towncraft.dataLoaders.Keyed;
-import me.webhead1104.towncraft.factories.TowncraftItemStackFactory;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.items.TowncraftMaterial;
 import me.webhead1104.towncraft.price.Price;
@@ -84,7 +83,7 @@ public class PlotType implements DataLoader.KeyBasedDataLoader<PlotType.Plot> {
         private void postProcess() {
             this.item = Towncraft.getDataLoader(ItemType.class).get(this.key);
             if (key.equals(Towncraft.NONE_KEY)) {
-                TowncraftItemStack itemStack = TowncraftItemStackFactory.of(TowncraftMaterial.FARMLAND);
+                TowncraftItemStack itemStack = TowncraftItemStack.of(TowncraftMaterial.FARMLAND);
                 itemStack.setName(Msg.format("Empty Plot"));
                 itemStack.setLore(Msg.format("<green>You should plant something!"));
                 menuItem = itemStack;

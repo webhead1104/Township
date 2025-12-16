@@ -20,7 +20,7 @@ public class MaterialSerializer extends TowncraftSerializer<TowncraftMaterial> {
             throw new SerializationException("Cannot deserialize a null material!");
         }
 
-        return TowncraftMaterialFactory.of(Key.key(raw));
+        return TowncraftMaterialFactory.get(Key.key(raw));
     }
 
 
