@@ -9,7 +9,7 @@ version = "1.0-SNAPSHOT"
 dependencies {
     implementation("net.minestom:data:1.21.11-rv1")
     implementation("org.jetbrains:annotations:26.0.2-1")
-    implementation("net.kyori:adventure-api:4.25.0")
+    implementation("net.kyori:adventure-api:4.26.1")
     implementation("com.palantir.javapoet:javapoet:0.9.0")
     implementation("com.google.code.gson:gson:2.13.2")
 }
