@@ -17,7 +17,7 @@ dependencies {
     implementation("io.github.revxrsal:zapper.api:1.0.3")
 
     compileOnly("com.github.Takasaki-Studio-Games:MinestomPvP:751353385c")
-    compileOnly("net.cytonic:Cytosis:1.0-SNAPSHOT") {
+    compileOnly("net.cytonic:Cytosis:1.0-SNAPSHOT:all") {
         exclude("me.devnatan")
         exclude("com.github.TogAr2", "MinestomPvP")
     }
