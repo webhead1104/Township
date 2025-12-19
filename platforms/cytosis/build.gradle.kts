@@ -1,11 +1,11 @@
 plugins {
     id("java")
     id("com.gradleup.shadow") version "9.3.0"
+    id("net.cytonic.run-cytosis") version "1.0"
 }
 
 repositories {
     maven("https://jitpack.io")
-    mavenLocal()
     maven("https://repo.foxikle.dev/cytonic")
 }
 
@@ -126,16 +126,12 @@ tasks.compileJava {
     source(generateClassloader.map { layout.buildDirectory.dir("generated/sources/classloader").get() })
 }
 
-val serverDirProvider = providers.gradleProperty("server_dir")
-
 tasks {
-    if (serverDirProvider.isPresent) {
-        register<Copy>("copyJarToPluginFolder") {
-            from(shadowJar)
-            into(file(serverDirProvider.get()).resolve("plugins"))
-        }
+    runCytosis {
+        cytosisVersion("1.0-SNAPSHOT")
+        runDirectory.set(rootProject.layout.projectDirectory.dir("run/cytosis"))
+        jvmArgs = listOf("-XX:+AllowEnhancedClassRedefinition")
     }
-
     assemble {
         dependsOn(shadowJar)
     }
@@ -146,9 +142,6 @@ tasks {
         archiveFileName.set("Towncraft-Cytosis-${project.version}.jar")
         archiveClassifier.set("")
         mergeServiceFiles()
-        if (serverDirProvider.isPresent) {
-            finalizedBy("copyJarToPluginFolder")
-        }
 
 //        // Exclude all api dependencies except configurate and IF
         val commonApiDeps = project(":platforms:common")

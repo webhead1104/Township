@@ -111,8 +111,7 @@ tasks {
     }
     runServer {
         minecraftVersion("1.21.10")
-
-        jvmArgs("-Dlog4j2.configurationFile=log4j2.xml")
+        runDirectory.set(rootProject.layout.projectDirectory.dir("run/paper"))
     }
     paperPluginYaml {
         name.set("Towncraft")
