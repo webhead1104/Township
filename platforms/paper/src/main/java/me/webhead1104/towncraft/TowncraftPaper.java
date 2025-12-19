@@ -2,15 +2,17 @@ package me.webhead1104.towncraft;
 
 import lombok.Getter;
 import me.webhead1104.towncraft.commands.TowncraftCommand;
-import me.webhead1104.towncraft.listeners.IFListener;
-import me.webhead1104.towncraft.listeners.JoinListener;
-import me.webhead1104.towncraft.listeners.LeaveListener;
+import me.webhead1104.towncraft.impl.TowncraftPlayerPaperImpl;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import revxrsal.commands.Lamp;
 import revxrsal.commands.bukkit.BukkitLamp;
 import revxrsal.commands.bukkit.actor.BukkitCommandActor;
 
-public class TowncraftPaper extends JavaPlugin {
+public class TowncraftPaper extends JavaPlugin implements Listener {
     @Getter
     private static TowncraftPaper instance;
 
@@ -34,8 +36,17 @@ public class TowncraftPaper extends JavaPlugin {
     }
 
     private void registerListeners() {
-        this.getServer().getPluginManager().registerEvents(new JoinListener(), this);
-        this.getServer().getPluginManager().registerEvents(new LeaveListener(), this);
-        this.getServer().getPluginManager().registerEvents(new IFListener(TowncraftPlatformManager.getViewFrame()), this);
+        this.getServer().getPluginManager().registerEvents(this, this);
+        this.getServer().getPluginManager().registerEvents(new IFListenerPaper(TowncraftPlatformManager.getViewFrame()), this);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onJoin(PlayerJoinEvent event) {
+        TowncraftPlatformManager.onJoin(new TowncraftPlayerPaperImpl(event.getPlayer()));
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onLeave(PlayerQuitEvent event) {
+        TowncraftPlatformManager.onLeave(new TowncraftPlayerPaperImpl(event.getPlayer()));
     }
 }

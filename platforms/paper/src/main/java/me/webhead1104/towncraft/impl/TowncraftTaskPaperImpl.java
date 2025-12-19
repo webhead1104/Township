@@ -3,7 +3,7 @@ package me.webhead1104.towncraft.impl;
 import me.webhead1104.towncraft.TowncraftTask;
 import org.bukkit.scheduler.BukkitTask;
 
-public record TowncraftTaskImpl(BukkitTask task) implements TowncraftTask {
+public record TowncraftTaskPaperImpl(BukkitTask task) implements TowncraftTask {
     @Override
     public boolean isCancelled() {
         return task.isCancelled();

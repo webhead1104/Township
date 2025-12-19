@@ -1,9 +1,9 @@
 package me.webhead1104.towncraft.impl;
 
 import me.webhead1104.towncraft.TowncraftPlayer;
-import me.webhead1104.towncraft.impl.items.TowncraftInventoryImpl;
-import me.webhead1104.towncraft.impl.items.TowncraftItemStackImpl;
-import me.webhead1104.towncraft.impl.items.TowncraftPlayerInventoryImpl;
+import me.webhead1104.towncraft.impl.items.TowncraftInventoryPaperImpl;
+import me.webhead1104.towncraft.impl.items.TowncraftItemStackPaperImpl;
+import me.webhead1104.towncraft.impl.items.TowncraftPlayerInventoryPaperImpl;
 import me.webhead1104.towncraft.items.TowncraftInventory;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.items.TowncraftPlayerInventory;
@@ -16,9 +16,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public record TowncraftPlayerImpl(Player player) implements TowncraftPlayer {
+public record TowncraftPlayerPaperImpl(Player player) implements TowncraftPlayer {
 
-    public TowncraftPlayerImpl(HumanEntity humanEntity) {
+    public TowncraftPlayerPaperImpl(HumanEntity humanEntity) {
         this((Player) humanEntity);
     }
 
@@ -34,7 +34,7 @@ public record TowncraftPlayerImpl(Player player) implements TowncraftPlayer {
 
     @Override
     public @NotNull TowncraftPlayerInventory getInventory() {
-        return new TowncraftPlayerInventoryImpl(player.getInventory());
+        return new TowncraftPlayerInventoryPaperImpl(player.getInventory());
     }
 
     @Override
@@ -49,7 +49,7 @@ public record TowncraftPlayerImpl(Player player) implements TowncraftPlayer {
 
     @Override
     public TowncraftInventory getOpenInventory() {
-        return new TowncraftInventoryImpl((Inventory) player.getOpenInventory());
+        return new TowncraftInventoryPaperImpl((Inventory) player.getOpenInventory());
     }
 
     @Override
@@ -59,7 +59,7 @@ public record TowncraftPlayerImpl(Player player) implements TowncraftPlayer {
 
     @Override
     public TowncraftItemStack getItemOnCursor() {
-        return new TowncraftItemStackImpl(player.getItemOnCursor());
+        return new TowncraftItemStackPaperImpl(player.getItemOnCursor());
     }
 
     @Override

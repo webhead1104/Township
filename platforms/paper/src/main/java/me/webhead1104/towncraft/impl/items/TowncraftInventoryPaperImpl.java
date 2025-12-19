@@ -2,7 +2,7 @@ package me.webhead1104.towncraft.impl.items;
 
 import lombok.NonNull;
 import me.webhead1104.towncraft.TowncraftPlayer;
-import me.webhead1104.towncraft.impl.TowncraftPlayerImpl;
+import me.webhead1104.towncraft.impl.TowncraftPlayerPaperImpl;
 import me.webhead1104.towncraft.items.TowncraftInventory;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.menus.TowncraftInventoryType;
@@ -17,17 +17,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TowncraftInventoryImpl implements TowncraftInventory {
+public class TowncraftInventoryPaperImpl implements TowncraftInventory {
     private final Inventory inventory;
 
-    public TowncraftInventoryImpl(Inventory inventory) {
+    public TowncraftInventoryPaperImpl(Inventory inventory) {
         this.inventory = inventory;
     }
 
     @Override
     public List<TowncraftPlayer> getViewers() {
         return inventory.getViewers().stream()
-                .map(TowncraftPlayerImpl::new)
+                .map(TowncraftPlayerPaperImpl::new)
                 .collect(Collectors.toList());
     }
 
@@ -68,13 +68,13 @@ public class TowncraftInventoryImpl implements TowncraftInventory {
 
     @Override
     public TowncraftItemStack getItem(int slot) {
-        return new TowncraftItemStackImpl(inventory.getItem(slot));
+        return new TowncraftItemStackPaperImpl(inventory.getItem(slot));
     }
 
     @Override
     public @Nullable TowncraftItemStack @NotNull [] getContents() {
         return Arrays.stream(inventory.getContents())
-                .map(TowncraftItemStackImpl::new).toArray(TowncraftItemStackImpl[]::new);
+                .map(TowncraftItemStackPaperImpl::new).toArray(TowncraftItemStackPaperImpl[]::new);
     }
 
     @Override

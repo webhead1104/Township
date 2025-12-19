@@ -1,7 +1,7 @@
 package me.webhead1104.towncraft.impl.items;
 
 import me.webhead1104.towncraft.TowncraftPlayer;
-import me.webhead1104.towncraft.impl.TowncraftPlayerImpl;
+import me.webhead1104.towncraft.impl.TowncraftPlayerPaperImpl;
 import me.webhead1104.towncraft.items.TowncraftInventory;
 import me.webhead1104.towncraft.items.TowncraftInventoryView;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
@@ -12,16 +12,16 @@ import org.bukkit.inventory.PlayerInventory;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record TowncraftInventoryViewImpl(InventoryView view) implements TowncraftInventoryView {
+public record TowncraftInventoryViewPaperImpl(InventoryView view) implements TowncraftInventoryView {
     @Override
     public TowncraftInventory getTopInventory() {
-        return new TowncraftInventoryImpl(view.getTopInventory());
+        return new TowncraftInventoryPaperImpl(view.getTopInventory());
     }
 
     @Override
     public List<TowncraftPlayer> getViewers() {
         return view.getTopInventory().getViewers()
-                .stream().map(TowncraftPlayerImpl::new)
+                .stream().map(TowncraftPlayerPaperImpl::new)
                 .collect(Collectors.toList());
     }
 
@@ -32,17 +32,17 @@ public record TowncraftInventoryViewImpl(InventoryView view) implements Towncraf
 
     @Override
     public TowncraftPlayer getPlayer() {
-        return new TowncraftPlayerImpl(view.getPlayer());
+        return new TowncraftPlayerPaperImpl(view.getPlayer());
     }
 
     @Override
     public TowncraftItemStack getCursor() {
-        return new TowncraftItemStackImpl(view.getCursor());
+        return new TowncraftItemStackPaperImpl(view.getCursor());
     }
 
     @Override
     public TowncraftItemStack getItem(int slot) {
-        return new TowncraftItemStackImpl(view.getItem(slot));
+        return new TowncraftItemStackPaperImpl(view.getItem(slot));
     }
 
     @Override
@@ -53,8 +53,8 @@ public record TowncraftInventoryViewImpl(InventoryView view) implements Towncraf
     @Override
     public TowncraftInventory getInventory(int slot) {
         if (view.getInventory(slot) instanceof PlayerInventory playerInventory) {
-            return new TowncraftPlayerInventoryImpl(playerInventory);
+            return new TowncraftPlayerInventoryPaperImpl(playerInventory);
         }
-        return new TowncraftInventoryImpl(view.getInventory(slot));
+        return new TowncraftInventoryPaperImpl(view.getInventory(slot));
     }
 }

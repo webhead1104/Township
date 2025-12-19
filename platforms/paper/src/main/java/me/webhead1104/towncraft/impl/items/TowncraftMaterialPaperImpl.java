@@ -6,8 +6,8 @@ import org.bukkit.Material;
 import org.bukkit.Registry;
 import org.jetbrains.annotations.NotNull;
 
-public record TowncraftMaterialImpl(Material material) implements TowncraftMaterial {
-    public TowncraftMaterialImpl(Key key) {
+public record TowncraftMaterialPaperImpl(Material material) implements TowncraftMaterial {
+    public TowncraftMaterialPaperImpl(Key key) {
         this(Registry.MATERIAL.get(key));
     }
 

@@ -22,7 +22,7 @@ public class TowncraftPaperPlatform implements TowncraftPlatform {
         if (player == null) {
             return null;
         }
-        return new TowncraftPlayerImpl(Bukkit.getPlayer(uuid));
+        return new TowncraftPlayerPaperImpl(Bukkit.getPlayer(uuid));
     }
 
     @Override
@@ -43,12 +43,12 @@ public class TowncraftPaperPlatform implements TowncraftPlatform {
     @Override
     public TowncraftTask runTimer(Runnable runnable, long delay, long period) {
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(TowncraftPaper.getInstance(), runnable, delay, period);
-        return new TowncraftTaskImpl(task);
+        return new TowncraftTaskPaperImpl(task);
     }
 
     @Override
     public TowncraftTask runTaskAsync(Runnable runnable) {
         BukkitTask task = Bukkit.getScheduler().runTaskAsynchronously(TowncraftPaper.getInstance(), runnable);
-        return new TowncraftTaskImpl(task);
+        return new TowncraftTaskPaperImpl(task);
     }
 }

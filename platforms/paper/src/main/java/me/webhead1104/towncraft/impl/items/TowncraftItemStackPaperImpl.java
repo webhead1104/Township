@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @AllArgsConstructor
-public class TowncraftItemStackImpl implements TowncraftItemStack {
+public class TowncraftItemStackPaperImpl implements TowncraftItemStack {
     private ItemStack itemStack;
 
     @Override
@@ -41,12 +41,12 @@ public class TowncraftItemStackImpl implements TowncraftItemStack {
 
     @Override
     public TowncraftMaterial getMaterial() {
-        return new TowncraftMaterialImpl(itemStack.getType());
+        return new TowncraftMaterialPaperImpl(itemStack.getType());
     }
 
     @Override
     public void setMaterial(TowncraftMaterial material) {
-        itemStack = itemStack.withType(((TowncraftMaterialImpl) material).material());
+        itemStack = itemStack.withType(((TowncraftMaterialPaperImpl) material).material());
     }
 
     @Override
