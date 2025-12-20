@@ -147,6 +147,8 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
         @Required
         @Setting("size")
         private TileSize size;
+        @Setting
+        private boolean notInMenu;
         private transient int slot;
         private transient boolean needToBePlaced;
         private transient String name;

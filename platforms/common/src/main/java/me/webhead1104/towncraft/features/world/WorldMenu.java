@@ -69,7 +69,6 @@ public class WorldMenu extends TowncraftView {
                 Tile tile = section.getSlot(slot);
                 if (clickContext.isShiftRightClick()) {
                     if (tile instanceof BuildingTile buildingTile) {
-                        if (buildingTile.isImmovable()) return;
                         BuildingType.Building building = Towncraft.getDataLoader(BuildingType.class).get(buildingTile.getBuildingType()).get(buildingTile.getBuildingSlot());
                         int clickedSlot = clickContext.getClickedSlot();
                         int anchor = WorldUtils.findAnchor(clickedSlot, building.getSize(), worldSection, buildingTile);

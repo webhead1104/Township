@@ -89,7 +89,6 @@ public class WorldEditMenu extends TowncraftView {
         if (!(tile instanceof BuildingTile buildingTile)) {
             return false;
         }
-        if (buildingTile.isImmovable()) return false;
 
         Key key = buildingTile.getBuildingType();
         if (key == null) return false;

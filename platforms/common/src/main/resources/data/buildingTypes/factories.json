@@ -6,8 +6,6 @@
         "key": "bakery",
         "level_needed": 2,
         "population_needed": 55,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "price": {
           "type": "coin",
           "amount": 125
@@ -26,8 +24,6 @@
         "key": "feed_mill",
         "level_needed": 3,
         "population_needed": 60,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "price": {
           "type": "coin",
           "amount": 150
@@ -46,8 +42,6 @@
         "key": "dairy_factory",
         "level_needed": 4,
         "population_needed": 65,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "price": {
           "type": "coin",
           "amount": 175
@@ -66,8 +60,6 @@
         "key": "sugar_factory",
         "level_needed": 7,
         "population_needed": 75,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "price": {
           "type": "coin",
           "amount": 250
@@ -86,8 +78,6 @@
         "key": "textile_factory",
         "level_needed": 9,
         "population_needed": 105,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "price": {
           "type": "coin",
           "amount": 500

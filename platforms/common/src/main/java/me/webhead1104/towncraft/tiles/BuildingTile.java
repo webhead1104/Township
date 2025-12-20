@@ -28,8 +28,4 @@ public abstract class BuildingTile extends Tile {
     public int hashCode() {
         return Objects.hash(buildingType, buildingSlot);
     }
-
-    public boolean isImmovable() {
-        return false;
-    }
 }

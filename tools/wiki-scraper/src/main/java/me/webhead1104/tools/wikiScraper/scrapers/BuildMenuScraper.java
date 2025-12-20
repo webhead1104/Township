@@ -240,7 +240,7 @@ public class BuildMenuScraper implements Scraper<BuildMenu> {
                 log.debug("population = {}", row.getValue(2).text());
                 building.setPopulationNeeded(row.getValue(2).getAsPopulation());
                 building.setPrice(new Price(row.getValue(3).getAsCoins()));
-                building.setTime(row.getValue(4).text().replaceAll("(n/a)|(Instant)", ""));
+                building.setTime(row.getValue(4).text().replaceAll("(n/a)|(Instant.*)|", ""));
                 building.setXp(row.getValue(5).getAsXp());
                 building.setSize(new TileSize(row.getValue(6).text()));
                 return building;

@@ -26,12 +26,19 @@ import java.util.stream.Collectors;
 @DependsOn(BuildMenuScraper.class)
 public class BuildingTypeScraper implements Scraper<BuildingType> {
     public static final Map<String, Tile> SPECIAL_BUILDING_TILES = new HashMap<>();
+    public static final Map<String, TileSize> SPECIAL_BUILDING_TILESIZE = new HashMap<>();
+    public static final List<String> NOT_IN_MENU = new ArrayList<>();
 
     static {
         SPECIAL_BUILDING_TILES.put("barn", new BarnTile());
         SPECIAL_BUILDING_TILES.put("helicopter", new HelicopterTile());
-        SPECIAL_BUILDING_TILES.put("train", new TrainTile());
         SPECIAL_BUILDING_TILES.put("town_hall", StaticWorldTile.TOWN_HALL);
+        SPECIAL_BUILDING_TILES.put("event_center", new EventCenterTile());
+        SPECIAL_BUILDING_TILESIZE.put("event_center", new TileSize(3, 5));
+        NOT_IN_MENU.add("event_center");
+        SPECIAL_BUILDING_TILES.put("train", new TrainTile());
+        SPECIAL_BUILDING_TILESIZE.put("train", new TileSize(1, 3));
+        NOT_IN_MENU.add("train");
     }
 
     @Override
@@ -50,6 +57,10 @@ public class BuildingTypeScraper implements Scraper<BuildingType> {
                 if (buildMenu.getKey().equals("special")) {
                     actualBuilding.setTile(SPECIAL_BUILDING_TILES.get(actualBuilding.getKey()));
                     buildings.add(actualBuilding);
+                    actualBuilding.setSize(SPECIAL_BUILDING_TILESIZE.getOrDefault(actualBuilding.getKey(), actualBuilding.getSize()));
+                    if (NOT_IN_MENU.contains(actualBuilding.getKey())) {
+                        actualBuilding.setNotInMenu(true);
+                    }
                 } else if (buildMenu.getKey().equals("housing")) {
                     Pattern pattern = Pattern.compile("(\\d+) @ lvl (\\d+)");
                     Matcher matcher = pattern.matcher(actualBuilding.getLevelString());

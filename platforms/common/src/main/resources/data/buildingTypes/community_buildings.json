@@ -5,8 +5,6 @@
       {
         "key": "grocery_store",
         "level_needed": 5,
-        "population_needed": -1,
-        "population_increase": -1,
         "max_population_increase": 10,
         "price": {
           "type": "coin",
@@ -30,8 +28,6 @@
       {
         "key": "school",
         "level_needed": 5,
-        "population_needed": -1,
-        "population_increase": -1,
         "max_population_increase": 20,
         "price": {
           "type": "coin",
@@ -55,8 +51,6 @@
       {
         "key": "hospital",
         "level_needed": 6,
-        "population_needed": -1,
-        "population_increase": -1,
         "max_population_increase": 25,
         "price": {
           "type": "coin",
@@ -80,8 +74,6 @@
       {
         "key": "police_station",
         "level_needed": 7,
-        "population_needed": -1,
-        "population_increase": -1,
         "max_population_increase": 30,
         "price": {
           "type": "coin",
@@ -105,8 +97,6 @@
       {
         "key": "fire_station",
         "level_needed": 8,
-        "population_needed": -1,
-        "population_increase": -1,
         "max_population_increase": 35,
         "price": {
           "type": "coin",
@@ -130,8 +120,6 @@
       {
         "key": "post_office",
         "level_needed": 9,
-        "population_needed": -1,
-        "population_increase": -1,
         "max_population_increase": 40,
         "price": {
           "type": "coin",
@@ -155,8 +143,6 @@
       {
         "key": "laundromat",
         "level_needed": 10,
-        "population_needed": -1,
-        "population_increase": -1,
         "max_population_increase": 45,
         "price": {
           "type": "coin",

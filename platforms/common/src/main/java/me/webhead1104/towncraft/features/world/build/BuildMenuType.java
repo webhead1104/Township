@@ -3,6 +3,7 @@ package me.webhead1104.towncraft.features.world.build;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.webhead1104.towncraft.Towncraft;
+import me.webhead1104.towncraft.annotations.DependsOn;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
 import me.webhead1104.towncraft.dataLoaders.Keyed;
 import me.webhead1104.towncraft.utils.Msg;
@@ -14,11 +15,9 @@ import org.spongepowered.configurate.objectmapping.meta.PostProcess;
 import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@DependsOn(BuildingType.class)
 public class BuildMenuType implements DataLoader.KeyBasedDataLoader<BuildMenuType.BuildMenu> {
     private final Map<Key, BuildMenu> values = new LinkedHashMap<>();
 
@@ -62,12 +61,15 @@ public class BuildMenuType implements DataLoader.KeyBasedDataLoader<BuildMenuTyp
         private Key key;
         @Required
         @Setting("buildings")
-        private List<Key> buildings;
+        private List<Key> realBuildings;
         private transient Component menuTitle;
+        private transient List<Key> buildings;
 
         @PostProcess
         private void postProcess() {
             menuTitle = Msg.format(WordUtils.capitalizeFully(key.value().replaceAll("_", " ")));
+            buildings = new ArrayList<>(realBuildings.stream().map(Towncraft.getDataLoader(BuildingType.class)::get).map(List::getFirst)
+                    .filter(it -> !it.isNotInMenu()).map(BuildingType.Building::getKey).toList());
         }
     }
 }

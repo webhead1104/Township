@@ -1,6 +1,5 @@
 package me.webhead1104.towncraft.tiles;
 
-import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.data.objects.WorldSection;
 import me.webhead1104.towncraft.features.trains.TrainMenu;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
@@ -9,10 +8,7 @@ import me.webhead1104.towncraft.menus.context.SlotClickContext;
 import me.webhead1104.towncraft.menus.context.SlotRenderContext;
 import me.webhead1104.towncraft.utils.Msg;
 
-public class TrainTile extends BuildingTile {
-    public TrainTile() {
-        super(Towncraft.key("train"));
-    }
+public class TrainTile extends Tile {
 
     @Override
     public TowncraftItemStack render(SlotRenderContext context, WorldSection worldSection, int slot) {
@@ -30,10 +26,5 @@ public class TrainTile extends BuildingTile {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public boolean isImmovable() {
-        return true;
     }
 }

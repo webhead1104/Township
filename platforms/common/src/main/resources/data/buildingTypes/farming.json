@@ -4,82 +4,56 @@
     "buildings": [
       {
         "key": "plot",
-        "level_needed": -1,
-        "population_needed": -1,
-        "population_increase": -1,
-        "max_population_increase": -1,
+        "level_needed": 0,
         "tile": {
           "class": "PlotTile"
         },
-        "xp": -1,
         "size": "1x1"
       },
       {
         "key": "plot",
-        "level_needed": -1,
-        "population_needed": -1,
-        "population_increase": -1,
-        "max_population_increase": -1,
+        "level_needed": 0,
         "tile": {
           "class": "PlotTile"
         },
-        "xp": -1,
         "size": "1x1"
       },
       {
         "key": "plot",
-        "level_needed": -1,
-        "population_needed": -1,
-        "population_increase": -1,
-        "max_population_increase": -1,
+        "level_needed": 0,
         "tile": {
           "class": "PlotTile"
         },
-        "xp": -1,
         "size": "1x1"
       },
       {
         "key": "plot",
-        "level_needed": -1,
-        "population_needed": -1,
-        "population_increase": -1,
-        "max_population_increase": -1,
+        "level_needed": 0,
         "tile": {
           "class": "PlotTile"
         },
-        "xp": -1,
         "size": "1x1"
       },
       {
         "key": "plot",
-        "level_needed": -1,
-        "population_needed": -1,
-        "population_increase": -1,
-        "max_population_increase": -1,
+        "level_needed": 0,
         "tile": {
           "class": "PlotTile"
         },
-        "xp": -1,
         "size": "1x1"
       },
       {
         "key": "plot",
-        "level_needed": -1,
-        "population_needed": -1,
-        "population_increase": -1,
-        "max_population_increase": -1,
+        "level_needed": 0,
         "tile": {
           "class": "PlotTile"
         },
-        "xp": -1,
         "size": "1x1"
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 65,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -88,10 +62,8 @@
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 70,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -100,10 +72,8 @@
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 75,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -112,10 +82,8 @@
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 85,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -124,10 +92,8 @@
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 95,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -136,10 +102,8 @@
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 110,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -148,10 +112,8 @@
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 125,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -160,10 +122,8 @@
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 145,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -172,10 +132,8 @@
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 165,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -184,10 +142,8 @@
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 185,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -196,10 +152,8 @@
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 210,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -208,10 +162,8 @@
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 235,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -220,10 +172,8 @@
       },
       {
         "key": "plot",
-        "level_needed": -1,
+        "level_needed": 0,
         "population_needed": 265,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "tile": {
           "class": "PlotTile"
         },
@@ -233,9 +183,6 @@
       {
         "key": "cowshed",
         "level_needed": 1,
-        "population_needed": -1,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "price": {
           "type": "coin",
           "amount": 0
@@ -253,9 +200,6 @@
       {
         "key": "chicken_coop",
         "level_needed": 5,
-        "population_needed": -1,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "price": {
           "type": "coin",
           "amount": 200
@@ -273,9 +217,6 @@
       {
         "key": "sheep_farm",
         "level_needed": 10,
-        "population_needed": -1,
-        "population_increase": -1,
-        "max_population_increase": -1,
         "price": {
           "type": "coin",
           "amount": 600

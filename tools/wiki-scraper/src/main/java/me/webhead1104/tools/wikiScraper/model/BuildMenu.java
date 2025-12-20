@@ -37,23 +37,24 @@ public class BuildMenu {
     public static class Building {
         private final String key;
         @Setting("level_needed")
-        private int levelNeeded = -1;
+        private int levelNeeded;
         private transient String levelString;
         @Setting("population_needed")
-        private int populationNeeded = -1;
+        private Integer populationNeeded;
         @Setting("population_increase")
-        private int populationIncrease = -1;
+        private Integer populationIncrease;
         @Setting("max_population_increase")
-        private int maxPopulationIncrease = -1;
+        private Integer maxPopulationIncrease;
         private Price price;
         private transient String priceString;
         @Setting("construction_materials")
         private ConstructionMaterials constructionMaterials;
         private String time;
         private Tile tile;
-        private int xp = -1;
+        private Integer xp;
         @Setting("size")
         private TileSize size;
+        private Boolean notInMenu;
 
         public Building(String key) {
             this.key = key;
