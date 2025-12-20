@@ -2,7 +2,7 @@ plugins {
     java
     application
     id("org.openjfx.javafxplugin") version "0.1.0"
-    id("org.beryx.jlink") version "3.1.5"
+    id("org.beryx.jlink") version "3.2.0"
 }
 
 group = "me.webhead1104"
