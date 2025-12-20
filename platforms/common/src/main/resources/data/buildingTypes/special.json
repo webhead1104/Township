@@ -1,0 +1,78 @@
+[
+  {
+    "key": "special",
+    "buildings": [
+      {
+        "key": "barn",
+        "level_needed": 1,
+        "population_needed": 0,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 0
+        },
+        "time": "",
+        "tile": {
+          "class": "BarnTile"
+        },
+        "xp": 0,
+        "size": "3x3"
+      },
+      {
+        "key": "helicopter",
+        "level_needed": 3,
+        "population_needed": 0,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 0
+        },
+        "time": "",
+        "tile": {
+          "class": "HelicopterTile"
+        },
+        "xp": 0,
+        "size": "3x3"
+      },
+      {
+        "key": "train",
+        "level_needed": 5,
+        "population_needed": 0,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 0
+        },
+        "time": "",
+        "tile": {
+          "class": "TrainTile"
+        },
+        "xp": 0,
+        "size": "0x0"
+      },
+      {
+        "key": "town_hall",
+        "level_needed": 6,
+        "population_needed": 0,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 0
+        },
+        "time": "",
+        "tile": {
+          "class": "StaticWorldTile",
+          "properties": {
+            "material": "minecraft:cobblestone"
+          }
+        },
+        "xp": 0,
+        "size": "2x2"
+      }
+    ]
+  }
+]

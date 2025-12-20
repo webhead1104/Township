@@ -1,0 +1,107 @@
+[
+  {
+    "key": "factories",
+    "buildings": [
+      {
+        "key": "bakery",
+        "level_needed": 2,
+        "population_needed": 55,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 125
+        },
+        "time": "3s",
+        "tile": {
+          "class": "FactoryTile",
+          "properties": {
+            "factoryType": "BAKERY"
+          }
+        },
+        "xp": 10,
+        "size": "2x2"
+      },
+      {
+        "key": "feed_mill",
+        "level_needed": 3,
+        "population_needed": 60,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 150
+        },
+        "time": "40s",
+        "tile": {
+          "class": "FactoryTile",
+          "properties": {
+            "factoryType": "FEED_MILL_1"
+          }
+        },
+        "xp": 11,
+        "size": "2x2"
+      },
+      {
+        "key": "dairy_factory",
+        "level_needed": 4,
+        "population_needed": 65,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 175
+        },
+        "time": "1h",
+        "tile": {
+          "class": "FactoryTile",
+          "properties": {
+            "factoryType": "DAIRY_FACTORY"
+          }
+        },
+        "xp": 12,
+        "size": "2x2"
+      },
+      {
+        "key": "sugar_factory",
+        "level_needed": 7,
+        "population_needed": 75,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 250
+        },
+        "time": "2h",
+        "tile": {
+          "class": "FactoryTile",
+          "properties": {
+            "factoryType": "SUGAR_FACTORY"
+          }
+        },
+        "xp": 15,
+        "size": "2x2"
+      },
+      {
+        "key": "textile_factory",
+        "level_needed": 9,
+        "population_needed": 105,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 500
+        },
+        "time": "6h",
+        "tile": {
+          "class": "FactoryTile",
+          "properties": {
+            "factoryType": "TEXTILE_FACTORY"
+          }
+        },
+        "xp": 25,
+        "size": "2x2"
+      }
+    ]
+  }
+]

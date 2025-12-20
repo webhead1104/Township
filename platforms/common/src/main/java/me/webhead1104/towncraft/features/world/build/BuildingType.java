@@ -25,7 +25,6 @@ import me.webhead1104.towncraft.utils.Utils;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.PostProcess;
 import org.spongepowered.configurate.objectmapping.meta.Required;
@@ -79,31 +78,41 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
     @Override
     public void load() {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        List<ConfigurationNode> nodes = getNodesFromMultipleFiles("/data/buildingTypes");
         try {
-            for (ConfigurationNode node : nodes) {
-                if (!node.isList()) {
-                    throw new RuntimeException("Node is not list!");
-                }
+            List<Building> buildings = getListFromMultipleFiles("/data/buildingTypes", BuildingFile.class).stream()
+                    .flatMap(wrapper -> wrapper.getBuildings().stream())
+                    .toList();
 
-                List<Building> buildings = node.getList(Building.class);
-                if (buildings == null) {
-                    throw new NullPointerException("List is empty!");
-                }
+            Map<Key, List<Building>> groupedBuildings = new HashMap<>();
+            for (Building building : buildings) {
+                groupedBuildings.computeIfAbsent(building.key(), _ -> new ArrayList<>()).add(building);
+            }
+
+            for (Map.Entry<Key, List<Building>> entry : groupedBuildings.entrySet()) {
                 int i = 0;
-                for (Building building : buildings) {
+                for (Building building : entry.getValue()) {
                     building.slot = i++;
                     if (building.getTile() instanceof BuildingTile buildingTile) {
                         buildingTile.setBuildingType(building.key());
                         buildingTile.setBuildingSlot(building.getSlot());
                     }
                 }
-                values.put(buildings.getFirst().key(), buildings);
+                values.put(entry.getKey(), entry.getValue());
             }
         } catch (Exception e) {
             throw new RuntimeException("An error occurred whilst loading building types! Please report the following stacktrace to Webhead1104:", e);
         }
         Towncraft.getLogger().info("Loaded {} buildings in {} ms!", values.size(), stopwatch.elapsed().toMillis());
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @ConfigSerializable
+    public static final class BuildingFile {
+        @Required
+        private Key key;
+        @Required
+        private List<Building> buildings;
     }
 
     @Getter

@@ -1,0 +1,407 @@
+[
+  {
+    "key": "housing",
+    "buildings": [
+      {
+        "key": "cottage",
+        "level_needed": 4,
+        "population_needed": -1,
+        "population_increase": 5,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 5
+        },
+        "time": "1m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "COTTAGE"
+          }
+        },
+        "xp": 5,
+        "size": "1x1"
+      },
+      {
+        "key": "cottage",
+        "level_needed": 4,
+        "population_needed": -1,
+        "population_increase": 5,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 5
+        },
+        "time": "1m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "COTTAGE"
+          }
+        },
+        "xp": 5,
+        "size": "1x1"
+      },
+      {
+        "key": "cottage",
+        "level_needed": 4,
+        "population_needed": -1,
+        "population_increase": 5,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 5
+        },
+        "time": "1m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "COTTAGE"
+          }
+        },
+        "xp": 5,
+        "size": "1x1"
+      },
+      {
+        "key": "cottage",
+        "level_needed": 5,
+        "population_needed": -1,
+        "population_increase": 5,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 5
+        },
+        "time": "1m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "COTTAGE"
+          }
+        },
+        "xp": 5,
+        "size": "1x1"
+      },
+      {
+        "key": "cape_cod_cottage",
+        "level_needed": 1,
+        "population_needed": -1,
+        "population_increase": 10,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 0
+        },
+        "time": "",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CAPE_COD_COTTAGE"
+          }
+        },
+        "xp": 0,
+        "size": "1x1"
+      },
+      {
+        "key": "cape_cod_cottage",
+        "level_needed": 5,
+        "population_needed": -1,
+        "population_increase": 10,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 10
+        },
+        "time": "10m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CAPE_COD_COTTAGE"
+          }
+        },
+        "xp": 10,
+        "size": "1x1"
+      },
+      {
+        "key": "cape_cod_cottage",
+        "level_needed": 6,
+        "population_needed": -1,
+        "population_increase": 10,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 10
+        },
+        "time": "10m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CAPE_COD_COTTAGE"
+          }
+        },
+        "xp": 10,
+        "size": "1x1"
+      },
+      {
+        "key": "cape_cod_cottage",
+        "level_needed": 7,
+        "population_needed": -1,
+        "population_increase": 10,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 10
+        },
+        "time": "10m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CAPE_COD_COTTAGE"
+          }
+        },
+        "xp": 10,
+        "size": "1x1"
+      },
+      {
+        "key": "cape_cod_cottage",
+        "level_needed": 8,
+        "population_needed": -1,
+        "population_increase": 10,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 10
+        },
+        "time": "10m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CAPE_COD_COTTAGE"
+          }
+        },
+        "xp": 10,
+        "size": "1x1"
+      },
+      {
+        "key": "chalet_bungalow",
+        "level_needed": 1,
+        "population_needed": -1,
+        "population_increase": 15,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 0
+        },
+        "time": "",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CHALET_BUNGALOW"
+          }
+        },
+        "xp": 0,
+        "size": "1x1"
+      },
+      {
+        "key": "chalet_bungalow",
+        "level_needed": 1,
+        "population_needed": -1,
+        "population_increase": 15,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 0
+        },
+        "time": "",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CHALET_BUNGALOW"
+          }
+        },
+        "xp": 0,
+        "size": "1x1"
+      },
+      {
+        "key": "chalet_bungalow",
+        "level_needed": 5,
+        "population_needed": -1,
+        "population_increase": 15,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 15
+        },
+        "time": "20m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CHALET_BUNGALOW"
+          }
+        },
+        "xp": 15,
+        "size": "1x1"
+      },
+      {
+        "key": "chalet_bungalow",
+        "level_needed": 6,
+        "population_needed": -1,
+        "population_increase": 15,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 15
+        },
+        "time": "20m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CHALET_BUNGALOW"
+          }
+        },
+        "xp": 15,
+        "size": "1x1"
+      },
+      {
+        "key": "chalet_bungalow",
+        "level_needed": 9,
+        "population_needed": -1,
+        "population_increase": 15,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 15
+        },
+        "time": "20m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CHALET_BUNGALOW"
+          }
+        },
+        "xp": 15,
+        "size": "1x1"
+      },
+      {
+        "key": "chalet_bungalow",
+        "level_needed": 10,
+        "population_needed": -1,
+        "population_increase": 15,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 15
+        },
+        "time": "20m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CHALET_BUNGALOW"
+          }
+        },
+        "xp": 15,
+        "size": "1x1"
+      },
+      {
+        "key": "conch_house",
+        "level_needed": 1,
+        "population_needed": -1,
+        "population_increase": 20,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 0
+        },
+        "time": "",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CONCH_HOUSE"
+          }
+        },
+        "xp": 0,
+        "size": "1x1"
+      },
+      {
+        "key": "conch_house",
+        "level_needed": 7,
+        "population_needed": -1,
+        "population_increase": 20,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 20
+        },
+        "time": "30m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "CONCH_HOUSE"
+          }
+        },
+        "xp": 20,
+        "size": "1x1"
+      },
+      {
+        "key": "bungalow",
+        "level_needed": 8,
+        "population_needed": -1,
+        "population_increase": 25,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 25
+        },
+        "time": "1h",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "BUNGALOW"
+          }
+        },
+        "xp": 25,
+        "size": "1x1"
+      },
+      {
+        "key": "bungalow",
+        "level_needed": 9,
+        "population_needed": -1,
+        "population_increase": 25,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 25
+        },
+        "time": "1h",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "BUNGALOW"
+          }
+        },
+        "xp": 25,
+        "size": "1x1"
+      },
+      {
+        "key": "farmhouse",
+        "level_needed": 10,
+        "population_needed": -1,
+        "population_increase": 30,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 60
+        },
+        "time": "1h30m",
+        "tile": {
+          "class": "HouseTile",
+          "properties": {
+            "houseType": "FARMHOUSE"
+          }
+        },
+        "xp": 30,
+        "size": "1x1"
+      }
+    ]
+  }
+]

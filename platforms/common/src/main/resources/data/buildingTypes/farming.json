@@ -1,0 +1,295 @@
+[
+  {
+    "key": "farming",
+    "buildings": [
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": -1,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": -1,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": -1,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": -1,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": -1,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": -1,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": -1,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": -1,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": -1,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": -1,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": -1,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": -1,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 65,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 2,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 70,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 3,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 75,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 4,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 85,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 5,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 95,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 6,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 110,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 7,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 125,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 8,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 145,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 10,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 165,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 11,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 185,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 12,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 210,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 13,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 235,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 14,
+        "size": "1x1"
+      },
+      {
+        "key": "plot",
+        "level_needed": -1,
+        "population_needed": 265,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "tile": {
+          "class": "PlotTile"
+        },
+        "xp": 15,
+        "size": "1x1"
+      },
+      {
+        "key": "cowshed",
+        "level_needed": 1,
+        "population_needed": -1,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 0
+        },
+        "time": "",
+        "tile": {
+          "class": "AnimalTile",
+          "properties": {
+            "animalType": "cowshed_1"
+          }
+        },
+        "xp": 0,
+        "size": "2x2"
+      },
+      {
+        "key": "chicken_coop",
+        "level_needed": 5,
+        "population_needed": -1,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 200
+        },
+        "time": "1h",
+        "tile": {
+          "class": "AnimalTile",
+          "properties": {
+            "animalType": "chicken_coop_1"
+          }
+        },
+        "xp": 13,
+        "size": "2x2"
+      },
+      {
+        "key": "sheep_farm",
+        "level_needed": 10,
+        "population_needed": -1,
+        "population_increase": -1,
+        "max_population_increase": -1,
+        "price": {
+          "type": "coin",
+          "amount": 600
+        },
+        "time": "4h",
+        "tile": {
+          "class": "AnimalTile",
+          "properties": {
+            "animalType": "sheep_farm_1"
+          }
+        },
+        "xp": 29,
+        "size": "2x2"
+      }
+    ]
+  }
+]
