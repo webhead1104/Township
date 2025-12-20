@@ -66,4 +66,9 @@ public class FactoryScraper implements Scraper<Factory> {
 
         return factories;
     }
+
+    @Override
+    public Class<Factory> resultType() {
+        return Factory.class;
+    }
 }

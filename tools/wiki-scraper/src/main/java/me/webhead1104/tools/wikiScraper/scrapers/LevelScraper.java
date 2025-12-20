@@ -57,4 +57,9 @@ public class LevelScraper implements Scraper<Level> {
         }
         return levels;
     }
+
+    @Override
+    public Class<Level> resultType() {
+        return Level.class;
+    }
 }

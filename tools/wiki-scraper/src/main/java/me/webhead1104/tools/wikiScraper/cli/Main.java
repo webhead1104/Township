@@ -73,7 +73,7 @@ public class Main implements Callable<Integer> {
 
             List<T> data = scraper.scrape();
 
-            File jsonFile = Utils.saveJson(data, outDir, scraper.outputPath().getPath());
+            File jsonFile = scraper.save(data, outDir);
             log.info("Saved to: {}", jsonFile.getAbsolutePath());
             log.info("Scraper '{}' completed successfully in {}ms", scraper.id(), System.currentTimeMillis() - start);
             return data;

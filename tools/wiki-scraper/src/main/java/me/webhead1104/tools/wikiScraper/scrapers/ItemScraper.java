@@ -63,6 +63,11 @@ public class ItemScraper implements Scraper<Item> {
     }
 
     @Override
+    public Class<Item> resultType() {
+        return Item.class;
+    }
+
+    @Override
     public File outputPath() {
         return new File("items.json");
     }

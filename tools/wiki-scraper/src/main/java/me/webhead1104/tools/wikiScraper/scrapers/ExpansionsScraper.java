@@ -70,4 +70,9 @@ public class ExpansionsScraper implements Scraper<Expansion> {
         }
         return expansions;
     }
+
+    @Override
+    public Class<Expansion> resultType() {
+        return Expansion.class;
+    }
 }

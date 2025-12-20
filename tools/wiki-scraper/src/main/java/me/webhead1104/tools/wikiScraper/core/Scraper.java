@@ -29,6 +29,12 @@ public interface Scraper<T> {
      */
     List<T> scrape() throws IOException;
 
+    Class<T> resultType();
+
+    default File save(List<T> data, File outDir) throws IOException {
+        return Utils.saveJson(data, outDir, outputPath().getPath(), resultType());
+    }
+
     default File outputPath() {
         return new File(id() + ".json");
     }

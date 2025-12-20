@@ -79,4 +79,9 @@ public class AnimalScraper implements Scraper<Animal> {
         animals.removeIf(animal -> animal.getLevelNeeded() > Main.MAX_LEVEL);
         return animals;
     }
+
+    @Override
+    public Class<Animal> resultType() {
+        return Animal.class;
+    }
 }
