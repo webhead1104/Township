@@ -2,7 +2,10 @@ package me.webhead1104.tools.wikiScraper.core;
 
 import io.leangen.geantyref.TypeToken;
 import lombok.experimental.UtilityClass;
-import org.spongepowered.configurate.BasicConfigurationNode;
+import me.webhead1104.tools.wikiScraper.model.tile.Tile;
+import me.webhead1104.tools.wikiScraper.model.tile.TileSize;
+import me.webhead1104.tools.wikiScraper.serializers.TileSerializer;
+import me.webhead1104.tools.wikiScraper.serializers.TileSizeSerializer;
 import org.spongepowered.configurate.gson.GsonConfigurationLoader;
 
 import java.io.*;
@@ -11,22 +14,18 @@ import java.util.List;
 
 @UtilityClass
 public final class Utils {
-    public static final GsonConfigurationLoader.Builder LOADER = GsonConfigurationLoader.builder();
+    public static final GsonConfigurationLoader.Builder LOADER = GsonConfigurationLoader.builder()
+            .defaultOptions(opts -> opts.shouldCopyDefaults(true).serializers(builder -> {
+                builder.register(Tile.class, new TileSerializer());
+                builder.register(TileSize.class, new TileSizeSerializer());
+            }));
 
-    public static <T> File saveJson(List<T> data, File outDir, String fileName) throws IOException, IllegalArgumentException {
+    public static <T> File saveJson(List<T> data, File outDir, String fileName, Class<T> elementType) throws IOException, IllegalArgumentException {
         if (!outDir.exists() && !outDir.mkdirs()) {
             throw new IOException("Failed to create output directory: " + outDir);
         }
-
-        if (data.isEmpty()) {
-            throw new IllegalArgumentException("Cannot determine element type from empty list");
-        }
-
         File file = new File(outDir, fileName);
-
-        @SuppressWarnings("unchecked")
-        Class<T> elementType = (Class<T>) data.getFirst().getClass();
-        LOADER.file(file).build().save(BasicConfigurationNode.root().setList(elementType, data));
+        LOADER.file(file).build().save(LOADER.build().createNode().setList(elementType, data));
         return file;
     }
 

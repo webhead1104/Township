@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import me.webhead1104.tools.wikiScraper.annotations.DependsOn;
 import me.webhead1104.tools.wikiScraper.core.Scraper;
 import me.webhead1104.tools.wikiScraper.core.ScraperRegistry;
-import me.webhead1104.tools.wikiScraper.core.Utils;
 import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -23,6 +22,7 @@ import java.util.concurrent.Callable;
         description = "Scrapes the official towncraft wiki for data.")
 public class Main implements Callable<Integer> {
     public static final int MAX_LEVEL = 10;
+    public static final int MAX_POPULATION = 280;
     private static final Map<String, Scraper<?>> SCRAPERS_BY_ID = new LinkedHashMap<>();
     private static final Map<Class<? extends Scraper<?>>, Scraper<?>> SCRAPERS_BY_CLASS = new LinkedHashMap<>();
 

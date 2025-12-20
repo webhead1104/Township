@@ -85,7 +85,7 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
 
             Map<Key, List<Building>> groupedBuildings = new HashMap<>();
             for (Building building : buildings) {
-                groupedBuildings.computeIfAbsent(building.key(), _ -> new ArrayList<>()).add(building);
+                groupedBuildings.computeIfAbsent(building.key(), k -> new ArrayList<>()).add(building);
             }
 
             for (Map.Entry<Key, List<Building>> entry : groupedBuildings.entrySet()) {

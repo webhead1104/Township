@@ -44,4 +44,9 @@ public class PlotScraper implements Scraper<Plot> {
         plots.removeIf(plot -> plot.getLevelNeeded() > Main.MAX_LEVEL);
         return plots;
     }
+
+    @Override
+    public Class<Plot> resultType() {
+        return Plot.class;
+    }
 }
