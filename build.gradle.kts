@@ -5,6 +5,7 @@ plugins {
 }
 
 allprojects {
+    apply(plugin = "java")
     apply(plugin = "io.freefair.lombok")
     apply(plugin = "jacoco")
 
@@ -15,6 +16,12 @@ allprojects {
         mavenCentral()
         maven("https://repo.opencollab.dev/maven-snapshots")
         maven("https://jitpack.io/")
+    }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
     }
 
     tasks.withType<JavaCompile> {

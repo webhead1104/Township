@@ -19,6 +19,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.5.22")
     implementation("info.picocli:picocli:4.7.7")
     implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
+    implementation("org.apache.commons:commons-text:1.15.0")
     annotationProcessor("info.picocli:picocli-codegen:4.7.7")
 }
 
