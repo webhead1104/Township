@@ -25,5 +25,5 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.26.1")
     implementation("com.google.code.gson:gson:2.13.2")
     implementation("org.slf4j:slf4j-api:2.1.0-alpha1")
-    implementation("ch.qos.logback:logback-classic:1.5.22")
+    implementation("ch.qos.logback:logback-classic:1.5.23")
 }
