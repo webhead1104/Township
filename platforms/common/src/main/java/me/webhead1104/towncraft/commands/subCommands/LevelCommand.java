@@ -21,7 +21,7 @@ public final class LevelCommand implements TowncraftSubCommand {
     @Subcommand("set")
     public void set(TowncraftPlayer player, @Range(min = 0, max = LevelDataLoader.MAX_LEVELS_ADDED) int amount) {
         User user = player.getUser();
-        if (CommandUtils.validate(LevelDataLoader.MAX_LEVELS_ADDED, user.getLevel() + amount, player)) {
+        if (CommandUtils.validate(LevelDataLoader.MAX_LEVELS_ADDED, amount, player)) {
             return;
         }
         user.setLevel(amount);
