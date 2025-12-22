@@ -40,6 +40,9 @@ public class WorldSection {
                 for (int a : TileSize.SIZE_1X3.toList(0)) {
                     slotMap.put(a, new TrainTile());
                 }
+                for (int integer : new TileSize(3, 5).toList(3)) {
+                    slotMap.put(integer, new EventCenterTile());
+                }
             }
         }
         this.section = section;

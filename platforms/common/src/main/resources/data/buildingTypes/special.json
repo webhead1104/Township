@@ -65,6 +65,22 @@
         },
         "xp": 0,
         "size": "2x2"
+      },
+      {
+        "key": "event_center",
+        "level_needed": 8,
+        "population_needed": 0,
+        "price": {
+          "type": "coin",
+          "amount": 0
+        },
+        "time": "",
+        "tile": {
+          "class": "EventCenterTile"
+        },
+        "xp": 0,
+        "size": "3x5",
+        "not-in-menu": true
       }
     ]
   }
