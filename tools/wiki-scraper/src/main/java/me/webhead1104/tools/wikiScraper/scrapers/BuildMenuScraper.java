@@ -50,7 +50,6 @@ public class BuildMenuScraper implements Scraper<BuildMenu> {
             if (buildMenuType == BuildMenuTypes.FARMING) {
                 buildings.addAll(0, parsePlots());
             }
-            buildings.removeIf(it -> "event_center".equals(it.getKey())); //todo Towncraft#108
 
             BuildMenu buildMenu = new BuildMenu(buildMenuType.name().toLowerCase(), buildings);
             buildMenus.put(buildMenuType.name().toLowerCase(), buildMenu);

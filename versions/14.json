@@ -1,0 +1,2188 @@
+{
+  "version": 14,
+  "uuid": "1e27cf68-9d59-45ba-8190-e4b55fabaf57",
+  "town-name": "Webhead1104's Town",
+  "level": 10,
+  "xp": 0,
+  "population": 60,
+  "max-population": 90,
+  "coins": 9945,
+  "cash": 20,
+  "section": 28,
+  "barn": {
+    "item-map": {
+      "cow_feed": 12,
+      "paint": 20,
+      "hammer": 20,
+      "nail": 20,
+      "chicken_feed": 12
+    },
+    "barn-upgrade": {
+      "id": 1,
+      "tools-needed": 2,
+      "barn-storage": 70
+    }
+  },
+  "animals": {
+    "animal-buildings": {
+      "cowshed_3": {
+        "animals": {
+          "0": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "1": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "2": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "3": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "4": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "5": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          }
+        }
+      },
+      "sheep_farm_1": {
+        "animals": {
+          "0": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "1": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "2": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "3": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "4": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "5": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          }
+        }
+      },
+      "cowshed_2": {
+        "animals": {
+          "0": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "1": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "2": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "3": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "4": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "5": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          }
+        }
+      },
+      "sheep_farm_2": {
+        "animals": {
+          "0": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "1": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "2": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "3": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "4": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "5": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          }
+        }
+      },
+      "cowshed_1": {
+        "animals": {
+          "0": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "1": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "2": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "3": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "4": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "5": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          }
+        }
+      },
+      "chicken_coop_1": {
+        "animals": {
+          "0": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "1": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "2": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "3": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "4": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "5": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          }
+        }
+      },
+      "chicken_coop_3": {
+        "animals": {
+          "0": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "1": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "2": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "3": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "4": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "5": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          }
+        }
+      },
+      "chicken_coop_2": {
+        "animals": {
+          "0": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "1": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "2": {
+            "feed": false,
+            "product": false,
+            "unlocked": true,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "3": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "4": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          },
+          "5": {
+            "feed": false,
+            "product": false,
+            "unlocked": false,
+            "instant": "1970-01-01T00:00:00Z"
+          }
+        }
+      }
+    }
+  },
+  "factories": {
+    "factory-buildings": {
+      "dairy_factory": {
+        "waiting": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "completed": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "working-on": "none",
+        "instant": "1970-01-01T00:00:00Z"
+      },
+      "bakery": {
+        "waiting": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "completed": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "working-on": "none",
+        "instant": "1970-01-01T00:00:00Z"
+      },
+      "feed_mill_1": {
+        "waiting": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "completed": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "working-on": "none",
+        "instant": "1970-01-01T00:00:00Z"
+      },
+      "textile_factory": {
+        "waiting": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "completed": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "working-on": "none",
+        "instant": "1970-01-01T00:00:00Z"
+      },
+      "feed_mill_3": {
+        "waiting": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "completed": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "working-on": "none",
+        "instant": "1970-01-01T00:00:00Z"
+      },
+      "sugar_factory": {
+        "waiting": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "completed": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "working-on": "none",
+        "instant": "1970-01-01T00:00:00Z"
+      },
+      "feed_mill_2": {
+        "waiting": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "completed": {
+          "0": "none",
+          "1": "none",
+          "2": "none"
+        },
+        "working-on": "none",
+        "instant": "1970-01-01T00:00:00Z"
+      }
+    }
+  },
+  "world": {
+    "world-map": {
+      "0": {
+        "slot-map": {},
+        "section": 0
+      },
+      "1": {
+        "slot-map": {},
+        "section": 1
+      },
+      "2": {
+        "slot-map": {},
+        "section": 2
+      },
+      "3": {
+        "slot-map": {},
+        "section": 3
+      },
+      "4": {
+        "slot-map": {},
+        "section": 4
+      },
+      "5": {
+        "slot-map": {},
+        "section": 5
+      },
+      "6": {
+        "slot-map": {},
+        "section": 6
+      },
+      "7": {
+        "slot-map": {},
+        "section": 7
+      },
+      "8": {
+        "slot-map": {},
+        "section": 8
+      },
+      "9": {
+        "slot-map": {},
+        "section": 9
+      },
+      "10": {
+        "slot-map": {},
+        "section": 10
+      },
+      "11": {
+        "slot-map": {},
+        "section": 11
+      },
+      "12": {
+        "slot-map": {},
+        "section": 12
+      },
+      "13": {
+        "slot-map": {},
+        "section": 13
+      },
+      "14": {
+        "slot-map": {},
+        "section": 14
+      },
+      "15": {
+        "slot-map": {},
+        "section": 15
+      },
+      "16": {
+        "slot-map": {},
+        "section": 16
+      },
+      "17": {
+        "slot-map": {},
+        "section": 17
+      },
+      "18": {
+        "slot-map": {},
+        "section": 18
+      },
+      "19": {
+        "slot-map": {},
+        "section": 19
+      },
+      "20": {
+        "slot-map": {},
+        "section": 20
+      },
+      "21": {
+        "slot-map": {},
+        "section": 21
+      },
+      "22": {
+        "slot-map": {},
+        "section": 22
+      },
+      "23": {
+        "slot-map": {},
+        "section": 23
+      },
+      "24": {
+        "slot-map": {},
+        "section": 24
+      },
+      "25": {
+        "slot-map": {},
+        "section": 25
+      },
+      "26": {
+        "slot-map": {},
+        "section": 26
+      },
+      "27": {
+        "slot-map": {
+          "0": {
+            "class": "BarnTile",
+            "properties": {
+              "buildingType": "barn",
+              "buildingSlot": 0
+            }
+          },
+          "1": {
+            "class": "BarnTile",
+            "properties": {
+              "buildingType": "barn",
+              "buildingSlot": 0
+            }
+          },
+          "2": {
+            "class": "BarnTile",
+            "properties": {
+              "buildingType": "barn",
+              "buildingSlot": 0
+            }
+          },
+          "3": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "4": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "5": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "6": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "7": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "8": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "9": {
+            "class": "BarnTile",
+            "properties": {
+              "buildingType": "barn",
+              "buildingSlot": 0
+            }
+          },
+          "10": {
+            "class": "BarnTile",
+            "properties": {
+              "buildingType": "barn",
+              "buildingSlot": 0
+            }
+          },
+          "11": {
+            "class": "BarnTile",
+            "properties": {
+              "buildingType": "barn",
+              "buildingSlot": 0
+            }
+          },
+          "12": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "13": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "14": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "15": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "16": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "17": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "18": {
+            "class": "BarnTile",
+            "properties": {
+              "buildingType": "barn",
+              "buildingSlot": 0
+            }
+          },
+          "19": {
+            "class": "BarnTile",
+            "properties": {
+              "buildingType": "barn",
+              "buildingSlot": 0
+            }
+          },
+          "20": {
+            "class": "BarnTile",
+            "properties": {
+              "buildingType": "barn",
+              "buildingSlot": 0
+            }
+          },
+          "21": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "22": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "23": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "24": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "25": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "26": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "27": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "28": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "29": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "30": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "31": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "32": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "33": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "34": {
+            "class": "PlotTile",
+            "properties": {
+              "buildingType": "plot",
+              "buildingSlot": 0,
+              "plotType": "none",
+              "claimable": false
+            }
+          },
+          "35": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "36": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "37": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "38": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "39": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "40": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "41": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "42": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "43": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "44": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "45": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "46": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "47": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "48": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "49": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "50": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "51": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "52": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "53": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          }
+        },
+        "section": 27
+      },
+      "28": {
+        "slot-map": {
+          "0": {
+            "class": "TrainTile"
+          },
+          "1": {
+            "class": "TrainTile"
+          },
+          "2": {
+            "class": "TrainTile"
+          },
+          "3": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "4": {
+            "class": "CommunityBuildingTile",
+            "properties": {
+              "buildingType": "grocery_store",
+              "buildingSlot": 0,
+              "communityBuildingType": "GROCERY_STORE"
+            }
+          },
+          "5": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "6": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "7": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "8": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "9": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "10": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "11": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "12": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "13": {
+            "class": "CommunityBuildingTile",
+            "properties": {
+              "buildingType": "grocery_store",
+              "buildingSlot": 0,
+              "communityBuildingType": "GROCERY_STORE"
+            }
+          },
+          "14": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "15": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "16": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "17": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "18": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "19": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "20": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "21": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "22": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "23": {
+            "class": "CommunityBuildingTile",
+            "properties": {
+              "buildingType": "school",
+              "buildingSlot": 0,
+              "communityBuildingType": "SCHOOL"
+            }
+          },
+          "24": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "25": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "26": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "27": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "28": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "29": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "30": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "31": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "32": {
+            "class": "CommunityBuildingTile",
+            "properties": {
+              "buildingType": "school",
+              "buildingSlot": 0,
+              "communityBuildingType": "SCHOOL"
+            }
+          },
+          "33": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "34": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "35": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "36": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "37": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "38": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "39": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "40": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "41": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "42": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "43": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "44": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "45": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "46": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "47": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "48": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "49": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "50": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "51": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "52": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "53": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          }
+        },
+        "section": 28
+      },
+      "29": {
+        "slot-map": {},
+        "section": 29
+      },
+      "30": {
+        "slot-map": {},
+        "section": 30
+      },
+      "31": {
+        "slot-map": {},
+        "section": 31
+      },
+      "32": {
+        "slot-map": {},
+        "section": 32
+      },
+      "33": {
+        "slot-map": {},
+        "section": 33
+      },
+      "34": {
+        "slot-map": {},
+        "section": 34
+      },
+      "35": {
+        "slot-map": {
+          "0": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "1": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "2": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "3": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "4": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "5": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "6": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "7": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "8": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "9": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "10": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "11": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "12": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "13": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "14": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "15": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "16": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "17": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "18": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "19": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "20": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "21": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "22": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "23": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "24": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "25": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "26": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "27": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "28": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "29": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "30": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "31": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "32": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "33": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "34": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "35": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "36": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "37": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "38": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "39": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "40": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "41": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "42": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "43": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "44": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "45": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "46": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "47": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "48": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "49": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "50": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "51": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "52": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "53": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          }
+        },
+        "section": 35
+      },
+      "36": {
+        "slot-map": {
+          "0": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "1": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "2": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "3": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "4": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "5": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "6": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "7": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "8": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "9": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "10": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "11": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "12": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "13": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "14": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "15": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "16": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "17": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "18": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "19": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "20": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "21": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "22": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "23": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "24": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "25": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "26": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "27": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "28": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "29": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "30": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "31": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "32": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "33": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "34": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "35": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "36": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "37": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "38": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "39": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "40": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "41": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "42": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "43": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "44": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "45": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "46": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "47": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "48": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "49": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "50": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "51": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "52": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          },
+          "53": {
+            "class": "StaticWorldTile",
+            "properties": {
+              "material": "minecraft:grass_block"
+            }
+          }
+        },
+        "section": 36
+      },
+      "37": {
+        "slot-map": {},
+        "section": 37
+      },
+      "38": {
+        "slot-map": {},
+        "section": 38
+      },
+      "39": {
+        "slot-map": {},
+        "section": 39
+      },
+      "40": {
+        "slot-map": {},
+        "section": 40
+      },
+      "41": {
+        "slot-map": {},
+        "section": 41
+      },
+      "42": {
+        "slot-map": {},
+        "section": 42
+      },
+      "43": {
+        "slot-map": {},
+        "section": 43
+      },
+      "44": {
+        "slot-map": {},
+        "section": 44
+      },
+      "45": {
+        "slot-map": {},
+        "section": 45
+      },
+      "46": {
+        "slot-map": {},
+        "section": 46
+      },
+      "47": {
+        "slot-map": {},
+        "section": 47
+      },
+      "48": {
+        "slot-map": {},
+        "section": 48
+      },
+      "49": {
+        "slot-map": {},
+        "section": 49
+      },
+      "50": {
+        "slot-map": {},
+        "section": 50
+      },
+      "51": {
+        "slot-map": {},
+        "section": 51
+      },
+      "52": {
+        "slot-map": {},
+        "section": 52
+      },
+      "53": {
+        "slot-map": {},
+        "section": 53
+      },
+      "54": {
+        "slot-map": {},
+        "section": 54
+      },
+      "55": {
+        "slot-map": {},
+        "section": 55
+      },
+      "56": {
+        "slot-map": {},
+        "section": 56
+      },
+      "57": {
+        "slot-map": {},
+        "section": 57
+      },
+      "58": {
+        "slot-map": {},
+        "section": 58
+      },
+      "59": {
+        "slot-map": {},
+        "section": 59
+      },
+      "60": {
+        "slot-map": {},
+        "section": 60
+      },
+      "61": {
+        "slot-map": {},
+        "section": 61
+      },
+      "62": {
+        "slot-map": {},
+        "section": 62
+      },
+      "63": {
+        "slot-map": {},
+        "section": 63
+      }
+    }
+  },
+  "trains": {
+    "trains": {
+      "1": {
+        "train-cars": {
+          "1": {
+            "claim-item-type": "nail",
+            "claim-item-amount": 26,
+            "give-item-type": "electric_saw",
+            "give-item-amount": 6
+          },
+          "2": {
+            "claim-item-type": "hammer",
+            "claim-item-amount": 2,
+            "give-item-type": "egg",
+            "give-item-amount": 8
+          },
+          "3": {
+            "claim-item-type": "paint",
+            "claim-item-amount": 23,
+            "give-item-type": "carrot",
+            "give-item-amount": 12
+          },
+          "4": {
+            "claim-item-type": "nail",
+            "claim-item-amount": 17,
+            "give-item-type": "cow_feed",
+            "give-item-amount": 10
+          },
+          "5": {
+            "claim-item-type": "nail",
+            "claim-item-amount": 6,
+            "give-item-type": "bagel",
+            "give-item-amount": 6
+          }
+        },
+        "unlocked": true,
+        "in-station": true,
+        "claim-items": false
+      },
+      "2": {
+        "train-cars": {
+          "1": {
+            "claim-item-type": "hammer",
+            "claim-item-amount": 11,
+            "give-item-type": "wool",
+            "give-item-amount": 2
+          },
+          "2": {
+            "claim-item-type": "nail",
+            "claim-item-amount": 28,
+            "give-item-type": "slab",
+            "give-item-amount": 6
+          },
+          "3": {
+            "claim-item-type": "paint",
+            "claim-item-amount": 9,
+            "give-item-type": "electric_saw",
+            "give-item-amount": 5
+          },
+          "4": {
+            "claim-item-type": "nail",
+            "claim-item-amount": 7,
+            "give-item-type": "bagel",
+            "give-item-amount": 6
+          },
+          "5": {
+            "claim-item-type": "hammer",
+            "claim-item-amount": 18,
+            "give-item-type": "shovel",
+            "give-item-amount": 3
+          }
+        },
+        "unlocked": false,
+        "in-station": true,
+        "claim-items": false
+      },
+      "3": {
+        "train-cars": {
+          "1": {
+            "claim-item-type": "nail",
+            "claim-item-amount": 1,
+            "give-item-type": "cotton",
+            "give-item-amount": 5
+          },
+          "2": {
+            "claim-item-type": "hammer",
+            "claim-item-amount": 3,
+            "give-item-type": "sugarcane",
+            "give-item-amount": 1
+          },
+          "3": {
+            "claim-item-type": "nail",
+            "claim-item-amount": 11,
+            "give-item-type": "bread",
+            "give-item-amount": 8
+          },
+          "4": {
+            "claim-item-type": "paint",
+            "claim-item-amount": 13,
+            "give-item-type": "cow_feed",
+            "give-item-amount": 9
+          },
+          "5": {
+            "claim-item-type": "hammer",
+            "claim-item-amount": 7,
+            "give-item-type": "milk",
+            "give-item-amount": 12
+          }
+        },
+        "unlocked": false,
+        "in-station": true,
+        "claim-items": false
+      }
+    },
+    "unlocked": false
+  },
+  "purchased-buildings": {
+    "purchased-buildings": {
+      "train": [
+        {
+          "slot": 0,
+          "section": 28,
+          "placed": true,
+          "building-type": "train"
+        }
+      ],
+      "barn": [
+        {
+          "slot": 0,
+          "section": 27,
+          "placed": true,
+          "building-type": "barn"
+        }
+      ],
+      "plot": [
+        {
+          "slot": 0,
+          "section": 27,
+          "placed": true,
+          "building-type": "plot"
+        }
+      ],
+      "grocery_store": [
+        {
+          "slot": 0,
+          "section": 28,
+          "placed": true,
+          "building-type": "grocery_store"
+        }
+      ],
+      "school": [
+        {
+          "slot": 0,
+          "section": 28,
+          "placed": true,
+          "building-type": "school"
+        }
+      ]
+    }
+  },
+  "expansions-purchased": 0,
+  "helicopter": {
+    "orders": {},
+    "pending-orders": []
+  }
+}
