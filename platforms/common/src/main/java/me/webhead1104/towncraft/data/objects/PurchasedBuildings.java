@@ -7,6 +7,7 @@ import lombok.Setter;
 import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.features.world.build.BuildingType;
 import net.kyori.adventure.key.Key;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
 import java.util.*;
@@ -37,21 +38,24 @@ public class PurchasedBuildings {
         return purchasedBuildings.get(buildingType).stream().filter(PurchasedBuilding::isPlaced).toList().size();
     }
 
-    public Wrapper getNextBuilding(Key buildingType) {
+    public @Nullable BuildingType.Building getNextBuilding(Key buildingType) {
+        List<BuildingType.Building> buildings = Towncraft.getDataLoader(BuildingType.class).get(buildingType);
         if (!purchasedBuildings.containsKey(buildingType)) {
-            return new Wrapper(0, false);
+            return buildings.getFirst();
         }
 
         for (PurchasedBuilding purchasedBuilding : purchasedBuildings.get(buildingType)) {
             if (!purchasedBuilding.isPlaced()) {
-                return new Wrapper(purchasedBuilding.getSlot(), true);
+                BuildingType.Building building = buildings.get(purchasedBuilding.getSlot());
+                building.setNeedToBePlaced(true);
+                return building;
             }
         }
 
-        if (Towncraft.getDataLoader(BuildingType.class).get(buildingType).size() > purchasedBuildings.get(buildingType).size()) {
-            return new Wrapper(-2, false);
+        if (buildings.size() > purchasedBuildings.get(buildingType).size()) {
+            return buildings.get(amountPurchased(buildingType));
         }
-        return new Wrapper(-1, false);
+        return null;
     }
 
     public void purchase(Key buildingType, int slot) {
@@ -64,9 +68,6 @@ public class PurchasedBuildings {
     public Optional<PurchasedBuilding> getPurchasedBuilding(Key buildingType, int slot) {
         if (!purchasedBuildings.containsKey(buildingType)) return Optional.empty();
         return Optional.ofNullable(purchasedBuildings.get(buildingType).get(slot));
-    }
-
-    public record Wrapper(int slot, boolean placed) {
     }
 
     @Getter

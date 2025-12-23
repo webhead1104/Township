@@ -3,12 +3,11 @@ package me.webhead1104.towncraft.features.world.build;
 import com.google.common.base.Stopwatch;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import me.webhead1104.towncraft.Towncraft;
-import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.annotations.DependsOn;
 import me.webhead1104.towncraft.data.TileSize;
 import me.webhead1104.towncraft.data.objects.ConstructionMaterials;
-import me.webhead1104.towncraft.data.objects.PurchasedBuildings;
 import me.webhead1104.towncraft.data.objects.User;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
 import me.webhead1104.towncraft.dataLoaders.Keyed;
@@ -36,28 +35,6 @@ import java.util.*;
 @DependsOn({AnimalType.class, FactoryType.class})
 public class BuildingType implements DataLoader.KeyBasedDataLoader<List<BuildingType.Building>> {
     private final Map<Key, List<Building>> values = new HashMap<>();
-
-    @Nullable
-    public static Building getNextBuilding(TowncraftPlayer player, Key buildingType) {
-        User user = player.getUser();
-        PurchasedBuildings.Wrapper amountPurchased = user.getPurchasedBuildings().getNextBuilding(buildingType);
-        List<Building> buildings = Towncraft.getDataLoader(BuildingType.class).get(buildingType);
-        if (amountPurchased.slot() == -1) return null;
-
-        if (amountPurchased.slot() == -2) {
-            return buildings.get(user.getPurchasedBuildings().amountPurchased(buildingType));
-        }
-        if (amountPurchased.placed()) {
-            Building building = buildings.get(amountPurchased.slot());
-            building.needToBePlaced = true;
-            return building;
-        } else {
-            if (amountPurchased.slot() == 0) {
-                return buildings.getFirst();
-            }
-            return buildings.get(amountPurchased.slot() - 1);
-        }
-    }
 
     public List<Building> get(Key key) {
         if (!values.containsKey(key)) {
@@ -150,6 +127,7 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
         @Setting
         private boolean notInMenu;
         private transient int slot;
+        @Setter
         private transient boolean needToBePlaced;
         private transient String name;
 

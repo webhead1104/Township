@@ -6,7 +6,10 @@
         "key": "plot",
         "level_needed": 0,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "size": "1x1"
       },
@@ -14,7 +17,10 @@
         "key": "plot",
         "level_needed": 0,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "size": "1x1"
       },
@@ -22,7 +28,10 @@
         "key": "plot",
         "level_needed": 0,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "size": "1x1"
       },
@@ -30,7 +39,10 @@
         "key": "plot",
         "level_needed": 0,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "size": "1x1"
       },
@@ -38,7 +50,10 @@
         "key": "plot",
         "level_needed": 0,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "size": "1x1"
       },
@@ -46,7 +61,10 @@
         "key": "plot",
         "level_needed": 0,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "size": "1x1"
       },
@@ -55,7 +73,10 @@
         "level_needed": 0,
         "population_needed": 65,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 2,
         "size": "1x1"
@@ -65,7 +86,10 @@
         "level_needed": 0,
         "population_needed": 70,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 3,
         "size": "1x1"
@@ -75,7 +99,10 @@
         "level_needed": 0,
         "population_needed": 75,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 4,
         "size": "1x1"
@@ -85,7 +112,10 @@
         "level_needed": 0,
         "population_needed": 85,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 5,
         "size": "1x1"
@@ -95,7 +125,10 @@
         "level_needed": 0,
         "population_needed": 95,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 6,
         "size": "1x1"
@@ -105,7 +138,10 @@
         "level_needed": 0,
         "population_needed": 110,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 7,
         "size": "1x1"
@@ -115,7 +151,10 @@
         "level_needed": 0,
         "population_needed": 125,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 8,
         "size": "1x1"
@@ -125,7 +164,10 @@
         "level_needed": 0,
         "population_needed": 145,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 10,
         "size": "1x1"
@@ -135,7 +177,10 @@
         "level_needed": 0,
         "population_needed": 165,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 11,
         "size": "1x1"
@@ -145,7 +190,10 @@
         "level_needed": 0,
         "population_needed": 185,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 12,
         "size": "1x1"
@@ -155,7 +203,10 @@
         "level_needed": 0,
         "population_needed": 210,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 13,
         "size": "1x1"
@@ -165,7 +216,10 @@
         "level_needed": 0,
         "population_needed": 235,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 14,
         "size": "1x1"
@@ -175,7 +229,10 @@
         "level_needed": 0,
         "population_needed": 265,
         "tile": {
-          "class": "PlotTile"
+          "class": "PlotTile",
+          "properties": {
+            "plotType": "none"
+          }
         },
         "xp": 15,
         "size": "1x1"
