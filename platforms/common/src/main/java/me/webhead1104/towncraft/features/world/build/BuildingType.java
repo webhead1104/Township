@@ -1,9 +1,10 @@
 package me.webhead1104.towncraft.features.world.build;
 
 import com.google.common.base.Stopwatch;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.With;
 import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.annotations.DependsOn;
 import me.webhead1104.towncraft.data.TileSize;
@@ -95,6 +96,7 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
     @Getter
     @ConfigSerializable
     @NoArgsConstructor
+    @AllArgsConstructor
     public static final class Building extends Keyed {
         @Required
         @Setting("key")
@@ -127,7 +129,7 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
         @Setting
         private boolean notInMenu;
         private transient int slot;
-        @Setter
+        @With
         private transient boolean needToBePlaced;
         private transient String name;
 

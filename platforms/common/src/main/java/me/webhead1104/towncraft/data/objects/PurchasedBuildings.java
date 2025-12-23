@@ -46,9 +46,7 @@ public class PurchasedBuildings {
 
         for (PurchasedBuilding purchasedBuilding : purchasedBuildings.get(buildingType)) {
             if (!purchasedBuilding.isPlaced()) {
-                BuildingType.Building building = buildings.get(purchasedBuilding.getSlot());
-                building.setNeedToBePlaced(true);
-                return building;
+                return buildings.get(purchasedBuilding.getSlot()).withNeedToBePlaced(true);
             }
         }
 
