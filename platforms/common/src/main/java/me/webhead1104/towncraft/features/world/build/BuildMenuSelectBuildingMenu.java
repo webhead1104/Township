@@ -13,6 +13,7 @@ import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.items.TowncraftMaterial;
 import me.webhead1104.towncraft.menus.TowncraftView;
 import me.webhead1104.towncraft.menus.context.SlotClickContext;
+import me.webhead1104.towncraft.tiles.ConstructionTile;
 import me.webhead1104.towncraft.utils.Msg;
 import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +43,12 @@ public class BuildMenuSelectBuildingMenu extends TowncraftView {
                         "ON_PLACE", (PlaceMenu.PlaceAction) (ctx, section, anchor) -> {
                             User user = userState.get(ctx);
                             for (Integer s : building.getSize().toList(anchor)) {
-                                user.getWorld().getSection(section).setSlot(s, building.getTile());
+                                ConstructionTile tile = new ConstructionTile(
+                                        building.getName(),
+                                        building.getTime(),
+                                        building.getTile()
+                                );
+                                user.getWorld().getSection(section).setSlot(s, tile);
                             }
                             user.getPurchasedBuildings().getPurchasedBuilding(buildingType, building.getSlot()).ifPresent(pb -> {
                                 pb.setPlaced(true);
@@ -72,7 +78,12 @@ public class BuildMenuSelectBuildingMenu extends TowncraftView {
                         "ON_PLACE", (PlaceMenu.PlaceAction) (ctx, section, anchor) -> {
                             User u = ctx.getUser();
                             for (Integer s : building.getSize().toList(anchor)) {
-                                u.getWorld().getSection(section).setSlot(s, building.getTile());
+                                ConstructionTile tile = new ConstructionTile(
+                                        building.getName(),
+                                        building.getTime(),
+                                        building.getTile()
+                                );
+                                u.getWorld().getSection(section).setSlot(s, tile);
                             }
                             u.getPurchasedBuildings().getPurchasedBuilding(buildingType, building.getSlot()).ifPresent(pb -> {
                                 pb.setPlaced(true);
