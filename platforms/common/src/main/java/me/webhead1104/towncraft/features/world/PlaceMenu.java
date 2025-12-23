@@ -1,6 +1,5 @@
 package me.webhead1104.towncraft.features.world;
 
-import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
@@ -11,6 +10,7 @@ import me.webhead1104.towncraft.data.objects.User;
 import me.webhead1104.towncraft.data.objects.WorldSection;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.items.TowncraftMaterial;
+import me.webhead1104.towncraft.menus.TowncraftView;
 import me.webhead1104.towncraft.menus.context.CloseContext;
 import me.webhead1104.towncraft.menus.context.Context;
 import me.webhead1104.towncraft.menus.context.SlotClickContext;
@@ -19,9 +19,9 @@ import me.webhead1104.towncraft.utils.Msg;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public class PlaceMenu extends View {
+import java.util.Objects;
 
-    private final MutableIntState sectionState = mutableState(27);
+public class PlaceMenu extends TowncraftView {
     private final State<TileSize> tileSizeState = initialState("TILE_SIZE");
     private final State<Integer> startSectionState = initialState("START_SECTION");
     private final State<PlaceAction> onPlaceState = initialState("ON_PLACE");
@@ -29,8 +29,8 @@ public class PlaceMenu extends View {
     private final State<Integer> startAnchorState = initialState("START_ANCHOR");
     private final State<Component> titleState = initialState("TITLE");
     private final MutableIntState slotState = mutableState(0);
+    private final MutableIntState sectionState = mutableState(27);
     private final MutableState<Boolean> canPlaceState = mutableState(false);
-    private final MutableState<Boolean> placedState = mutableState(false);
 
     @Override
     public void onInit(@NotNull ViewConfigBuilder config) {
@@ -42,15 +42,9 @@ public class PlaceMenu extends View {
     @Override
     public void onOpen(@NotNull OpenContext context) {
         context.modifyConfig().title(titleState.get(context));
-        context.getPlayer().getInventory().clear();
-        context.getPlayer().setItemOnCursor(TowncraftItemStack.empty());
+
         Integer start = startSectionState.get(context);
-        if (start != null) {
-            sectionState.set(start, context);
-        } else {
-            int current = context.getPlayer().getUser().getSection();
-            sectionState.set(current, context);
-        }
+        sectionState.set(Objects.requireNonNullElseGet(start, () -> context.getUser().getSection()), context);
         Integer startAnchor = startAnchorState.get(context);
         if (startAnchor != null) {
             TileSize size = tileSizeState.get(context);
@@ -81,7 +75,8 @@ public class PlaceMenu extends View {
 
     @Override
     public void onClose(@NotNull CloseContext context) {
-        if (!Boolean.TRUE.equals(placedState.get(context))) {
+        super.onClose(context);
+        if (openBackMenu.get(context)) {
             CancelAction cancel = onCancelState.get(context);
             if (cancel != null) {
                 cancel.onCancel(context);
@@ -164,16 +159,18 @@ public class PlaceMenu extends View {
         } else if (context.getClickedSlot() == 67 && context.itemExists() && Boolean.TRUE.equals(canPlaceState.get(context))) {
             PlaceAction place = onPlaceState.get(context);
             if (place != null) {
-                placedState.set(true, context);
+                openBackMenu.set(false, context);
                 place.onPlace(context, section, slotState.get(context));
             }
         }
     }
 
+    @FunctionalInterface
     public interface PlaceAction {
         void onPlace(SlotClickContext context, int section, int anchor);
     }
 
+    @FunctionalInterface
     public interface CancelAction {
         void onCancel(CloseContext context);
     }
