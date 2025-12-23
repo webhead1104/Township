@@ -27,7 +27,7 @@ public record RegistryGenerator(Path outputFolder) implements TowncraftCodeGener
                 // Add @SuppressWarnings("unused")
                 .addModifiers(Modifier.SEALED)
                 .addPermittedSubclass(typeClass)
-                .addAnnotation(AnnotationSpec.builder(SuppressWarnings.class).addMember("value", "$S", "unused").build())
+                .addAnnotation(AnnotationSpec.builder(SuppressWarnings.class).addMember("value", "{$S, $S}", "unused", "SpellCheckingInspection").build())
                 .addJavadoc(generateJavadoc(typeClass));
 
         // Use data

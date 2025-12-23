@@ -23,7 +23,7 @@ dependencies {
     }
 
     compileOnly("io.github.revxrsal:lamp.bukkit:4.0.0-rc.14")
-    compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
 
     //shadow these in since paper class loading is weird
     implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
@@ -110,7 +110,7 @@ tasks {
         enabled = false
     }
     runServer {
-        minecraftVersion("1.21.10")
+        minecraftVersion("1.21.11")
         runDirectory.set(rootProject.layout.projectDirectory.dir("run/paper"))
     }
     paperPluginYaml {
