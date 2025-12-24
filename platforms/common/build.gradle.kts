@@ -10,6 +10,8 @@ plugins {
     id("net.kyori.blossom") version "2.2.0"
 }
 
+version = project.findProperty("plugin_version") as String? ?: "unknown"
+
 dependencies {
     api("me.devnatan:inventory-framework-api:3.7.1")
     api("me.devnatan:inventory-framework-platform:3.7.1")

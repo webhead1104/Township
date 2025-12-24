@@ -6,6 +6,8 @@ plugins {
     id("net.cytonic.run-cytosis") version "1.0"
 }
 
+version = project.findProperty("plugin_version") as String? ?: "unknown"
+
 repositories {
     maven("https://jitpack.io")
     maven("https://repo.foxikle.dev/cytonic")

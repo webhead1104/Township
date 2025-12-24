@@ -4,6 +4,8 @@ plugins {
     id("xyz.jpenilla.run-paper") version "3.0.2"
     id("com.gradleup.shadow") version "9.3.0"
 }
+version = project.findProperty("plugin_version") as String? ?: "unknown"
+val minecraftVersion = findProperty("minecraft_version") as String
 
 repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
@@ -23,7 +25,7 @@ dependencies {
     }
 
     compileOnly("io.github.revxrsal:lamp.bukkit:4.0.0-rc.14")
-    compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:$minecraftVersion-R0.1-SNAPSHOT")
 
     //shadow these in since paper class loading is weird
     implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
@@ -118,7 +120,7 @@ tasks {
         enabled = false
     }
     runServer {
-        minecraftVersion("1.21.11")
+        minecraftVersion(minecraftVersion)
         runDirectory.set(rootProject.layout.projectDirectory.dir("run/paper"))
     }
     paperPluginYaml {

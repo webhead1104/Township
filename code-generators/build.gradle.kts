@@ -9,7 +9,7 @@ group = "me.webhead1104"
 version = "1.0-SNAPSHOT"
 
 dependencies {
-    implementation("net.minestom:data:1.21.11-rv1")
+    implementation("net.minestom:data:${findProperty("minecraft_version") as String}-rv1")
     implementation("org.jetbrains:annotations:26.0.2-1")
     implementation("net.kyori:adventure-api:4.26.1")
     implementation("com.palantir.javapoet:javapoet:0.9.0")
