@@ -42,8 +42,10 @@ import me.webhead1104.towncraft.database.LoaderManager;
 import me.webhead1104.towncraft.database.UserLoader;
 import me.webhead1104.towncraft.features.animals.AnimalType;
 import me.webhead1104.towncraft.features.factories.FactoryType;
+import me.webhead1104.towncraft.utils.BuildInfo;
 import me.webhead1104.towncraft.utils.ClassGraphUtils;
 import net.kyori.adventure.util.Services;
+import org.slf4j.Logger;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 import revxrsal.commands.Lamp;
 import revxrsal.commands.command.CommandActor;
@@ -83,6 +85,12 @@ public class TowncraftPlatformManager {
     }
 
     public static void init() {
+        Logger logger = Towncraft.getLogger();
+        logger.info("******************************************");
+        logger.info("");
+        logger.info("Loading Towncraft version {}", BuildInfo.VERSION);
+        logger.info("");
+        logger.info("******************************************");
         Config.loadConfig();
         loadDataLoaders();
         loadDataVersions();
