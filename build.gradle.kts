@@ -17,7 +17,7 @@ allprojects {
     apply(plugin = "net.kyori.indra.licenser.spotless")
 
     group = "me.webhead1104"
-    version = "1.0-SNAPSHOT"
+    version = "0.1"
 
     repositories {
         mavenCentral()

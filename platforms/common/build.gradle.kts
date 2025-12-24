@@ -10,9 +10,6 @@ plugins {
     id("net.kyori.blossom") version "2.2.0"
 }
 
-group = "me.webhead1104"
-version = "1.0-SNAPSHOT"
-
 dependencies {
     api("me.devnatan:inventory-framework-api:3.7.1")
     api("me.devnatan:inventory-framework-platform:3.7.1")

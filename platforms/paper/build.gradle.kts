@@ -105,6 +105,14 @@ tasks.compileJava {
     source(generateClassloader.map { layout.buildDirectory.dir("generated/sources/classloader").get() })
 }
 
+tasks.named("javadocJar") {
+    enabled = false
+}
+
+tasks.named("sourcesJar") {
+    enabled = false
+}
+
 tasks {
     jar {
         enabled = false
