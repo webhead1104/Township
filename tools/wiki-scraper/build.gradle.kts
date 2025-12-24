@@ -1,3 +1,5 @@
+import net.kyori.indra.IndraExtension
+
 plugins {
     id("java")
     id("io.freefair.lombok") version "9.1.0"
@@ -23,8 +25,12 @@ dependencies {
     annotationProcessor("info.picocli:picocli-codegen:4.7.7")
 }
 
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+extensions.configure<IndraExtension> {
+    javaVersions {
+        target(25)
+        minimumToolchain(25)
+        testWith(25)
+    }
 }
 
 application {
