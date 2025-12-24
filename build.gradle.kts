@@ -1,13 +1,20 @@
+import net.kyori.indra.IndraExtension
+
 plugins {
     id("java")
     id("io.freefair.lombok") version "9.1.0"
-    id("com.diffplug.spotless") version "8.1.0"
+    id("net.kyori.indra") version "4.0.0" apply false
+    id("net.kyori.indra.git") version "4.0.0" apply false
+    id("net.kyori.indra.licenser.spotless") version "4.0.0" apply false
 }
 
 allprojects {
     apply(plugin = "java")
     apply(plugin = "io.freefair.lombok")
     apply(plugin = "jacoco")
+    apply(plugin = "net.kyori.indra")
+    apply(plugin = "net.kyori.indra.git")
+    apply(plugin = "net.kyori.indra.licenser.spotless")
 
     group = "me.webhead1104"
     version = "1.0-SNAPSHOT"
@@ -18,15 +25,27 @@ allprojects {
         maven("https://jitpack.io/")
     }
 
-    java {
-        toolchain {
-            languageVersion.set(JavaLanguageVersion.of(21))
+    extensions.configure<IndraExtension> {
+        javaVersions {
+            target(21)
+            minimumToolchain(21)
+            testWith(21)
         }
+
+        github("Webhead1104", "Towncraft") {
+            ci(true)
+        }
+
+        mitLicense()
     }
 
     tasks.withType<JavaCompile> {
         // Preserve parameter names in the bytecode
         options.compilerArgs.add("-parameters")
+    }
+
+    tasks.withType<Jar> {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 
     plugins.withType<JavaPlugin> {
@@ -62,16 +81,6 @@ allprojects {
                     }
                 })
             )
-        }
-    }
-}
-
-tasks {
-    spotless {
-        ratchetFrom = "origin/master"
-        java {
-            idea().withDefaults(true)
-            formatAnnotations()
         }
     }
 }

@@ -1,3 +1,5 @@
+import net.kyori.indra.IndraExtension
+
 plugins {
     id("java")
     id("com.gradleup.shadow") version "9.3.0"
@@ -32,6 +34,14 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")
+}
+
+extensions.configure<IndraExtension> {
+    javaVersions {
+        target(25)
+        minimumToolchain(25)
+        testWith(25)
+    }
 }
 
 java {

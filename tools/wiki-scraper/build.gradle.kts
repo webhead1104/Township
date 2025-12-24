@@ -31,11 +31,6 @@ application {
     mainClass.set("me.webhead1104.tools.wikiScraper.cli.Main")
 }
 
-tasks.withType<Javadoc> {
-    val javadocOptions = options as CoreJavadocOptions
-    javadocOptions.addStringOption("source", "21")
-}
-
 tasks.getByName<JavaExec>("run") {
     args = listOf(
         "-o",
