@@ -1,14 +1,16 @@
 import net.kyori.indra.IndraExtension
 
 plugins {
-    id("java")
-    id("io.freefair.lombok") version "9.1.0"
+    id("io.freefair.lombok") version "9.1.0" apply false
     id("net.kyori.indra") version "4.0.0" apply false
     id("net.kyori.indra.git") version "4.0.0" apply false
     id("net.kyori.indra.licenser.spotless") version "4.0.0" apply false
 }
 
-allprojects {
+subprojects {
+    if (subprojects.isNotEmpty()) {
+        return@subprojects
+    }
     apply(plugin = "java")
     apply(plugin = "io.freefair.lombok")
     apply(plugin = "jacoco")
