@@ -81,8 +81,8 @@ public class ExpansionDataLoader implements DataLoader.IntegerBasedDataLoader<Ex
         @Setting("time")
         private Duration time;
         @Required
-        @Setting("xp")
-        private int xp;
+        @Setting("xp_needed")
+        private int xpNeeded;
         @Nullable
         @Setting("tools_needed")
         private ToolsNeeded toolsNeeded;
