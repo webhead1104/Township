@@ -1,8 +1,5 @@
-@file:OptIn(ExperimentalTime::class)
-
 import net.kyori.indra.git.RepositoryValueSource
 import org.eclipse.jgit.api.Git
-import kotlin.time.ExperimentalTime
 
 plugins {
     id("java")
@@ -60,7 +57,7 @@ sourceSets {
         blossom {
             javaSources {
                 property("version", "${project.version} (${gitVersion.get()})")
-                property("devVersion", isDevBuild(gitBranch.get(), gitRepositoryUrl.get()).toString())
+                properties.put("isDev", isDevBuild(gitBranch.get(), gitRepositoryUrl.get()).toString())
             }
         }
         java {
