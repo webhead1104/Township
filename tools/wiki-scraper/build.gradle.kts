@@ -17,7 +17,7 @@ dependencies {
     implementation("io.github.classgraph:classgraph:4.8.184")
     implementation("org.slf4j:slf4j-api:2.1.0-alpha1")
     implementation("ch.qos.logback:logback-classic:1.5.23")
-    implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.13")
     implementation("com.github.ajalt.clikt:clikt:5.0.3")
     implementation("org.apache.commons:commons-text:1.15.0")
     implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
