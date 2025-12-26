@@ -26,6 +26,7 @@ package me.webhead1104.towncraft;
 import lombok.Getter;
 import me.webhead1104.towncraft.commands.TowncraftCommand;
 import me.webhead1104.towncraft.impl.TowncraftPlayerPaperImpl;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -51,6 +52,8 @@ public class TowncraftPaper extends JavaPlugin implements Listener {
         TowncraftPlatformManager.initCommands(lamp);
 
         registerListeners();
+
+        new Metrics(this, 27967);
     }
 
     @Override

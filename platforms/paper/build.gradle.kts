@@ -27,6 +27,7 @@ dependencies {
 
     compileOnly("io.github.revxrsal:lamp.bukkit:4.0.0-rc.14")
     compileOnly("io.papermc.paper:paper-api:$minecraftVersion-R0.1-SNAPSHOT")
+    implementation("org.bstats:bstats-bukkit:3.1.0")
 
     //shadow these in since paper class loading is weird
     implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
@@ -148,6 +149,7 @@ tasks {
         relocate("org.spongepowered.configurate", "me.webhead1104.towncraft.libs.configurate")
         relocate("io.leangen.geantyref", "me.webhead1104.towncraft.libs.configurate")
         relocate("com.google.gson", "me.webhead1104.towncraft.libs.configurate")
+        relocate("org.bstats", "me.webhead1104.towncraft.libs.bstats")
     }
 }
 
