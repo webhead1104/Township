@@ -21,7 +21,7 @@ dependencies {
     implementation(libs.clikt)
     implementation(libs.commonsText)
     implementation(libs.configurate.gson)
-    implementation(libs.kotlin.reflect)
+    implementation(kotlin("reflect"))
 }
 
 java {
