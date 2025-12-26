@@ -1,5 +1,3 @@
-import net.kyori.indra.IndraExtension
-
 plugins {
     id("java")
     application
@@ -16,12 +14,8 @@ dependencies {
     implementation("com.google.code.gson:gson:2.13.2")
 }
 
-extensions.configure<IndraExtension> {
-    javaVersions {
-        target(25)
-        minimumToolchain(25)
-        testWith(25)
-    }
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(25))
 }
 
 application {

@@ -3,6 +3,7 @@ plugins {
     id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
     id("xyz.jpenilla.run-paper") version "3.0.2"
     id("com.gradleup.shadow") version "9.3.0"
+    id("me.modmuss50.mod-publish-plugin") version "1.1.0"
 }
 version = project.findProperty("plugin_version") as String? ?: "unknown"
 val minecraftVersion = findProperty("minecraft_version") as String
@@ -37,7 +38,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")
 }
 
-val generateClassloader = tasks.register("generateClassloader") {
+val generateClassloader: TaskProvider<Task> = tasks.register("generateClassloader") {
     val outputDir: File = file("$projectDir/build/generated/sources/classloader")
     val packageDir = File(outputDir, "me/webhead1104/towncraft/utils")
     val classloaderFile = File(packageDir, "GeneratedClassloader.java")
@@ -105,14 +106,6 @@ val generateClassloader = tasks.register("generateClassloader") {
 tasks.compileJava {
     dependsOn(generateClassloader)
     source(generateClassloader.map { layout.buildDirectory.dir("generated/sources/classloader").get() })
-}
-
-tasks.named("javadocJar") {
-    enabled = false
-}
-
-tasks.named("sourcesJar") {
-    enabled = false
 }
 
 tasks {

@@ -33,6 +33,10 @@ dependencies {
     testImplementation("ch.qos.logback:logback-classic:1.5.23")
 }
 
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+}
+
 abstract class RepositoryUrlValueSource : RepositoryValueSource.Parameterless<String>() {
     override fun obtain(repository: Git): String? {
         return repository.repository.config.getString("remote", "origin", "url")

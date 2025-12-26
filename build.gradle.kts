@@ -1,8 +1,5 @@
-import net.kyori.indra.IndraExtension
-
 plugins {
     id("io.freefair.lombok") version "9.1.0" apply false
-    id("net.kyori.indra") version "4.0.0" apply false
     id("net.kyori.indra.git") version "4.0.0" apply false
     id("net.kyori.indra.licenser.spotless") version "4.0.0" apply false
 }
@@ -14,7 +11,6 @@ subprojects {
     apply(plugin = "java")
     apply(plugin = "io.freefair.lombok")
     apply(plugin = "jacoco")
-    apply(plugin = "net.kyori.indra")
     apply(plugin = "net.kyori.indra.git")
     apply(plugin = "net.kyori.indra.licenser.spotless")
 
@@ -24,20 +20,6 @@ subprojects {
         mavenCentral()
         maven("https://repo.opencollab.dev/maven-snapshots")
         maven("https://jitpack.io/")
-    }
-
-    extensions.configure<IndraExtension> {
-        javaVersions {
-            target(21)
-            minimumToolchain(21)
-            testWith(21)
-        }
-
-        github("Webhead1104", "Towncraft") {
-            ci(true)
-        }
-
-        mitLicense()
     }
 
     tasks.withType<JavaCompile> {

@@ -1,5 +1,3 @@
-import net.kyori.indra.IndraExtension
-
 plugins {
     id("java")
     id("io.freefair.lombok") version "9.1.0"
@@ -25,12 +23,8 @@ dependencies {
     annotationProcessor("info.picocli:picocli-codegen:4.7.7")
 }
 
-extensions.configure<IndraExtension> {
-    javaVersions {
-        target(25)
-        minimumToolchain(25)
-        testWith(25)
-    }
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(25))
 }
 
 application {
@@ -38,6 +32,7 @@ application {
 }
 
 tasks.getByName<JavaExec>("run") {
+    jvmArgs = listOf("--enable-native-access=ALL-UNNAMED")
     args = listOf(
         "-o",
         rootProject.projectDir.resolve("platforms/common/src/main/resources").absolutePath,
