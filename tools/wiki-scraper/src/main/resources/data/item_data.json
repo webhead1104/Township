@@ -1,0 +1,19 @@
+{
+  "materials": {
+    "milk": "minecraft:milk_bucket",
+    "egg": "minecraft:egg",
+    "wool": "minecraft:white_wool",
+    "wheat": "minecraft:wheat",
+    "carrot": "minecraft:carrot",
+    "sugarcane": "minecraft:sugar_cane",
+    "bread": "minecraft:bread",
+    "cookies": "minecraft:cookie",
+    "sugar": "minecraft:sugar",
+    "yarn": "minecraft:string",
+    "brick": "minecraft:brick",
+    "glass": "minecraft:glass",
+    "slab": "minecraft:stone_slab",
+    "shovel": "minecraft:stone_shovel",
+    "axe": "minecraft:stone_axe"
+  }
+}

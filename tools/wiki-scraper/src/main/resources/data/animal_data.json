@@ -1,5 +1,7 @@
 {
-  "cowshed": "minecraft:cow_spawn_egg",
-  "chicken_coop": "minecraft:chicken_spawn_egg",
-  "sheep_farm": "minecraft:sheep_spawn_egg"
+  "materials": {
+    "cowshed": "minecraft:cow_spawn_egg",
+    "chicken_coop": "minecraft:chicken_spawn_egg",
+    "sheep_farm": "minecraft:sheep_spawn_egg"
+  }
 }
