@@ -2,7 +2,7 @@
 inventoryFramework = "3.7.1"
 guava = "33.5.0-jre"
 jetbrainsAnnotations = "26.0.2-1"
-configurate = "4.2.0-GeyserMC-SNAPSHOT"
+configurate = "4.2.0"
 classgraph = "4.8.184"
 adventure = "4.26.1"
 commonsText = "1.15.0"
