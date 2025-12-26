@@ -46,7 +46,7 @@
         },
         "xp": 0,
         "size": "1x3",
-        "not-in-menu": true
+        "not_in_menu": true
       },
       {
         "key": "town_hall",
@@ -80,7 +80,7 @@
         },
         "xp": 0,
         "size": "3x5",
-        "not-in-menu": true
+        "not_in_menu": true
       }
     ]
   }

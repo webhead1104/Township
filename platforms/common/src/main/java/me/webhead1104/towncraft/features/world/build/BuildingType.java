@@ -149,7 +149,7 @@ public class BuildingType implements DataLoader.KeyBasedDataLoader<List<Building
         @Required
         @Setting("size")
         private TileSize size;
-        @Setting
+        @Setting("not_in_menu")
         private boolean notInMenu;
         private transient int slot;
         @With
