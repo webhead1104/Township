@@ -25,18 +25,18 @@ dependencies {
         exclude("net.kyori")
     }
 
-    compileOnly("io.github.revxrsal:lamp.bukkit:4.0.0-rc.14")
+    compileOnly(libs.lamp.bukkit)
     compileOnly("io.papermc.paper:paper-api:$minecraftVersion-R0.1-SNAPSHOT")
-    implementation("org.bstats:bstats-bukkit:3.1.0")
+    implementation(libs.bstats)
 
     //shadow these in since paper class loading is weird
-    implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
-    implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
-    implementation("me.devnatan:inventory-framework-api:3.7.1")
-    implementation("me.devnatan:inventory-framework-platform:3.7.1")
+    implementation(libs.configurate.gson)
+    implementation(libs.configurate.yaml)
+    implementation(libs.inventoryFramework.api)
+    implementation(libs.inventoryFramework.platform)
 
-    testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.launcher)
 }
 
 val generateClassloader: TaskProvider<Task> = tasks.register("generateClassloader") {

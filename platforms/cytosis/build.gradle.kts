@@ -16,24 +16,25 @@ dependencies {
     implementation(project(":platforms:common")) {
         isTransitive = false
     }
-    implementation("io.github.revxrsal:zapper.api:1.0.3")
+    implementation(libs.zapper)
 
-    compileOnly("com.github.Takasaki-Studio-Games:MinestomPvP:751353385c")
-    compileOnly("net.cytonic:Cytosis:1.0-SNAPSHOT:all") {
+    compileOnly(variantOf(libs.cytosis) {
+        classifier("all")
+    }) {
         exclude("me.devnatan")
-        exclude("com.github.TogAr2", "MinestomPvP")
+
     }
-    compileOnly("io.github.revxrsal:lamp.minestom:4.0.0-rc.14")
 
+    compileOnly(libs.lamp.minestom)
 
-    implementation("org.spongepowered:configurate-gson:4.2.0-GeyserMC-SNAPSHOT")
-    implementation("org.spongepowered:configurate-yaml:4.2.0-GeyserMC-SNAPSHOT")
-    implementation("me.devnatan:inventory-framework-api:3.7.1")
-    implementation("me.devnatan:inventory-framework-platform:3.7.1")
-    implementation("org.apache.commons:commons-text:1.15.0")
+    implementation(libs.configurate.gson)
+    implementation(libs.configurate.yaml)
+    implementation(libs.inventoryFramework.api)
+    implementation(libs.inventoryFramework.platform)
+    implementation(libs.commonsText)
 
-    testImplementation("org.junit.jupiter:junit-jupiter:6.0.1")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.launcher)
 }
 
 java {
