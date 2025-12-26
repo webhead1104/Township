@@ -103,7 +103,7 @@ public class ExpansionMenu extends TowncraftView {
             ExpansionDataLoader.Expansion expansion = expansionState.get(context);
             if (user.getCoins() >= expansion.getCoinsNeeded() && user.getPopulation() >= expansion.getPopulationNeeded()) {
                 user.setCoins(user.getCoins() - expansion.getCoinsNeeded());
-                user.addXp(expansion.getXp());
+                user.addXp(expansion.getXpNeeded());
                 user.setExpansionsPurchased(user.getExpansionsPurchased() + 1);
                 Instant instant = Instant.now().plus(expansion.getTime());
                 TileSize.SIZE_3X3.toList(slotState.get(context)).forEach(slot -> {
