@@ -20,7 +20,7 @@ gson = "2.13.2"
 jsoup = "1.21.2"
 clikt = "5.0.3"
 kotlin-logging = "7.0.3"
-kotlin-reflect = "1.9.0"
+kotlin-reflect = "2.3.0"
 
 [libraries]
 inventoryFramework-api = { module = "me.devnatan:inventory-framework-api", version.ref = "inventoryFramework" }
