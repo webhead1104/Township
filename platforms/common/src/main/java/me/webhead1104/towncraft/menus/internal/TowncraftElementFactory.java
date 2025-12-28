@@ -36,7 +36,6 @@ import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.events.TowncraftInventoryClickEvent;
 import me.webhead1104.towncraft.events.TowncraftInventoryCloseEvent;
 import me.webhead1104.towncraft.items.TowncraftInventory;
-import me.webhead1104.towncraft.items.TowncraftInventoryHolder;
 import me.webhead1104.towncraft.menus.TowncraftViewContainer;
 import me.webhead1104.towncraft.menus.TowncraftViewer;
 import me.webhead1104.towncraft.menus.component.TowncraftItemComponentBuilder;
@@ -79,8 +78,7 @@ public class TowncraftElementFactory extends ElementFactory {
                     finalType.getMaxSize(),
                     context.getRoot().getClass().getName()));
 
-        final TowncraftInventoryHolder holder = context instanceof TowncraftInventoryHolder ? (TowncraftInventoryHolder) context : null;
-        final TowncraftInventory inventory = MenuFactory.createInventory(holder, finalType, size, config.getTitle());
+        final TowncraftInventory inventory = MenuFactory.createInventory(finalType, size, config.getTitle());
 
         return new TowncraftViewContainer(inventory, false, finalType, false);
     }

@@ -29,8 +29,6 @@ import me.devnatan.inventoryframework.ViewContainer;
 import me.devnatan.inventoryframework.Viewer;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.data.objects.User;
-import me.webhead1104.towncraft.items.TowncraftInventory;
-import me.webhead1104.towncraft.items.TowncraftInventoryHolder;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.menus.TowncraftViewContainer;
 import me.webhead1104.towncraft.menus.TowncraftViewer;
@@ -46,8 +44,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public final class RenderContext extends PlatformRenderContext<TowncraftItemComponentBuilder, Context>
-        implements Context, TowncraftInventoryHolder {
+public final class RenderContext extends PlatformRenderContext<TowncraftItemComponentBuilder, Context> implements Context {
 
     private final TowncraftPlayer player;
 
@@ -195,10 +192,5 @@ public final class RenderContext extends PlatformRenderContext<TowncraftItemComp
     @Override
     public String toString() {
         return "RenderContext{" + "player=" + player + "} " + super.toString();
-    }
-
-    @Override
-    public TowncraftInventory getInventory() {
-        return ((TowncraftViewContainer) getContainerOrThrow()).getInventory();
     }
 }

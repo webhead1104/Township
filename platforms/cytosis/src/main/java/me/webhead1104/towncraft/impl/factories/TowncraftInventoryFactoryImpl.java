@@ -26,7 +26,6 @@ package me.webhead1104.towncraft.impl.factories;
 import me.webhead1104.towncraft.factories.TowncraftInventoryFactory;
 import me.webhead1104.towncraft.impl.items.TowncraftInventoryImpl;
 import me.webhead1104.towncraft.items.TowncraftInventory;
-import me.webhead1104.towncraft.items.TowncraftInventoryHolder;
 import me.webhead1104.towncraft.menus.TowncraftInventoryType;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.Inventory;
@@ -34,12 +33,12 @@ import net.minestom.server.inventory.InventoryType;
 
 public class TowncraftInventoryFactoryImpl implements TowncraftInventoryFactory {
     @Override
-    public TowncraftInventory create(TowncraftInventoryHolder holder, TowncraftInventoryType type, Component title) {
+    public TowncraftInventory create(TowncraftInventoryType type, Component title) {
         return new TowncraftInventoryImpl(new Inventory(getInventoryType(type), title));
     }
 
     @Override
-    public TowncraftInventory create(TowncraftInventoryHolder holder, int size, Component title) {
+    public TowncraftInventory create(int size, Component title) {
         return new TowncraftInventoryImpl(new Inventory(getInventoryType(size), title));
     }
 
