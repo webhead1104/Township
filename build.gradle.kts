@@ -1,3 +1,5 @@
+import com.diffplug.gradle.spotless.SpotlessExtension
+
 plugins {
     id("io.freefair.lombok") version "9.1.0" apply false
     id("net.kyori.indra.git") version "4.0.0" apply false
@@ -20,6 +22,12 @@ subprojects {
         mavenCentral()
         maven("https://repo.opencollab.dev/maven-snapshots")
         maven("https://jitpack.io/")
+    }
+
+    configure<SpotlessExtension> {
+        java {
+            targetExclude("**/build/**")
+        }
     }
 
     tasks.withType<JavaCompile> {
