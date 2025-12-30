@@ -23,6 +23,7 @@
  */
 package me.webhead1104.towncraft.impl.factories;
 
+import com.google.auto.service.AutoService;
 import me.webhead1104.towncraft.factories.TowncraftItemStackFactory;
 import me.webhead1104.towncraft.impl.items.TowncraftItemStackImpl;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
@@ -31,6 +32,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import org.jetbrains.annotations.NotNull;
 
+@AutoService(TowncraftItemStackFactory.class)
 public class TowncraftItemStackFactoryImpl implements TowncraftItemStackFactory {
     @Override
     public @NotNull TowncraftItemStack get0(TowncraftMaterial material) {

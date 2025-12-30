@@ -20,6 +20,7 @@ gson = "2.13.2"
 jsoup = "1.21.2"
 clikt = "5.0.3"
 kotlin-logging = "7.0.13"
+autoService = "1.1.1"
 
 [libraries]
 inventoryFramework-api = { module = "me.devnatan:inventory-framework-api", version.ref = "inventoryFramework" }
@@ -47,6 +48,6 @@ adventure-minimessage = { module = "net.kyori:adventure-text-minimessage", versi
 javapoet = { module = "com.palantir.javapoet:javapoet", version.ref = "javapoet" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
-
 clikt = { module = "com.github.ajalt.clikt:clikt", version.ref = "clikt" }
 kotlin-logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "kotlin-logging" }
+autoService = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }

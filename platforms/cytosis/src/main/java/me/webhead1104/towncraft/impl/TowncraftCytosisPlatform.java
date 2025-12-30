@@ -23,6 +23,7 @@
  */
 package me.webhead1104.towncraft.impl;
 
+import com.google.auto.service.AutoService;
 import me.webhead1104.towncraft.TowncraftPlatform;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.TowncraftTask;
@@ -38,6 +39,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.UUID;
 
+@AutoService(TowncraftPlatform.class)
 public class TowncraftCytosisPlatform implements TowncraftPlatform {
     private static final Logger LOGGER = LoggerFactory.getLogger("Towncraft");
 

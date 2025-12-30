@@ -23,6 +23,7 @@
  */
 package me.webhead1104.towncraft.impl.factories;
 
+import com.google.auto.service.AutoService;
 import me.webhead1104.towncraft.factories.TowncraftInventoryFactory;
 import me.webhead1104.towncraft.impl.items.TowncraftInventoryPaperImpl;
 import me.webhead1104.towncraft.items.TowncraftInventory;
@@ -32,6 +33,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 
+@AutoService(TowncraftInventoryFactory.class)
 public class TowncraftInventoryFactoryPaperImpl implements TowncraftInventoryFactory {
     @Override
     public TowncraftInventory create(TowncraftInventoryType type, Component title) {

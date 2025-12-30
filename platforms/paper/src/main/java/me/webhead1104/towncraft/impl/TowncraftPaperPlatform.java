@@ -23,6 +23,7 @@
  */
 package me.webhead1104.towncraft.impl;
 
+import com.google.auto.service.AutoService;
 import me.webhead1104.towncraft.TowncraftPaper;
 import me.webhead1104.towncraft.TowncraftPlatform;
 import me.webhead1104.towncraft.TowncraftPlayer;
@@ -36,6 +37,7 @@ import org.slf4j.Logger;
 import java.io.File;
 import java.util.UUID;
 
+@AutoService(TowncraftPlatform.class)
 public class TowncraftPaperPlatform implements TowncraftPlatform {
 
     @Override

@@ -23,6 +23,7 @@
  */
 package me.webhead1104.towncraft.impl.factories;
 
+import com.google.auto.service.AutoService;
 import me.webhead1104.towncraft.factories.TowncraftInventoryFactory;
 import me.webhead1104.towncraft.impl.items.TowncraftInventoryImpl;
 import me.webhead1104.towncraft.items.TowncraftInventory;
@@ -31,6 +32,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 
+@AutoService(TowncraftInventoryFactory.class)
 public class TowncraftInventoryFactoryImpl implements TowncraftInventoryFactory {
     @Override
     public TowncraftInventory create(TowncraftInventoryType type, Component title) {
