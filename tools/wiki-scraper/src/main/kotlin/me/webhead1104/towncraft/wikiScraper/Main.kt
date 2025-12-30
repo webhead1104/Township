@@ -122,9 +122,7 @@ class Main : CliktCommand(name = "wiki-scraper") {
                     dependency = SCRAPERS_BY_CLASS.entries
                         .find { depClass.java.isAssignableFrom(it.key) }
                         ?.value
-                        ?: throw IllegalStateException(
-                            "Dependency not found: ${depClass.java.name} required by ${clazz.name}"
-                        )
+                        ?: error("Dependency not found: ${depClass.java.name} required by ${clazz.name}")
                 }
                 runWithDependencies(dependency, loaded, loading)
             }
