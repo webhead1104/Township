@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2025 Webhead1104
+ * Copyright (c) 2026 Webhead1104
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ package me.webhead1104.menuDesigner;
 import javafx.application.Application;
 
 public class Launcher {
-    public static void main(String[] args) {
+    static void main(String[] args) {
         Application.launch(MenuDesignerApplication.class, args);
     }
 }
