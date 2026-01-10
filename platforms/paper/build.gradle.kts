@@ -28,7 +28,7 @@ dependencies {
     compileOnly(libs.lamp.bukkit)
     compileOnly("io.papermc.paper:paper-api:$minecraftVersion-R0.1-SNAPSHOT")
     implementation(libs.bstats)
-    annotationProcessor(libs.autoService)
+    annotationProcessor(libs.autoService.processor)
 
     //shadow these in since paper class loading is weird
     implementation(libs.configurate.gson)

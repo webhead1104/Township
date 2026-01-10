@@ -26,7 +26,7 @@ dependencies {
     }
 
     compileOnly(libs.lamp.minestom)
-    annotationProcessor(libs.autoService)
+    annotationProcessor(libs.autoService.processor)
 
     implementation(libs.configurate.gson)
     implementation(libs.configurate.yaml)

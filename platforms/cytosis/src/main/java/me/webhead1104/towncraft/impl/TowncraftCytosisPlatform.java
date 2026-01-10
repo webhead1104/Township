@@ -76,8 +76,7 @@ public class TowncraftCytosisPlatform implements TowncraftPlatform {
     }
 
     @Override
-    public TowncraftTask runTaskAsync(Runnable runnable) {
-        Task task = MinecraftServer.getSchedulerManager().buildTask(runnable).schedule();
-        return new TowncraftTaskImpl(task);
+    public void runTaskAsync(Runnable runnable) {
+        MinecraftServer.getSchedulerManager().buildTask(runnable).schedule();
     }
 }

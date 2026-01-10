@@ -23,6 +23,8 @@
  */
 package me.webhead1104.towncraft.impl.items;
 
+import com.google.common.base.Preconditions;
+import lombok.EqualsAndHashCode;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.items.TowncraftMaterial;
 import me.webhead1104.towncraft.utils.Msg;
@@ -33,34 +35,42 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode
 public class TowncraftItemStackTestImpl implements TowncraftItemStack {
     private TowncraftMaterial material;
     private Component name;
     private List<Component> lore = new ArrayList<>();
+    private boolean nameColorOverridden;
     private String playerHeadTexture;
+    private boolean hideToolTip;
 
-    public TowncraftItemStackTestImpl(TowncraftMaterial material) {
+    public TowncraftItemStackTestImpl(@NotNull TowncraftMaterial material) {
+        Preconditions.checkNotNull(material, "material cannot be null");
         this.material = material;
-        this.name = Msg.format(Utils.thing2(material.getKey().value()));
+        this.name = Msg.format(Utils.thing2(material.key().value()));
     }
 
     @Override
-    public void setName(Component component) {
-        this.name = component;
+    public void setName(@NotNull Component name) {
+        Preconditions.checkNotNull(name, "name cannot be null");
+        this.name = name;
     }
 
     @Override
-    public void setLore(List<Component> lore) {
+    public void setLore(@NotNull List<Component> lore) {
+        Preconditions.checkNotNull(lore, "lore cannot be null");
         this.lore = lore;
     }
 
     @Override
     public void overrideNameColor() {
+        this.nameColorOverridden = true;
     }
 
     @Override
     public boolean isSimilar(@NotNull TowncraftItemStack other) {
-        return false;
+        Preconditions.checkNotNull(other, "other cannot be null");
+        return equals(other);
     }
 
     @Override
@@ -70,24 +80,28 @@ public class TowncraftItemStackTestImpl implements TowncraftItemStack {
 
     @Override
     public void setMaterial(TowncraftMaterial material) {
+        Preconditions.checkNotNull(material, "material cannot be null");
         this.material = material;
     }
 
     @Override
     public void setPlayerHeadTexture(String texture) {
+        Preconditions.checkNotNull(texture, "texture cannot be null");
+        this.playerHeadTexture = texture;
     }
 
     @Override
     public void hideTooltip(boolean hideTooltip) {
+        this.hideToolTip = hideTooltip;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return material.equals(TowncraftMaterial.AIR);
     }
 
     @Override
     public Object toPlatform() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }

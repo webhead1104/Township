@@ -62,7 +62,7 @@ public record RegistryGenerator(Path outputFolder) implements TowncraftCodeGener
                             .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                             .initializer(
                                     // TypeClass.CONSTANT_NAME = LoaderClass.get(namespaceString)
-                                    "$T.get(key($S))",
+                                    "$T.getInternal(key($S))",
                                     loaderClass,
                                     namespaceString
                             )

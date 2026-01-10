@@ -26,6 +26,7 @@ package me.webhead1104.towncraft.items;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.menus.TowncraftInventoryType;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,9 +41,13 @@ public interface TowncraftInventory {
 
     void setTitle(Component title);
 
-    void setTitle(String title);
+    default void setTitle(String titleString) {
+        setTitle(Component.text(titleString));
+    }
 
-    String getTitleString();
+    default String getTitleString() {
+        return PlainTextComponentSerializer.plainText().serialize(getTitle());
+    }
 
     TowncraftInventoryType getType();
 

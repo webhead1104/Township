@@ -35,7 +35,7 @@ public record TowncraftMaterialPaperImpl(Material material) implements Towncraft
     }
 
     @Override
-    public @NotNull Key getKey() {
+    public @NotNull Key key() {
         return material.getKey();
     }
 

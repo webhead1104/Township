@@ -34,7 +34,7 @@ public record TowncraftMaterialImpl(Material material) implements TowncraftMater
     }
 
     @Override
-    public @NotNull Key getKey() {
+    public @NotNull Key key() {
         return material.key();
     }
 

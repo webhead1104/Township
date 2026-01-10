@@ -28,5 +28,5 @@ public interface Scheduler {
 
     TowncraftTask runTimer(Runnable runnable, long delay, long period);
 
-    TowncraftTask runTaskAsync(Runnable runnable);
+    void runTaskAsync(Runnable runnable);
 }

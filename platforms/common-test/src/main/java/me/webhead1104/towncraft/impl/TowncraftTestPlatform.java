@@ -23,25 +23,32 @@
  */
 package me.webhead1104.towncraft.impl;
 
+import com.google.auto.service.AutoService;
+import com.google.common.base.Preconditions;
 import me.webhead1104.towncraft.TowncraftPlatform;
 import me.webhead1104.towncraft.TowncraftPlayer;
 import me.webhead1104.towncraft.TowncraftTask;
+import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@AutoService(TowncraftPlatform.class)
 public class TowncraftTestPlatform implements TowncraftPlatform {
+    private static final HashMap<UUID, TowncraftPlayer> players = new HashMap<>();
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     @Override
-    public @Nullable TowncraftPlayer getPlayer(UUID uuid) {
-        return null;
+    public @Nullable TowncraftPlayer getPlayer(@NotNull UUID uuid) {
+        Preconditions.checkNotNull(uuid, "uuid cannot be null");
+        return players.computeIfAbsent(uuid, TowncraftPlayerTestImpl::new);
     }
 
     @Override
@@ -51,7 +58,7 @@ public class TowncraftTestPlatform implements TowncraftPlatform {
 
     @Override
     public File getDataFolder() {
-        return new File("build/config/config");
+        return new File("build/config");
     }
 
     @Override
@@ -61,11 +68,12 @@ public class TowncraftTestPlatform implements TowncraftPlatform {
 
     @Override
     public TowncraftTask runTimer(Runnable runnable, long delay, long period) {
-        return null;
+        return new TowncraftTaskTestImpl(
+                scheduler.scheduleAtFixedRate(runnable, delay, period, TimeUnit.MILLISECONDS));
     }
 
     @Override
-    public TowncraftTask runTaskAsync(Runnable runnable) {
-        return null;
+    public void runTaskAsync(Runnable runnable) {
+        scheduler.submit(runnable);
     }
 }

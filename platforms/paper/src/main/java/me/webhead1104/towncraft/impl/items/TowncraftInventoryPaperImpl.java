@@ -30,7 +30,6 @@ import me.webhead1104.towncraft.items.TowncraftInventory;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.menus.TowncraftInventoryType;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -67,16 +66,6 @@ public class TowncraftInventoryPaperImpl implements TowncraftInventory {
     @Override
     public void setTitle(Component title) {
         throw new UnsupportedOperationException("This operation is not supported.");
-    }
-
-    @Override
-    public void setTitle(String title) {
-        throw new UnsupportedOperationException("This operation is not supported.");
-    }
-
-    @Override
-    public String getTitleString() {
-        return PlainTextComponentSerializer.plainText().serialize(inventory.getType().defaultTitle());
     }
 
     @Override

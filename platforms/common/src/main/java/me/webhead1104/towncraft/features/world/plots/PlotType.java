@@ -26,7 +26,6 @@ package me.webhead1104.towncraft.features.world.plots;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import me.webhead1104.towncraft.Towncraft;
 import me.webhead1104.towncraft.dataLoaders.DataLoader;
 import me.webhead1104.towncraft.dataLoaders.ItemType;
@@ -47,7 +46,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 public class PlotType implements DataLoader.KeyBasedDataLoader<PlotType.Plot> {
     private final Map<Key, Plot> values = new LinkedHashMap<>();
 

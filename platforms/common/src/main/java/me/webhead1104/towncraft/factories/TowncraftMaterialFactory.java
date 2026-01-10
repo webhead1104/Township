@@ -26,8 +26,11 @@ package me.webhead1104.towncraft.factories;
 import me.webhead1104.towncraft.items.TowncraftMaterial;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.util.Services;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 public interface TowncraftMaterialFactory {
     TowncraftMaterialFactory INSTANCE = Services.service(TowncraftMaterialFactory.class)
@@ -36,6 +39,12 @@ public interface TowncraftMaterialFactory {
     @Nullable
     static TowncraftMaterial get(@NotNull Key key) {
         return INSTANCE.get0(key);
+    }
+
+    @NotNull
+    @ApiStatus.Internal
+    static TowncraftMaterial getInternal(@NotNull Key key) {
+        return Objects.requireNonNull(INSTANCE.get0(key));
     }
 
     @Nullable

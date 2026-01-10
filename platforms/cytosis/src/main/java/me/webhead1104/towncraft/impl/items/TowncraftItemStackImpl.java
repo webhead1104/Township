@@ -23,6 +23,7 @@
  */
 package me.webhead1104.towncraft.impl.items;
 
+import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
 import me.webhead1104.towncraft.items.TowncraftItemStack;
 import me.webhead1104.towncraft.items.TowncraftMaterial;
@@ -35,7 +36,6 @@ import net.minestom.server.item.component.TooltipDisplay;
 import net.minestom.server.network.player.GameProfile;
 import net.minestom.server.network.player.ResolvableProfile;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.include.com.google.common.collect.Sets;
 
 import java.util.List;
 

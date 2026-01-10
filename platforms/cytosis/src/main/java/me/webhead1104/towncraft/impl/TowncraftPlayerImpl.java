@@ -35,6 +35,7 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -66,7 +67,7 @@ public record TowncraftPlayerImpl(CytosisPlayer player) implements TowncraftPlay
     }
 
     @Override
-    public TowncraftInventory getOpenInventory() {
+    public @Nullable TowncraftInventory getOpenInventory() {
         return new TowncraftInventoryImpl(player.getOpenInventory());
     }
 

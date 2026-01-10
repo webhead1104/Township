@@ -10,24 +10,27 @@ plugins {
 version = project.findProperty("plugin_version") as String? ?: "unknown"
 
 dependencies {
-    api(libs.inventoryFramework.api)
-    api(libs.inventoryFramework.platform)
-    api(libs.guava)
-    api(libs.jetbrainsAnnotations)
-    api(libs.configurate.gson)
-    api(libs.configurate.yaml)
-    api(libs.classgraph)
-    api(libs.adventure.minimessage)
-    api(libs.commonsText)
-    api(libs.slf4j)
-    api(libs.mongodb)
-    api(libs.hikari)
-    api(libs.lamp.common)
+    implApi(libs.inventoryFramework.api)
+    implApi(libs.inventoryFramework.platform)
+    implApi(libs.guava)
+    implApi(libs.jetbrainsAnnotations)
+    implApi(libs.configurate.gson)
+    implApi(libs.configurate.yaml)
+    implApi(libs.classgraph)
+    implApi(libs.adventure.minimessage)
+    implApi(libs.adventure.plainText)
+    implApi(libs.commonsText)
+    implApi(libs.slf4j)
+    implApi(libs.mongodb)
+    implApi(libs.hikari)
+    implApi(libs.lamp.common)
+    implApi(libs.autoService.annotations)
 
+    testImplementation(project(":platforms:common-test"))
+    testImplementation(libs.logback)
+    testAnnotationProcessor(libs.autoService.processor)
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.launcher)
-    testImplementation(libs.configurate.gson)
-    testImplementation(libs.logback)
 }
 
 java {

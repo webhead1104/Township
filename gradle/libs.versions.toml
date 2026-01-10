@@ -45,9 +45,11 @@ cytosis = { module = "net.cytonic:Cytosis", version.ref = "cytosis" }
 bstats = { module = "org.bstats:bstats-bukkit", version.ref = "bstats" }
 adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
 adventure-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }
+adventure-plainText = { module = "net.kyori:adventure-text-serializer-plain", version.ref = "adventure" }
 javapoet = { module = "com.palantir.javapoet:javapoet", version.ref = "javapoet" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 clikt = { module = "com.github.ajalt.clikt:clikt", version.ref = "clikt" }
 kotlin-logging = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "kotlin-logging" }
-autoService = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
+autoService-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoService" }
+autoService-processor = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }

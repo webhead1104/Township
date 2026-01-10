@@ -53,7 +53,7 @@ public class MaterialSerializer extends TowncraftSerializer<TowncraftMaterial> {
             throw new SerializationException("Cannot serialize a null material!");
         }
 
-        node.set(material.getKey().asString());
+        node.set(material.key().asString());
     }
 
     @Override

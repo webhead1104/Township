@@ -72,8 +72,7 @@ public class TowncraftPaperPlatform implements TowncraftPlatform {
     }
 
     @Override
-    public TowncraftTask runTaskAsync(Runnable runnable) {
-        BukkitTask task = Bukkit.getScheduler().runTaskAsynchronously(TowncraftPaper.getInstance(), runnable);
-        return new TowncraftTaskPaperImpl(task);
+    public void runTaskAsync(Runnable runnable) {
+        Bukkit.getScheduler().runTaskAsynchronously(TowncraftPaper.getInstance(), runnable);
     }
 }

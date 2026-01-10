@@ -36,6 +36,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -71,7 +72,7 @@ public record TowncraftPlayerPaperImpl(Player player) implements TowncraftPlayer
     }
 
     @Override
-    public TowncraftInventory getOpenInventory() {
+    public @Nullable TowncraftInventory getOpenInventory() {
         return new TowncraftInventoryPaperImpl((Inventory) player.getOpenInventory());
     }
 

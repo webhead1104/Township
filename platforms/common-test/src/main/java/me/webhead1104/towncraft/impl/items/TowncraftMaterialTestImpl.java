@@ -21,18 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package me.webhead1104.towncraft.impl.factories;
+package me.webhead1104.towncraft.impl.items;
 
-import me.webhead1104.towncraft.factories.TowncraftItemStackFactory;
-import me.webhead1104.towncraft.impl.items.TowncraftItemStackTestImpl;
-import me.webhead1104.towncraft.items.TowncraftItemStack;
+import com.google.common.base.Preconditions;
 import me.webhead1104.towncraft.items.TowncraftMaterial;
+import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 
-public class TowncraftItemStackFactoryTestImpl implements TowncraftItemStackFactory {
+public record TowncraftMaterialTestImpl(Key key) implements TowncraftMaterial {
+    public TowncraftMaterialTestImpl(@NotNull Key key) {
+        Preconditions.checkNotNull(key, "key cannot be null");
+        this.key = key;
+    }
 
     @Override
-    public @NotNull TowncraftItemStack get0(TowncraftMaterial material) {
-        return new TowncraftItemStackTestImpl(material);
+    public Object getPlatform() {
+        throw new UnsupportedOperationException();
     }
 }
