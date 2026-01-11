@@ -2,7 +2,7 @@ plugins {
     id("java")
     id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
     id("xyz.jpenilla.run-paper") version "3.0.2"
-    id("com.gradleup.shadow") version "9.3.0"
+    id("com.gradleup.shadow") version "9.3.1"
     id("me.modmuss50.mod-publish-plugin") version "1.1.0"
 }
 version = project.findProperty("plugin_version") as String? ?: "unknown"
